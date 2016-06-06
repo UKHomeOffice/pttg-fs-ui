@@ -1,0 +1,230 @@
+<div class="column-full-width">
+    <div id="page1" data-bind="visible: currentPage() === 1">
+        <h2 class="heading-medium">Tier 4 Student</h2>
+        <h1 class="heading-xlarge" id="pageSubTitle">Financial status check</h1>
+        <div class="text">
+            <p class="lede" id="pageSubText">
+                You can use this tool to check whether a Tier 4 Student applicant meets the financial status requirements.
+            </p>
+        </div>
+
+        <div class="form-group">
+            <form name="vm.queryForm" ng-submit="vm.submit()">
+
+                <div ng-if="vm.validateError || vm.restError" class="error-summary"
+                     role="group" aria-labelledby="error-summary-heading-example-2" tabindex="-1">
+
+                    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
+                        There's some missing information
+                    </h1>
+
+                    <p>Make sure all the fields have been completed including the National Insurance Number and the
+                        application raised date.</p>
+
+                    <ul class="error-summary-list">
+
+                        <li ng-if="vm.applicantDateOfBirthMissingError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Applicant date of birth is
+                                missing</a></li>
+                        <li ng-if="vm.applicantDateOfBirthInvalidError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Applicant date of birth is
+                                invalid</a></li>
+
+                        <li ng-if="vm.applicationRaisedDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Application raised date is
+                                missing</a></li>
+                        <li ng-if="vm.applicationRaisedDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Application raised date is
+                                invalid</a></li>
+
+                        <li ng-if="vm.insideLondonMissingError">
+                            <a href="" ng-click="vm.scrollTo('insideLondon')">Inside / Outside London must be specified</a></li>
+
+                        <li ng-if="vm.courseLengthInvalidError">
+                            <a href="" ng-click="vm.scrollTo('courseLength')">The course length is invalid</a></li>
+
+                        <li ng-if="vm.dependantsInvalidError">
+                            <a href="" ng-click="vm.scrollTo('dependants')">The number of dependants is invalid</a></li>
+
+                        <li ng-if="vm.totalTuitionFeesInvalidError">
+                            <a href="" ng-click="vm.scrollTo('totalTuitionFees')">The total tuition fees is invalid</a></li>
+
+                        <li ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
+                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid')">The tuition fees already paid is invalid</a></li>
+
+                        <li ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
+                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees already paid is invalid</a></li>
+
+                        <li ng-if="vm.accountNumberInvalidError">
+                            <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is invalid</a></li>
+
+                        <li ng-if="vm.sortCodeInvalidError">
+                            <a href="" ng-click="vm.scrollTo('sortCode')">The sortCode is invalid</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="form-group " id="applicant-date-of-birth"
+                     ng-class="{error : vm.applicantDateOfBirthMissingError || vm.applicantDateOfBirthInvalidError}">
+
+                    <fieldset>
+                        <legend class="form-label-bold">Applicant date of birth</legend>
+                        <div class="form-date">
+                            <p class="form-hint">For example, 31 3 1980</p>
+                                <span id="applicant-date-of-birth-error" class="error-message"
+                                      ng-if="vm.applicantDateOfBirthMissingError || vm.applicantDateOfBirthInvalidError">
+                                    Please provide a valid applicant date of birth</span>
+                            <div class="form-group form-group-day">
+                                <label for="applicantDateOfBirthDay">Day</label>
+                                <input class="form-control" name="applicantDateOfBirthDay" id="applicantDateOfBirthDay" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthDay" autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-month">
+                                <label for="applicantDateOfBirthMonth">Month</label>
+                                <input class="form-control" name="applicantDateOfBirthMonth" id="applicantDateOfBirthMonth"
+                                       type="number" pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthMonth"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="applicantDateOfBirthYear">Year</label>
+                                <input class="form-control" name="applicantDateOfBirthYear" id="applicantDateOfBirthYear" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthYear" autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="form-group " id="application-raised-date"
+                     ng-class="{error : vm.applicationRaisedDateMissingError || vm.applicationRaisedDateInvalidError}">
+
+                    <fieldset>
+                        <legend class="form-label-bold">Application raised date</legend>
+                        <div class="form-date">
+                            <p class="form-hint">For example, 31 3 1980</p>
+                                <span id="application-raised-date-error" class="error-message"
+                                      ng-if="vm.applicationRaisedDateMissingError || vm.applicationRaisedDateInvalidError">
+                                    Please provide a valid application raised date</span>
+                            <div class="form-group form-group-day">
+                                <label for="applicationRaisedDateDay">Day</label>
+                                <input class="form-control" name="applicationRaisedDateDay" id="applicationRaisedDateDay" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateDay" autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-month">
+                                <label for="applicationRaisedDateMonth">Month</label>
+                                <input class="form-control" name="applicationRaisedDateMonth" id="applicationRaisedDateMonth"
+                                       type="number" pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateMonth"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="applicationRaisedDateYear">Year</label>
+                                <input class="form-control" name="applicationRaisedDateYear" id="applicationRaisedDateYear" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateYear" autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.insideLondonMissingError }">
+                    <label class="form-label-bold" for="insideLondon">
+                        Is the University inside London?
+                    </label>
+                    <span id="insideLondon-error" class="error-message" ng-if="vm.insideLondonMissingError">
+                                    Please specify whether or not the course is inside London</span>
+                    <input type="radio" class="form-control form-control-1-8" name="insideLondon" id="insideLondon" value="yes"
+                           ng-model="vm.model.insideLondon" autocomplete="off">Yes
+                    <input type="radio" class="form-control form-control-1-8" name="insideLondon" value="no"
+                           ng-model="vm.model.insideLondon" autocomplete="off">No
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.courseLengthInvalidError }">
+                    <label class="form-label-bold" for="courseLength">
+                        Course length
+                        <span class="form-hint">Enter the number of months</span>
+                    </label>
+                    <span id="courseLength-error" class="error-message" ng-if="vm.courseLengthInvalidError">
+                                    The course length is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
+                           ng-model="vm.model.courseLength" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.dependantsInvalidError }">
+                    <label class="form-label-bold" for="dependants" id="no-dependants">
+                        Number of dependants
+                        <span class="form-hint">You can leave this blank for no dependants.</span>
+                    </label>
+                    <span id="dependants-error" class="error-message" ng-if="vm.dependantsInvalidError">
+                                    The number or dependants is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="dependants" id="dependants"
+                           ng-model="vm.model.dependants" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.totalTuitionFeesInvalidError }">
+                    <label class="form-label-bold" for="totalTuitionFees">
+                        Total tuition fees for the first year
+                        <span class="form-hint">For example, 9000</span>
+                    </label>
+                    <span id="totalTuitionFees-error" class="error-message" ng-if="vm.totalTuitionFeesInvalidError">
+                                    The total tuition fees is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="totalTuitionFees" id="totalTuitionFees"
+                           ng-model="vm.model.totalTuitionFees" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.tuitionFeesAlreadyPaidInvalidError }">
+                    <label class="form-label-bold" for="tuitionFeesAlreadyPaid">
+                        Tuition fees already paid
+                        <span class="form-hint">For example, 3000</span>
+                    </label>
+                    <span id="tuitionFeesAlreadyPaid-error" class="error-message" ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
+                                    The tuition fees already paid is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="tuitionFeesAlreadyPaid" id="tuitionFeesAlreadyPaid"
+                           ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError }">
+                    <label class="form-label-bold" for="accommodationFeesAlreadyPaid">
+                        Accommodation fees already paid
+                        <span class="form-hint">For example, 500</span>
+                    </label>
+                    <span id="accommodationFeesAlreadyPaid-error" class="error-message" ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
+                                    The accommodation fees already paid is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="accommodationFeesAlreadyPaid" id="accommodationFeesAlreadyPaid"
+                           ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.accountNumberInvalidError }">
+                    <label class="form-label-bold" for="accountNumber">
+                        Account number
+                        <span class="form-hint">For example, 12345678</span>
+                    </label>
+                    <span id="accountNumber-error" class="error-message" ng-if="vm.accountNumber">
+                                    The account number is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="accountNumber" id="accountNumber"
+                           ng-model="vm.model.accountNumber" autocomplete="off">
+                </div>
+
+                <div class="form-group" ng-class="{error : vm.sortCodeInvalidError }">
+                    <label class="form-label-bold" for="sortCode">
+                        Sort code
+                        <span class="form-hint">For example, 01 02 03</span>
+                    </label>
+                    <span id="sortCode-error" class="error-message" ng-if="vm.sortCode">
+                                    The sort code is invalid</span>
+                    <input type="number" class="form-control form-control-1-8" name="sortCode" id="sortCode"
+                           ng-model="vm.model.sortCode" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <p><input type="submit" class="button continue-button" value="Check financial status"></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

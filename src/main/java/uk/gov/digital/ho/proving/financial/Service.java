@@ -22,11 +22,11 @@ public class Service {
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
 
     @RequestMapping(path = "greetings", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity greeting(@RequestParam(value = "nino", required = true) String nino) {
+    public ResponseEntity greeting(@RequestParam(value = "accountNumber", required = true) String accountNumber) {
 
-        LOGGER.debug("Greeting: nino - {}", nino);
+        LOGGER.debug("Greeting: accountNumber - {}", accountNumber);
 
-        return new ResponseEntity<>("{\"Hello\": \"" + nino + "\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"greeting\": \"Hello " + accountNumber + "\"}", HttpStatus.OK);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)

@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,9 +49,9 @@ public class ServiceIntegrationTest {
     @Test
     public void shouldSayHello() throws Exception {
         mockMvc
-            .perform(get("/financialstatus/v1/greetings?nino=AA123456A"))
+            .perform(get("/financialstatus/v1/greetings?accountNumber=12345678"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("Hello", is("AA123456A")));
+            .andExpect(jsonPath("greeting", is("Hello 12345678")));
     }
 
     @Test
@@ -61,6 +60,6 @@ public class ServiceIntegrationTest {
             .perform(get("/financialstatus/v1/greetings"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code", is("0008")))
-            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("nino"))));
+            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("accountNumber"))));
     }
 }

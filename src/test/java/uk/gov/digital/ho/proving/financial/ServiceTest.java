@@ -12,9 +12,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * @Author Home Office Digital
@@ -39,9 +37,9 @@ public class ServiceTest {
     @Test
     public void shouldSayHello() throws Exception {
         mockMvc
-            .perform(get("/financialstatus/v1/greetings?nino=AA123456A"))
+            .perform(get("/financialstatus/v1/greetings?accountNumber=12345678"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("Hello", is("AA123456A")));
+            .andExpect(jsonPath("greeting", is("Hello 12345678")));
     }
 
     @Test
@@ -50,6 +48,6 @@ public class ServiceTest {
             .perform(get("/financialstatus/v1/greetings"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code", is("0008")))
-            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("nino"))));
+            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("accountNumber"))));
     }
 }
