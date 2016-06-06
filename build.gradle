@@ -28,7 +28,7 @@ dependencies {
 }
 
 springboot{
-    port = 8000
+    port = 8001
 }
 
 // to do - consider making acceptanceTest config part of common-gradle plugin
