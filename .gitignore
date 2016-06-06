@@ -10,3 +10,6 @@ build
 runtime
 *.log
 *.iml
+bower_components
+node_modules
+**/webapp/*
