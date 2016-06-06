@@ -26,7 +26,6 @@ mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by 
 
 dependencies {
     compile libraries.logging
-    compile libraries.springboot
 
     testCompile libraries.cucumber
 }
