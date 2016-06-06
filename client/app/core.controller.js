@@ -25,7 +25,7 @@
             applicationRaisedDateDay: '',
             applicationRaisedDateMonth: '',
             applicationRaisedDateYear: '',
-            
+
             insideLondon:'',
             courseLength:'',
             dependants:'',
@@ -34,12 +34,12 @@
             accommodationFeesAlreadyPaid:'',
             accountNumber:'',
             sortCode:'',
-            
+
             greeting:''
         };
 
         vm.validateError = false;
-        
+
         vm.applicantDateOfBirthInvalidError = false;
         vm.applicantDateOfBirthMissingError = false;
         vm.applicationRaisedDateInvalidError = false;
@@ -52,7 +52,9 @@
         vm.tuitionFeesAlreadyPaidInvalidError = false;
         vm.accommodationFeesAlreadyPaidInvalidError = false;
         vm.accountNumberInvalidError = false;
+        vm.accountNumberMissingError = false;
         vm.sortCodeInvalidError = false;
+        vm.sortCodeMissingError = false;
 
         vm.serverError = '';
 
@@ -77,7 +79,7 @@
         vm.formatApplicantDateOfBirth = function() {
             return vm.formatDate(vm.getFullApplicantDateOfBirth());
         }
-        
+
         vm.formatApplicationRaisedDate = function() {
                   return vm.formatDate(vm.getFullApplicationRaisedDate());
         }
@@ -129,8 +131,10 @@
             vm.tuitionFeesAlreadyPaidInvalidError = false;
             vm.accommodationFeesAlreadyPaidInvalidError = false;
             vm.accountNumberInvalidError = false;
+            vm.accountNumberMissingError = false;
             vm.sortCodeInvalidError = false;
-            
+            vm.sortCodeMissingError = false;
+
             vm.serverError = '';
             vm.validateError = false;
         }
@@ -138,7 +142,7 @@
         function validateForm(){
             var validated = true;
             clearErrors();
-            
+
 
             if (vm.model.applicantDateOfBirthDay === null ||
                 vm.model.applicantDateOfBirthMonth === null ||
@@ -166,12 +170,12 @@
                 validated = false;
             }
 
-            if (vm.model.accountNumber === '') {
+            if (vm.model.accountNumber === '' || vm.model.accountNumber === null) {
                 vm.queryForm.accountNumber.$setValidity(false);
                 vm.accountNumberMissingError = true;
                 validated =  false;
             }
-            
+
             return validated;
         }
     }

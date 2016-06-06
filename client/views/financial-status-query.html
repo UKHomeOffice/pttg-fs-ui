@@ -58,8 +58,14 @@
                         <li ng-if="vm.accountNumberInvalidError">
                             <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is invalid</a></li>
 
+                        <li ng-if="vm.accountNumberMissingError">
+                            <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is missing</a></li>
+
                         <li ng-if="vm.sortCodeInvalidError">
                             <a href="" ng-click="vm.scrollTo('sortCode')">The sortCode is invalid</a></li>
+
+                        <li ng-if="vm.sortCodeMissingError">
+                            <a href="" ng-click="vm.scrollTo('sortCode')">The sortCode is missing</a></li>
 
                     </ul>
                 </div>
@@ -197,7 +203,7 @@
                            ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
                 </div>
 
-                <div class="form-group" ng-class="{error : vm.accountNumberInvalidError }">
+                <div class="form-group" ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
                     <label class="form-label-bold" for="accountNumber">
                         Account number
                         <span class="form-hint">For example, 12345678</span>
@@ -208,7 +214,7 @@
                            ng-model="vm.model.accountNumber" autocomplete="off">
                 </div>
 
-                <div class="form-group" ng-class="{error : vm.sortCodeInvalidError }">
+                <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
                     <label class="form-label-bold" for="sortCode">
                         Sort code
                         <span class="form-hint">For example, 01 02 03</span>
