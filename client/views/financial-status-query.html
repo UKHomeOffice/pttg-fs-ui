@@ -137,15 +137,19 @@
                 </div>
 
                 <div class="form-group" ng-class="{error : vm.insideLondonMissingError }">
-                    <label class="form-label-bold" for="insideLondon">
-                        Is the University inside London?
-                    </label>
-                    <span id="insideLondon-error" class="error-message" ng-if="vm.insideLondonMissingError">
-                                    Please specify whether or not the course is inside London</span>
-                    <input type="radio" class="form-control form-control-1-8" name="insideLondon" id="insideLondon" value="yes"
-                           ng-model="vm.model.insideLondon" autocomplete="off">Yes
-                    <input type="radio" class="form-control form-control-1-8" name="insideLondon" value="no"
-                           ng-model="vm.model.insideLondon" autocomplete="off">No
+                    <fieldset class="inline">
+                        <legend class="form-label-bold">Is the University inside London?</legend>
+                        <span id="insideLondon-error" class="error-message" ng-if="vm.insideLondonMissingError">
+                                        Please specify whether or not the course is inside London</span>
+                        <label class="block-label" for="insideLondon-1">
+                            <input type="radio" class="form-control form-control-1-8" name="insideLondon" id="insideLondon-1" value="yes"
+                                ng-model="vm.model.insideLondon" autocomplete="off">Yes
+                        </label>
+                        <label class="block-label" for="insideLondon-2">
+                            <input type="radio" class="form-control form-control-1-8" name="insideLondon" id="insideLondon-2" value="no"
+                                ng-model="vm.model.insideLondon" autocomplete="off">No
+                        </label>
+                    </fieldset>
                 </div>
 
                 <div class="form-group" ng-class="{error : vm.courseLengthInvalidError }">
