@@ -2,7 +2,10 @@ package uk.gov.digital.ho.proving.financial;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.actuate.metrics.CounterService;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -21,12 +24,16 @@ public class ServiceTest {
 
     private MockMvc mockMvc;
 
+    @Mock
+    private CounterService counterService;
+
     @Before
     public void setup() {
 
         MockitoAnnotations.initMocks(this);
 
         Service service = new Service();
+        ReflectionTestUtils.setField(service, "counterService", counterService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(service)
             .alwaysDo(print())
