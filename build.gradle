@@ -3,21 +3,24 @@ buildscript {
         mavenCentral()
         jcenter()
         maven { url "https://github.com/UKHomeOffice/pttg-gradle-repo/raw/master/releases" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
 
         classpath 'pttg-gradle-common:pttgCommonGradle:1.1.RELEASE'
         classpath 'pttg-gradle-common:pttgSpringBootGradle:1.0.RELEASE'
-        classpath 'pttg-gradle-common:pttgCommonUIGradle:1.0.RELEASE'
 
         classpath 'net.serenity-bdd:serenity-gradle-plugin:1.1.31'
+
+        classpath("com.moowork.gradle:gradle-node-plugin:0.12")
+        classpath("com.moowork.gradle:gradle-gulp-plugin:0.12")
     }
 }
 
 apply plugin: 'pttgCommonGradle'
-apply plugin: 'pttgCommonUIGradle'
 apply plugin: 'pttgSpringBootGradle'
 apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'com.moowork.gulp'
 
 group 'pttg-financial-status-service-ui'
 version '1.0-SNAPSHOT'
@@ -34,7 +37,12 @@ springboot{
     port = 8001
 }
 
-// to do - consider making acceptanceTest config part of common-gradle plugin
+jar.into('static') {
+    from('src/main/webapp')
+}
+
+build.dependsOn gulp_build
+
 test {
     exclude 'acceptance/**'
 }
