@@ -28,7 +28,6 @@
 
             insideLondon: '',
             courseLength: '',
-            dependants: '',
             totalTuitionFees: '',
             tuitionFeesAlreadyPaid: '',
             accommodationFeesAlreadyPaid: '',
@@ -47,7 +46,6 @@
 
         vm.insideLondonMissingError = false;
         vm.courseLengthInvalidError = false;
-        vm.dependantsInvalidError = false;
         vm.totalTuitionFeesInvalidError = false;
         vm.tuitionFeesAlreadyPaidInvalidError = false;
         vm.accommodationFeesAlreadyPaidInvalidError = false;
@@ -126,7 +124,6 @@
 
             vm.insideLondonMissingError = false;
             vm.courseLengthInvalidError = false;
-            vm.dependantsInvalidError = false;
             vm.totalTuitionFeesInvalidError = false;
             vm.tuitionFeesAlreadyPaidInvalidError = false;
             vm.accommodationFeesAlreadyPaidInvalidError = false;
