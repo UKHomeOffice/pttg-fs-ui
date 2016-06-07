@@ -23,18 +23,18 @@
 
                     <ul class="error-summary-list">
 
-                        <li ng-if="vm.applicantDateOfBirthMissingError">
-                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Applicant date of birth is
+                        <li ng-if="vm.applicantDateOfBirthDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDateDay')">Applicant date of birth is
                                 missing</a></li>
-                        <li ng-if="vm.applicantDateOfBirthInvalidError">
-                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Applicant date of birth is
+                        <li ng-if="vm.applicantDateOfBirthDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDateDay')">Applicant date of birth is
                                 invalid</a></li>
 
                         <li ng-if="vm.applicationRaisedDateMissingError">
-                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Application raised date is
+                            <a href="" ng-click="vm.scrollTo('applicationRaisedDateDay')">Application raised date is
                                 missing</a></li>
                         <li ng-if="vm.applicationRaisedDateInvalidError">
-                            <a href="" ng-click="vm.scrollTo('applicantDateOfBirthDay')">Application raised date is
+                            <a href="" ng-click="vm.scrollTo('applicationRaisedDateDay')">Application raised date is
                                 invalid</a></li>
 
                         <li ng-if="vm.insideLondonMissingError">
@@ -70,33 +70,33 @@
                     </ul>
                 </div>
 
-                <div class="form-group " id="applicant-date-of-birth"
-                     ng-class="{error : vm.applicantDateOfBirthMissingError || vm.applicantDateOfBirthInvalidError}">
+                <div class="form-group " id="applicant-date-of-birth-date"
+                     ng-class="{error : vm.applicantDateOfBirthDateMissingError || vm.applicantDateOfBirthDateInvalidError}">
 
                     <fieldset>
                         <legend class="form-label-bold">Applicant date of birth</legend>
                         <div class="form-date">
                             <p class="form-hint">For example, 31 3 1980</p>
-                                <span id="applicant-date-of-birth-error" class="error-message"
-                                      ng-if="vm.applicantDateOfBirthMissingError || vm.applicantDateOfBirthInvalidError">
+                                <span id="applicant-date-of-birth-date-error" class="error-message"
+                                      ng-if="vm.applicantDateOfBirthDateMissingError || vm.applicantDateOfBirthDateInvalidError">
                                     Please provide a valid applicant date of birth</span>
                             <div class="form-group form-group-day">
-                                <label for="applicantDateOfBirthDay">Day</label>
-                                <input class="form-control" name="applicantDateOfBirthDay" id="applicantDateOfBirthDay" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthDay" autocomplete="off">
+                                <label for="applicantDateOfBirthDateDay">Day</label>
+                                <input class="form-control" name="applicantDateOfBirthDateDay" id="applicantDateOfBirthDateDay" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthDateDay" autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-month">
-                                <label for="applicantDateOfBirthMonth">Month</label>
-                                <input class="form-control" name="applicantDateOfBirthMonth" id="applicantDateOfBirthMonth"
-                                       type="number" pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthMonth"
+                                <label for="applicantDateOfBirthDateMonth">Month</label>
+                                <input class="form-control" name="applicantDateOfBirthDateMonth" id="applicantDateOfBirthDateMonth"
+                                       type="number" pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthDateMonth"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-year">
-                                <label for="applicantDateOfBirthYear">Year</label>
-                                <input class="form-control" name="applicantDateOfBirthYear" id="applicantDateOfBirthYear" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthYear" autocomplete="off">
+                                <label for="applicantDateOfBirthDateYear">Year</label>
+                                <input class="form-control" name="applicantDateOfBirthDateYear" id="applicantDateOfBirthDateYear" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.applicantDateOfBirthDateYear" autocomplete="off">
                             </div>
                         </div>
 
@@ -139,7 +139,7 @@
                 <div class="form-group" ng-class="{error : vm.insideLondonMissingError }">
                     <fieldset class="inline">
                         <legend class="form-label-bold">Is the University inside London?</legend>
-                        <span id="insideLondon-error" class="error-message" ng-if="vm.insideLondonMissingError">
+                        <span id="inside-london-error" class="error-message" ng-if="vm.insideLondonMissingError">
                                         Please specify whether or not the course is inside London</span>
                         <label class="block-label" for="insideLondon-1">
                             <input type="radio" class="form-control form-control-1-8" name="insideLondon" id="insideLondon-1" value="yes"
@@ -157,7 +157,7 @@
                         Course length
                         <span class="form-hint">Enter the number of months</span>
                     </label>
-                    <span id="courseLength-error" class="error-message" ng-if="vm.courseLengthInvalidError">
+                    <span id="course-length-error" class="error-message" ng-if="vm.courseLengthInvalidError">
                                     The course length is invalid</span>
                     <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
                            ng-model="vm.model.courseLength" autocomplete="off">
@@ -179,7 +179,7 @@
                         Total tuition fees for the first year
                         <span class="form-hint">For example, 9000</span>
                     </label>
-                    <span id="totalTuitionFees-error" class="error-message" ng-if="vm.totalTuitionFeesInvalidError">
+                    <span id="total-tuition-fees-error" class="error-message" ng-if="vm.totalTuitionFeesInvalidError">
                                     The total tuition fees is invalid</span>
                     <input type="number" class="form-control form-control-1-8" name="totalTuitionFees" id="totalTuitionFees"
                            ng-model="vm.model.totalTuitionFees" autocomplete="off">
@@ -190,7 +190,7 @@
                         Tuition fees already paid
                         <span class="form-hint">For example, 3000</span>
                     </label>
-                    <span id="tuitionFeesAlreadyPaid-error" class="error-message" ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
+                    <span id="tuition-fees-already-paid-error" class="error-message" ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
                                     The tuition fees already paid is invalid</span>
                     <input type="number" class="form-control form-control-1-8" name="tuitionFeesAlreadyPaid" id="tuitionFeesAlreadyPaid"
                            ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
@@ -201,7 +201,7 @@
                         Accommodation fees already paid
                         <span class="form-hint">For example, 500</span>
                     </label>
-                    <span id="accommodationFeesAlreadyPaid-error" class="error-message" ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
+                    <span id="accommodation-fees-already-paid-error" class="error-message" ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
                                     The accommodation fees already paid is invalid</span>
                     <input type="number" class="form-control form-control-1-8" name="accommodationFeesAlreadyPaid" id="accommodationFeesAlreadyPaid"
                            ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
@@ -212,8 +212,8 @@
                         Account number
                         <span class="form-hint">For example, 12345678</span>
                     </label>
-                    <span id="accountNumber-error" class="error-message" ng-if="vm.accountNumber">
-                                    The account number is invalid</span>
+                    <span id="account-number-error" class="error-message" ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
+                                    Please provide a valid account number</span>
                     <input type="number" class="form-control form-control-1-8" name="accountNumber" id="accountNumber"
                            ng-model="vm.model.accountNumber" autocomplete="off">
                 </div>
