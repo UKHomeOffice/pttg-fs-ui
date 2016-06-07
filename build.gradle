@@ -14,6 +14,8 @@ buildscript {
 
         classpath("com.moowork.gradle:gradle-node-plugin:0.12")
         classpath("com.moowork.gradle:gradle-gulp-plugin:0.12")
+
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.16"
     }
 }
 
@@ -21,6 +23,7 @@ apply plugin: 'pttgCommonGradle'
 apply plugin: 'pttgSpringBootGradle'
 apply plugin: 'net.serenity-bdd.aggregator'
 apply plugin: 'com.moowork.gulp'
+apply plugin: 'com.gorylenko.gradle-git-properties'
 
 group 'pttg-financial-status-service-ui'
 version '1.0-SNAPSHOT'
@@ -29,6 +32,8 @@ mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by 
 
 dependencies {
     compile libraries.logging
+
+    compile libraries.springbootDev
 
     testCompile libraries.cucumber
 }
@@ -55,3 +60,14 @@ task acceptanceTest(type: Test) {
     outputs.upToDateWhen {false}
 }
 
+bootRun {
+    systemProperties = [
+        'endpoints.health.sensitive': false
+    ]
+}
+
+processResources {
+    filesMatching("**/application.properties") {
+        expand( project.properties )
+    }
+}
