@@ -19,18 +19,12 @@
         /* has it*/
 
         vm.model = {
-            applicantDateOfBirthDateDay: '',
-            applicantDateOfBirthDateMonth: '',
-            applicantDateOfBirthDateYear: '',
+
             applicationRaisedDateDay: '',
             applicationRaisedDateMonth: '',
             applicationRaisedDateYear: '',
 
-            insideLondon: '',
-            courseLength: '',
-            totalTuitionFees: '',
-            tuitionFeesAlreadyPaid: '',
-            accommodationFeesAlreadyPaid: '',
+            totalFundsRequired: '',
             accountNumber: '',
             sortCode: '',
 
@@ -39,18 +33,15 @@
 
         vm.validateError = false;
 
-        vm.applicantDateOfBirthDateInvalidError = false;
-        vm.applicantDateOfBirthDateMissingError = false;
         vm.applicationRaisedDateInvalidError = false;
         vm.applicationRaisedDateMissingError = false;
 
-        vm.insideLondonMissingError = false;
-        vm.courseLengthInvalidError = false;
-        vm.totalTuitionFeesInvalidError = false;
-        vm.tuitionFeesAlreadyPaidInvalidError = false;
-        vm.accommodationFeesAlreadyPaidInvalidError = false;
+        vm.totalFundsRequiredMissingError = false;
+        vm.totalFundsRequiredInvalidError = false;
+
         vm.accountNumberInvalidError = false;
         vm.accountNumberMissingError = false;
+
         vm.sortCodeInvalidError = false;
         vm.sortCodeMissingError = false;
 
@@ -60,23 +51,11 @@
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
         };
 
-        // to do - parameterise this with prefix
-        vm.getFullApplicantDateOfBirthDate = function () {
-            var month = vm.model.applicantDateOfBirthDateMonth > 9 ? vm.model.applicantDateOfBirthDateMonth : '0' + vm.model.applicantDateOfBirthDateMonth;
-            var day = vm.model.applicantDateOfBirthDateDay > 9 ? vm.model.applicantDateOfBirthDateDay : '0' + vm.model.applicantDateOfBirthDateDay
-            return vm.model.applicantDateOfBirthDateYear + '-' + month + '-' + day;
-            return vm.model.applicantDateOfBirthDateYear + '-' + vm.model.applicantDateOfBirthDateMonth + '-' + vm.model.applicantDateOfBirthDateDay;
-        };
-
         vm.getFullApplicationRaisedDate = function () {
             var month = vm.model.applicationRaisedDateMonth > 9 ? vm.model.applicationRaisedDateMonth : '0' + vm.model.applicationRaisedDateMonth;
             var day = vm.model.applicationRaisedDateDay > 9 ? vm.model.applicationRaisedDateDay : '0' + vm.model.applicationRaisedDateDay
             return vm.model.applicationRaisedDateYear + '-' + month + '-' + day;
         };
-
-        vm.formatApplicantDateOfBirthDate = function () {
-            return vm.formatDate(vm.getFullApplicantDateOfBirthDate());
-        }
 
         vm.formatApplicationRaisedDate = function () {
             return vm.formatDate(vm.getFullApplicationRaisedDate());
@@ -117,18 +96,15 @@
         };
 
         function clearErrors() {
-            vm.applicantDateOfBirthDateInvalidError = false;
-            vm.applicantDateOfBirthDateMissingError = false;
             vm.applicationRaisedDateInvalidError = false;
             vm.applicationRaisedDateMissingError = false;
 
-            vm.insideLondonMissingError = false;
-            vm.courseLengthInvalidError = false;
-            vm.totalTuitionFeesInvalidError = false;
-            vm.tuitionFeesAlreadyPaidInvalidError = false;
-            vm.accommodationFeesAlreadyPaidInvalidError = false;
+            vm.totalFundsRequiredInvalidError = false;
+            vm.totalFundsRequiredMissingError = false;
+
             vm.accountNumberInvalidError = false;
             vm.accountNumberMissingError = false;
+
             vm.sortCodeInvalidError = false;
             vm.sortCodeMissingError = false;
 
@@ -139,23 +115,7 @@
         function validateForm() {
             var validated = true;
             clearErrors();
-
-
-            if (vm.model.applicantDateOfBirthDateDay === null ||
-                vm.model.applicantDateOfBirthDateMonth === null ||
-                vm.model.applicantDateOfBirthDateYear === null) {
-                vm.queryForm.applicantDateOfBirthDateDay.$setValidity(false);
-                vm.queryForm.applicantDateOfBirthDateMonth.$setValidity(false);
-                vm.queryForm.applicantDateOfBirthDateYear.$setValidity(false);
-                vm.applicantDateOfBirthDateMissingError = true;
-                validated = false;
-            } else if (!moment(vm.getFullApplicantDateOfBirthDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
-                vm.applicantDateOfBirthDateInvalidError = true;
-                validated = false;
-            } else if (moment(vm.getFullApplicantDateOfBirthDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
-                vm.applicantDateOfBirthDateInvalidError = true;
-                validated = false;
-            }
+            
 
             if (vm.model.applicationRaisedDateDay === null ||
                 vm.model.applicationRaisedDateMonth === null ||

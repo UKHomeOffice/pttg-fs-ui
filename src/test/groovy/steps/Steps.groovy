@@ -23,6 +23,12 @@ class Steps {
 
     private int delay = 500
 
+    def sortCodeParts = ["First", "Second", "Third"]
+    def sortCodeDelimiter = "-"
+
+    def dateParts = ["Day", "Month", "Year"]
+    def dateDelimiter = "/"
+
     def String toCamelCase(String s) {
         String allUpper = StringUtils.remove(WordUtils.capitalizeFully(s), " ")
         String camelCase = allUpper[0].toLowerCase() + allUpper.substring(1)
@@ -42,37 +48,34 @@ class Steps {
         }
     }
 
-    @Given("^a student with\$")
-    public void a_student_with(DataTable arg1) throws Throwable {
+    private void fillOrClearBySplitting(String key, String input, List<String> partNames, String delimiter) {
 
-        println "Setting up student"
+        if (input != null && input.length() != 0) {
+            fillPartsBySplitting(key, input, delimiter, partNames)
+
+        } else {
+            clearParts(key, partNames)
+        }
     }
 
-    @Given("^a course with\$")
-    public void a_course_with(DataTable arg1) throws Throwable {
+    private void fillPartsBySplitting(String key, String value, String delimiter, List<String> partNames) {
 
-        println "Setting up course"
+        String[] parts = value.split(delimiter)
+
+        parts.eachWithIndex { part, index ->
+            sendKeys(driver.findElement(By.id(key + partNames[index])), part)
+        }
     }
 
-    @When("^the financial status check is performed\$")
-    public void the_financial_status_check_is_performed() throws Throwable {
-
-        driver.get("http://localhost:8000");
-
-        println "Doing it"
-    }
-
-    @Then("^The service provides the following result\$")
-    public void the_service_provides_the_following_result(DataTable arg1) throws Throwable {
-
-        println "Confirming it"
+    private void clearParts(String key, List<String> partNames) {
+        partNames.each { part ->
+            driver.findElement(By.id(key + part)).clear()
+        }
     }
 
     @Given("^using the financial status service ui\$")
     public void using_the_financial_status_service_ui() throws Throwable {
-
         driver.get("http://localhost:8001");
-
     }
 
     @When("^the financial status check is performed with\$")
@@ -80,31 +83,18 @@ class Steps {
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
-        println driver.currentUrl
-
-        List<String, String> entriesList = arg1.asList(String.class)
-
         entries.each { k, v ->
             String key = toCamelCase(k)
 
             if (key.endsWith("Date")) {
-                if (v != null && v.length() != 0) {
+                fillOrClearBySplitting(key, v, dateParts, dateDelimiter)
 
-                    String day = v.substring(0, v.indexOf("/"))
-                    String month = v.substring(v.indexOf("/") + 1, v.lastIndexOf("/"))
-                    String year = v.substring(v.lastIndexOf("/") + 1)
+            } else if (key.equals("sortCode")) {
+                fillOrClearBySplitting(key, v, sortCodeParts, sortCodeDelimiter)
 
-                    sendKeys(driver.findElement(By.id(key + "Day")), day)
-                    sendKeys(driver.findElement(By.id(key + "Month")), month)
-                    sendKeys(driver.findElement(By.id(key + "Year")), year)
-
-                } else {
-                    driver.findElement(By.id(key + "Day")).clear()
-                    driver.findElement(By.id(key + "Month")).clear()
-                    driver.findElement(By.id(key + "Year")).clear()
-                }
             } else {
                 sendKeys(driver.findElement(By.id(key)), v)
+
             }
         }
 
@@ -118,7 +108,6 @@ class Steps {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
         assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
-
     }
 
 

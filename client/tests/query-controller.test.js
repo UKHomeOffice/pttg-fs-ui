@@ -38,19 +38,6 @@ describe('coreController', function(){
         expect(coreController).toBeDefined();
     });
 
-    it('is expected to get the applicant date of birth in ISO format', function(){
-        coreController.model.applicantDateOfBirthDateDay='1';
-        coreController.model.applicantDateOfBirthDateMonth='2';
-        coreController.model.applicantDateOfBirthDateYear='2015';
-        expect(coreController.getFullApplicantDateOfBirthDate()).toEqual('2015-02-01')
-    });
-
-    it('is expected to format the applicant date of birth to DD/MM/YYYY', function(){
-        coreController.model.applicantDateOfBirthDateDay='1';
-        coreController.model.applicantDateOfBirthDateMonth='2';
-        coreController.model.applicantDateOfBirthDateYear='2015';
-        expect(coreController.formatApplicantDateOfBirthDate()).toEqual('01/02/2015')
-    });
 
     it('is expected to get the application raised date in ISO format', function(){
         coreController.model.applicationRaisedDateDay='1';
@@ -69,9 +56,6 @@ describe('coreController', function(){
     it('is expected the form submits the correct data to the service', function() {
         spyOnSuccessful();
 
-        coreController.model.applicantDateOfBirthDateDay='1';
-        coreController.model.applicantDateOfBirthDateMonth='2';
-        coreController.model.applicantDateOfBirthDateYear='2015';
         coreController.model.applicationRaisedDateDay='1';
         coreController.model.applicationRaisedDateMonth='2';
         coreController.model.applicationRaisedDateYear='2015';
@@ -84,15 +68,26 @@ describe('coreController', function(){
     });
 
 
-   it('does not call service on validation failure - invalid applicant date of birth', function(){
+   it('does not call service on validation failure - invalid application date', function(){
         spyOnSuccessful();
 
-        coreController.model.applicantDateOfBirthDateDay='1';
-        coreController.model.applicantDateOfBirthDateMonth='2000';
-        coreController.model.applicantDateOfBirthDateYear='2015';
-        coreController.model.applicationRaisedDateDay='1';
+        coreController.model.applicationRaisedDateDay='99';
         coreController.model.applicationRaisedDateMonth='2';
         coreController.model.applicationRaisedDateYear='2015';
+        coreController.model.accountNumber='12345678';
+
+        coreController.submit()
+
+        expect(coreController.validateError).toBeTruthy();
+        expect(restService.checkFinancialStatus.calls.count()).toBe(0);
+    });
+
+    it('does not call service on validation failure - future application date', function(){
+        spyOnSuccessful();
+
+        coreController.model.applicationRaisedDateDay='1';
+        coreController.model.applicationRaisedDateMonth='2';
+        coreController.model.applicationRaisedDateYear='2999';
         coreController.model.accountNumber='12345678';
 
         coreController.submit()
@@ -105,9 +100,6 @@ describe('coreController', function(){
        spyOnSuccessful();
        response = {greeting : "Hello 12345678"};
 
-        coreController.model.applicantDateOfBirthDateDay='1';
-        coreController.model.applicantDateOfBirthDateMonth='2';
-        coreController.model.applicantDateOfBirthDateYear='2015';
         coreController.model.applicationRaisedDateDay='1';
         coreController.model.applicationRaisedDateMonth='2';
         coreController.model.applicationRaisedDateYear='2015';
