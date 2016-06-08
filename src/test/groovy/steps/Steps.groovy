@@ -73,8 +73,8 @@ class Steps {
         }
     }
 
-    @Given("^using the financial status service ui\$")
-    public void using_the_financial_status_service_ui() throws Throwable {
+    @Given("^(?:caseworker|user) is using the financial status service ui\$")
+    public void user_is_using_the_financial_status_service_ui() throws Throwable {
         driver.get("http://localhost:8001");
     }
 

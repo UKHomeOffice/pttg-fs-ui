@@ -23,8 +23,7 @@
                         There's some missing information
                     </h1>
 
-                    <p>Make sure all the fields have been completed including the National Insurance Number and the
-                        maintenance period end date.</p>
+                    <p>Make sure that all the fields have been completed</p>
 
                     <ul class="error-summary-list">
 
@@ -104,10 +103,10 @@
                         <span
                             class="form-hint">For example, 10000</span>
                     </label>
-                    <span id="totalFundsRequired-error" class="error-message"
+                    <span id="total-funds-required-error" class="error-message"
                           ng-if="vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError">
                                     Please provide a valid total funds required</span>
-                    £<input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4"
+                    £<input type="number" pattern="[0-9]*" class="form-control form-control-1-4"
                            name="totalFundsRequired"
                            id="totalFundsRequired"
                            ng-model="vm.model.totalFundsRequired" autocomplete="off">

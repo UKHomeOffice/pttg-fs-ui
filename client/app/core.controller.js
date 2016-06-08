@@ -141,16 +141,10 @@
                 validated = false;
             }
 
-            if (vm.model.accountNumber === '' || vm.model.accountNumber === null) {
-                vm.queryForm.accountNumber.$setValidity(false);
-                vm.accountNumberMissingError = true;
+            if (vm.model.totalFundsRequired === '' || vm.model.totalFundsRequired === null) {
+                vm.queryForm.totalFundsRequired.$setValidity(false);
+                vm.totalFundsRequiredMissingError = true;
                 validated = false;
-            } else {
-                if (!ACCOUNT_NUMBER_REGEX.test(vm.model.accountNumber)) {
-                    vm.accountNumberInvalidError = true;
-                    vm.queryForm.accountNumber.$setValidity(false);
-                    validated = false;
-                }
             }
 
             if (vm.model.sortCodeFirst === null ||
@@ -164,6 +158,18 @@
             } else {
                 if (!BARCLAYS_SORT_CODE_REGEX.test(vm.getFullSortCode())) {
                     vm.sortCodeInvalidError = true;
+                    validated = false;
+                }
+            }
+
+            if (vm.model.accountNumber === '' || vm.model.accountNumber === null) {
+                vm.queryForm.accountNumber.$setValidity(false);
+                vm.accountNumberMissingError = true;
+                validated = false;
+            } else {
+                if (!ACCOUNT_NUMBER_REGEX.test(vm.model.accountNumber)) {
+                    vm.accountNumberInvalidError = true;
+                    vm.queryForm.accountNumber.$setValidity(false);
                     validated = false;
                 }
             }

@@ -107,9 +107,9 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
 
-############### Maintenance Period End date is mandatory and must be a valid date not in the future ###############
+############### Maintenance period end date is mandatory and must be a valid date not in the future ###############
 
-    Scenario: User does not enter an Maintenance Period End date
+    Scenario: User does not enter a maintenance period end date
         Given using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date |          |
@@ -120,7 +120,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
 
-    Scenario: User enters an invalid Maintenance Period End date
+    Scenario: User enters an invalid maintenance period end date
         Given using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 50/01/1980 |
@@ -131,8 +131,8 @@ Feature: Show clear error details when inputs are invalid
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
 
-    Scenario: User enters a future Maintenance Period End date
-        Given using the financial status service ui
+    Scenario: User enters a future maintenance period end date
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/9999 |
             | Total funds required        | 1          |
@@ -141,3 +141,17 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
+
+
+############### Total funds required is mandatory ###############
+
+    Scenario: User does not enter total funds required
+        Given caseworker is using the financial status service ui
+        When the financial status check is performed with
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        |            |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
+        Then the service displays the following message
+            | Error Message | Please provide a valid total funds required |
+            | Error Field   | total-funds-required-error                  |
