@@ -14,7 +14,9 @@
         var DATE_DISPLAY_FORMAT = 'DD/MM/YYYY';
         var DATE_VALIDATE_FORMAT = 'YYYY-M-D';
 
-        var ACCOUNTNUMBER_REGEX = /^[0-9]{8}$/;
+        var ACCOUNT_NUMBER_REGEX = /^(?!0{8})[0-9]{8}$/;
+        var SORT_CODE_REGEX = /^(?!00-00-00)(?:\d{2}-){2}\d{2}$/;
+        var BARCLAYS_SORT_CODE_REGEX = /^(?!00-00-00)(?:13|14|2[0-9])(?:-\d{2}){2}$/;
 
         /* has it*/
 
@@ -26,7 +28,9 @@
 
             totalFundsRequired: '',
             accountNumber: '',
-            sortCode: '',
+            sortCodeFirst: '',
+            sortCodeSecond: '',
+            sortCodeThird: '',
 
             greeting: ''
         };
@@ -63,6 +67,10 @@
 
         vm.formatDate = function (dateToFormat) {
             return moment(dateToFormat, DATE_VALIDATE_FORMAT, true).format("DD/MM/YYYY");
+        }
+
+        vm.getFullSortCode = function () {
+            return vm.model.sortCodeFirst + '-' + vm.model.sortCodeSecond + '-' + vm.model.sortCodeThird;
         }
 
         vm.scrollTo = function (anchor) {
@@ -115,7 +123,7 @@
         function validateForm() {
             var validated = true;
             clearErrors();
-            
+
 
             if (vm.model.applicationRaisedDateDay === null ||
                 vm.model.applicationRaisedDateMonth === null ||
@@ -138,9 +146,24 @@
                 vm.accountNumberMissingError = true;
                 validated = false;
             } else {
-                if (!ACCOUNTNUMBER_REGEX.test(vm.model.accountNumber)) {
+                if (!ACCOUNT_NUMBER_REGEX.test(vm.model.accountNumber)) {
                     vm.accountNumberInvalidError = true;
                     vm.queryForm.accountNumber.$setValidity(false);
+                    validated = false;
+                }
+            }
+
+            if (vm.model.sortCodeFirst === null ||
+                vm.model.sortCodeSecond === null ||
+                vm.model.sortCodeThird === null) {
+                vm.queryForm.sortCodeFirst.$setValidity(false);
+                vm.queryForm.sortCodeSecond.$setValidity(false);
+                vm.queryForm.sortCodeThird.$setValidity(false);
+                vm.sortCodeMissingError = true;
+                validated = false;
+            } else {
+                if (!BARCLAYS_SORT_CODE_REGEX.test(vm.getFullSortCode())) {
+                    vm.sortCodeInvalidError = true;
                     validated = false;
                 }
             }

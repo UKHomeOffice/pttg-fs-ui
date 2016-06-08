@@ -47,10 +47,10 @@
                             <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is missing</a></li>
 
                         <li ng-if="vm.sortCodeInvalidError">
-                            <a href="" ng-click="vm.scrollTo('sortCode')">The sortCode is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sortCode is invalid</a></li>
 
                         <li ng-if="vm.sortCodeMissingError">
-                            <a href="" ng-click="vm.scrollTo('sortCode')">The sortCode is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sortCode is missing</a></li>
 
                     </ul>
                 </div>
@@ -97,12 +97,14 @@
                      ng-class="{error : vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError}">
                     <label class="form-label-bold" for="totalFundsRequired">
                         Enter total funds required
-                        <span class="form-hint">This is calculated from the total fees minus what has already been paid.</span>
+                        <span
+                            class="form-hint">This is calculated from the total fees minus what has already been paid.</span>
                     </label>
                     <span id="totalFundsRequired-error" class="error-message"
                           ng-if="vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError">
                                     Please provide a valid total funds required</span>
-                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4" name="totalFundsRequired"
+                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4"
+                           name="totalFundsRequired"
                            id="totalFundsRequired"
                            ng-model="vm.model.totalFundsRequired" autocomplete="off">
                 </div>
@@ -126,25 +128,26 @@
                         <legend class="form-label-bold">Sort code</legend>
                         <div class="form-date">
                             <p class="form-hint">For example, 01 02 03</p>
-                            <span id="sort-code-error" class="error-message" ng-if="vm.sortCode">
-                                    The sort code is invalid</span>
+                            <span id="sort-code-error" class="error-message"
+                                  ng-if="vm.sortCodeInvalidError || vm.sortCodeMissingError">
+                                    Please provide a valid sort code</span>
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeFirst"
-                                       id="sortCodeFirst" type="number"
+                                       id="sortCodeFirst" type="tel"
                                        pattern="[0-9]{2}" ng-model="vm.model.sortCodeFirst"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeSecond"
-                                       id="sortCodeSecond"
-                                       type="number" pattern="[0-9]{2}" ng-model="vm.model.sortCodeSecond"
+                                       id="sortCodeSecond" type="tel"
+                                       pattern="[0-9]{2}" ng-model="vm.model.sortCodeSecond"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeThird"
-                                       id="sortCodeThird" type="number"
+                                       id="sortCodeThird" type="tel"
                                        pattern="[0-9]{2}" ng-model="vm.model.sortCodeThird"
                                        autocomplete="off">
                             </div>
