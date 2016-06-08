@@ -9,7 +9,7 @@ Feature: Show clear error details when inputs are invalid
 #    Sort codes cannot be all 0
 
     Scenario: User enters an invalid sort code - missing digits
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -20,7 +20,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | sort-code-error                  |
 
     Scenario: User enters an invalid sort code - all 0
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -35,7 +35,7 @@ Feature: Show clear error details when inputs are invalid
 #    Barclays sort codes have a first pair of 13, 14, or in the range 20-29
 
     Scenario: User enters a sort code outside the barclays range
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -52,7 +52,7 @@ Feature: Show clear error details when inputs are invalid
 #    Account numbers can't be all 0
 
     Scenario: User does not enter a bank account number
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -63,7 +63,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
     Scenario: User enters an invalid bank account number - too short
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -74,7 +74,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
     Scenario: User enters an invalid bank account number - too long
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -85,7 +85,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
     Scenario: User enters an invalid bank account number - all zeroes
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -96,7 +96,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
     Scenario: User enters an invalid bank account number - not digits
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
@@ -110,7 +110,7 @@ Feature: Show clear error details when inputs are invalid
 ############### Maintenance period end date is mandatory and must be a valid date not in the future ###############
 
     Scenario: User does not enter a maintenance period end date
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date |          |
             | Total funds required        | 1        |
@@ -121,7 +121,7 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | maintenance-period-end-date-error                  |
 
     Scenario: User enters an invalid maintenance period end date
-        Given using the financial status service ui
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 50/01/1980 |
             | Total funds required        | 1          |
