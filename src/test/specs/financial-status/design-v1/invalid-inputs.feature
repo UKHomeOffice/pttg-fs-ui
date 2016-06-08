@@ -11,10 +11,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid sort code - missing digits
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 12345678   |
-            | Sort Code               | 20-2-03    |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-2-03    |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -22,10 +22,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid sort code - all 0
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 12345678   |
-            | Sort Code               | 00-00-00   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 00-00-00   |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -37,10 +37,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters a sort code outside the barclays range
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 12345678   |
-            | Sort Code               | 19-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 19-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -54,10 +54,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User does not enter a bank account number
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          |            |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              |            |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -65,10 +65,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid bank account number - too short
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 1234       |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 1234       |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -76,10 +76,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid bank account number - too long
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 123456789  |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 123456789  |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -87,10 +87,10 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid bank account number - all zeroes
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 00000000   |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 00000000   |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -98,46 +98,46 @@ Feature: Show clear error details when inputs are invalid
     Scenario: User enters an invalid bank account number - not digits
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 1234567A   |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 1234567A   |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
 
 
-############### Application raised date is mandatory and must be a valid date not in the future ###############
+############### Maintenance Period End date is mandatory and must be a valid date not in the future ###############
 
-    Scenario: User does not enter an application raised date
+    Scenario: User does not enter an Maintenance Period End date
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date |          |
-            | Total funds required    | 1        |
-            | Account Number          | 12345678 |
-            | Sort Code               | 20-02-03 |
+            | Maintenance Period End Date |          |
+            | Total funds required        | 1        |
+            | Account Number              | 12345678 |
+            | Sort Code                   | 20-02-03 |
         Then the service displays the following message
-            | Error Message | Please provide a valid application raised date |
-            | Error Field   | application-raised-date-error                  |
+            | Error Message | Please provide a valid maintenance period end date |
+            | Error Field   | maintenance-period-end-date-error                  |
 
-    Scenario: User enters an invalid application raised date
+    Scenario: User enters an invalid Maintenance Period End date
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 50/01/1980 |
-            | Total funds required    | 1          |
-            | Account Number          | 12345678   |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 50/01/1980 |
+            | Total funds required        | 1          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
-            | Error Message | Please provide a valid application raised date |
-            | Error Field   | application-raised-date-error                  |
+            | Error Message | Please provide a valid maintenance period end date |
+            | Error Field   | maintenance-period-end-date-error                  |
 
-    Scenario: User enters a future application raised date
+    Scenario: User enters a future Maintenance Period End date
         Given using the financial status service ui
         When the financial status check is performed with
-            | Application Raised Date | 01/01/9999 |
-            | Total funds required    | 1          |
-            | Account Number          | 12345678   |
-            | Sort Code               | 20-02-03   |
+            | Maintenance Period End Date | 01/01/9999 |
+            | Total funds required        | 1          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
         Then the service displays the following message
-            | Error Message | Please provide a valid application raised date |
-            | Error Field   | application-raised-date-error                  |
+            | Error Message | Please provide a valid maintenance period end date |
+            | Error Field   | maintenance-period-end-date-error                  |

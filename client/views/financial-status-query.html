@@ -1,12 +1,16 @@
 <div class="column-full-width">
     <div id="page1" data-bind="visible: currentPage() === 1">
-        <h1 class="heading-xlarge" id="pageSubTitle"><span class="heading-secondary">Tier 4</span>Financial
+        <h1 class="heading-xlarge" id="pageSubTitle"><span class="heading-secondary">Tier 4 (General) student</span>Financial
             status check</h1>
         <div class="text">
             <p class="lede" id="pageSubText">
-                You can use this tool to check whether a Tier 4 Student applicant meets the financial status
+                You can use this tool to check whether a Tier 4 (General) Student applicant meets the financial status
                 requirements.
             </p>
+        </div>
+
+        <div class="panel panel-border-wide">
+            <p>This tool can currently be used with Barclays personal current accounts in the applicants own name.</p>
         </div>
 
         <div class="form-group">
@@ -20,16 +24,16 @@
                     </h1>
 
                     <p>Make sure all the fields have been completed including the National Insurance Number and the
-                        application raised date.</p>
+                        maintenance period end date.</p>
 
                     <ul class="error-summary-list">
 
-                        <li ng-if="vm.applicationRaisedDateMissingError">
-                            <a href="" ng-click="vm.scrollTo('applicationRaisedDateDay')">The application raised date is
+                        <li ng-if="vm.maintenancePeriodEndDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('maintenancePeriodEndDateDay')">The maintenance period end date is
                                 missing</a></li>
 
-                        <li ng-if="vm.applicationRaisedDateInvalidError">
-                            <a href="" ng-click="vm.scrollTo('applicationRaisedDateDay')">The application raised date is
+                        <li ng-if="vm.maintenancePeriodEndDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('maintenancePeriodEndDateDay')">The maintenance period end date is
                                 invalid</a></li>
 
                         <li ng-if="vm.totalFundsRequiredInvalidError">
@@ -47,45 +51,45 @@
                             <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is missing</a></li>
 
                         <li ng-if="vm.sortCodeInvalidError">
-                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sortCode is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sort code is invalid</a></li>
 
                         <li ng-if="vm.sortCodeMissingError">
-                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sortCode is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sort code is missing</a></li>
 
                     </ul>
                 </div>
 
 
-                <div class="form-group " id="application-raised-date"
-                     ng-class="{error : vm.applicationRaisedDateMissingError || vm.applicationRaisedDateInvalidError}">
+                <div class="form-group " id="maintenance-period-end-date"
+                     ng-class="{error : vm.maintenancePeriodEndDateMissingError || vm.maintenancePeriodEndDateInvalidError}">
 
                     <fieldset>
-                        <legend class="form-label-bold">When was the application raised?</legend>
+                        <legend class="form-label-bold">Maintenance period end date</legend>
                         <div class="form-date">
-                            <p class="form-hint">For example, 31 3 2016</p>
-                                <span id="application-raised-date-error" class="error-message"
-                                      ng-if="vm.applicationRaisedDateMissingError || vm.applicationRaisedDateInvalidError">
-                                    Please provide a valid application raised date</span>
+                            <p class="form-hint">This tool will check bank statments 28 days prior to this date</p>
+                                <span id="maintenance-period-end-date-error" class="error-message"
+                                      ng-if="vm.maintenancePeriodEndDateMissingError || vm.maintenancePeriodEndDateInvalidError">
+                                    Please provide a valid maintenance period end date</span>
                             <div class="form-group form-group-day">
-                                <label for="applicationRaisedDateDay">Day</label>
-                                <input class="form-control" name="applicationRaisedDateDay"
-                                       id="applicationRaisedDateDay" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateDay" autocomplete="off">
+                                <label for="maintenancePeriodEndDateDay">Day</label>
+                                <input class="form-control" name="maintenancePeriodEndDateDay"
+                                       id="maintenancePeriodEndDateDay" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateDay" autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-month">
-                                <label for="applicationRaisedDateMonth">Month</label>
-                                <input class="form-control" name="applicationRaisedDateMonth"
-                                       id="applicationRaisedDateMonth"
-                                       type="number" pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateMonth"
+                                <label for="maintenancePeriodEndDateMonth">Month</label>
+                                <input class="form-control" name="maintenancePeriodEndDateMonth"
+                                       id="maintenancePeriodEndDateMonth"
+                                       type="number" pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateMonth"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-year">
-                                <label for="applicationRaisedDateYear">Year</label>
-                                <input class="form-control" name="applicationRaisedDateYear"
-                                       id="applicationRaisedDateYear" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.applicationRaisedDateYear"
+                                <label for="maintenancePeriodEndDateYear">Year</label>
+                                <input class="form-control" name="maintenancePeriodEndDateYear"
+                                       id="maintenancePeriodEndDateYear" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateYear"
                                        autocomplete="off">
                             </div>
                         </div>
@@ -96,38 +100,24 @@
                 <div class="form-group"
                      ng-class="{error : vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError}">
                     <label class="form-label-bold" for="totalFundsRequired">
-                        Enter total funds required
+                        Total funds required
                         <span
-                            class="form-hint">This is calculated from the total fees minus what has already been paid.</span>
+                            class="form-hint">For example, 10000</span>
                     </label>
                     <span id="totalFundsRequired-error" class="error-message"
                           ng-if="vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError">
                                     Please provide a valid total funds required</span>
-                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4"
+                    £<input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4"
                            name="totalFundsRequired"
                            id="totalFundsRequired"
                            ng-model="vm.model.totalFundsRequired" autocomplete="off">
-                </div>
-
-                <div class="form-group"
-                     ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
-                    <label class="form-label-bold" for="accountNumber">
-                        Account number
-                        <span class="form-hint">For example, 12345678</span>
-                    </label>
-                    <span id="account-number-error" class="error-message"
-                          ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
-                                    Please provide a valid account number</span>
-                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4" name="accountNumber"
-                           id="accountNumber"
-                           ng-model="vm.model.accountNumber" autocomplete="off">
                 </div>
 
                 <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
                     <fieldset>
                         <legend class="form-label-bold">Sort code</legend>
                         <div class="form-date">
-                            <p class="form-hint">For example, 01 02 03</p>
+                            <p class="form-hint">For example, 12 34 56</p>
                             <span id="sort-code-error" class="error-message"
                                   ng-if="vm.sortCodeInvalidError || vm.sortCodeMissingError">
                                     Please provide a valid sort code</span>
@@ -154,6 +144,20 @@
                         </div>
 
                     </fieldset>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
+                    <label class="form-label-bold" for="accountNumber">
+                        Account number
+                        <span class="form-hint">For example, 12345678</span>
+                    </label>
+                    <span id="account-number-error" class="error-message"
+                          ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
+                                    Please provide a valid account number</span>
+                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4" name="accountNumber"
+                           id="accountNumber"
+                           ng-model="vm.model.accountNumber" autocomplete="off">
                 </div>
 
                 <div class="form-group">

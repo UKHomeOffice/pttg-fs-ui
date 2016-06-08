@@ -39,27 +39,30 @@ describe('coreController', function(){
     });
 
 
-    it('is expected to get the application raised date in ISO format', function(){
-        coreController.model.applicationRaisedDateDay='1';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2015';
-        expect(coreController.getFullApplicationRaisedDate()).toEqual('2015-02-01')
+    it('is expected to get the maintenance period end date in ISO format', function(){
+        coreController.model.maintenancePeriodEndDateDay='1';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2015';
+        expect(coreController.getFullMaintenancePeriodEndDate()).toEqual('2015-02-01')
     });
 
-    it('is expected to format the application raised date to DD/MM/YYYY', function(){
-        coreController.model.applicationRaisedDateDay='1';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2015';
-        expect(coreController.formatApplicationRaisedDate()).toEqual('01/02/2015')
+    it('is expected to format the maintenance period end date to DD/MM/YYYY', function(){
+        coreController.model.maintenancePeriodEndDateDay='1';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2015';
+        expect(coreController.formatMaintenancePeriodEndDate()).toEqual('01/02/2015')
     });
 
     it('is expected the form submits the correct data to the service', function() {
         spyOnSuccessful();
 
-        coreController.model.applicationRaisedDateDay='1';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2015';
+        coreController.model.maintenancePeriodEndDateDay='1';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2015';
         coreController.model.accountNumber='12345678';
+        coreController.model.sortCodeFirst='20';
+        coreController.model.sortCodeSecond='02';
+        coreController.model.sortCodeThird='03';
 
         coreController.submit()
 
@@ -71,10 +74,13 @@ describe('coreController', function(){
    it('does not call service on validation failure - invalid application date', function(){
         spyOnSuccessful();
 
-        coreController.model.applicationRaisedDateDay='99';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2015';
+        coreController.model.maintenancePeriodEndDateDay='99';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2015';
         coreController.model.accountNumber='12345678';
+       coreController.model.sortCodeFirst='20';
+       coreController.model.sortCodeSecond='02';
+       coreController.model.sortCodeThird='03';
 
         coreController.submit()
 
@@ -85,10 +91,13 @@ describe('coreController', function(){
     it('does not call service on validation failure - future application date', function(){
         spyOnSuccessful();
 
-        coreController.model.applicationRaisedDateDay='1';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2999';
+        coreController.model.maintenancePeriodEndDateDay='1';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2999';
         coreController.model.accountNumber='12345678';
+        coreController.model.sortCodeFirst='20';
+        coreController.model.sortCodeSecond='02';
+        coreController.model.sortCodeThird='03';
 
         coreController.submit()
 
@@ -100,10 +109,13 @@ describe('coreController', function(){
        spyOnSuccessful();
        response = {greeting : "Hello 12345678"};
 
-        coreController.model.applicationRaisedDateDay='1';
-        coreController.model.applicationRaisedDateMonth='2';
-        coreController.model.applicationRaisedDateYear='2015';
+        coreController.model.maintenancePeriodEndDateDay='1';
+        coreController.model.maintenancePeriodEndDateMonth='2';
+        coreController.model.maintenancePeriodEndDateYear='2015';
         coreController.model.accountNumber='12345678';
+        coreController.model.sortCodeFirst='20';
+        coreController.model.sortCodeSecond='02';
+        coreController.model.sortCodeThird='03';
 
        coreController.submit()
        scope.$digest()

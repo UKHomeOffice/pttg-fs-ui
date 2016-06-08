@@ -22,9 +22,9 @@
 
         vm.model = {
 
-            applicationRaisedDateDay: '',
-            applicationRaisedDateMonth: '',
-            applicationRaisedDateYear: '',
+            maintenancePeriodEndDateDay: '',
+            maintenancePeriodEndDateMonth: '',
+            maintenancePeriodEndDateYear: '',
 
             totalFundsRequired: '',
             accountNumber: '',
@@ -37,8 +37,8 @@
 
         vm.validateError = false;
 
-        vm.applicationRaisedDateInvalidError = false;
-        vm.applicationRaisedDateMissingError = false;
+        vm.maintenancePeriodEndDateInvalidError = false;
+        vm.maintenancePeriodEndDateMissingError = false;
 
         vm.totalFundsRequiredMissingError = false;
         vm.totalFundsRequiredInvalidError = false;
@@ -55,14 +55,14 @@
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
         };
 
-        vm.getFullApplicationRaisedDate = function () {
-            var month = vm.model.applicationRaisedDateMonth > 9 ? vm.model.applicationRaisedDateMonth : '0' + vm.model.applicationRaisedDateMonth;
-            var day = vm.model.applicationRaisedDateDay > 9 ? vm.model.applicationRaisedDateDay : '0' + vm.model.applicationRaisedDateDay
-            return vm.model.applicationRaisedDateYear + '-' + month + '-' + day;
+        vm.getFullMaintenancePeriodEndDate = function () {
+            var month = vm.model.maintenancePeriodEndDateMonth > 9 ? vm.model.maintenancePeriodEndDateMonth : '0' + vm.model.maintenancePeriodEndDateMonth;
+            var day = vm.model.maintenancePeriodEndDateDay > 9 ? vm.model.maintenancePeriodEndDateDay : '0' + vm.model.maintenancePeriodEndDateDay
+            return vm.model.maintenancePeriodEndDateYear + '-' + month + '-' + day;
         };
 
-        vm.formatApplicationRaisedDate = function () {
-            return vm.formatDate(vm.getFullApplicationRaisedDate());
+        vm.formatMaintenancePeriodEndDate = function () {
+            return vm.formatDate(vm.getFullMaintenancePeriodEndDate());
         }
 
         vm.formatDate = function (dateToFormat) {
@@ -104,8 +104,8 @@
         };
 
         function clearErrors() {
-            vm.applicationRaisedDateInvalidError = false;
-            vm.applicationRaisedDateMissingError = false;
+            vm.maintenancePeriodEndDateInvalidError = false;
+            vm.maintenancePeriodEndDateMissingError = false;
 
             vm.totalFundsRequiredInvalidError = false;
             vm.totalFundsRequiredMissingError = false;
@@ -125,19 +125,19 @@
             clearErrors();
 
 
-            if (vm.model.applicationRaisedDateDay === null ||
-                vm.model.applicationRaisedDateMonth === null ||
-                vm.model.applicationRaisedDateYear === null) {
-                vm.queryForm.applicationRaisedDateDay.$setValidity(false);
-                vm.queryForm.applicationRaisedDateMonth.$setValidity(false);
-                vm.queryForm.applicationRaisedDateYear.$setValidity(false);
-                vm.applicationRaisedDateMissingError = true;
+            if (vm.model.maintenancePeriodEndDateDay === null ||
+                vm.model.maintenancePeriodEndDateMonth === null ||
+                vm.model.maintenancePeriodEndDateYear === null) {
+                vm.queryForm.maintenancePeriodEndDateDay.$setValidity(false);
+                vm.queryForm.maintenancePeriodEndDateMonth.$setValidity(false);
+                vm.queryForm.maintenancePeriodEndDateYear.$setValidity(false);
+                vm.maintenancePeriodEndDateMissingError = true;
                 validated = false;
-            } else if (!moment(vm.getFullApplicationRaisedDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
-                vm.applicationRaisedDateInvalidError = true;
+            } else if (!moment(vm.getFullMaintenancePeriodEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                vm.maintenancePeriodEndDateInvalidError = true;
                 validated = false;
-            } else if (moment(vm.getFullApplicationRaisedDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
-                vm.applicationRaisedDateInvalidError = true;
+            } else if (moment(vm.getFullMaintenancePeriodEndDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
+                vm.maintenancePeriodEndDateInvalidError = true;
                 validated = false;
             }
 
