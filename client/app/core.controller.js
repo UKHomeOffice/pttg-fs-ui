@@ -17,6 +17,8 @@
         var ACCOUNT_NUMBER_REGEX = /^(?!0{8})[0-9]{8}$/;
         var SORT_CODE_REGEX = /^(?!00-00-00)(?:\d{2}-){2}\d{2}$/;
         var BARCLAYS_SORT_CODE_REGEX = /^(?!00-00-00)(?:13|14|2[0-9])(?:-\d{2}){2}$/;
+        
+        var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
 
         /* has it*/
 
@@ -40,8 +42,8 @@
         vm.maintenancePeriodEndDateInvalidError = false;
         vm.maintenancePeriodEndDateMissingError = false;
 
-        vm.totalFundsRequiredMissingError = false;
         vm.totalFundsRequiredInvalidError = false;
+        vm.totalFundsRequiredMissingError = false;
 
         vm.accountNumberInvalidError = false;
         vm.accountNumberMissingError = false;
@@ -144,6 +146,10 @@
             if (vm.model.totalFundsRequired === '' || vm.model.totalFundsRequired === null) {
                 vm.queryForm.totalFundsRequired.$setValidity(false);
                 vm.totalFundsRequiredMissingError = true;
+                validated = false;
+            } else if (vm.model.totalFundsRequired !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.totalFundsRequired))) {
+                vm.queryForm.totalFundsRequired.$setValidity(false);
+                vm.totalFundsRequiredInvalidError = true;
                 validated = false;
             }
 

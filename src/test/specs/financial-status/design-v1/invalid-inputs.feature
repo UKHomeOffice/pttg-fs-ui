@@ -145,11 +145,46 @@ Feature: Show clear error details when inputs are invalid
 
 ############### Total funds required is mandatory ###############
 
+    # Total funds required must be positive, non-zero, and whole numbers
+
     Scenario: User does not enter total funds required
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        |            |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
+        Then the service displays the following message
+            | Error Message | Please provide a valid total funds required |
+            | Error Field   | total-funds-required-error                  |
+
+    Scenario: User enters 0 total funds required
+        Given caseworker is using the financial status service ui
+        When the financial status check is performed with
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 0          |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
+        Then the service displays the following message
+            | Error Message | Please provide a valid total funds required |
+            | Error Field   | total-funds-required-error                  |
+
+    Scenario: User enters negative total funds required
+        Given caseworker is using the financial status service ui
+        When the financial status check is performed with
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | -1         |
+            | Account Number              | 12345678   |
+            | Sort Code                   | 20-02-03   |
+        Then the service displays the following message
+            | Error Message | Please provide a valid total funds required |
+            | Error Field   | total-funds-required-error                  |
+
+    Scenario: User enters fractional total funds required
+        Given caseworker is using the financial status service ui
+        When the financial status check is performed with
+            | Maintenance Period End Date | 01/01/1980 |
+            | Total funds required        | 1.1        |
             | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
         Then the service displays the following message
