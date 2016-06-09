@@ -28,7 +28,8 @@
             maintenancePeriodEndDateMonth: '',
             maintenancePeriodEndDateYear: '',
 
-            maintenancePeriodChecked: '2001-1-1',
+            maintenancePeriodCheckedFrom: '',
+            maintenancePeriodCheckedTo: '',
 
             totalFundsRequired: '',
             accountNumber: '',
@@ -36,7 +37,6 @@
             sortCodeSecond: '',
             sortCodeThird: '',
 
-            greeting: '',
             meetsFinancialStatusRequirements: true
         };
 
@@ -60,6 +60,10 @@
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
         };
 
+        vm.getMaintenancePeriodChecked = function () {
+            return maintenancePeriodCheckedFrom + " to " + maintenancePeriodCheckedTo
+        }
+        
         vm.getFullMaintenancePeriodEndDate = function () {
             var month = vm.model.maintenancePeriodEndDateMonth > 9 ? vm.model.maintenancePeriodEndDateMonth : '0' + vm.model.maintenancePeriodEndDateMonth;
             var day = vm.model.maintenancePeriodEndDateDay > 9 ? vm.model.maintenancePeriodEndDateDay : '0' + vm.model.maintenancePeriodEndDateDay
@@ -89,7 +93,9 @@
                 // to do - add all other parameters
                 restService.checkFinancialStatus(vm.model.accountNumber)
                     .then(function (data) {
-                        vm.model.greeting = data.greeting;
+                        vm.model.meetsFinancialStatusRequirements = data.meetsFinancialStatusRequirements;
+                        vm.model.maintenancePeriodCheckedFrom = data.maintenancePeriodCheckedFrom;
+                        vm.model.maintenancePeriodCheckedTo = data.maintenancePeriodCheckedTo;
                         $location.path('/financial-status-result');
                     }).catch(function (error) {
                     if (error.status === 400 && error.data.error.code === INVALID_NINO_NUMBER) {

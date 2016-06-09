@@ -41,12 +41,13 @@ public class ServiceTest {
             .build();
     }
 
+    // todo - this is ibviously just a dummy
     @Test
-    public void shouldSayHello() throws Exception {
+    public void shouldReportMeetingFinancialStatus() throws Exception {
         mockMvc
-            .perform(get("/financialstatus/v1/greetings?accountNumber=12345678"))
+            .perform(get("/financialstatus/v1/greetings?accountNumber=11111111"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("greeting", is("Hello 12345678")));
+            .andExpect(jsonPath("meetsFinancialStatusRequirements", is(true)));
     }
 
     @Test

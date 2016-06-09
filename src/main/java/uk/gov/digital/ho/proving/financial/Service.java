@@ -32,7 +32,13 @@ public class Service {
         LOGGER.debug("Greeting: accountNumber - {}", accountNumber);
         counterService.increment("greetings.accountNumber");
 
-        return new ResponseEntity<>("{\"greeting\": \"Hello " + accountNumber + "\"}", HttpStatus.OK);
+        boolean pass = accountNumber.equals("11111111") ? true : false;
+
+        return new ResponseEntity<>(
+            "{\"meetsFinancialStatusRequirements\": " + pass + "," +
+                " \"maintenancePeriodCheckedFrom\": \"1/1/1066\"," +
+                " \"maintenancePeriodCheckedTo\": \"1/1/1966\"}",
+            HttpStatus.OK);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
