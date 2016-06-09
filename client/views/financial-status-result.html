@@ -1,17 +1,48 @@
+<div id="page2">
+    <h1 class="heading-xlarge" id="pageSubTitle"><span class="heading-secondary">Tier 4 (General) student</span>Financial
+        status check</h1>
+
+    <div ng-if="vm.model.meetsFinancialStatusRequirements">
+
+        <div class="govuk-box-highlight">
+            <h1 class="bold-large">Passed</h1>
+            <p>This applicant meets all of the financial status requirements</p>
+        </div>
+
+    </div>
+
+    <div ng-if="!vm.model.meetsFinancialStatusRequirements">
+
+        <div class="govuk-box-highlight panel-fail">
+            <h1 class="bold-large">Not passed</h1>
+            <p>This applicant does not meet all of the financial status requirements</p>
+        </div>
+
+    </div>
 
 
-<div id="page2" >
-    <h2 class="heading-medium">Tier</h2>
-    <h1 class="heading-large">Financial status check</h1>
+    <h2 class="heading-medium">
+        Results
+    </h2>
     <table>
         <thead>
-        <tr>
-            <th scope="col">Results</th>
-        </tr>
         </thead>
         <tbody>
         <tr>
-            <td id="yourGreeting">{{vm.model.greeting}}</td>
+            <th>Total funds required</th>
+            <td scope="col">{{vm.formatMoney(vm.model.totalFundsRequired)}}</td>
+        </tr>
+        <tr>
+            <th>Maintenance period checked</th>
+            <td scope="col">{{vm.formatDate(vm.model.maintenancePeriodChecked)}}</td>
+        </tr>
+        <tr>
+            <th>Sort code</th>
+            <td scope="col">{{vm.getFullSortCode()}}</td>
+        </tr>
+        <tr>
+            <th>Account number</th>
+            <td scope="col">{{vm.model.accountNumber}}</td>
         </tr>
         </tbody>
     </table>
@@ -19,7 +50,7 @@
     <br/>
     <br/>
     <div class="form-group">
-        <input type="submit" class="button" value="Start a new search" ng-click="vm.newSearch()">
+        <input type="submit" class="button" value="Begin a new check" ng-click="vm.newSearch()">
     </div>
 
 </div>

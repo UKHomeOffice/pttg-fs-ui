@@ -17,7 +17,7 @@
         var ACCOUNT_NUMBER_REGEX = /^(?!0{8})[0-9]{8}$/;
         var SORT_CODE_REGEX = /^(?!00-00-00)(?:\d{2}-){2}\d{2}$/;
         var BARCLAYS_SORT_CODE_REGEX = /^(?!00-00-00)(?:13|14|2[0-9])(?:-\d{2}){2}$/;
-        
+
         var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
 
         /* has it*/
@@ -28,13 +28,16 @@
             maintenancePeriodEndDateMonth: '',
             maintenancePeriodEndDateYear: '',
 
+            maintenancePeriodChecked: '2001-1-1',
+
             totalFundsRequired: '',
             accountNumber: '',
             sortCodeFirst: '',
             sortCodeSecond: '',
             sortCodeThird: '',
 
-            greeting: ''
+            greeting: '',
+            meetsFinancialStatusRequirements: true
         };
 
         vm.validateError = false;
