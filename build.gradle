@@ -51,7 +51,12 @@ jar.into('static') {
     from('src/main/webapp')
 }
 
-build.dependsOn gulp_build
+build.dependsOn gulp_build, gulp_test
+
+task("gulpTest", type: Test){
+    dependsOn gulp_test
+    group 'verification'
+}
 
 test {
     exclude 'acceptance/**'
