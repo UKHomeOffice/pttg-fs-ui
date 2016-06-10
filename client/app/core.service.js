@@ -11,10 +11,15 @@
         return {
             checkFinancialStatus : checkFinancialStatus
         };
-        function checkFinancialStatus(accountNumber) {
-            var url = 'financialstatus/v1/greetings';
+        function checkFinancialStatus(accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate) {
+            var url = 'financialstatus/v1/status';
             return $http.get(url, {
-                                      params: { accountNumber: accountNumber }
+                                      params: { 
+                                          accountNumber: accountNumber,
+                                          sortCode : sortCode,
+                                          totalFundsRequired: totalFundsRequired,
+                                          maintenancePeriodEndDate: maintenancePeriodEndDate
+                                      }
                                   })
 
                 .then(

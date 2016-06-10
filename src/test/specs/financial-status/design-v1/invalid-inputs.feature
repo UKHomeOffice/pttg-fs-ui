@@ -13,8 +13,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-2-03    |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -24,8 +24,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 00-00-00   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -39,8 +39,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 19-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
@@ -56,8 +56,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              |            |
             | Sort Code                   | 20-02-03   |
+            | Account Number              |            |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -67,8 +67,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 1234       |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 1234       |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -78,8 +78,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 123456789  |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 123456789  |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -89,8 +89,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 00000000   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 00000000   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -100,8 +100,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 1234567A   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 1234567A   |
         Then the service displays the following message
             | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
@@ -114,8 +114,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date |          |
             | Total funds required        | 1        |
-            | Account Number              | 12345678 |
             | Sort Code                   | 20-02-03 |
+            | Account Number              | 12345678 |
         Then the service displays the following message
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
@@ -125,8 +125,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 50/01/1980 |
             | Total funds required        | 1          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
@@ -136,8 +136,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/9999 |
             | Total funds required        | 1          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
@@ -152,8 +152,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        |            |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
@@ -163,8 +163,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 0          |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
@@ -174,8 +174,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | -1         |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
@@ -185,8 +185,8 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Maintenance Period End Date | 01/01/1980 |
             | Total funds required        | 1.1        |
-            | Account Number              | 12345678   |
             | Sort Code                   | 20-02-03   |
+            | Account Number              | 12345678   |
         Then the service displays the following message
             | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |

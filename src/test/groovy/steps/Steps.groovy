@@ -4,12 +4,16 @@ import cucumber.api.DataTable
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
+import groovy.json.JsonOutput
+import groovyx.net.http.ContentType
+import groovyx.net.http.URIBuilder
 import net.thucydides.core.annotations.Managed
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.text.WordUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import groovyx.net.http.RESTClient
 
 import java.text.SimpleDateFormat
 
@@ -17,6 +21,14 @@ import java.text.SimpleDateFormat
  * @Author Home Office Digital
  */
 class Steps {
+
+    def host = "localhost"
+    def port = 8001
+
+    def rootContextUrl(){
+        return new URIBuilder("/").setHost(host).setPort(port).setScheme("http").toString()
+    }
+
 
     @Managed
     public WebDriver driver;
@@ -75,7 +87,7 @@ class Steps {
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get("http://localhost:8001");
+        driver.get(rootContextUrl());
     }
 
     @When("^the financial status check is performed with\$")
@@ -110,5 +122,47 @@ class Steps {
         assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
     }
 
+    @Then("^the service displays the following result\$")
+    public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+
+        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
+
+        entries.each { k, v ->
+
+            String fieldName = toCamelCase(k);
+
+            WebElement element = driver.findElement(By.id(fieldName))
+
+            assert v.contains(element.getText())
+        }
+    }
+
+    @Given("^account (.+) has had a (?:minimum|maximum) balance of (.+)\$")
+    public void account_has_had_a_balance_of(String accountNumber, double balance) throws Throwable {
+
+        // to do - finish structuring account data representation
+        def account = new AccountSpec(accountNumber: accountNumber, balance: balance)
+
+        postToStub(account)
+    }
+
+    private void postToStub(AccountSpec account) {
+
+        // to do - post to the real stub
+        def json = JsonOutput.toJson(account)
+
+        println json
+
+        String endpoint = rootContextUrl()
+
+        def client = new RESTClient(endpoint)
+
+        def response = client.post(
+            path: "/financialstatus/v1/stub",
+            body: json,
+            requestContentType: ContentType.JSON)
+
+        println "status: " + response.status
+    }
 
 }

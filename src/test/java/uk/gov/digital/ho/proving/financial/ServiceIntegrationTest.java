@@ -50,7 +50,7 @@ public class ServiceIntegrationTest {
     @Test
     public void shouldReportMeetingFinancialStatus() throws Exception {
         mockMvc
-            .perform(get("/financialstatus/v1/greetings?accountNumber=11111111"))
+            .perform(get("/financialstatus/v1/status?accountNumber=11111111&sortCode=01-01-01&totalFundsRequired=0&maintenancePeriodEndDate=2016-10-10"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("meetsFinancialStatusRequirements", is(true)));
     }
@@ -58,7 +58,7 @@ public class ServiceIntegrationTest {
     @Test
     public void shouldReportErrorForMissingParameter() throws Exception {
         this.mockMvc
-            .perform(get("/financialstatus/v1/greetings"))
+            .perform(get("/financialstatus/v1/status?sortCode=01-01-01&totalFundsRequired=0&maintenancePeriodEndDate=2016-10-10"))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code", is("0008")))
             .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("accountNumber"))));

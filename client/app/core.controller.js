@@ -60,10 +60,16 @@
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
         };
 
+        vm.formatMoneyWholePounds = function (moneyToFormat) {
+            return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 0});
+        };
+
         vm.getMaintenancePeriodChecked = function () {
-            return maintenancePeriodCheckedFrom + " to " + maintenancePeriodCheckedTo
+            return vm.formatDate(vm.model.maintenancePeriodCheckedFrom) +
+                " to " +
+                vm.formatDate(vm.model.maintenancePeriodCheckedTo)
         }
-        
+
         vm.getFullMaintenancePeriodEndDate = function () {
             var month = vm.model.maintenancePeriodEndDateMonth > 9 ? vm.model.maintenancePeriodEndDateMonth : '0' + vm.model.maintenancePeriodEndDateMonth;
             var day = vm.model.maintenancePeriodEndDateDay > 9 ? vm.model.maintenancePeriodEndDateDay : '0' + vm.model.maintenancePeriodEndDateDay
@@ -91,7 +97,11 @@
             if (validateForm()) {
 
                 // to do - add all other parameters
-                restService.checkFinancialStatus(vm.model.accountNumber)
+                restService.checkFinancialStatus(
+                    vm.model.accountNumber,
+                    vm.getFullSortCode(),
+                    vm.model.totalFundsRequired,
+                    vm.getFullMaintenancePeriodEndDate())
                     .then(function (data) {
                         vm.model.meetsFinancialStatusRequirements = data.meetsFinancialStatusRequirements;
                         vm.model.maintenancePeriodCheckedFrom = data.maintenancePeriodCheckedFrom;
