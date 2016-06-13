@@ -1,0 +1,16 @@
+{
+    "account": {
+        "sortCode": "11-22-33",
+        "accountNumber": "12345678"
+    },
+    "dailyBalanceCheck": {
+        "applicationRaisedDate": "2015-01-30",
+        "assessmentStartDate": "2015-01-03",
+        "threshold": 1,
+        "minimumAboveThreshold": true
+    },
+    "status": {
+        "code": "200",
+        "message": "OK"
+    }
+}

@@ -3,13 +3,13 @@
         status check</h1>
 
     <div class="govuk-box-highlight"
-         ng-class="{'panel-fail': !vm.model.meetsFinancialStatusRequirements}">
+         ng-class="{'panel-fail': !vm.model.fundingRequirementMet}">
             <h1 class="bold-large">
-                <span ng-if="vm.model.meetsFinancialStatusRequirements" id="outcome">Passed</span>
-                <span ng-if="!vm.model.meetsFinancialStatusRequirements" id="outcome">Not passed</span>
+                <span ng-if="vm.model.fundingRequirementMet" id="outcome">Passed</span>
+                <span ng-if="!vm.model.fundingRequirementMet" id="outcome">Not passed</span>
             </h1>
-            <p ng-if="vm.model.meetsFinancialStatusRequirements">This applicant meets all of the financial status requirements</p>
-            <p ng-if="!vm.model.meetsFinancialStatusRequirements">This applicant does not meet all of the financial status requirements</p>
+            <p ng-if="vm.model.fundingRequirementMet">This applicant meets all of the financial status requirements</p>
+            <p ng-if="!vm.model.fundingRequirementMet">This applicant does not meet all of the financial status requirements</p>
 
     </div>
 
@@ -23,19 +23,19 @@
         <tbody>
         <tr>
             <th>Total funds required</th>
-            <td id="totalFundsRequired" scope="col">{{vm.formatMoneyWholePounds(vm.model.totalFundsRequired)}}</td>
+            <td id="totalFundsRequired" scope="col">{{vm.formatMoneyWholePounds(vm.model.threshold)}}</td>
         </tr>
         <tr>
             <th>Maintenance period checked</th>
-            <td id="maintenancePeriodChecked" scope="col">{{vm.getMaintenancePeriodChecked()}}</td>
+            <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
         <tr>
             <th>Sort code</th>
-            <td id="sortCode" scope="col">{{vm.getFullSortCode()}}</td>
+            <td id="sortCode" scope="col">{{vm.model.sortCodeChecked}}</td>
         </tr>
         <tr>
             <th>Account number</th>
-            <td id="accountNumber" scope="col">{{vm.model.accountNumber}}</td>
+            <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
         </tr>
         </tbody>
     </table>

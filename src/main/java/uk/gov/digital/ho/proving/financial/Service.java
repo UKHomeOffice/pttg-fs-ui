@@ -1,8 +1,12 @@
 package uk.gov.digital.ho.proving.financial;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -10,8 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.digital.ho.proving.financial.domain.ResponseStatus;
+import org.springframework.web.util.UriComponentsBuilder;
+import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheckResponse;
+import uk.gov.digital.ho.proving.financial.model.FundingCheckResult;
+import uk.gov.digital.ho.proving.financial.model.ResponseStatus;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @Author Home Office Digital
  */
 @RestController
-@RequestMapping("/financialstatus/v1/")
+@RequestMapping(path = "/incomeproving/v1/individual/financialstatus")
 public class Service {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
@@ -33,7 +43,19 @@ public class Service {
     @Autowired
     private CounterService counterService;
 
-    @RequestMapping(path = "status", method = RequestMethod.GET, produces = "application/json")
+    @Value("${api.root}")
+    private String apiRoot;
+
+    @Value("${api.endpoint}")
+    private String apiEndpoint;
+
+    @Value("${daily-balance.days-to-check}")
+    private String daysToCheck;
+
+    private Client client = Client.create();
+
+
+    @RequestMapping(path = "funds", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(@RequestParam(value = "accountNumber", required = true) String accountNumber,
                                  @RequestParam(value = "sortCode", required = true) String sortCode,
                                  @RequestParam(value = "totalFundsRequired", required = true) String totalFundsRequired,
@@ -43,25 +65,39 @@ public class Service {
         LOGGER.debug("Status for: accountNumber - {}, sortCode - {}", accountNumber, sortCode);
         counterService.increment("financial.status.check.servicecall");
 
-        // to do - stop faking
-        int threshold = Integer.parseInt(totalFundsRequired);
+        client.setConnectTimeout(10000);
 
-        boolean pass = (threshold <= 0) ? true : false;
-        if (accountBalances.containsKey(accountNumber)) {
+        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate);
 
-            LOGGER.debug("matched accountnumber - balance is {}", accountBalances.get(accountNumber));
+        ClientResponse clientResponse = webResource
+            .header("accept", MediaType.APPLICATION_JSON)
+            .header("content-type", MediaType.APPLICATION_JSON)
+            .get(ClientResponse.class);
 
-            pass = accountBalances.get(accountNumber) >= threshold;
+        DailyBalanceCheckResponse apiResult = clientResponse.getEntity(DailyBalanceCheckResponse.class);
+
+        LOGGER.debug(apiResult.toString());
+
+        if (clientResponse.getStatusInfo().getStatusCode() != (Response.Status.OK.getStatusCode())) {
+            return new ResponseEntity<>(HttpStatus.valueOf(clientResponse.getStatus()));
         }
 
+        return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
+    }
 
-        LocalDate maintenancePeriodFromDate = maintenancePeriodEndDate.minusDays(28);
+    private WebResource dailyBalanceCheckUrl(String accountNumber, String sortCode, String totalFundsRequired, LocalDate maintenancePeriodEndDate) {
 
-        return new ResponseEntity<>(
-            "{\"meetsFinancialStatusRequirements\": " + pass + "," +
-                " \"maintenancePeriodCheckedFrom\": \"" + maintenancePeriodFromDate + "\"," +
-                " \"maintenancePeriodCheckedTo\": \"" + maintenancePeriodEndDate + "\"}",
-            HttpStatus.OK);
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiEndpoint)
+            .queryParam("accountNumber", accountNumber)
+            .queryParam("sortCode", sortCode)
+            .queryParam("threshold", totalFundsRequired)
+            .queryParam("applicationRaisedDate", maintenancePeriodEndDate)
+            .queryParam("days", daysToCheck)
+            .build().toUri();
+
+        LOGGER.debug(expanded.toString());
+
+        return client.resource(expanded);
     }
 
     @RequestMapping(path = "stub", method = RequestMethod.POST, produces = "application/json")
@@ -105,6 +141,7 @@ public class Service {
                 '}';
         }
     }
+
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Object missingParamterHandler(MissingServletRequestParameterException exception) {

@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -29,13 +30,13 @@ public class DailyBalanceCheck implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private final LocalDate assessmentStartDate;
 
-    private final int threshold;
+    private final BigDecimal threshold;
     private final boolean minimumAboveThreshold;
 
     @JsonCreator
     public DailyBalanceCheck(@JsonProperty("applicationRaisedDate") @DateTimeFormat(iso = ISO.DATE) LocalDate applicationRaisedDate,
                              @JsonProperty("assessmentStartDate") @DateTimeFormat(iso = ISO.DATE) LocalDate assessmentStartDate,
-                             @JsonProperty("threshold") int threshold,
+                             @JsonProperty("threshold") BigDecimal threshold,
                              @JsonProperty("minimumAboveThreshold") boolean minimumAboveThreshold) {
         this.applicationRaisedDate = applicationRaisedDate;
         this.assessmentStartDate = assessmentStartDate;
@@ -51,7 +52,7 @@ public class DailyBalanceCheck implements Serializable {
         return assessmentStartDate;
     }
 
-    public int getThreshold() {
+    public BigDecimal getThreshold() {
         return threshold;
     }
 
@@ -74,10 +75,10 @@ public class DailyBalanceCheck implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DailyBalanceCheck that = (DailyBalanceCheck) o;
-        return threshold == that.threshold &&
-            minimumAboveThreshold == that.minimumAboveThreshold &&
+        return minimumAboveThreshold == that.minimumAboveThreshold &&
             Objects.equals(applicationRaisedDate, that.applicationRaisedDate) &&
-            Objects.equals(assessmentStartDate, that.assessmentStartDate);
+            Objects.equals(assessmentStartDate, that.assessmentStartDate) &&
+            Objects.equals(threshold, that.threshold);
     }
 
     @Override

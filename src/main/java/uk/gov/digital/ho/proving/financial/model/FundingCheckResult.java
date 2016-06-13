@@ -10,6 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -31,7 +32,7 @@ public class FundingCheckResult implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private final LocalDate periodCheckedTo;
 
-    private final int threshold;
+    private final BigDecimal threshold;
 
 
     @JsonCreator
@@ -40,7 +41,7 @@ public class FundingCheckResult implements Serializable {
                               @JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                               @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
                               @JsonProperty("periodCheckedTo")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
-                              @JsonProperty("threshold") int threshold){
+                              @JsonProperty("threshold") BigDecimal threshold){
 
         this.sortCode = sortCode;
         this.accountNumber = accountNumber;
@@ -79,7 +80,7 @@ public class FundingCheckResult implements Serializable {
         return periodCheckedTo;
     }
 
-    public int getThreshold() {
+    public BigDecimal getThreshold() {
         return threshold;
     }
 

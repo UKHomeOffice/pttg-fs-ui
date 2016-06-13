@@ -158,7 +158,7 @@ class Steps {
         def client = new RESTClient(endpoint)
 
         def response = client.post(
-            path: "/financialstatus/v1/stub",
+            path: "/incomeproving/v1/individual/financialstatus/stub",
             body: json,
             requestContentType: ContentType.JSON)
 

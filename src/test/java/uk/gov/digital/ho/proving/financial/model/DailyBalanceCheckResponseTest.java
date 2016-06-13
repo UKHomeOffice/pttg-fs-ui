@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -61,7 +62,7 @@ public class DailyBalanceCheckResponseTest {
     }
 
     private DailyBalanceCheck aDailyBalanceCheck(LocalDate aDate, int threshold, boolean minimumAboveThreshold) {
-        return new DailyBalanceCheck(aDate, aDate.minusDays(27), threshold, minimumAboveThreshold);
+        return new DailyBalanceCheck(aDate, aDate.minusDays(27), BigDecimal.valueOf(threshold), minimumAboveThreshold);
     }
 
     private ResponseStatus aResponseStatus(String code, String message) {

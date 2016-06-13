@@ -27,17 +27,20 @@
             maintenancePeriodEndDateDay: '',
             maintenancePeriodEndDateMonth: '',
             maintenancePeriodEndDateYear: '',
-
-            maintenancePeriodCheckedFrom: '',
-            maintenancePeriodCheckedTo: '',
-
+            
             totalFundsRequired: '',
             accountNumber: '',
             sortCodeFirst: '',
             sortCodeSecond: '',
             sortCodeThird: '',
 
-            meetsFinancialStatusRequirements: true
+            fundingRequirementMet: '',
+            threshold: '',
+            accountNumberChecked: '',
+            sortCodeChecked: '',
+            periodCheckedFrom: '',
+            periodCheckedTo: ''
+
         };
 
         vm.validateError = false;
@@ -64,10 +67,10 @@
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 0});
         };
 
-        vm.getMaintenancePeriodChecked = function () {
-            return vm.formatDate(vm.model.maintenancePeriodCheckedFrom) +
+        vm.getPeriodChecked = function () {
+            return vm.formatDate(vm.model.periodCheckedFrom) +
                 " to " +
-                vm.formatDate(vm.model.maintenancePeriodCheckedTo)
+                vm.formatDate(vm.model.periodCheckedTo)
         }
 
         vm.getFullMaintenancePeriodEndDate = function () {
@@ -103,9 +106,12 @@
                     vm.model.totalFundsRequired,
                     vm.getFullMaintenancePeriodEndDate())
                     .then(function (data) {
-                        vm.model.meetsFinancialStatusRequirements = data.meetsFinancialStatusRequirements;
-                        vm.model.maintenancePeriodCheckedFrom = data.maintenancePeriodCheckedFrom;
-                        vm.model.maintenancePeriodCheckedTo = data.maintenancePeriodCheckedTo;
+                        vm.model.fundingRequirementMet = data.fundingRequirementMet;
+                        vm.model.periodCheckedFrom = data.periodCheckedFrom;
+                        vm.model.periodCheckedTo = data.periodCheckedTo;
+                        vm.model.threshold = data.threshold;
+                        vm.model.accountNumberChecked = data.accountNumber;
+                        vm.model.sortCodeChecked = data.sortCode;
                         $location.path('/financial-status-result');
                     }).catch(function (error) {
                     if (error.status === 400 && error.data.error.code === INVALID_NINO_NUMBER) {

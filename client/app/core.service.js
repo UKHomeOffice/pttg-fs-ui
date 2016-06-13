@@ -12,7 +12,7 @@
             checkFinancialStatus : checkFinancialStatus
         };
         function checkFinancialStatus(accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate) {
-            var url = 'financialstatus/v1/status';
+            var url = 'incomeproving/v1/individual/financialstatus/funds';
             return $http.get(url, {
                                       params: { 
                                           accountNumber: accountNumber,

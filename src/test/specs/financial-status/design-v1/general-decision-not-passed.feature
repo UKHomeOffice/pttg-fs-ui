@@ -18,7 +18,7 @@ Feature: Pass - Tier 4 (General) Student In Country (single current account and 
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Total Funds Required       | £2,350                   |
-            | Maintenance Period Checked | 10/05/2016 to 07/06/2016 |
+            | Maintenance Period Checked | 11/05/2016 to 07/06/2016 |
             | Sort Code                  | 13-56-09                 |
             | Account Number             | 23568498                 |
 

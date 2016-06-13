@@ -115,10 +115,11 @@ describe('coreController', function () {
 
     it('sets returned data from service on the model ', function () {
         spyOnSuccessful();
-        response = {meetsFinancialStatusRequirements: false, maintenancePeriodCheckedFrom : 111, maintenancePeriodCheckedTo: 222};
 
-        coreController.model.maintenancePeriodEndDateDay = '1';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
+        response = {sortCode: 20-02-03, accountNumber: 12345678, fundingRequirementMet: true, periodCheckedFrom: 2015-01-03, periodCheckedTo: 2015-01-30, threshold: 1}
+
+        coreController.model.maintenancePeriodEndDateDay = '30';
+        coreController.model.maintenancePeriodEndDateMonth = '1';
         coreController.model.maintenancePeriodEndDateYear = '2015';
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
@@ -129,7 +130,7 @@ describe('coreController', function () {
         coreController.submit()
         scope.$digest()
 
-        expect(coreController.model.meetsFinancialStatusRequirements).toBe(false);
+        expect(coreController.model.fundingRequirementMet).toBe(true);
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
