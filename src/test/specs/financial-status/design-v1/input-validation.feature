@@ -1,5 +1,5 @@
-Feature: Tool identifies if Applicant meets minimum Financial Requirement
-    Pass Total Funds Required Calculation - Tier 4 (General) student (single current account and no dependants)
+
+Feature: Show clear error details when inputs are invalid
 
     Fields mandatory to fill in:
     Maintenance Period End Date - Format should be dd/mm/yyyy
@@ -17,7 +17,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09 |
             | Account Number              | 23568498 |
         Then the service displays the following message
-            | Error Message | Please provide a valid Maintenance Period End Date |
+            | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
 
     Scenario: Case Worker enters invalid Maintenance Period End Date - in the future
@@ -28,7 +28,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Maintenance Period End Date |
+            | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
 
     Scenario: Case Worker enters invalid Maintenance Period End date - not numbers 0-9
@@ -39,7 +39,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Maintenance Period End Date |
+            | Error Message | Please provide a valid maintenance period end date |
             | Error Field   | maintenance-period-end-date-error                  |
 
 ######################### Validation on the Total Funds Required field #########################
@@ -52,7 +52,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Total Funds Required |
+            | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
 
     Scenario: Case Worker enters invalid Total Funds Required - just 0
@@ -63,7 +63,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Total Funds Required |
+            | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
 
     Scenario: Case Worker enters invalid Total Funds Required - not numbers 0-9 (letters)
@@ -74,7 +74,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Total Funds Required |
+            | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
 
     Scenario: Case Worker enters invalid Total Funds Required - not numbers 0-9 (negative)
@@ -85,7 +85,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Total Funds Required |
+            | Error Message | Please provide a valid total funds required |
             | Error Field   | total-funds-required-error                  |
 
 ######################### Validation on the Sort Code Field #########################
@@ -98,7 +98,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   |            |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Sort Code |
+            | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - mising digits
@@ -109,7 +109,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-0    |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Sort Code |
+            | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - all 0's
@@ -120,7 +120,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 00-00-00   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Sort Code |
+            | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
@@ -131,7 +131,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-0q   |
             | Account Number              | 23568498   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Sort Code |
+            | Error Message | Please provide a valid sort code |
             | Error Field   | sort-code-error                  |
 
 
@@ -145,7 +145,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              |            |
         Then the service displays the following message
-            | Error Message | Please provide a valid Account Number |
+            | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - too short
@@ -156,7 +156,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 2356849    |
         Then the service displays the following message
-            | Error Message | Please provide a valid Account Number |
+            | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - too long
@@ -167,7 +167,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 235684988  |
         Then the service displays the following message
-            | Error Message | Please provide a valid Account Number |
+            | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - all 0's
@@ -178,7 +178,7 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 00000000   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Account Number |
+            | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - not numbers 0-9
@@ -189,5 +189,5 @@ Feature: Tool identifies if Applicant meets minimum Financial Requirement
             | Sort Code                   | 13-56-09   |
             | Account Number              | 23568a98   |
         Then the service displays the following message
-            | Error Message | Please provide a valid Account Number |
+            | Error Message | Please provide a valid account number |
             | Error Field   | account-number-error                  |
