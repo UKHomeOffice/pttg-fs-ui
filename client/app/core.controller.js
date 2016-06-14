@@ -187,7 +187,7 @@
                 vm.sortCodeMissingError = true;
                 validated = false;
             } else {
-                if (!BARCLAYS_SORT_CODE_REGEX.test(vm.getFullSortCode())) {
+                if (!SORT_CODE_REGEX.test(vm.getFullSortCode())) {
                     vm.sortCodeInvalidError = true;
                     validated = false;
                 }
