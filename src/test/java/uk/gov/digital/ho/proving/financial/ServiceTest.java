@@ -69,7 +69,7 @@ public class ServiceTest {
         ReflectionTestUtils.setField(service, "client", mockClient);
 
         ReflectionTestUtils.setField(service, "apiRoot", "");
-        ReflectionTestUtils.setField(service, "apiEndpoint", API_ENDPOINT);
+        ReflectionTestUtils.setField(service, "apiEndpoint", API_ENDPOINT + "/{sortCode}/{accountNumber}");
         ReflectionTestUtils.setField(service, "daysToCheck", "27");
 
         mockMvc = MockMvcBuilders.standaloneSetup(service).setMessageConverters(createMessageConverter())
@@ -92,7 +92,7 @@ public class ServiceTest {
 
         String ui_url = UI_ENDPOINT + "/funds?accountNumber=12345678&sortCode=20-01-01&totalFundsRequired=1&maintenancePeriodEndDate=2015-10-30";
 
-        String api_url = API_ENDPOINT + "?accountNumber=12345678&sortCode=20-01-01&threshold=1&applicationRaisedDate=2015-10-30&days=27";
+        String api_url = API_ENDPOINT + "/20-01-01/12345678?threshold=1&applicationRaisedDate=2015-10-30&days=27";
 
         URI uri = UriComponentsBuilder.fromUriString(api_url).build().toUri();
 

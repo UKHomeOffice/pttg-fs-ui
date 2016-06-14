@@ -33,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @Author Home Office Digital
  */
 @RestController
-@RequestMapping(path = "/incomeproving/v1/individual/financialstatus")
+@RequestMapping(path = "/incomeproving/v1/individual/financialstatus/")
 public class Service {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
@@ -88,12 +88,11 @@ public class Service {
     private WebResource dailyBalanceCheckUrl(String accountNumber, String sortCode, String totalFundsRequired, LocalDate maintenancePeriodEndDate) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiEndpoint)
-            .queryParam("accountNumber", accountNumber)
-            .queryParam("sortCode", sortCode)
             .queryParam("threshold", totalFundsRequired)
             .queryParam("applicationRaisedDate", maintenancePeriodEndDate)
             .queryParam("days", daysToCheck)
-            .build().toUri();
+            .buildAndExpand(sortCode, accountNumber)
+            .toUri();
 
         LOGGER.debug(expanded.toString());
 
