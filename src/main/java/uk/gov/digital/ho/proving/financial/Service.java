@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -97,48 +98,6 @@ public class Service {
         LOGGER.debug(expanded.toString());
 
         return client.resource(expanded);
-    }
-
-    @RequestMapping(path = "stub", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity stub(@RequestBody AccountSpec account) {
-
-        LOGGER.debug("Account spec: {}", account);
-
-        accountBalances.put(account.accountNumber, account.balance);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    public static class AccountSpec {
-        double balance;
-        String accountNumber;
-
-        public AccountSpec() {
-        }
-
-        public double getBalance() {
-            return balance;
-        }
-
-        public void setBalance(double balance) {
-            this.balance = balance;
-        }
-
-        public String getAccountNumber() {
-            return accountNumber;
-        }
-
-        public void setAccountNumber(String accountNumber) {
-            this.accountNumber = accountNumber;
-        }
-
-        @Override
-        public String toString() {
-            return "AccountSpec{" +
-                "minimumBalance=" + balance +
-                ", accountNumber='" + accountNumber + '\'' +
-                '}';
-        }
     }
 
 

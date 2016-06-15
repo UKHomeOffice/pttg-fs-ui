@@ -24,9 +24,9 @@
 
         vm.model = {
 
-            maintenancePeriodEndDateDay: '',
-            maintenancePeriodEndDateMonth: '',
-            maintenancePeriodEndDateYear: '',
+            endDateDay: '',
+            endDateMonth: '',
+            endDateYear: '',
             
             totalFundsRequired: '',
             accountNumber: '',
@@ -45,8 +45,8 @@
 
         vm.validateError = false;
 
-        vm.maintenancePeriodEndDateInvalidError = false;
-        vm.maintenancePeriodEndDateMissingError = false;
+        vm.endDateInvalidError = false;
+        vm.endDateMissingError = false;
 
         vm.totalFundsRequiredInvalidError = false;
         vm.totalFundsRequiredMissingError = false;
@@ -73,14 +73,14 @@
                 vm.formatDate(vm.model.periodCheckedTo)
         }
 
-        vm.getFullMaintenancePeriodEndDate = function () {
-            var month = vm.model.maintenancePeriodEndDateMonth > 9 ? vm.model.maintenancePeriodEndDateMonth : '0' + vm.model.maintenancePeriodEndDateMonth;
-            var day = vm.model.maintenancePeriodEndDateDay > 9 ? vm.model.maintenancePeriodEndDateDay : '0' + vm.model.maintenancePeriodEndDateDay
-            return vm.model.maintenancePeriodEndDateYear + '-' + month + '-' + day;
+        vm.getFullendDate = function () {
+            var month = vm.model.endDateMonth > 9 ? vm.model.endDateMonth : '0' + vm.model.endDateMonth;
+            var day = vm.model.endDateDay > 9 ? vm.model.endDateDay : '0' + vm.model.endDateDay
+            return vm.model.endDateYear + '-' + month + '-' + day;
         };
 
-        vm.formatMaintenancePeriodEndDate = function () {
-            return vm.formatDate(vm.getFullMaintenancePeriodEndDate());
+        vm.formatendDate = function () {
+            return vm.formatDate(vm.getFullendDate());
         }
 
         vm.formatDate = function (dateToFormat) {
@@ -104,7 +104,7 @@
                     vm.model.accountNumber,
                     vm.getFullSortCode(),
                     vm.model.totalFundsRequired,
-                    vm.getFullMaintenancePeriodEndDate())
+                    vm.getFullendDate())
                     .then(function (data) {
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
@@ -131,8 +131,8 @@
         };
 
         function clearErrors() {
-            vm.maintenancePeriodEndDateInvalidError = false;
-            vm.maintenancePeriodEndDateMissingError = false;
+            vm.endDateInvalidError = false;
+            vm.endDateMissingError = false;
 
             vm.totalFundsRequiredInvalidError = false;
             vm.totalFundsRequiredMissingError = false;
@@ -152,19 +152,19 @@
             clearErrors();
 
 
-            if (vm.model.maintenancePeriodEndDateDay === null ||
-                vm.model.maintenancePeriodEndDateMonth === null ||
-                vm.model.maintenancePeriodEndDateYear === null) {
-                vm.queryForm.maintenancePeriodEndDateDay.$setValidity(false);
-                vm.queryForm.maintenancePeriodEndDateMonth.$setValidity(false);
-                vm.queryForm.maintenancePeriodEndDateYear.$setValidity(false);
-                vm.maintenancePeriodEndDateMissingError = true;
+            if (vm.model.endDateDay === null ||
+                vm.model.endDateMonth === null ||
+                vm.model.endDateYear === null) {
+                vm.queryForm.endDateDay.$setValidity(false);
+                vm.queryForm.endDateMonth.$setValidity(false);
+                vm.queryForm.endDateYear.$setValidity(false);
+                vm.endDateMissingError = true;
                 validated = false;
-            } else if (!moment(vm.getFullMaintenancePeriodEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
-                vm.maintenancePeriodEndDateInvalidError = true;
+            } else if (!moment(vm.getFullendDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                vm.endDateInvalidError = true;
                 validated = false;
-            } else if (moment(vm.getFullMaintenancePeriodEndDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
-                vm.maintenancePeriodEndDateInvalidError = true;
+            } else if (moment(vm.getFullendDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
+                vm.endDateInvalidError = true;
                 validated = false;
             }
 

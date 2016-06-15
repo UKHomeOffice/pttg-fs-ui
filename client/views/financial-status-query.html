@@ -4,13 +4,8 @@
             status check</h1>
         <div class="text">
             <p class="lede" id="pageSubText">
-                You can use this tool to check whether a Tier 4 (General) Student applicant meets the financial status
-                requirements.
+                An online statement checker for Barclays current account holder (must be in the applicant’s own name).
             </p>
-        </div>
-
-        <div class="panel panel-border-wide" id="pageNotice">
-            <p>This tool can currently be used with Barclays personal current accounts in the applicants own name.</p>
         </div>
 
         <div class="form-group">
@@ -27,12 +22,12 @@
 
                     <ul class="error-summary-list">
 
-                        <li ng-if="vm.maintenancePeriodEndDateMissingError">
-                            <a href="" ng-click="vm.scrollTo('maintenancePeriodEndDateDay')">The maintenance period end date is
+                        <li ng-if="vm.endDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
                                 missing</a></li>
 
-                        <li ng-if="vm.maintenancePeriodEndDateInvalidError">
-                            <a href="" ng-click="vm.scrollTo('maintenancePeriodEndDateDay')">The maintenance period end date is
+                        <li ng-if="vm.endDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
                                 invalid</a></li>
 
                         <li ng-if="vm.totalFundsRequiredInvalidError">
@@ -59,36 +54,36 @@
                 </div>
 
 
-                <div class="form-group " id="maintenance-period-end-date"
-                     ng-class="{error : vm.maintenancePeriodEndDateMissingError || vm.maintenancePeriodEndDateInvalidError}">
+                <div class="form-group " id="end-date"
+                     ng-class="{error : vm.endDateMissingError || vm.endDateInvalidError}">
 
                     <fieldset>
-                        <legend class="form-label-bold">Maintenance period end date</legend>
+                        <legend class="form-label-bold">End date of 28-day period</legend>
                         <div class="form-date">
-                            <p class="form-hint">This tool will check bank statments 28 days prior to this date</p>
-                                <span id="maintenance-period-end-date-error" class="error-message"
-                                      ng-if="vm.maintenancePeriodEndDateMissingError || vm.maintenancePeriodEndDateInvalidError">
-                                    Please provide a valid maintenance period end date</span>
+                            <p class="form-hint">For example, 21 01 2016</p>
+                                <span id="end-date-error" class="error-message"
+                                      ng-if="vm.endDateMissingError || vm.endDateInvalidError">
+                                    Please provide a valid end date</span>
                             <div class="form-group form-group-day">
-                                <label for="maintenancePeriodEndDateDay">Day</label>
-                                <input class="form-control" name="maintenancePeriodEndDateDay"
-                                       id="maintenancePeriodEndDateDay" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateDay" autocomplete="off">
+                                <label for="endDateDay">Day</label>
+                                <input class="form-control" name="endDateDay"
+                                       id="endDateDay" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.endDateDay" autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-month">
-                                <label for="maintenancePeriodEndDateMonth">Month</label>
-                                <input class="form-control" name="maintenancePeriodEndDateMonth"
-                                       id="maintenancePeriodEndDateMonth"
-                                       type="number" pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateMonth"
+                                <label for="endDateMonth">Month</label>
+                                <input class="form-control" name="endDateMonth"
+                                       id="endDateMonth"
+                                       type="number" pattern="[0-9]*" ng-model="vm.model.endDateMonth"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-year">
-                                <label for="maintenancePeriodEndDateYear">Year</label>
-                                <input class="form-control" name="maintenancePeriodEndDateYear"
-                                       id="maintenancePeriodEndDateYear" type="number"
-                                       pattern="[0-9]*" ng-model="vm.model.maintenancePeriodEndDateYear"
+                                <label for="endDateYear">Year</label>
+                                <input class="form-control" name="endDateYear"
+                                       id="endDateYear" type="number"
+                                       pattern="[0-9]*" ng-model="vm.model.endDateYear"
                                        autocomplete="off">
                             </div>
                         </div>

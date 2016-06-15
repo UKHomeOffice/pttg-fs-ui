@@ -6,10 +6,9 @@ Feature: Pass - Tier 4 (General) Student In Country (single current account and 
     ending on (and including) the Maintenance Period End Date
 
     Scenario: Shelly is a general student and does not have sufficient financial funds
-    (On a daily basis the closing balance in her account is < than the Total funds required)
+    (On a daily basis the closing balance in her account is < than the total funds required at £2349.99)
 
         Given caseworker is using the financial status service ui
-        And account 23568498 has had a maximum balance of 2349.99
         When the financial status check is performed with
             | Maintenance Period End Date | 30/05/2016 |
             | Total Funds Required        | 2350       |

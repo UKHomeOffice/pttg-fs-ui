@@ -136,33 +136,4 @@ class Steps {
             assert v.contains(element.getText())
         }
     }
-
-    @Given("^account (.+) has had a (?:minimum|maximum) balance of (.+)\$")
-    public void account_has_had_a_balance_of(String accountNumber, double balance) throws Throwable {
-
-        // to do - finish structuring account data representation
-        def account = new AccountSpec(accountNumber: accountNumber, balance: balance)
-
-        postToStub(account)
-    }
-
-    private void postToStub(AccountSpec account) {
-
-        // to do - post to the real stub
-        def json = JsonOutput.toJson(account)
-
-        println json
-
-        String endpoint = rootContextUrl()
-
-        def client = new RESTClient(endpoint)
-
-        def response = client.post(
-            path: "/incomeproving/v1/individual/financialstatus/stub",
-            body: json,
-            requestContentType: ContentType.JSON)
-
-        println "status: " + response.status
-    }
-
 }
