@@ -149,7 +149,7 @@
                     <span id="account-number-error" class="error-message"
                           ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
                                     Please provide a valid account number</span>
-                    <input type="number" pattern="[0-9]{8}" class="form-control form-control-1-4" name="accountNumber"
+                    <input type="text" pattern="[0-9]{8}" class="form-control form-control-1-4" name="accountNumber"
                            id="accountNumber"
                            ng-model="vm.model.accountNumber" autocomplete="off">
                 </div>

@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,14 +36,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class ServiceTest {
 
-    public static final String UI_ENDPOINT = "/incomeproving/v1/individual/financialstatus";
+    public static final String UI_ENDPOINT = "/pttg/financialstatusservice/v1/accounts/";
 
     public static final String API_ENDPOINT = "/incomeproving/v1/individual/dailybalancecheck";
 
     private MockMvc mockMvc;
-
-    @Mock
-    private CounterService counterService;
 
     @Mock
     private Client mockClient;
@@ -65,7 +61,6 @@ public class ServiceTest {
 
         Service service = new Service();
 
-        ReflectionTestUtils.setField(service, "counterService", counterService);
         ReflectionTestUtils.setField(service, "client", mockClient);
 
         ReflectionTestUtils.setField(service, "apiRoot", "");
@@ -90,14 +85,14 @@ public class ServiceTest {
     @Test
     public void shouldProcessValidRequestResponse() throws Exception {
 
-        String ui_url = UI_ENDPOINT + "/funds?accountNumber=12345678&sortCode=20-01-01&totalFundsRequired=1&maintenancePeriodEndDate=2015-10-30";
+        String ui_url = UI_ENDPOINT + "200101/12345678/dailybalancestatus?totalFundsRequired=1&endDate=2015-10-30";
 
-        String api_url = API_ENDPOINT + "/20-01-01/12345678?threshold=1&applicationRaisedDate=2015-10-30&days=27";
+        String api_url = API_ENDPOINT + "/200101/12345678?threshold=1&applicationRaisedDate=2015-10-30&days=27";
 
         URI uri = UriComponentsBuilder.fromUriString(api_url).build().toUri();
 
         DailyBalanceCheckResponse result = new DailyBalanceCheckResponse(
-            anAccount("11-22-33", "12345678"),
+            anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
             aResponseStatus("200", "OK"));
 
@@ -113,13 +108,13 @@ public class ServiceTest {
     @Test
     public void shouldReportErrorForMissingParameter() throws Exception {
 
-        String ui_url = UI_ENDPOINT + "/funds?&sortCode=01-01-01&totalFundsRequired=0&maintenancePeriodEndDate=2016-10-10";
+        String ui_url = UI_ENDPOINT + "010101/12345678/dailybalancestatus?endDate=2016-10-10";
 
         this.mockMvc
             .perform(get(ui_url))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("code", is("0008")))
-            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("accountNumber"))));
+            .andExpect(jsonPath("message", allOf(containsString("Missing parameter"), containsString("totalFundsRequired"))));
     }
 
     private void withResponse(URI url, Response.Status status) {

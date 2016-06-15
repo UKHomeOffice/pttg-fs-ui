@@ -19,6 +19,7 @@ import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheckResponse;
 import uk.gov.digital.ho.proving.financial.model.FundingCheckResult;
 import uk.gov.digital.ho.proving.financial.model.ResponseStatus;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -33,15 +34,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @Author Home Office Digital
  */
 @RestController
-@RequestMapping(path = "/incomeproving/v1/individual/financialstatus/")
+@RequestMapping(path = "/pttg/financialstatusservice/v1/accounts/")
 public class Service {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
 
     private static Map<String, Double> accountBalances = new HashMap<>();
 
-    @Autowired
-    private CounterService counterService;
 
     @Value("${api.root}")
     private String apiRoot;
@@ -55,19 +54,19 @@ public class Service {
     private Client client = Client.create();
 
 
-    @RequestMapping(path = "funds", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity status(@RequestParam(value = "accountNumber", required = true) String accountNumber,
-                                 @RequestParam(value = "sortCode", required = true) String sortCode,
+    @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity status(@PathVariable("accountNumber") String accountNumber,
+                                 @PathVariable("sortCode") String sortCode,
                                  @RequestParam(value = "totalFundsRequired", required = true) String totalFundsRequired,
-                                 @RequestParam(value = "maintenancePeriodEndDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maintenancePeriodEndDate) {
+                                 @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
 
-        LOGGER.debug("Status for: accountNumber - {}, sortCode - {}", accountNumber, sortCode);
-        counterService.increment("financial.status.check.servicecall");
+        LOGGER.debug("Status for: accountNumber: {}, sortCode: {}, totalFundsRequired: {}, endDate: {}",
+            accountNumber, sortCode, totalFundsRequired, endDate);
 
         client.setConnectTimeout(10000);
 
-        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate);
+        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, endDate);
 
         // to do handle connection failure errors
         // to do handle invalid/unparseable response error

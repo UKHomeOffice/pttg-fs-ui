@@ -2,8 +2,7 @@ package uk.gov.digital.ho.proving.financial.model;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @Author Home Office Digital
