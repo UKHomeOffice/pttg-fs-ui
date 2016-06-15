@@ -91,6 +91,10 @@
             return vm.model.sortCodeFirst + '-' + vm.model.sortCodeSecond + '-' + vm.model.sortCodeThird;
         }
 
+        vm.getFullSortCodeDigits = function () {
+            return vm.model.sortCodeFirst + vm.model.sortCodeSecond + vm.model.sortCodeThird;
+        }
+
         vm.scrollTo = function (anchor) {
             $anchorScroll(anchor);
         };
@@ -102,7 +106,7 @@
                 // to do - add all other parameters
                 restService.checkFinancialStatus(
                     vm.model.accountNumber,
-                    vm.getFullSortCode(),
+                    vm.getFullSortCodeDigits(),
                     vm.model.totalFundsRequired,
                     vm.getFullendDate())
                     .then(function (data) {

@@ -10,7 +10,7 @@ describe('coreController', function () {
         q = $q;
 
         restService = {
-            checkFinancialStatus: function (accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate) {
+            checkFinancialStatus: function (accountNumber, sortCode, totalFundsRequired, endDate) {
             }
         };
 
@@ -45,25 +45,25 @@ describe('coreController', function () {
 
 
     it('is expected to get the maintenance period end date in ISO format', function () {
-        coreController.model.maintenancePeriodEndDateDay = '1';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
-        coreController.model.maintenancePeriodEndDateYear = '2015';
-        expect(coreController.getFullMaintenancePeriodEndDate()).toEqual('2015-02-01')
+        coreController.model.endDateDay = '1';
+        coreController.model.endDateMonth = '2';
+        coreController.model.endDateYear = '2015';
+        expect(coreController.getFullendDate()).toEqual('2015-02-01')
     });
 
     it('is expected to format the maintenance period end date to DD/MM/YYYY', function () {
-        coreController.model.maintenancePeriodEndDateDay = '1';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
-        coreController.model.maintenancePeriodEndDateYear = '2015';
-        expect(coreController.formatMaintenancePeriodEndDate()).toEqual('01/02/2015')
+        coreController.model.endDateDay = '1';
+        coreController.model.endDateMonth = '2';
+        coreController.model.endDateYear = '2015';
+        expect(coreController.formatendDate()).toEqual('01/02/2015')
     });
 
     it('is expected the form submits the correct data to the service', function () {
         spyOnSuccessful();
 
-        coreController.model.maintenancePeriodEndDateDay = '1';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
-        coreController.model.maintenancePeriodEndDateYear = '2015';
+        coreController.model.endDateDay = '1';
+        coreController.model.endDateMonth = '2';
+        coreController.model.endDateYear = '2015';
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
@@ -80,9 +80,9 @@ describe('coreController', function () {
     it('does not call service on validation failure - invalid application date', function () {
         spyOnSuccessful();
 
-        coreController.model.maintenancePeriodEndDateDay = '99';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
-        coreController.model.maintenancePeriodEndDateYear = '2015';
+        coreController.model.endDateDay = '99';
+        coreController.model.endDateMonth = '2';
+        coreController.model.endDateYear = '2015';
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
@@ -98,9 +98,9 @@ describe('coreController', function () {
     it('does not call service on validation failure - future application date', function () {
         spyOnSuccessful();
 
-        coreController.model.maintenancePeriodEndDateDay = '1';
-        coreController.model.maintenancePeriodEndDateMonth = '2';
-        coreController.model.maintenancePeriodEndDateYear = '2999';
+        coreController.model.endDateDay = '1';
+        coreController.model.endDateMonth = '2';
+        coreController.model.endDateYear = '2999';
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
@@ -116,11 +116,11 @@ describe('coreController', function () {
     it('sets returned data from service on the model ', function () {
         spyOnSuccessful();
 
-        response = {sortCode: 20-02-03, accountNumber: 12345678, fundingRequirementMet: true, periodCheckedFrom: 2015-01-03, periodCheckedTo: 2015-01-30, threshold: 1}
+        response = {sortCode: 200203, accountNumber: 12345678, fundingRequirementMet: true, periodCheckedFrom: 2015-01-03, periodCheckedTo: 2015-01-30, threshold: 1}
 
-        coreController.model.maintenancePeriodEndDateDay = '30';
-        coreController.model.maintenancePeriodEndDateMonth = '1';
-        coreController.model.maintenancePeriodEndDateYear = '2015';
+        coreController.model.endDateDay = '30';
+        coreController.model.endDateMonth = '1';
+        coreController.model.endDateYear = '2015';
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';

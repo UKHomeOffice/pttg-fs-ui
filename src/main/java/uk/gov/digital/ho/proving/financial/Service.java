@@ -24,7 +24,6 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -69,6 +68,10 @@ public class Service {
         client.setConnectTimeout(10000);
 
         WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, maintenancePeriodEndDate);
+
+        // to do handle connection failure errors
+        // to do handle invalid/unparseable response error
+        // to do I'd do it now but it's a different "feature"
 
         ClientResponse clientResponse = webResource
             .header("accept", MediaType.APPLICATION_JSON)

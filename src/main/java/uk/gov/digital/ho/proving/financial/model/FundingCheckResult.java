@@ -40,10 +40,10 @@ public class FundingCheckResult implements Serializable {
                               @JsonProperty("accountNumber") String accountNumber,
                               @JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                               @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
-                              @JsonProperty("periodCheckedTo")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
-                              @JsonProperty("threshold") BigDecimal threshold){
+                              @JsonProperty("periodCheckedTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
+                              @JsonProperty("threshold") BigDecimal threshold) {
 
-        this.sortCode = sortCode;
+        this.sortCode = formatSortCode(sortCode);
         this.accountNumber = accountNumber;
         this.fundingRequirementMet = fundingRequirementMet;
         this.periodCheckedFrom = periodCheckedFrom;
@@ -52,7 +52,7 @@ public class FundingCheckResult implements Serializable {
     }
 
     public FundingCheckResult(DailyBalanceCheckResponse apiResult) {
-        this.sortCode = apiResult.getAccount().getSortCode();
+        this.sortCode = formatSortCode(apiResult.getAccount().getSortCode());
         this.accountNumber = apiResult.getAccount().getAccountNumber();
         this.fundingRequirementMet = apiResult.getDailyBalanceCheck().isMinimumAboveThreshold();
         this.periodCheckedFrom = apiResult.getDailyBalanceCheck().getAssessmentStartDate();
@@ -94,5 +94,17 @@ public class FundingCheckResult implements Serializable {
             ", periodCheckedTo=" + periodCheckedTo +
             ", threshold=" + threshold +
             '}';
+    }
+
+    private String formatSortCode(String sortCode) {
+
+        if (sortCode.length() != 6) {
+            return sortCode;
+        }
+
+        StringBuilder sb = new StringBuilder(sortCode);
+        sb.insert(2,'-').insert(5,'-');
+
+        return sb.toString();
     }
 }
