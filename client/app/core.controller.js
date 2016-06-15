@@ -35,6 +35,7 @@
             sortCodeThird: '',
 
             fundingRequirementMet: '',
+            minimum: '',
             accountNumberChecked: '',
             sortCodeChecked: '',
             periodCheckedFrom: '',
@@ -112,6 +113,7 @@
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
                         vm.model.periodCheckedTo = data.periodCheckedTo;
+                        vm.model.minimum = data.minimum;
                         vm.model.accountNumberChecked = data.accountNumber;
                         vm.model.sortCodeChecked = data.sortCode;
                         $location.path('/financial-status-result');
