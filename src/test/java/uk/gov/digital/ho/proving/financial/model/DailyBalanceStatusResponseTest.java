@@ -34,12 +34,12 @@ public class DailyBalanceStatusResponseTest {
 
         DailyBalanceStatusResponse sample = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
+            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
             aResponseStatus("200", "OK"));
 
         String actual = jsonFrom(sample);
 
-        String expected = stringFrom("/daily-balance-check-response.json");
+        String expected = stringFrom("/daily-balance-status-response.json");
 
         assertThat(actual.replace(" ", "")).isEqualTo(expected.replace(" ", ""));
     }
@@ -49,10 +49,10 @@ public class DailyBalanceStatusResponseTest {
 
         DailyBalanceStatusResponse expected = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
+            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
             aResponseStatus("200", "OK"));
 
-        DailyBalanceStatusResponse actual = objectFrom("/daily-balance-check-response.json");
+        DailyBalanceStatusResponse actual = objectFrom("/daily-balance-status-response.json");
 
         assertThat(actual).isEqualTo(expected);
     }
