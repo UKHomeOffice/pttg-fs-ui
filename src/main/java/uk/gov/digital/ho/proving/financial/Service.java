@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheckResponse;
+import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse;
 import uk.gov.digital.ho.proving.financial.model.FundingCheckResult;
 import uk.gov.digital.ho.proving.financial.model.ResponseStatus;
 
@@ -48,7 +48,9 @@ public class Service {
     @Value("${daily-balance.days-to-check}")
     private int daysToCheck;
 
-    private Client client = Client.create();
+    private Client client = getClient();
+
+
 
 
     @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
@@ -57,39 +59,40 @@ public class Service {
                                  @RequestParam(value = "totalFundsRequired", required = true) String totalFundsRequired,
                                  @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
 
-
         LOGGER.debug("Status for: accountNumber: {}, sortCode: {}, totalFundsRequired: {}, toDate: {}",
             accountNumber, sortCode, totalFundsRequired, toDate);
 
-        client.setConnectTimeout(10000);
 
-        LocalDate fromDate = toDate.minusDays(daysToCheck - 1);
+        WebResource webResource = dailyBalanceStatusUrlFor(accountNumber, sortCode, totalFundsRequired, toDate.minusDays(daysToCheck - 1), toDate);
 
-        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, toDate, fromDate);
+        try {
+            return fundingCheckResultFor(webResource);
+
+        } catch (Exception e) {
+            LOGGER.error("Error processing request via FSS API: {}", e.getMessage());
+            return buildErrorResponse("0000", "Error processing request via FSS API: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private ResponseEntity fundingCheckResultFor(WebResource webResource) {
 
         ClientResponse clientResponse = webResource
             .header("accept", MediaType.APPLICATION_JSON)
             .header("content-type", MediaType.APPLICATION_JSON)
             .get(ClientResponse.class);
 
-        if (clientResponse.getStatusInfo().getStatusCode() != (Response.Status.OK.getStatusCode())) {
-            LOGGER.error("Error received from financial status service API: status={}", clientResponse.getStatus());
+        if (clientResponse.getStatus() != (Response.Status.OK.getStatusCode())) {
+            LOGGER.error("Failure at FSS API with status: {}", clientResponse.getStatus());
             return buildErrorResponse("0000", "Failure at FSS API with status: " + clientResponse.getStatus(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        try {
-            DailyBalanceCheckResponse apiResult = clientResponse.getEntity(DailyBalanceCheckResponse.class);
-            LOGGER.debug(apiResult.toString());
+        DailyBalanceStatusResponse apiResult = clientResponse.getEntity(DailyBalanceStatusResponse.class);
+        LOGGER.debug("Received dailybalancestatus result: {}", apiResult.toString());
 
-            return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
-
-        } catch (Exception e){
-            LOGGER.error("Error processing response from financial status service API: {}", e.getMessage());
-            return buildErrorResponse("0000", "Failed to process response from FSS API: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
     }
 
-    private WebResource dailyBalanceCheckUrl(String accountNumber, String sortCode, String totalFundsRequired, LocalDate to, LocalDate from) {
+    private WebResource dailyBalanceStatusUrlFor(String accountNumber, String sortCode, String totalFundsRequired, LocalDate from, LocalDate to) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiEndpoint)
             .queryParam("minimum", totalFundsRequired)
@@ -119,5 +122,11 @@ public class Service {
 
         ResponseStatus response = new ResponseStatus(errorCode, errorMessage);
         return new ResponseEntity<>(response, headers, status);
+    }
+
+    private Client getClient() {
+        Client c = Client.create();
+        c.setConnectTimeout(10000);
+        return c;
     }
 }

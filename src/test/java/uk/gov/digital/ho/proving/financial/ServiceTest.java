@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.UriComponentsBuilder;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheck;
-import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheckResponse;
+import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse;
 import uk.gov.digital.ho.proving.financial.model.ResponseStatus;
 
 import javax.ws.rs.core.Response;
@@ -91,7 +91,7 @@ public class ServiceTest {
 
         URI uri = UriComponentsBuilder.fromUriString(api_url).build().toUri();
 
-        DailyBalanceCheckResponse result = new DailyBalanceCheckResponse(
+        DailyBalanceStatusResponse result = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
             aResponseStatus("200", "OK"));
@@ -126,8 +126,8 @@ public class ServiceTest {
         when(clientResponse.getStatus()).thenReturn(status.getStatusCode());
     }
 
-    private void withApiResult(DailyBalanceCheckResponse result) {
-        when(clientResponse.getEntity(DailyBalanceCheckResponse.class)).thenReturn(result);
+    private void withApiResult(DailyBalanceStatusResponse result) {
+        when(clientResponse.getEntity(DailyBalanceStatusResponse.class)).thenReturn(result);
     }
 
     private Account anAccount(String sortCode, String accountNumber) {

@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @Author Home Office Digital
  */
-public class DailyBalanceCheckResponseTest {
+public class DailyBalanceStatusResponseTest {
 
     private ObjectMapper mapper;
 
@@ -32,7 +32,7 @@ public class DailyBalanceCheckResponseTest {
     @Test
     public void shouldSerializeToJson() throws Exception {
 
-        DailyBalanceCheckResponse sample = new DailyBalanceCheckResponse(
+        DailyBalanceStatusResponse sample = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
             aResponseStatus("200", "OK"));
@@ -47,12 +47,12 @@ public class DailyBalanceCheckResponseTest {
     @Test
     public void shouldDeserializeFromJson() throws Exception {
 
-        DailyBalanceCheckResponse expected = new DailyBalanceCheckResponse(
+        DailyBalanceStatusResponse expected = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
             aResponseStatus("200", "OK"));
 
-        DailyBalanceCheckResponse actual = objectFrom("/daily-balance-check-response.json");
+        DailyBalanceStatusResponse actual = objectFrom("/daily-balance-check-response.json");
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -69,18 +69,18 @@ public class DailyBalanceCheckResponseTest {
         return new ResponseStatus(code, message);
     }
 
-    private DailyBalanceCheckResponse objectFrom(String file) throws Exception {
+    private DailyBalanceStatusResponse objectFrom(String file) throws Exception {
 
         InputStream input = this.getClass().getResourceAsStream(file);
 
-        return mapper.readValue(input, DailyBalanceCheckResponse.class);
+        return mapper.readValue(input, DailyBalanceStatusResponse.class);
     }
 
     private String stringFrom(String file) throws Exception {
         return new String(Files.readAllBytes(Paths.get(this.getClass().getResource(file).toURI()))).trim();
     }
 
-    private String jsonFrom(DailyBalanceCheckResponse sample) throws JsonProcessingException {
+    private String jsonFrom(DailyBalanceStatusResponse sample) throws JsonProcessingException {
         return mapper.writeValueAsString(sample);
     }
 }

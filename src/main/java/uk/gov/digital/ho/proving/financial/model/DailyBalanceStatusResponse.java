@@ -12,7 +12,7 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DailyBalanceCheckResponse implements Serializable {
+public class DailyBalanceStatusResponse implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Account account;
@@ -24,9 +24,9 @@ public class DailyBalanceCheckResponse implements Serializable {
     private ResponseStatus status;
 
     @JsonCreator
-    public DailyBalanceCheckResponse(@JsonProperty("account") Account account,
-                                     @JsonProperty("dailyBalanceCheck") DailyBalanceCheck dailyBalanceCheck,
-                                     @JsonProperty("status") ResponseStatus status) {
+    public DailyBalanceStatusResponse(@JsonProperty("account") Account account,
+                                      @JsonProperty("dailyBalanceCheck") DailyBalanceCheck dailyBalanceCheck,
+                                      @JsonProperty("status") ResponseStatus status) {
         this.account = account;
         this.dailyBalanceCheck = dailyBalanceCheck;
         this.status = status;
@@ -46,7 +46,7 @@ public class DailyBalanceCheckResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "DailyBalanceCheckResponse{" +
+        return "DailyBalanceStatusResponse{" +
             "account=" + account +
             ", dailyBalanceCheck=" + dailyBalanceCheck +
             ", status=" + status +
@@ -57,7 +57,7 @@ public class DailyBalanceCheckResponse implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DailyBalanceCheckResponse that = (DailyBalanceCheckResponse) o;
+        DailyBalanceStatusResponse that = (DailyBalanceStatusResponse) o;
         return Objects.equals(account, that.account) &&
             Objects.equals(dailyBalanceCheck, that.dailyBalanceCheck) &&
             Objects.equals(status, that.status);

@@ -51,7 +51,7 @@ public class FundingCheckResult implements Serializable {
         this.minimum = minimum;
     }
 
-    public FundingCheckResult(DailyBalanceCheckResponse apiResult) {
+    public FundingCheckResult(DailyBalanceStatusResponse apiResult) {
         this.sortCode = formatSortCode(apiResult.getAccount().getSortCode());
         this.accountNumber = apiResult.getAccount().getAccountNumber();
         this.fundingRequirementMet = apiResult.getDailyBalanceCheck().isMinimumAboveThreshold();
