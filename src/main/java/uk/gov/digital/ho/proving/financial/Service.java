@@ -46,7 +46,7 @@ public class Service {
     private String apiEndpoint;
 
     @Value("${daily-balance.days-to-check}")
-    private String daysToCheck;
+    private int daysToCheck;
 
     private Client client = Client.create();
 
@@ -55,42 +55,46 @@ public class Service {
     public ResponseEntity status(@PathVariable("accountNumber") String accountNumber,
                                  @PathVariable("sortCode") String sortCode,
                                  @RequestParam(value = "totalFundsRequired", required = true) String totalFundsRequired,
-                                 @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+                                 @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
 
 
-        LOGGER.debug("Status for: accountNumber: {}, sortCode: {}, totalFundsRequired: {}, endDate: {}",
-            accountNumber, sortCode, totalFundsRequired, endDate);
+        LOGGER.debug("Status for: accountNumber: {}, sortCode: {}, totalFundsRequired: {}, toDate: {}",
+            accountNumber, sortCode, totalFundsRequired, toDate);
 
         client.setConnectTimeout(10000);
 
-        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, endDate);
+        LocalDate fromDate = toDate.minusDays(daysToCheck - 1);
 
-        // to do handle connection failure errors
-        // to do handle invalid/unparseable response error
-        // to do I'd do it now but it's a different "feature"
+        WebResource webResource = dailyBalanceCheckUrl(accountNumber, sortCode, totalFundsRequired, toDate, fromDate);
 
         ClientResponse clientResponse = webResource
             .header("accept", MediaType.APPLICATION_JSON)
             .header("content-type", MediaType.APPLICATION_JSON)
             .get(ClientResponse.class);
 
-        DailyBalanceCheckResponse apiResult = clientResponse.getEntity(DailyBalanceCheckResponse.class);
-
-        LOGGER.debug(apiResult.toString());
-
         if (clientResponse.getStatusInfo().getStatusCode() != (Response.Status.OK.getStatusCode())) {
-            return new ResponseEntity<>(HttpStatus.valueOf(clientResponse.getStatus()));
+            LOGGER.error("Error received from financial status service API: status={}", clientResponse.getStatus());
+            return buildErrorResponse("0000", "Failure at FSS API with status: " + clientResponse.getStatus(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
+        try {
+            DailyBalanceCheckResponse apiResult = clientResponse.getEntity(DailyBalanceCheckResponse.class);
+            LOGGER.debug(apiResult.toString());
+
+            return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
+
+        } catch (Exception e){
+            LOGGER.error("Error processing response from financial status service API: {}", e.getMessage());
+            return buildErrorResponse("0000", "Failed to process response from FSS API: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    private WebResource dailyBalanceCheckUrl(String accountNumber, String sortCode, String totalFundsRequired, LocalDate maintenancePeriodEndDate) {
+    private WebResource dailyBalanceCheckUrl(String accountNumber, String sortCode, String totalFundsRequired, LocalDate to, LocalDate from) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiEndpoint)
-            .queryParam("threshold", totalFundsRequired)
-            .queryParam("applicationRaisedDate", maintenancePeriodEndDate)
-            .queryParam("days", daysToCheck)
+            .queryParam("minimum", totalFundsRequired)
+            .queryParam("fromDate", from)
+            .queryParam("toDate", to)
             .buildAndExpand(sortCode, accountNumber)
             .toUri();
 
@@ -105,13 +109,14 @@ public class Service {
 
         LOGGER.debug(exception.getMessage());
 
+        return buildErrorResponse("0008", "Missing parameter: " + exception.getParameterName(), HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<ResponseStatus> buildErrorResponse(String errorCode, String errorMessage, HttpStatus status) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.set(CONTENT_TYPE, APPLICATION_JSON_VALUE);
 
-        return buildErrorResponse(headers, "0008", "Missing parameter: " + exception.getParameterName(), HttpStatus.BAD_REQUEST);
-    }
-
-    private ResponseEntity<ResponseStatus> buildErrorResponse(HttpHeaders headers, String errorCode, String errorMessage, HttpStatus status) {
         ResponseStatus response = new ResponseStatus(errorCode, errorMessage);
         return new ResponseEntity<>(response, headers, status);
     }

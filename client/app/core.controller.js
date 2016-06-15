@@ -27,7 +27,7 @@
             endDateDay: '',
             endDateMonth: '',
             endDateYear: '',
-            
+
             totalFundsRequired: '',
             accountNumber: '',
             sortCodeFirst: '',
@@ -58,6 +58,7 @@
         vm.sortCodeMissingError = false;
 
         vm.serverError = '';
+        vm.serverErrorDetail = '';
 
         vm.formatMoney = function (moneyToFormat) {
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
@@ -118,12 +119,8 @@
                         vm.model.sortCodeChecked = data.sortCode;
                         $location.path('/financial-status-result');
                     }).catch(function (error) {
-                    if (error.status === 400 && error.data.error.code === INVALID_NINO_NUMBER) {
-                        vm.ninoInvalidError = true;
-                        vm.restError = true;
-                    } else {
-                        vm.serverError = 'Unable to process your request, please try again.';
-                    }
+                    vm.serverError = 'Unable to process your request, please try again.';
+                    vm.serverErrorDetail = error.data.message;
                 });
             } else {
                 vm.validateError = true;
@@ -148,6 +145,7 @@
             vm.sortCodeMissingError = false;
 
             vm.serverError = '';
+            vm.serverErrorDetail = '';
             vm.validateError = false;
         }
 

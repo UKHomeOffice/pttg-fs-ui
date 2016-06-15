@@ -1,3 +1,11 @@
+<div class="error-summary" ng-if="vm.serverError !== ''">
+    <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
+        Server Error
+    </h1>
+    <p id="serverError"> {{vm.serverError}}</p>
+    <p id="serverErrorDetail"> {{vm.serverErrorDetail}}</p>
+</div>
+
 <div class="column-full-width">
     <div id="page1" data-bind="visible: currentPage() === 1">
         <h1 class="heading-xlarge" id="pageTitle"><span class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>Financial

@@ -11,12 +11,12 @@
         return {
             checkFinancialStatus : checkFinancialStatus
         };
-        function checkFinancialStatus(accountNumber, sortCode, totalFundsRequired, endDate) {
+        function checkFinancialStatus(accountNumber, sortCode, totalFundsRequired, toDate) {
             var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode +'/' + accountNumber + '/dailybalancestatus';
             return $http.get(url, {
                                       params: {
                                           totalFundsRequired: totalFundsRequired,
-                                          endDate: endDate
+                                          toDate: toDate
                                       }
                                   })
 

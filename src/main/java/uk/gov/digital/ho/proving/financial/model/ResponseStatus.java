@@ -9,17 +9,15 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponseStatus implements Serializable {
+public class ResponseStatus {
+    private String code;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
 
-    private String code;
+    public ResponseStatus(){}
 
-    @JsonCreator
-    public ResponseStatus(@JsonProperty("code") String code,
-                          @JsonProperty("message") String message) {
+    public ResponseStatus(String code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -28,8 +26,16 @@ public class ResponseStatus implements Serializable {
         return code;
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -45,12 +51,12 @@ public class ResponseStatus implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResponseStatus that = (ResponseStatus) o;
-        return Objects.equals(message, that.message) &&
-            Objects.equals(code, that.code);
+        return Objects.equals(code, that.code) &&
+            Objects.equals(message, that.message);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, code);
+        return Objects.hash(code, message);
     }
 }

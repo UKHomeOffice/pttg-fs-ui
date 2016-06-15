@@ -38,7 +38,7 @@ public class ServiceTest {
 
     public static final String UI_ENDPOINT = "/pttg/financialstatusservice/v1/accounts/";
 
-    public static final String API_ENDPOINT = "/incomeproving/v1/individual/dailybalancecheck";
+    public static final String API_ENDPOINT = "/pttg/financialstatusservice/v1/accounts/";
 
     private MockMvc mockMvc;
 
@@ -64,8 +64,8 @@ public class ServiceTest {
         ReflectionTestUtils.setField(service, "client", mockClient);
 
         ReflectionTestUtils.setField(service, "apiRoot", "");
-        ReflectionTestUtils.setField(service, "apiEndpoint", API_ENDPOINT + "/{sortCode}/{accountNumber}");
-        ReflectionTestUtils.setField(service, "daysToCheck", "27");
+        ReflectionTestUtils.setField(service, "apiEndpoint", API_ENDPOINT + "/{sortCode}/{accountNumber}/dailybalancestatus");
+        ReflectionTestUtils.setField(service, "daysToCheck", 28);
 
         mockMvc = MockMvcBuilders.standaloneSetup(service).setMessageConverters(createMessageConverter())
             .alwaysDo(print())
@@ -85,15 +85,15 @@ public class ServiceTest {
     @Test
     public void shouldProcessValidRequestResponse() throws Exception {
 
-        String ui_url = UI_ENDPOINT + "200101/12345678/dailybalancestatus?totalFundsRequired=1&endDate=2015-10-30";
+        String ui_url = UI_ENDPOINT + "200101/12345678/dailybalancestatus?totalFundsRequired=1&toDate=2015-10-30";
 
-        String api_url = API_ENDPOINT + "/200101/12345678?threshold=1&applicationRaisedDate=2015-10-30&days=27";
+        String api_url = API_ENDPOINT + "/200101/12345678/dailybalancestatus?minimum=1&fromDate=2015-10-03&toDate=2015-10-30";
 
         URI uri = UriComponentsBuilder.fromUriString(api_url).build().toUri();
 
         DailyBalanceCheckResponse result = new DailyBalanceCheckResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
+            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
             aResponseStatus("200", "OK"));
 
         withResponse(uri, Response.Status.OK);
@@ -108,7 +108,7 @@ public class ServiceTest {
     @Test
     public void shouldReportErrorForMissingParameter() throws Exception {
 
-        String ui_url = UI_ENDPOINT + "010101/12345678/dailybalancestatus?endDate=2016-10-10";
+        String ui_url = UI_ENDPOINT + "010101/12345678/dailybalancestatus?toDate=2016-10-10";
 
         this.mockMvc
             .perform(get(ui_url))

@@ -33,7 +33,7 @@ public class DailyBalanceCheckResponseTest {
     public void shouldSerializeToJson() throws Exception {
 
         DailyBalanceCheckResponse sample = new DailyBalanceCheckResponse(
-            anAccount("11-22-33", "12345678"),
+            anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
             aResponseStatus("200", "OK"));
 
@@ -48,7 +48,7 @@ public class DailyBalanceCheckResponseTest {
     public void shouldDeserializeFromJson() throws Exception {
 
         DailyBalanceCheckResponse expected = new DailyBalanceCheckResponse(
-            anAccount("11-22-33", "12345678"),
+            anAccount("112233", "12345678"),
             aDailyBalanceCheck(LocalDate.of(2015, 01, 30), 1, true),
             aResponseStatus("200", "OK"));
 
