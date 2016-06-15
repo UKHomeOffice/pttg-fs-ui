@@ -10,7 +10,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -32,23 +31,19 @@ public class FundingCheckResult implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private final LocalDate periodCheckedTo;
 
-    private final BigDecimal threshold;
-
 
     @JsonCreator
     public FundingCheckResult(@JsonProperty("sortCode") String sortCode,
                               @JsonProperty("accountNumber") String accountNumber,
                               @JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                               @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
-                              @JsonProperty("periodCheckedTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
-                              @JsonProperty("threshold") BigDecimal threshold) {
+                              @JsonProperty("periodCheckedTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo) {
 
         this.sortCode = formatSortCode(sortCode);
         this.accountNumber = accountNumber;
         this.fundingRequirementMet = fundingRequirementMet;
         this.periodCheckedFrom = periodCheckedFrom;
         this.periodCheckedTo = periodCheckedTo;
-        this.threshold = threshold;
     }
 
     public FundingCheckResult(DailyBalanceCheckResponse apiResult) {
@@ -57,7 +52,6 @@ public class FundingCheckResult implements Serializable {
         this.fundingRequirementMet = apiResult.getDailyBalanceCheck().isMinimumAboveThreshold();
         this.periodCheckedFrom = apiResult.getDailyBalanceCheck().getAssessmentStartDate();
         this.periodCheckedTo = apiResult.getDailyBalanceCheck().getApplicationRaisedDate();
-        this.threshold = apiResult.getDailyBalanceCheck().getThreshold();
     }
 
     public String getSortCode() {
@@ -80,9 +74,6 @@ public class FundingCheckResult implements Serializable {
         return periodCheckedTo;
     }
 
-    public BigDecimal getThreshold() {
-        return threshold;
-    }
 
     @Override
     public String toString() {
@@ -92,7 +83,6 @@ public class FundingCheckResult implements Serializable {
             ", fundingRequirementMet=" + fundingRequirementMet +
             ", periodCheckedFrom=" + periodCheckedFrom +
             ", periodCheckedTo=" + periodCheckedTo +
-            ", threshold=" + threshold +
             '}';
     }
 
@@ -103,7 +93,7 @@ public class FundingCheckResult implements Serializable {
         }
 
         StringBuilder sb = new StringBuilder(sortCode);
-        sb.insert(2,'-').insert(5,'-');
+        sb.insert(2, '-').insert(5, '-');
 
         return sb.toString();
     }
