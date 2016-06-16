@@ -3,12 +3,10 @@
         "sortCode": "112233",
         "accountNumber": "12345678"
     },
-    "dailyBalanceCheck": {
-        "applicationRaisedDate": "2015-10-30",
-        "assessmentStartDate": "2015-10-03",
-        "threshold": 1,
-        "minimumAboveThreshold": true
-    },
+    "fromDate": "2015-10-03",
+    "toDate": "2015-10-30",
+    "minimum": 100,
+    "pass": true,
     "status": {
         "code": "200",
         "message": "OK"

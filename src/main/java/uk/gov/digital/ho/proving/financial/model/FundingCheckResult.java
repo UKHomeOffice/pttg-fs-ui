@@ -54,10 +54,10 @@ public class FundingCheckResult implements Serializable {
     public FundingCheckResult(DailyBalanceStatusResponse apiResult) {
         this.sortCode = formatSortCode(apiResult.getAccount().getSortCode());
         this.accountNumber = apiResult.getAccount().getAccountNumber();
-        this.fundingRequirementMet = apiResult.getDailyBalanceCheck().isMinimumAboveThreshold();
-        this.periodCheckedFrom = apiResult.getDailyBalanceCheck().getAssessmentStartDate();
-        this.periodCheckedTo = apiResult.getDailyBalanceCheck().getApplicationRaisedDate();
-        this.minimum = apiResult.getDailyBalanceCheck().getThreshold();
+        this.fundingRequirementMet = apiResult.isPass();
+        this.periodCheckedFrom = apiResult.getFromDate();
+        this.periodCheckedTo = apiResult.getToDate();
+        this.minimum = apiResult.getMinimum();
     }
 
     public String getSortCode() {

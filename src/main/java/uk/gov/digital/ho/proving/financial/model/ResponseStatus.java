@@ -1,11 +1,7 @@
 package uk.gov.digital.ho.proving.financial.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -15,7 +11,8 @@ public class ResponseStatus {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
 
-    public ResponseStatus(){}
+    public ResponseStatus() {
+    }
 
     public ResponseStatus(String code, String message) {
         this.code = code;

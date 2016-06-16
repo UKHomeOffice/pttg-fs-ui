@@ -4,8 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -17,18 +24,33 @@ public class DailyBalanceStatusResponse implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Account account;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private DailyBalanceCheck dailyBalanceCheck;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private final LocalDate fromDate;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private final LocalDate toDate;
+
+    private final BigDecimal minimum;
+
+    private final boolean pass;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private ResponseStatus status;
 
     @JsonCreator
     public DailyBalanceStatusResponse(@JsonProperty("account") Account account,
-                                      @JsonProperty("dailyBalanceCheck") DailyBalanceCheck dailyBalanceCheck,
+                                      @JsonProperty("fromDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+                                      @JsonProperty("toDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+                                      @JsonProperty("minimum") BigDecimal minimum,
+                                      @JsonProperty("pass") boolean pass,
                                       @JsonProperty("status") ResponseStatus status) {
         this.account = account;
-        this.dailyBalanceCheck = dailyBalanceCheck;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.minimum = minimum;
+        this.pass = pass;
         this.status = status;
     }
 
@@ -36,19 +58,36 @@ public class DailyBalanceStatusResponse implements Serializable {
         return account;
     }
 
-    public DailyBalanceCheck getDailyBalanceCheck() {
-        return dailyBalanceCheck;
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public BigDecimal getMinimum() {
+        return minimum;
+    }
+
+    public boolean isPass() {
+        return pass;
     }
 
     public ResponseStatus getStatus() {
         return status;
     }
 
+
     @Override
     public String toString() {
         return "DailyBalanceStatusResponse{" +
             "account=" + account +
-            ", dailyBalanceCheck=" + dailyBalanceCheck +
+            ", fromDate=" + fromDate +
+            ", toDate=" + toDate +
+            ", minimum=" + minimum +
+            ", pass=" + pass +
             ", status=" + status +
             '}';
     }
@@ -58,13 +97,16 @@ public class DailyBalanceStatusResponse implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DailyBalanceStatusResponse that = (DailyBalanceStatusResponse) o;
-        return Objects.equals(account, that.account) &&
-            Objects.equals(dailyBalanceCheck, that.dailyBalanceCheck) &&
+        return pass == that.pass &&
+            Objects.equals(account, that.account) &&
+            Objects.equals(fromDate, that.fromDate) &&
+            Objects.equals(toDate, that.toDate) &&
+            Objects.equals(minimum, that.minimum) &&
             Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(account, dailyBalanceCheck, status);
+        return Objects.hash(account, fromDate, toDate, minimum, pass, status);
     }
 }

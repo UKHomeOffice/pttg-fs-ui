@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.util.UriComponentsBuilder;
 import uk.gov.digital.ho.proving.financial.model.Account;
-import uk.gov.digital.ho.proving.financial.model.DailyBalanceCheck;
 import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse;
 import uk.gov.digital.ho.proving.financial.model.ResponseStatus;
 
@@ -93,7 +92,10 @@ public class ServiceTest {
 
         DailyBalanceStatusResponse result = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
+            LocalDate.of(2015, 10, 3),
+            LocalDate.of(2015, 10, 30),
+            BigDecimal.valueOf(100.0),
+            true,
             aResponseStatus("200", "OK"));
 
         withResponse(uri, Response.Status.OK);
@@ -132,10 +134,6 @@ public class ServiceTest {
 
     private Account anAccount(String sortCode, String accountNumber) {
         return new Account(sortCode, accountNumber);
-    }
-
-    private DailyBalanceCheck aDailyBalanceCheck(LocalDate aDate, int threshold, boolean minimumAboveThreshold) {
-        return new DailyBalanceCheck(aDate, aDate.minusDays(27), BigDecimal.valueOf(threshold), minimumAboveThreshold);
     }
 
     private ResponseStatus aResponseStatus(String code, String message) {

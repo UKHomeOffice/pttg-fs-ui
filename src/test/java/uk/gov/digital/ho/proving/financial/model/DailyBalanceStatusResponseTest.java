@@ -23,7 +23,7 @@ public class DailyBalanceStatusResponseTest {
     private ObjectMapper mapper;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         mapper = new ObjectMapper();
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -34,7 +34,10 @@ public class DailyBalanceStatusResponseTest {
 
         DailyBalanceStatusResponse sample = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
+            LocalDate.of(2015, 10, 3),
+            LocalDate.of(2015, 10, 30),
+            BigDecimal.valueOf(100),
+            true,
             aResponseStatus("200", "OK"));
 
         String actual = jsonFrom(sample);
@@ -49,7 +52,10 @@ public class DailyBalanceStatusResponseTest {
 
         DailyBalanceStatusResponse expected = new DailyBalanceStatusResponse(
             anAccount("112233", "12345678"),
-            aDailyBalanceCheck(LocalDate.of(2015, 10, 30), 1, true),
+            LocalDate.of(2015, 10, 3),
+            LocalDate.of(2015, 10, 30),
+            BigDecimal.valueOf(100),
+            true,
             aResponseStatus("200", "OK"));
 
         DailyBalanceStatusResponse actual = objectFrom("/daily-balance-status-response.json");
@@ -59,10 +65,6 @@ public class DailyBalanceStatusResponseTest {
 
     private Account anAccount(String sortCode, String accountNumber) {
         return new Account(sortCode, accountNumber);
-    }
-
-    private DailyBalanceCheck aDailyBalanceCheck(LocalDate aDate, int threshold, boolean minimumAboveThreshold) {
-        return new DailyBalanceCheck(aDate, aDate.minusDays(27), BigDecimal.valueOf(threshold), minimumAboveThreshold);
     }
 
     private ResponseStatus aResponseStatus(String code, String message) {
