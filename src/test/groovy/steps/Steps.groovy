@@ -29,6 +29,8 @@ class Steps {
         return new URIBuilder("/").setHost(host).setPort(port).setScheme("http").toString()
     }
 
+    def queryPageLocation = '#/financial-status-query'
+    def resultsPageLocation = '#/financial-status-result'
 
     @Managed
     public WebDriver driver;
@@ -93,6 +95,8 @@ class Steps {
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
 
+        assert driver.currentUrl.contains(queryPageLocation)
+
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
         entries.each { k, v ->
@@ -117,6 +121,8 @@ class Steps {
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
+        assert driver.currentUrl.contains(queryPageLocation)
+
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
         assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
@@ -124,6 +130,8 @@ class Steps {
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+
+        assert driver.currentUrl.contains(resultsPageLocation)
 
         Map<String, String> entries = expectedResult.asMap(String.class, String.class)
 
