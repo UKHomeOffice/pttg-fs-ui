@@ -47,6 +47,10 @@ class Steps {
         String allUpper = StringUtils.remove(WordUtils.capitalizeFully(s), " ")
         String camelCase = allUpper[0].toLowerCase() + allUpper.substring(1)
         camelCase
+
+//        if(s.isEmpty()) return ""
+//        def words = s.tokenize(" ")*.toLowerCase()*.capitalize().join("")
+//        words[0].toLowerCase() + words.substring(1)
     }
 
     def parseDate(String dateString) {

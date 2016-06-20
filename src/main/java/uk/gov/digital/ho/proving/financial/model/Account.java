@@ -11,7 +11,7 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Account implements Serializable {
+public final class Account implements Serializable {
 
     private final String sortCode;
     private final String accountNumber;

@@ -1,20 +1,21 @@
 package uk.gov.digital.ho.proving.financial.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
 
-public class ResponseStatus {
-    private String code;
+public final class ResponseDetails {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String message;
+    private final String message;
 
-    public ResponseStatus() {
-    }
+    private final String code;
 
-    public ResponseStatus(String code, String message) {
+    @JsonCreator
+    public ResponseDetails(@JsonProperty("code") String code, @JsonProperty("message") String message) {
         this.code = code;
         this.message = message;
     }
@@ -23,21 +24,14 @@ public class ResponseStatus {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     @Override
     public String toString() {
-        return "ResponseStatus{" +
+        return "ResponseDetails{" +
             "code='" + code + '\'' +
             ", message='" + message + '\'' +
             '}';
@@ -47,7 +41,7 @@ public class ResponseStatus {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ResponseStatus that = (ResponseStatus) o;
+        ResponseDetails that = (ResponseDetails) o;
         return Objects.equals(code, that.code) &&
             Objects.equals(message, that.message);
     }

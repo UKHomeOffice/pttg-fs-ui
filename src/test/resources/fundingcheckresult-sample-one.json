@@ -1,0 +1,8 @@
+{
+    "sortCode": "11-22-33",
+    "accountNumber": "1245678",
+    "fundingRequirementMet": true,
+    "periodCheckedFrom": "2015-10-03",
+    "periodCheckedTo": "2015-10-30",
+    "minimum": 100
+}

@@ -19,10 +19,10 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DailyBalanceStatusResponse implements Serializable {
+public final class DailyBalanceStatusResponse implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Account account;
+    private final Account account;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -37,7 +37,7 @@ public class DailyBalanceStatusResponse implements Serializable {
     private final boolean pass;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ResponseStatus status;
+    private final ResponseDetails status;
 
     @JsonCreator
     public DailyBalanceStatusResponse(@JsonProperty("account") Account account,
@@ -45,7 +45,7 @@ public class DailyBalanceStatusResponse implements Serializable {
                                       @JsonProperty("toDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
                                       @JsonProperty("minimum") BigDecimal minimum,
                                       @JsonProperty("pass") boolean pass,
-                                      @JsonProperty("status") ResponseStatus status) {
+                                      @JsonProperty("status") ResponseDetails status) {
         this.account = account;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -75,7 +75,7 @@ public class DailyBalanceStatusResponse implements Serializable {
         return pass;
     }
 
-    public ResponseStatus getStatus() {
+    public ResponseDetails getStatus() {
         return status;
     }
 

@@ -40,8 +40,10 @@ dependencies {
 
 
     testCompile libraries.cucumber
+    testCompile libraries.spock
     testCompile 'org.assertj:assertj-core:3.4.1'
     testCompile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+    testCompile 'nl.jqno.equalsverifier:equalsverifier:1.7.2'
 }
 
 springboot{
@@ -54,7 +56,7 @@ jar.into('static') {
 
 build.dependsOn gulp_build, gulp_test
 
-task("gulpTest", type: Test){
+task("gulpTest"){
     dependsOn gulp_test
     group 'verification'
 }
@@ -81,4 +83,8 @@ processResources {
     filesMatching("**/application.properties") {
         expand( project.properties )
     }
+}
+
+clean.doFirst{
+    delete 'pttg-financial-status-service-ui.log'
 }

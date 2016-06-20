@@ -12,12 +12,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FundingCheckResult implements Serializable {
+public final class FundingCheckResult implements Serializable {
 
     private final String sortCode;
     private final String accountNumber;
@@ -94,6 +95,24 @@ public class FundingCheckResult implements Serializable {
             ", periodCheckedTo=" + periodCheckedTo +
             ", minimum=" + minimum +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FundingCheckResult that = (FundingCheckResult) o;
+        return fundingRequirementMet == that.fundingRequirementMet &&
+            Objects.equals(sortCode, that.sortCode) &&
+            Objects.equals(accountNumber, that.accountNumber) &&
+            Objects.equals(periodCheckedFrom, that.periodCheckedFrom) &&
+            Objects.equals(periodCheckedTo, that.periodCheckedTo) &&
+            Objects.equals(minimum, that.minimum);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sortCode, accountNumber, fundingRequirementMet, periodCheckedFrom, periodCheckedTo, minimum);
     }
 
     private String formatSortCode(String sortCode) {
