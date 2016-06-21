@@ -1,3 +1,4 @@
+@DataDir=FS6
 Feature: General Content - Tier 4 (General) student (single current account and no dependants)
 
 
@@ -6,11 +7,12 @@ Feature: General Content - Tier 4 (General) student (single current account and 
     Scenario: Page checks for Passed text write up
     This is a scenario to check if Applicant meets minimum financial requirement text write up
         Given caseworker is using the financial status service ui
+        Given the test data for account 55555555
         When the financial status check is performed with
             | End date                               | 01/06/2016  |
             | Total funds required                   | 2350        |
-            | Sort code                              | 13-56-09    |
-            | Account  number                        | 23568498    |
+            | Sort code                              | 55-55-55    |
+            | Account  number                        | 55555555    |
         Then the service displays the following result
             | Page dynamic heading                   | Passed      |
         And the service displays the following result headers in order
@@ -23,11 +25,12 @@ Feature: General Content - Tier 4 (General) student (single current account and 
     Scenario: Check for important text on the page
     This scenario is to check for required text on the page
         Given caseworker is using the financial status service ui
+        Given the test data for account 55555555
         When the financial status check is performed with
             | End date                     | 01/06/2016  |
             | Total funds required         | 2350        |
-            | Sort code                    | 13-56-09    |
-            | Account  number              | 23568498    |
+            | Sort code                    | 55-55-55    |
+            | Account  number              | 55555555    |
         Then the service displays the following result
             | Page heading                 | Tier 4 (General) student |
             | Page sub heading             | Financial status check  |
@@ -38,12 +41,13 @@ Feature: General Content - Tier 4 (General) student (single current account and 
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
+        Given the test data for account 55555555
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                               | 07/06/2016  |
             | Total funds required                   | 2350        |
-            | Sort code                              | 13-56-09    |
-            | Account  number                        | 23568498    |
+            | Sort code                              | 55-55-55    |
+            | Account  number                        | 55555555    |
         Then the service displays the following result
             | Page dynamic heading                   | Not passed  |
         And the service displays the following result headers in order
@@ -54,12 +58,13 @@ Feature: General Content - Tier 4 (General) student (single current account and 
 
     Scenario: Check for important text on the page
     This scenario is to check for required text on the page
+        Given the test data for account 55555555
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                               | 01/06/2016  |
             | Total funds required                   | 2350    |
-            | Sort code                              | 13-56-09    |
-            | Account  number                        | 23568498    |
+            | Sort code                              | 55-55-55    |
+            | Account  number                        | 55555555    |
         Then the service displays the following result
             | Page heading                           | Tier 4 (General) student |
             | Page sub heading                       | Financial status check   |
@@ -72,6 +77,7 @@ Feature: General Content - Tier 4 (General) student (single current account and 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
 
         Given caseworker is using the financial status service ui
+        Given the test data for account 55555555
         When the caseworker views the query page
         Then the service displays the following page content
             | Page heading     | Tier 4 (General) student |
