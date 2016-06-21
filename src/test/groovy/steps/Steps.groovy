@@ -38,7 +38,8 @@ class Steps {
 
     def pageLocations = [
         'queryPage'  : '#/financial-status-query',
-        'resultsPage': '#/financial-status-result'
+        'resultsPage': '#/financial-status-result',
+        'noRecordPage': '#/financial-status-no-record'
     ]
 
     def sortCodeParts = ["First", "Second", "Third"]
@@ -157,6 +158,13 @@ class Steps {
         driver.findElement(By.className("button")).click();
     }
 
+    @When("^the caseworker views the query page\$")
+    public void the_caseworker_views_the_query_page() throws Throwable {
+
+        driver.get(uiUrl)
+        assertCurrentPage('queryPage')
+    }
+
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
@@ -167,12 +175,63 @@ class Steps {
         assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
     }
 
+    @Then("^the service displays the query page\$")
+    public void the_service_displays_the_query_page(DataTable expectedResult) throws Throwable {
+
+        assertCurrentPage('queryPage')
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^the service displays the account not found page\$")
+    public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
+
+        assertCurrentPage('noRecordPage')
+
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^the service displays the following your search data\$")
+    public void the_service_displays_the_following_your_search_date(DataTable expectedResult) throws Throwable {
+
+        assertCurrentPage('noRecordPage')
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
         driver.sleep(delay)
         assertCurrentPage('resultsPage')
 
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^the service displays the following page content\$")
+    public void the_service_displays_the_following_page_content(DataTable expectedResult) throws Throwable {
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+
+    @Then("^the service displays the following result headers in order\$")
+    public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
+
+        assertCurrentPage('resultsPage')
+
+        WebElement tableElement = driver.findElement(By.id("resultsTable"))
+        def entriesAsList = expectedResult.asList(String.class)
+
+        entriesAsList.eachWithIndex { v, index ->
+            def oneBasedIndex = index + 1;
+            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
+            assert result : "Could not find header [$v] for Results table row, [$oneBasedIndex] "
+        }
+    }
+
+    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
         Map<String, String> entries = expectedResult.asMap(String.class, String.class)
 
         entries.each { k, v ->

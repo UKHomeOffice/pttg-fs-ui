@@ -80,6 +80,15 @@ class ServiceSpec extends Specification {
         true,
         new ResponseDetails("200", "OK"))
 
+    DailyBalanceStatusResponse notFoundResponse = new DailyBalanceStatusResponse(
+        null,
+        null,
+        null,
+        null,
+        false,
+        new ResponseDetails("404", "Not Found"))
+
+
     def remoteApiResponse(Response.Status status, DailyBalanceStatusResponse response) {
 
         mockClient.resource(_) >> webResource
@@ -246,4 +255,22 @@ class ServiceSpec extends Specification {
             andExpect(jsonPath("code", is("0000")))
         }
     }
+
+    def "propagates remote server not found response"() {
+
+        given:
+        remoteApiResponse(Response.Status.NOT_FOUND, notFoundResponse)
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
+                .param('toDate', TO_DATE))
+
+        then:
+        response.with {
+            andExpect(status().isNotFound())
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import uk.gov.digital.ho.proving.financial.exception.AccountNotFoundException;
 import uk.gov.digital.ho.proving.financial.exception.InvalidRequestParameterException;
 import uk.gov.digital.ho.proving.financial.exception.ServiceProcessingException;
 import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse;
@@ -74,10 +75,11 @@ public class Service {
         try {
             return fundingCheckResultFor(webResource);
 
+        } catch (AccountNotFoundException e){
+            return new ResponseEntity<>(new FundingCheckResult(sortCode, accountNumber), HttpStatus.NOT_FOUND);
+        } catch (ServiceProcessingException e){
+            throw e;
         } catch (Exception e) {
-            if (e instanceof ServiceProcessingException) {
-                throw e;
-            }
             LOGGER.error("Error processing request via FSS API: {}", e.getMessage());
             throw new ServiceProcessingException("0000", "Unknown error processing request via FSS API: " + e.getMessage());
         }
@@ -105,8 +107,12 @@ public class Service {
             .get(ClientResponse.class);
 
         if (clientResponse.getStatus() != (Response.Status.OK.getStatusCode())) {
-            LOGGER.error("Failure at FSS API with status: {}", clientResponse.getStatus());
-            throw new ServiceProcessingException("0005", "Failure at FSS API with status: " + clientResponse.getStatus());
+            if (clientResponse.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+                throw new AccountNotFoundException("00XX", "Account details not found: " + clientResponse.getStatus());
+            } else {
+                LOGGER.error("Failure at FSS API with status: {}", clientResponse.getStatus());
+                throw new ServiceProcessingException("0005", "Failure at FSS API with status: " + clientResponse.getStatus());
+            }
         }
 
         DailyBalanceStatusResponse apiResult = clientResponse.getEntity(DailyBalanceStatusResponse.class);

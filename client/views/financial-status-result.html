@@ -1,15 +1,15 @@
 <div id="page2">
-    <h1 class="heading-xlarge" id="pageSubTitle"><span class="heading-secondary">Tier 4 (General) student</span>Financial
-        status check</h1>
+    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student</span>
+        <span id="pageSubHeading">Financial status check</span></h1>
 
     <div class="govuk-box-highlight"
          ng-class="{'panel-fail': !vm.model.fundingRequirementMet}">
-            <h1 class="bold-large">
+            <h1 class="bold-large" id="pageDynamicHeading">
                 <span ng-if="vm.model.fundingRequirementMet" id="outcome">Passed</span>
                 <span ng-if="!vm.model.fundingRequirementMet" id="outcome">Not passed</span>
             </h1>
-            <p ng-if="vm.model.fundingRequirementMet">This applicant meets the financial requirements</p>
-            <p ng-if="!vm.model.fundingRequirementMet">This applicant does not meet the financial requirements</p>
+            <p id="pageDynamicDetail"><span ng-if="vm.model.fundingRequirementMet">This applicant meets all of the financial status requirements</span>
+            <span  ng-if="!vm.model.fundingRequirementMet">This applicant does not meet the financial requirements</span></p>
 
     </div>
 
@@ -17,7 +17,7 @@
     <h2 class="heading-medium">
         Results
     </h2>
-    <table>
+    <table id="resultsTable">
         <thead>
         </thead>
         <tbody>
