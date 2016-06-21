@@ -79,7 +79,7 @@ class TestDataLoader {
         def json = testDataFiles[accountNumber]
 
         if (json == null) {
-            assert false: "No test data file was loaded for account number $accountNumber from directory $dataDirName\r\n" +
+            assert false: "No test data file was loaded for account number $accountNumber from directory $dataDirName - " +
                 "You can create one using a copy of src/test/resources/account-data/example.json"
         }
 
