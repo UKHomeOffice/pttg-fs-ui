@@ -1,41 +1,45 @@
 package steps
 
 import cucumber.api.DataTable
+import cucumber.api.Scenario
+import cucumber.api.java.After
+import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
-import groovy.json.JsonOutput
-import groovyx.net.http.ContentType
-import groovyx.net.http.URIBuilder
+import groovy.json.JsonSlurper
 import net.thucydides.core.annotations.Managed
-import org.apache.commons.lang3.StringUtils
-import org.apache.commons.lang3.text.WordUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import groovyx.net.http.RESTClient
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-import java.text.SimpleDateFormat
+import static steps.UtilitySteps.toCamelCase
 
 /**
  * @Author Home Office Digital
  */
 class Steps {
 
-    def host = "localhost"
-    def port = 8001
-
-    def rootContextUrl(){
-        return new URIBuilder("/").setHost(host).setPort(port).setScheme("http").toString()
-    }
-
-    def queryPageLocation = '#/financial-status-query'
-    def resultsPageLocation = '#/financial-status-result'
+    private static Logger LOGGER = LoggerFactory.getLogger(Steps.class);
 
     @Managed
-    public WebDriver driver;
+    WebDriver driver;
+    private def delay = 500
 
-    private int delay = 500
+    def uiHost = "localhost"
+    def uiPort = 8001
+    def uiUrl = "http://$uiHost:$uiPort/"
+
+    def barclaysStubHost = "localhost"
+    def barclaysStubPort = 8082
+    def testDataLoader
+
+    def pageLocations = [
+        'queryPage'  : '#/financial-status-query',
+        'resultsPage': '#/financial-status-result'
+    ]
 
     def sortCodeParts = ["First", "Second", "Third"]
     def sortCodeDelimiter = "-"
@@ -43,20 +47,38 @@ class Steps {
     def dateParts = ["Day", "Month", "Year"]
     def dateDelimiter = "/"
 
-    def String toCamelCase(String s) {
-        String allUpper = StringUtils.remove(WordUtils.capitalizeFully(s), " ")
-        String camelCase = allUpper[0].toLowerCase() + allUpper.substring(1)
-        camelCase
 
-//        if(s.isEmpty()) return ""
-//        def words = s.tokenize(" ")*.toLowerCase()*.capitalize().join("")
-//        words[0].toLowerCase() + words.substring(1)
+    @Before
+    def setUp(Scenario scenario) {
+
+        checkPrerequisites()
+
+        // todo is there a hook to allow setup before all scenarios in this feature?
+        testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
+        testDataLoader.loadTestDataFiles(scenario)
     }
 
-    def parseDate(String dateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
-        Date date = sdf.parse(dateString)
-        date
+    @After
+    def tearDown() {
+        testDataLoader?.clearTestData()
+    }
+
+    private def checkPrerequisites() {
+
+        String healthCheckText = readHealthCheck()
+        def health = new JsonSlurper().parseText(healthCheckText)
+
+        assert health.status == "UP": "Health check failure. Are the UI, API and STUB all running? Healthcheck said: $healthCheckText"
+    }
+
+    private String readHealthCheck() {
+
+        try {
+            def healthCheckUrl = uiUrl + "health"
+            return healthCheckUrl.toURL().text
+        } catch (Exception e) {
+            assert false: "Could not connect to UI server at $uiUrl. Is it running?"
+        }
     }
 
     def sendKeys(WebElement element, String v) {
@@ -66,7 +88,7 @@ class Steps {
         }
     }
 
-    private void fillOrClearBySplitting(String key, String input, List<String> partNames, String delimiter) {
+    private def fillOrClearBySplitting(String key, String input, List<String> partNames, String delimiter) {
 
         if (input != null && input.length() != 0) {
             fillPartsBySplitting(key, input, delimiter, partNames)
@@ -76,7 +98,7 @@ class Steps {
         }
     }
 
-    private void fillPartsBySplitting(String key, String value, String delimiter, List<String> partNames) {
+    private def fillPartsBySplitting(String key, String value, String delimiter, List<String> partNames) {
 
         String[] parts = value.split(delimiter)
 
@@ -85,21 +107,34 @@ class Steps {
         }
     }
 
-    private void clearParts(String key, List<String> partNames) {
+    private def clearParts(String key, List<String> partNames) {
         partNames.each { part ->
             driver.findElement(By.id(key + part)).clear()
         }
     }
 
+    private def assertCurrentPage(String location) {
+
+        def expected = pageLocations[location]
+        assert driver.currentUrl.contains(expected): "We're not at the expected page location: '$expected'. Something must have gone wrong earlier. Current page $driver.currentUrl"
+    }
+
+
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(rootContextUrl());
+        driver.get(uiUrl)
+        assertCurrentPage('queryPage')
+    }
+
+    @Given("^the test data for account (.+)\$")
+    public void the_test_data_for_account_number(String accountNumber) {
+        testDataLoader.loadTestData(accountNumber)
     }
 
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
 
-        assert driver.currentUrl.contains(queryPageLocation)
+        assertCurrentPage('queryPage')
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
@@ -125,7 +160,7 @@ class Steps {
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
-        assert driver.currentUrl.contains(queryPageLocation)
+        assertCurrentPage('queryPage')
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
@@ -135,7 +170,8 @@ class Steps {
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
-        assert driver.currentUrl.contains(resultsPageLocation)
+        driver.sleep(delay)
+        assertCurrentPage('resultsPage')
 
         Map<String, String> entries = expectedResult.asMap(String.class, String.class)
 

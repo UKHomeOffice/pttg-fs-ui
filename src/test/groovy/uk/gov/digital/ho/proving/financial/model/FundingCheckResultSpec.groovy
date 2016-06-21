@@ -44,7 +44,7 @@ class FundingCheckResultSpec extends Specification {
     }
 
     @Unroll
-    def "should not format sortCode when #invalidBecause"() {
+    def "should not format sortCode #sortCode because #invalidBecause"() {
 
         when:
         def instance = new FundingCheckResult(sortCode, null, false, null, null, null)
