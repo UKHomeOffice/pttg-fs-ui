@@ -4,7 +4,6 @@ import cucumber.api.Scenario
 import groovyx.net.http.RESTClient
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import uk.gov.digital.ho.proving.financial.Service
 
 import static groovyx.net.http.ContentType.JSON
 
@@ -13,26 +12,35 @@ import static groovyx.net.http.ContentType.JSON
  */
 class TestDataLoader {
 
+    /*
+      * You can manually insert test data using POSTMAN (or similar) by POSTing the json data to
+      *
+      * http://localhost:8082/financialstatus/v1/accounts
+      *
+      * using content-type = application/json
+      *
+      * You can clear all test data by executing DELETE against the same URL
+     */
+
     private static Logger LOGGER = LoggerFactory.getLogger(TestDataLoader.class);
 
     def dataDirTagName = "@DataDir="
     def dataDirPath = "src/test/resources/account-data"
     def dataDirName
+    def dataDir
 
     def restClient
-
-    def testDataFiles = [:]
 
     TestDataLoader(String host, int port) {
 
         restClient = new RESTClient("http://$host:$port/financialstatus/v1/")
 
         restClient.handler.failure = { response, data ->
-            assert false : "Rest call failed with response status: $response.status and body: $data"
+            assert false: "Rest call failed with response status: $response.status and body: $data"
         }
     }
 
-    def loadTestDataFiles(Scenario scenario) {
+    def prepareFor(Scenario scenario) {
 
         def dataDirTag = scenario.getSourceTagNames().find {
             it.startsWith(dataDirTagName)
@@ -40,56 +48,52 @@ class TestDataLoader {
 
         if (dataDirTag != null) {
             dataDirName = dataDirTag - dataDirTagName
-            loadTestDataFilesFrom(dataDirName)
 
         } else {
             println ''
             LOGGER.warn('WARNING: No data directory specified. Tag the feature to specify the directory containing test data files, eg @DataDir=name')
         }
-    }
 
-    private def loadTestDataFilesFrom(String dataDir) {
+        dataDir = new File("$dataDirPath/$dataDirName")
 
-        println ''
-        LOGGER.debug("Loading test data files from: $dataDir")
-
-        def dir = new File("$dataDirPath/$dataDir")
-
-        if (!dir.isDirectory()) {
+        if (!dataDir.isDirectory()) {
             println ''
-            LOGGER.warn("WARNING: $dir.absolutePath is not a directory. No test data files will be loaded")
-            return
+            LOGGER.warn("WARNING: $dataDir.absolutePath is not a directory. No test data files will be loaded")
         }
-
-        testDataFiles = dir.listFiles().collectEntries {
-            [(it.name - '.json'): it.text]
-        }
-
-        int count = testDataFiles.size()
-        println ''
-        LOGGER.debug("Loaded $count data files")
     }
 
+    def loadTestData(String fileName) {
 
-    def loadTestData(String accountNumber) {
-
-        println ''
-        LOGGER.debug("Loading test data for $accountNumber")
-
-        def json = testDataFiles[accountNumber]
+        def json = jsonFromFile(fileName)
 
         if (json == null) {
-            assert false: "No test data file was loaded for account number $accountNumber from directory $dataDirName - " +
+            assert false: "No test data file was loaded for $fileName from directory $dataDirName - " +
                 "You can create one using a copy of src/test/resources/account-data/example.json"
         }
 
-        postTestData(accountNumber, json)
+        postTestData(fileName, json)
     }
 
-    private def postTestData(String accountNumber, String json) {
+    private def jsonFromFile(String fileName) {
 
         println ''
-        LOGGER.debug("Posting test data for $accountNumber")
+        LOGGER.debug("Loading test data for $fileName from: $dataDir")
+
+        def file = dataDir.listFiles().find {
+            it.name.contains(fileName)
+        }
+
+        if (file == null) {
+            return null
+        }
+
+        return file.text
+    }
+
+    private def postTestData(String fileName, String json) {
+
+        println ''
+        LOGGER.debug("Posting test data for $fileName")
 
         def response = restClient.post(
             path: "accounts",
@@ -100,15 +104,10 @@ class TestDataLoader {
         assert response.status == 200: "Error posting test data to stub. Response status: $response.status"
 
         println ''
-        LOGGER.debug("Completed posting test data for $accountNumber")
+        LOGGER.debug("Completed posting test data for $fileName")
     }
 
     def clearTestData() {
-
-        if(testDataFiles.size() <= 0){
-            LOGGER.debug("No test data files were loaded, so not going to try to delete from stub")
-            return
-        }
 
         println ''
         LOGGER.debug("Clearing test data")

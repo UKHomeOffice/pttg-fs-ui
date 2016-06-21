@@ -55,7 +55,7 @@ class Steps {
 
         // todo is there a hook to allow setup before all scenarios in this feature?
         testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
-        testDataLoader.loadTestDataFiles(scenario)
+        testDataLoader.prepareFor(scenario)
     }
 
     @After
@@ -127,8 +127,8 @@ class Steps {
     }
 
     @Given("^the test data for account (.+)\$")
-    public void the_test_data_for_account_number(String accountNumber) {
-        testDataLoader.loadTestData(accountNumber)
+    public void the_test_data_for_account_number(String fileName) {
+        testDataLoader.loadTestData(fileName)
     }
 
     @When("^the financial status check is performed with\$")
