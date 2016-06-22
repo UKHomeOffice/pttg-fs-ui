@@ -5,9 +5,9 @@
         .module('app.core')
         .controller('coreController', coreController);
 
-    coreController.$inject = ['$rootScope', '$location', 'restService', '$anchorScroll'];
+    coreController.$inject = ['$rootScope', '$location', 'restService', '$anchorScroll', '$log'];
     /* @ngInject */
-    function coreController($rootScope, $location, restService, $anchorScroll) {
+    function coreController($rootScope, $location, restService, $anchorScroll, $log) {
         var vm = this;
 
         var CURRENCY_SYMBOL = '£';
@@ -119,8 +119,15 @@
                         vm.model.sortCodeChecked = data.sortCode;
                         $location.path('/financial-status-result');
                     }).catch(function (error) {
-                    vm.serverError = 'Unable to process your request, please try again.';
-                    vm.serverErrorDetail = error.data.message;
+                     $log.debug("received a non success result with status: "+error.status)
+                    if (error.status === 404) {
+                        vm.model.accountNumberChecked = error.data.accountNumber;
+                        vm.model.sortCodeChecked = error.data.sortCode;
+                        $location.path('/financial-status-no-record');
+                    } else {
+                        vm.serverError = 'Unable to process your request, please try again.';
+                        vm.serverErrorDetail = error.data.message;
+                    }
                 });
             } else {
                 vm.validateError = true;

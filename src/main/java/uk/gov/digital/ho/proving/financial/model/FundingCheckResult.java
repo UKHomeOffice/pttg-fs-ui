@@ -61,6 +61,16 @@ public final class FundingCheckResult implements Serializable {
         this.minimum = apiResult.getMinimum();
     }
 
+    /* used for account not found response */
+    public FundingCheckResult(String sortCode, String accountNumber) {
+        this.sortCode = formatSortCode(sortCode);
+        this.accountNumber = accountNumber;
+        this.fundingRequirementMet = false;
+        this.periodCheckedFrom = null;
+        this.periodCheckedTo =null;
+        this.minimum = null;
+    }
+
     public String getSortCode() {
         return sortCode;
     }

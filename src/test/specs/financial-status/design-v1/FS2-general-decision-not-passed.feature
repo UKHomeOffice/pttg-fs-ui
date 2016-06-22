@@ -1,4 +1,4 @@
-@DataDir=FSS2
+@DataDir=FS2
 Feature: No pass - Tier 4 (General) Student In Country (single current account and no dependants)
 
     Requirement to meet Tier 4 pass

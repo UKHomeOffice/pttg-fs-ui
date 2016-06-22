@@ -1,0 +1,29 @@
+
+<h1 class="form-title heading-large">
+    <span id="pageDynamicHeading">There is no record for the sort code and account number with Barclays</span>
+</h1>
+
+<p class="lede"><span id="pageDynamicSubText">We couldn't perform the financial requirement check as no information exists for sort code {{vm.model.sortCodeChecked}} and account number {{vm.model.accountNumberChecked}}.</span></p>
+
+<h2 class="heading-medium">
+    Your search
+</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th scope="col">Sort code</th>
+        <th scope="col">Account number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><span id="sortCode">{{vm.model.sortCodeChecked}}</span></td>
+        <td><span id="accountNumber">{{vm.model.accountNumberChecked}}</span></td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<div class="form-group">
+    <input type="submit" class="button" value="Start a new search" ng-click="vm.newSearch()">
+</div>

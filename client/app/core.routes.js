@@ -19,6 +19,9 @@
             .when('/financial-status-result', {
                 templateUrl : 'views/financial-status-result.html'
             })
+            .when('/financial-status-no-record', {
+                templateUrl : 'views/financial-status-no-record.html'
+            })
             .otherwise({
                 templateUrl: 'views/404.html'
             });
