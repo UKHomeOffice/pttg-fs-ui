@@ -37,13 +37,32 @@
                             <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
                                 invalid</a></li>
 
-                        <li ng-if="vm.totalFundsRequiredInvalidError">
-                            <a href="" ng-click="vm.scrollTo('totalFundsRequired')">The total funds required is
-                                invalid</a></li>
+                        <li ng-if="vm.insideLondonMissingError">
+                            <a href="" ng-click="vm.scrollTo('insideLondon')">The inside london is missing</a></li>
 
-                        <li ng-if="vm.totalFundsRequiredMissingError">
-                            <a href="" ng-click="vm.scrollTo('totalFundsRequired')">The total funds required is
-                                missing</a></li>
+                        <li ng-if="vm.courseLengthInvalidError">
+                            <a href="" ng-click="vm.scrollTo('courseLength')">The course length is invalid</a></li>
+
+                        <li ng-if="vm.courseLengthMissingError">
+                            <a href="" ng-click="vm.scrollTo('courseLength')">The course length is missing</a></li>
+
+                        <li ng-if="vm.totalTuitionFeesInvalidError">
+                            <a href="" ng-click="vm.scrollTo('totalTuitionFees')">The total tuition fees is invalid</a></li>
+
+                        <li ng-if="vm.totalTuitionFeesMissingError">
+                            <a href="" ng-click="vm.scrollTo('totalTuitionFees')">The total tuition fees is missing</a></li>
+
+                        <li ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
+                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid')">The tuition fees already paid is invalid</a></li>
+
+                        <li ng-if="vm.tuitionFeesAlreadyPaidMissingError">
+                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid')">The tuition fees already paid is missing</a></li>
+
+                        <li ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
+                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees already paid is invalid</a></li>
+
+                        <li ng-if="vm.accommodationFeesAlreadyPaidMissingError">
+                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees already paid is missing</a></li>
 
                         <li ng-if="vm.accountNumberInvalidError">
                             <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is invalid</a></li>
@@ -99,20 +118,79 @@
                 </div>
 
                 <div class="form-group"
-                     ng-class="{error : vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError}">
-                    <label class="form-label-bold" for="totalFundsRequired">
-                        Total funds required
-                        <span
-                            class="form-hint">For example, 10000</span>
-                    </label>
-                    <span id="total-funds-required-error" class="error-message"
-                          ng-if="vm.totalFundsRequiredInvalidError || vm.totalFundsRequiredMissingError">
-                                    Please provide a valid total funds required</span>
-                    £<input type="number" pattern="[0-9]*" class="form-control form-control-1-4"
-                           name="totalFundsRequired"
-                           id="totalFundsRequired"
-                           ng-model="vm.model.totalFundsRequired" autocomplete="off">
+                     ng-class="{error : vm.insideLondonMissingError }">
+                    <fieldset class="inline">
+                        <legend class="form-label-bold">Is the place of study inside London?</legend>
+                        <span id="inside-london-error" class="error-message" ng-if="vm.insideLondonMissingError">
+                                        Please specify whether the course is inside or outside London</span>
+                        <label class="block-label" for="insideLondon-1">
+                            <input type="radio" class="form-control form-control-1-8" name="insideLondon"
+                                   id="insideLondon-1" value="yes"
+                                   ng-model="vm.model.insideLondon" autocomplete="off">Yes
+                        </label>
+                        <label class="block-label" for="insideLondon-2">
+                            <input type="radio" class="form-control form-control-1-8" name="insideLondon"
+                                   id="insideLondon-2" value="no"
+                                   ng-model="vm.model.insideLondon" autocomplete="off">No
+                        </label>
+                    </fieldset>
                 </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
+                    <label class="form-label-bold" for="courseLength">
+                        Course length
+                        <span class="form-hint">Enter the number of months, up to 9 months</span>
+                    </label>
+                    <span id="course-length-error" class="error-message"
+                          ng-if="vm.courseLengthInvalidError || vm.courseLengthMissingError">
+                                    Please provide a valid course length</span>
+                    <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
+                           ng-model="vm.model.courseLength" autocomplete="off">
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError }">
+                    <label class="form-label-bold" for="totalTuitionFees">
+                        Total tuition fees for the first year
+                        <span class="form-hint">For example, 9000</span>
+                    </label>
+                    <span id="total-tuition-fees-error" class="error-message"
+                          ng-if="vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError">
+                                    Please provide a valid total tuition fees</span>
+                    £ <input type="number" class="form-control form-control-1-4" name="totalTuitionFees"
+                            id="totalTuitionFees"
+                            ng-model="vm.model.totalTuitionFees" autocomplete="off">
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError }">
+                    <label class="form-label-bold" for="tuitionFeesAlreadyPaid">
+                        Tuition fees already paid
+                        <span class="form-hint">For example, 3000</span>
+                    </label>
+                    <span id="tuition-fees-already-paid-error" class="error-message"
+                          ng-if="vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError">
+                                    Please provide a valid tuition fees already paid</span>
+                    £ <input type="number" class="form-control form-control-1-4" name="tuitionFeesAlreadyPaid"
+                            id="tuitionFeesAlreadyPaid"
+                            ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError }">
+                    <label class="form-label-bold" for="accommodationFeesAlreadyPaid">
+                        Accommodation fees already paid
+                        <span class="form-hint">For example, 500</span>
+                    </label>
+                    <span id="accommodation-fees-already-paid-error" class="error-message"
+                          ng-if="vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError">
+                                    Please provide a valid accommodation fees already paid</span>
+                    £ <input type="number" class="form-control form-control-1-4" name="accommodationFeesAlreadyPaid"
+                            id="accommodationFeesAlreadyPaid"
+                            ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
+                </div>
+
 
                 <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
                     <fieldset>

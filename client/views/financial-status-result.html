@@ -15,6 +15,24 @@
 
 
     <h2 class="heading-medium">
+        Your search
+    </h2>
+    <table id="yourSearchTable">
+        <thead>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Sort code</th>
+            <td id="sortCode" scope="col">{{vm.model.sortCodeChecked}}</td>
+        </tr>
+        <tr>
+            <th>Account number</th>
+            <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 class="heading-medium">
         Results
     </h2>
     <table id="resultsTable">
@@ -26,16 +44,8 @@
             <td id="totalFundsRequired" scope="col">{{vm.formatMoneyWholePounds(vm.model.minimum)}}</td>
         </tr>
         <tr>
-            <th>28-day period checked</th>
+            <th>Maintenance period checked</th>
             <td id="28-dayPeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
-        </tr>
-        <tr>
-            <th>Sort code</th>
-            <td id="sortCode" scope="col">{{vm.model.sortCodeChecked}}</td>
-        </tr>
-        <tr>
-            <th>Account number</th>
-            <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
         </tr>
         </tbody>
     </table>
