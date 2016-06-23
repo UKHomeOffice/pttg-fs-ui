@@ -29,15 +29,19 @@ mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by 
 
 dependencies {
     compile libraries.groovy
+    compile libraries.jackson
+    compile libraries.jersey
     compile libraries.json
     compile libraries.logging
-    compile libraries.jacksonJsonProviders
 
-    testCompile libraries.groovy
-    testCompile libraries.json
-    testCompile libraries.testUtils
     testCompile libraries.cucumber
+    testCompile libraries.groovy
+    testCompile libraries.jackson
+    testCompile libraries.jersey
+    testCompile libraries.json
     testCompile libraries.spock
+    testCompile libraries.springTest
+    testCompile libraries.testUtils
 }
 
 springboot{
