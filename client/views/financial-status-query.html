@@ -37,8 +37,8 @@
                             <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
                                 invalid</a></li>
 
-                        <li ng-if="vm.insideLondonMissingError">
-                            <a href="" ng-click="vm.scrollTo('insideLondon')">The inside london is missing</a></li>
+                        <li ng-if="vm.innerLondonBoroughMissingError">
+                            <a href="" ng-click="vm.scrollTo('innerLondonBorough')">The inner London Borough is missing</a></li>
 
                         <li ng-if="vm.courseLengthInvalidError">
                             <a href="" ng-click="vm.scrollTo('courseLength')">The course length is invalid</a></li>
@@ -117,21 +117,21 @@
                     </fieldset>
                 </div>
 
-                <div class="form-group"
-                     ng-class="{error : vm.insideLondonMissingError }">
+                <div class="form-group" id="innerLondonBorough"
+                     ng-class="{error : vm.innerLondonBoroughMissingError }">
                     <fieldset class="inline">
-                        <legend class="form-label-bold">Is the place of study inside London?</legend>
-                        <span id="inside-london-error" class="error-message" ng-if="vm.insideLondonMissingError">
+                        <legend class="form-label-bold">Is the place of study inner London Borough?</legend>
+                        <span id="inside-london-error" class="error-message" ng-if="vm.innerLondonBoroughMissingError">
                                         Please specify whether the course is inside or outside London</span>
-                        <label class="block-label" for="insideLondon-1">
-                            <input type="radio" class="form-control form-control-1-8" name="insideLondon"
-                                   id="insideLondon-1" value="yes"
-                                   ng-model="vm.model.insideLondon" autocomplete="off">Yes
+                        <label class="block-label" for="innerLondonBorough-1">
+                            <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
+                                   id="innerLondonBorough-1" value="yes"
+                                   ng-model="vm.model.innerLondonBorough" autocomplete="off">Yes
                         </label>
-                        <label class="block-label" for="insideLondon-2">
-                            <input type="radio" class="form-control form-control-1-8" name="insideLondon"
-                                   id="insideLondon-2" value="no"
-                                   ng-model="vm.model.insideLondon" autocomplete="off">No
+                        <label class="block-label" for="innerLondonBorough-2">
+                            <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
+                                   id="innerLondonBorough-2" value="no"
+                                   ng-model="vm.model.innerLondonBorough" autocomplete="off">No
                         </label>
                     </fieldset>
                 </div>

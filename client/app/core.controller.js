@@ -28,11 +28,18 @@
             endDateMonth: '',
             endDateYear: '',
 
-            totalFundsRequired: '',
+            innerLondonBorough: '',
+            courseLength: '',
+            totalTuitionFees: '',
+            tuitionFeesAlreadyPaid: '',
+            accommodationFeesAlreadyPaid: '',
+
             accountNumber: '',
             sortCodeFirst: '',
             sortCodeSecond: '',
             sortCodeThird: '',
+
+            totalFundsRequired: '',
 
             fundingRequirementMet: '',
             minimum: '',
@@ -48,8 +55,20 @@
         vm.endDateInvalidError = false;
         vm.endDateMissingError = false;
 
-        vm.totalFundsRequiredInvalidError = false;
-        vm.totalFundsRequiredMissingError = false;
+        vm.innerLondonBoroughInvalidError = false;
+        vm.innerLondonBoroughMissingError = false;
+
+        vm.courseLengthInvalidError = false;
+        vm.courseLengthMissingError = false;
+
+        vm.totalTuitionFeesInvalidError = false;
+        vm.totalTuitionFeesMissingError = false;
+
+        vm.tuitionFeesAlreadyPaidInvalidError = false;
+        vm.tuitionFeesAlreadyPaidMissingError = false;
+
+        vm.accommodationFeesAlreadyPaidInvalidError = false;
+        vm.accommodationFeesAlreadyPaidMissingError = false;
 
         vm.accountNumberInvalidError = false;
         vm.accountNumberMissingError = false;
@@ -74,14 +93,14 @@
                 vm.formatDate(vm.model.periodCheckedTo)
         }
 
-        vm.getFullendDate = function () {
+        vm.getFullEndDate = function () {
             var month = vm.model.endDateMonth > 9 ? vm.model.endDateMonth : '0' + vm.model.endDateMonth;
             var day = vm.model.endDateDay > 9 ? vm.model.endDateDay : '0' + vm.model.endDateDay
             return vm.model.endDateYear + '-' + month + '-' + day;
         };
 
-        vm.formatendDate = function () {
-            return vm.formatDate(vm.getFullendDate());
+        vm.formatEndDate = function () {
+            return vm.formatDate(vm.getFullEndDate());
         }
 
         vm.formatDate = function (dateToFormat) {
@@ -104,12 +123,25 @@
 
             if (validateForm()) {
 
-                // to do - add all other parameters
+                restService.calculateTotalFundsRequired(
+                    vm.model.innerLondonBorough,
+                    vm.model.courseLength,
+                    vm.model.totalTuitionFees,
+                    vm.model.tuitionFeesAlreadyPaid,
+                    vm.model.accommodationFeesAlreadyPaid)
+                    .then(function (data) {
+                        vm.model.totalFundsRequired = data.totalFundsRequired;
+                    }).catch(function (error) {
+                    $log.debug("received a non success result with status: " + error.status)
+                    vm.serverError = 'Unable to process your request, please try again.';
+                    vm.serverErrorDetail = error.data.message;
+                });
+
                 restService.checkFinancialStatus(
                     vm.model.accountNumber,
                     vm.getFullSortCodeDigits(),
                     vm.model.totalFundsRequired,
-                    vm.getFullendDate())
+                    vm.getFullEndDate())
                     .then(function (data) {
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
@@ -119,7 +151,7 @@
                         vm.model.sortCodeChecked = data.sortCode;
                         $location.path('/financial-status-result');
                     }).catch(function (error) {
-                     $log.debug("received a non success result with status: "+error.status)
+                    $log.debug("received a non success result with status: " + error.status)
                     if (error.status === 404) {
                         vm.model.accountNumberChecked = error.data.accountNumber;
                         vm.model.sortCodeChecked = error.data.sortCode;
@@ -142,8 +174,20 @@
             vm.endDateInvalidError = false;
             vm.endDateMissingError = false;
 
-            vm.totalFundsRequiredInvalidError = false;
-            vm.totalFundsRequiredMissingError = false;
+            vm.innerLondonBoroughInvalidError = false;
+            vm.innerLondonBoroughRequiredMissingError = false;
+
+            vm.courseLengthInvalidError = false;
+            vm.courseLengthMissingError = false;
+
+            vm.totalTuitionFeesInvalidError = false;
+            vm.totalTuitionFeesMissingError = false;
+
+            vm.tuitionFeesAlreadyPaidInvalidError = false;
+            vm.tuitionFeesAlreadyPaidMissingError = false;
+
+            vm.accommodationFeesAlreadyPaidInvalidError = false;
+            vm.accommodationFeesAlreadyPaidMissingError = false;
 
             vm.accountNumberInvalidError = false;
             vm.accountNumberMissingError = false;
@@ -169,21 +213,57 @@
                 vm.queryForm.endDateYear.$setValidity(false);
                 vm.endDateMissingError = true;
                 validated = false;
-            } else if (!moment(vm.getFullendDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+            } else if (!moment(vm.getFullEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
                 vm.endDateInvalidError = true;
                 validated = false;
-            } else if (moment(vm.getFullendDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
+            } else if (moment(vm.getFullEndDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
                 vm.endDateInvalidError = true;
                 validated = false;
             }
 
-            if (vm.model.totalFundsRequired === '' || vm.model.totalFundsRequired === null) {
-                vm.queryForm.totalFundsRequired.$setValidity(false);
-                vm.totalFundsRequiredMissingError = true;
+            if (vm.model.innerLondonBorough === '' || vm.model.innerLondonBorough === null) {
+                vm.queryForm.innerLondonBorough.$setValidity(false);
+                vm.innerLondonBoroughMissingError = true;
                 validated = false;
-            } else if (vm.model.totalFundsRequired !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.totalFundsRequired))) {
-                vm.queryForm.totalFundsRequired.$setValidity(false);
-                vm.totalFundsRequiredInvalidError = true;
+            }
+
+            if (vm.model.courseLength === '' || vm.model.courseLength === null) {
+                vm.queryForm.courseLength.$setValidity(false);
+                vm.courseLengthMissingError = true;
+                validated = false;
+            } else if (vm.model.courseLength !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.courseLength))) {
+                vm.queryForm.courseLength.$setValidity(false);
+                vm.courseLengthInvalidError = true;
+                validated = false;
+            }
+            
+            if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
+                vm.queryForm.totalTuitionFees.$setValidity(false);
+                vm.totalTuitionFeesMissingError = true;
+                validated = false;
+            } else if (vm.model.totalTuitionFees !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.totalTuitionFees))) {
+                vm.queryForm.totalTuitionFees.$setValidity(false);
+                vm.totalTuitionFeesInvalidError = true;
+                validated = false;
+            }
+
+            if (vm.model.tuitionFeesAlreadyPaid === '' || vm.model.tuitionFeesAlreadyPaid === null) {
+                vm.queryForm.tuitionFeesAlreadyPaid.$setValidity(false);
+                vm.tuitionFeesAlreadyPaidMissingError = true;
+                validated = false;
+            } else if (vm.model.tuitionFeesAlreadyPaid !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.tuitionFeesAlreadyPaid))) {
+                vm.queryForm.tuitionFeesAlreadyPaid.$setValidity(false);
+                vm.tuitionFeesAlreadyPaidInvalidError = true;
+                validated = false;
+            }
+
+            if (vm.model.accommodationFeesAlreadyPaid === '' || vm.model.accommodationFeesAlreadyPaid === null) {
+                vm.queryForm.accommodationFeesAlreadyPaid.$setValidity(false);
+                vm.accommodationFeesAlreadyPaidMissingError = true;
+                validated = false;
+            } else if (vm.model.accommodationFeesAlreadyPaid !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.accommodationFeesAlreadyPaid))) {
+                vm.queryForm.accommodationFeesAlreadyPaid.$setValidity(false);
+                vm.accommodationFeesAlreadyPaidInvalidError = true;
                 validated = false;
             }
 

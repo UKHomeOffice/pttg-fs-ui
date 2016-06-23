@@ -109,6 +109,8 @@ class TestDataLoader {
 
     def clearTestData() {
 
+        // todo don't bother if we know we haven't sent anything
+
         println ''
         LOGGER.debug("Clearing test data")
 
