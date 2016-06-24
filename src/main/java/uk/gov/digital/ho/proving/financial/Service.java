@@ -11,19 +11,23 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
+import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
 import uk.gov.digital.ho.proving.financial.exception.AccountNotFoundException;
 import uk.gov.digital.ho.proving.financial.exception.InvalidRequestParameterException;
 import uk.gov.digital.ho.proving.financial.exception.ServiceProcessingException;
-import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse;
-import uk.gov.digital.ho.proving.financial.model.FundingCheckResult;
-import uk.gov.digital.ho.proving.financial.model.ThresholdResponse;
+import uk.gov.digital.ho.proving.financial.integration.ApiUrls;
+import uk.gov.digital.ho.proving.financial.model.*;
 
-import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
+
+import static uk.gov.digital.ho.proving.financial.model.ResponseDetails.notFoundResponseDetails;
 
 /**
  * @Author Home Office Digital
@@ -35,9 +39,6 @@ public class Service {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
 
-    private static final Pattern SORT_CODE_PATTERN = Pattern.compile("^(?!000000)\\d{6}$");
-    private static final Pattern ACCOUNT_NUMBER_PATTERN = Pattern.compile("^(?!00000000)\\d{8}$");
-
     @Value("${daily-balance.days-to-check}")
     private int daysToCheck;
 
@@ -46,47 +47,25 @@ public class Service {
 
     private Client client = getClient();
 
+
     @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(
-        @PathVariable("accountNumber") String accountNumber,
-        @PathVariable("sortCode") String sortCode,
-        @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-        @RequestParam(value = "innerLondonBorough", required = true) Boolean innerLondonBorough,
-        @RequestParam(value = "courseLength", required = true) int courseLength,
-        @RequestParam(value = "totalTuitionFees", required = true) int totalTuitionFees,
-        @RequestParam(value = "tuitionFeesAlreadyPaid", required = true) int tuitionFeesAlreadyPaid,
-        @RequestParam(value = "accommodationFeesAlreadyPaid", required = true) int accommodationFeesAlreadyPaid
-    ) {
+        @Valid Account account,
+        @Valid Course course,
+        @Valid Maintenance maintenance,
+        @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
+        ) {
 
-        LOGGER.debug("Status for: accountNumber: {}, sortCode: {}", accountNumber, sortCode);
+        LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}", account, course, maintenance, toDate);
 
-        // todo standardize validation scheme eg use spring / jsr303 @Valid
-        if (!SORT_CODE_PATTERN.matcher(sortCode).matches()) {
-            LOGGER.debug("Invalid sortcode: {}", sortCode);
-            throw new InvalidRequestParameterException("sortCode", "Invalid sort code");
-        }
-
-        if (!ACCOUNT_NUMBER_PATTERN.matcher(accountNumber).matches()) {
-            LOGGER.debug("Invalid accountNumber: {}", accountNumber);
-            throw new InvalidRequestParameterException("accountNumber", "Invalid account number");
-        }
-
-        // todo bundle all these params into a class
-        return checkFinancialStatus(accountNumber, sortCode, toDate, innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid);
+        return checkFinancialStatus(account, toDate, course, maintenance);
     }
 
-    private ResponseEntity checkFinancialStatus(String accountNumber,
-                                                String sortCode,
-                                                LocalDate toDate,
-                                                Boolean innerLondonBorough,
-                                                int courseLength,
-                                                int totalTuitionFees,
-                                                int tuitionFeesAlreadyPaid,
-                                                int accommodationFeesAlreadypaid) {
+    private ResponseEntity checkFinancialStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
-        BigDecimal totalFundsRequired = getThreshold(innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadypaid);
+        BigDecimal totalFundsRequired = getThreshold(course, maintenance);
 
-        return getDailyBalanceStatus(accountNumber, sortCode, toDate, totalFundsRequired);
+        return getDailyBalanceStatus(account, toDate, totalFundsRequired);
     }
 
     // todo wrap params into request class
@@ -94,14 +73,8 @@ public class Service {
     // todo introduce response data class
     // todo use optional rather than exceptions
 
-    private BigDecimal getThreshold(Boolean innerLondonBorough, int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
-
-        WebResource thresholdResource = client.resource(apiUrls.thresholdUrlFor(
-            innerLondonBorough,
-            courseLength,
-            totalTuitionFees,
-            tuitionFeesAlreadyPaid,
-            accommodationFeesAlreadypaid));
+    private BigDecimal getThreshold(Course course, Maintenance maintenance) {
+        WebResource thresholdResource = client.resource(apiUrls.thresholdUrlFor(course, maintenance));
 
         try {
             return thresholdCalculationFor(thresholdResource);
@@ -127,17 +100,16 @@ public class Service {
 
         }
 
-        ThresholdResponse apiResult = clientResponse.getEntity(ThresholdResponse.class);
+        ThresholdResult apiResult = clientResponse.getEntity(ThresholdResult.class);
         LOGGER.debug("Received threshold result: {}", apiResult.toString());
 
         return apiResult.getThreshold();
     }
 
-    private ResponseEntity getDailyBalanceStatus(String accountNumber, String sortCode, LocalDate toDate, BigDecimal totalFundsRequired) {
+    private ResponseEntity getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
 
         WebResource dailyBalanceResource = client.resource(apiUrls.dailyBalanceStatusUrlFor(
-            accountNumber,
-            sortCode,
+            account,
             totalFundsRequired,
             toDate.minusDays(daysToCheck - 1),
             toDate));
@@ -146,7 +118,7 @@ public class Service {
             return fundingCheckResultFor(dailyBalanceResource);
 
         } catch (AccountNotFoundException e) {
-            return new ResponseEntity<>(new FundingCheckResult(sortCode, accountNumber), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new FundingCheckResponse(notFoundResultFor(account)), HttpStatus.NOT_FOUND);
         } catch (ServiceProcessingException e) {
             throw e;
         } catch (Exception e) {
@@ -172,10 +144,14 @@ public class Service {
             }
         }
 
-        DailyBalanceStatusResponse apiResult = clientResponse.getEntity(DailyBalanceStatusResponse.class);
+        DailyBalanceStatusResult apiResult = clientResponse.getEntity(DailyBalanceStatusResult.class);
         LOGGER.debug("Received dailybalancestatus result: {}", apiResult.toString());
 
-        return new ResponseEntity<>(new FundingCheckResult(apiResult), HttpStatus.OK);
+        return new ResponseEntity<>(new FundingCheckResponse(apiResult), HttpStatus.OK);
+    }
+
+    private DailyBalanceStatusResult notFoundResultFor(Account account) {
+        return new DailyBalanceStatusResult(account, null, null, null, false, notFoundResponseDetails());
     }
 
 

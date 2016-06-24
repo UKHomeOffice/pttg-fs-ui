@@ -1,4 +1,4 @@
-package uk.gov.digital.ho.proving.financial.model;
+package uk.gov.digital.ho.proving.financial.integration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.gov.digital.ho.proving.financial.model.Account;
+import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -19,7 +21,7 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class DailyBalanceStatusResponse implements Serializable {
+public final class DailyBalanceStatusResult implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final Account account;
@@ -40,12 +42,12 @@ public final class DailyBalanceStatusResponse implements Serializable {
     private final ResponseDetails status;
 
     @JsonCreator
-    public DailyBalanceStatusResponse(@JsonProperty("account") Account account,
-                                      @JsonProperty("fromDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
-                                      @JsonProperty("toDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-                                      @JsonProperty("minimum") BigDecimal minimum,
-                                      @JsonProperty("pass") boolean pass,
-                                      @JsonProperty("status") ResponseDetails status) {
+    public DailyBalanceStatusResult(@JsonProperty("account") Account account,
+                                    @JsonProperty("fromDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+                                    @JsonProperty("toDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+                                    @JsonProperty("minimum") BigDecimal minimum,
+                                    @JsonProperty("pass") boolean pass,
+                                    @JsonProperty("status") ResponseDetails status) {
         this.account = account;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -82,7 +84,7 @@ public final class DailyBalanceStatusResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "DailyBalanceStatusResponse{" +
+        return "DailyBalanceStatusResult{" +
             "account=" + account +
             ", fromDate=" + fromDate +
             ", toDate=" + toDate +
@@ -96,7 +98,7 @@ public final class DailyBalanceStatusResponse implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DailyBalanceStatusResponse that = (DailyBalanceStatusResponse) o;
+        DailyBalanceStatusResult that = (DailyBalanceStatusResult) o;
         return pass == that.pass &&
             Objects.equals(account, that.account) &&
             Objects.equals(fromDate, that.fromDate) &&

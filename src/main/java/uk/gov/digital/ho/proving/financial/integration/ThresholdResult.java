@@ -1,4 +1,4 @@
-package uk.gov.digital.ho.proving.financial.model;
+package uk.gov.digital.ho.proving.financial.integration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -12,12 +12,12 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class ThresholdResponse implements Serializable {
+public final class ThresholdResult implements Serializable {
 
     private final BigDecimal threshold;
 
     @JsonCreator
-    public ThresholdResponse(@JsonProperty("threshold") BigDecimal threshold){
+    public ThresholdResult(@JsonProperty("threshold") BigDecimal threshold){
         this.threshold = threshold;
     }
 
@@ -27,7 +27,7 @@ public final class ThresholdResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "ThresholdResponse{" +
+        return "ThresholdResult{" +
             "threshold='" + threshold + '\'' +
             '}';
     }
@@ -36,7 +36,7 @@ public final class ThresholdResponse implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ThresholdResponse that = (ThresholdResponse) o;
+        ThresholdResult that = (ThresholdResult) o;
         return Objects.equals(threshold, that.threshold);
     }
 

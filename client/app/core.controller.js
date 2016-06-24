@@ -46,7 +46,12 @@
             accountNumberChecked: '',
             sortCodeChecked: '',
             periodCheckedFrom: '',
-            periodCheckedTo: ''
+            periodCheckedTo: '',
+            innerLondonBoroughChecked: '',
+            courseLengthChecked: '',
+            totalTuitionFeesChecked: '',
+            tuitionFeesAlreadyPaidChecked: '',
+            accommodationFeesAlreadyPaidChecked: ''
 
         };
 
@@ -133,13 +138,25 @@
                     vm.model.tuitionFeesAlreadyPaid,
                     vm.model.accommodationFeesAlreadyPaid)
                     .then(function (data) {
+                        // api results
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
-                        vm.model.periodCheckedFrom = data.periodCheckedFrom;
-                        vm.model.periodCheckedTo = data.periodCheckedTo;
                         vm.model.minimum = data.minimum;
-                        vm.model.accountNumberChecked = data.accountNumber;
-                        vm.model.sortCodeChecked = data.sortCode;
-                        $location.path('/financial-status-result');
+                        vm.model.periodCheckedFrom = data.periodCheckedFrom;
+                        // reflect inputs
+                        vm.model.periodCheckedTo = vm.getFullEndDate();
+                        vm.model.accountNumberChecked = vm.model.accountNumber;
+                        vm.model.sortCodeChecked = vm.getFullSortCode();
+                        vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough;
+                        vm.model.courseLengthChecked = vm.model.courseLength;
+                        vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
+                        vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
+                        vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
+
+                        if (vm.model.fundingRequirementMet == true) {
+                            $location.path('/financial-status-result-pass');
+                        } else {
+                            $location.path('/financial-status-result-not-pass');
+                        }
                     }).catch(function (error) {
                     $log.debug("received a non success result with status: " + error.status)
                     if (error.status === 404) {
@@ -226,7 +243,7 @@
                 vm.courseLengthInvalidError = true;
                 validated = false;
             }
-            
+
             if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
                 vm.queryForm.totalTuitionFees.$setValidity(false);
                 vm.totalTuitionFeesMissingError = true;

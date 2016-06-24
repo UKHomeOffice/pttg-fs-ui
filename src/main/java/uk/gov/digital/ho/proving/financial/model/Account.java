@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -13,13 +15,30 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Account implements Serializable {
 
-    private final String sortCode;
-    private final String accountNumber;
+    @NotNull(message = "Missing parameter")
+    @Pattern(regexp = "^(?!000000)\\d{6}$", message = "Invalid parameter format")
+    private String sortCode;
+
+    @NotNull(message = "Missing parameter")
+    @Pattern(regexp = "^(?!00000000)\\d{8}$", message = "Invalid parameter format")
+    private String accountNumber;
 
     @JsonCreator
     public Account(@JsonProperty("sortCode") String sortCode,
                    @JsonProperty("accountNumber") String accountNumber) {
         this.sortCode = sortCode;
+        this.accountNumber = accountNumber;
+    }
+
+    // todo how to make pathvariable binding work via jsoncreator instead of setters?
+    public Account() {
+    }
+
+    public void setSortCode(String sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 

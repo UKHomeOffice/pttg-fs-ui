@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
+import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 
 import java.time.LocalDate
 
@@ -35,7 +36,7 @@ class DailyBalanceStatusResponseSpec extends Specification {
         def sampleOneJson = stringFromFile("dailybalancestatusresponse-sample-one.json")
 
         when:
-        def actual = mapper.readValue(sampleOneJson, DailyBalanceStatusResponse.class)
+        def actual = mapper.readValue(sampleOneJson, DailyBalanceStatusResult.class)
 
         then:
         actual == expected
@@ -53,20 +54,20 @@ class DailyBalanceStatusResponseSpec extends Specification {
         output.contains("pass=$sample.pass")
 
         and:
-        !output.contains('DailyBalanceStatusResponse@')
+        !output.contains('DailyBalanceStatusResult@')
     }
 
     def 'has valid hashcode and equals'() {
 
         when:
-        EqualsVerifier.forClass(DailyBalanceStatusResponse).verify()
+        EqualsVerifier.forClass(DailyBalanceStatusResult).verify()
 
         then:
         noExceptionThrown()
     }
 
 
-    def sampleOne = new DailyBalanceStatusResponse(
+    def sampleOne = new DailyBalanceStatusResult(
         new Account("112233", "12345678"),
         LocalDate.of(2015, 10, 3),
         LocalDate.of(2015, 10, 30),

@@ -1,10 +1,13 @@
-package uk.gov.digital.ho.proving.financial;
+package uk.gov.digital.ho.proving.financial.integration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import uk.gov.digital.ho.proving.financial.model.Account;
+import uk.gov.digital.ho.proving.financial.model.Course;
+import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -28,14 +31,14 @@ public class ApiUrls {
     private String apiThresholdEndpoint;
 
 
-    public URI thresholdUrlFor(Boolean innerLondonBorough, int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
+    public URI thresholdUrlFor(Course course, Maintenance maintenance) {
 
         LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceEndpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdEndpoint)
-            .queryParam("innerLondon", innerLondonBorough)
-            .queryParam("courseLength", courseLength)
-            .queryParam("tuitionFees", totalTuitionFees)
+            .queryParam("innerLondon", course.getInnerLondonBorough())
+            .queryParam("courseLength", course.getCourseLength())
+            .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
 //            .queryParam("totalTuitionFees", totalTuitionFees)
 //            .queryParam("tuitionFeesAlreadyPaid", tuitionFeesAlreadyPaid)
 //            .queryParam("accommodationFeesAlreadypaid", accommodationFeesAlreadypaid)
@@ -47,13 +50,13 @@ public class ApiUrls {
         return expanded;
     }
 
-    public URI dailyBalanceStatusUrlFor(String accountNumber, String sortCode, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
+    public URI dailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceEndpoint)
             .queryParam("minimum", totalFundsRequired.toPlainString())
             .queryParam("fromDate", from)
             .queryParam("toDate", to)
-            .buildAndExpand(sortCode, accountNumber)
+            .buildAndExpand(account.getSortCode(), account.getAccountNumber())
             .toUri();
 
         LOGGER.debug(expanded.toString());

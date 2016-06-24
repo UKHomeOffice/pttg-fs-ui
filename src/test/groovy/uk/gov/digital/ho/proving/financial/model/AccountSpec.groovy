@@ -26,7 +26,7 @@ class AccountSpec extends Specification {
     def 'has valid hashcode and equals'() {
 
         when:
-        EqualsVerifier.forClass(Account).verify()
+        EqualsVerifier.forClass(Account).suppress(Warning.NONFINAL_FIELDS).verify() // todo remove suppression when can make spring binding behave with immutable class
 
         then:
         noExceptionThrown()

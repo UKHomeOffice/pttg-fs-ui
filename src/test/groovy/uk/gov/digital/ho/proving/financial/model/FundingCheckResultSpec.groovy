@@ -5,6 +5,7 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
+import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse
 
 import java.time.LocalDate
 
@@ -37,7 +38,7 @@ class FundingCheckResultSpec extends Specification {
         def sampleOneJson = stringFromFile("fundingcheckresult-sample-one.json")
 
         when:
-        def actual = mapper.readValue(sampleOneJson, FundingCheckResult.class)
+        def actual = mapper.readValue(sampleOneJson, FundingCheckResponse.class)
 
         then:
         actual == expected
@@ -47,7 +48,7 @@ class FundingCheckResultSpec extends Specification {
     def "should not format sortCode #sortCode because #invalidBecause"() {
 
         when:
-        def instance = new FundingCheckResult(sortCode, null, false, null, null, null)
+        def instance = new FundingCheckResponse(sortCode, null, false, null, null, null)
 
         then:
         instance.sortCode == sortCode
@@ -63,7 +64,7 @@ class FundingCheckResultSpec extends Specification {
     def "should format #sortCode to #formatted for presentation"() {
 
         when:
-        def instance = new FundingCheckResult(sortCode, null, false, null, null, null)
+        def instance = new FundingCheckResponse(sortCode, null, false, null, null, null)
 
         then:
         instance.sortCode == formatted
@@ -78,7 +79,7 @@ class FundingCheckResultSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new FundingCheckResult("112233", null, false, null, null, null)
+        def instance = new FundingCheckResponse("112233", null, false, null, null, null)
 
         when:
         def output = instance.toString()
@@ -87,19 +88,19 @@ class FundingCheckResultSpec extends Specification {
         output.contains("sortCode='$instance.sortCode'")
 
         and:
-        !output.contains('FundingCheckResult@')
+        !output.contains('FundingCheckResponse@')
     }
 
     def 'has valid hashcode and equals'() {
 
         when:
-        EqualsVerifier.forClass(FundingCheckResult).verify()
+        EqualsVerifier.forClass(FundingCheckResponse).verify()
 
         then:
         noExceptionThrown()
     }
 
-    def sampleOne = new FundingCheckResult("112233",
+    def sampleOne = new FundingCheckResponse("112233",
         "1245678",
         true,
         LocalDate.of(2015, 10, 3),

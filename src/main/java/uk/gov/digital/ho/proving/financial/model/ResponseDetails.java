@@ -14,6 +14,10 @@ public final class ResponseDetails {
 
     private final String code;
 
+    public static ResponseDetails notFoundResponseDetails(){
+        return new ResponseDetails("404", "not found");
+    }
+
     @JsonCreator
     public ResponseDetails(@JsonProperty("code") String code, @JsonProperty("message") String message) {
         this.code = code;

@@ -8,10 +8,11 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.exception.ApiExceptionHandler
+import uk.gov.digital.ho.proving.financial.integration.ApiUrls
 import uk.gov.digital.ho.proving.financial.model.Account
-import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse
+import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
-import uk.gov.digital.ho.proving.financial.model.ThresholdResponse
+import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
 
 import javax.ws.rs.core.Response
 import java.time.LocalDate
@@ -80,7 +81,7 @@ class ServiceSpec extends Specification {
         converter
     }
 
-    DailyBalanceStatusResponse passResponse = new DailyBalanceStatusResponse(
+    DailyBalanceStatusResult passResponse = new DailyBalanceStatusResult(
         new Account(SORT_CODE, ACCOUNT_NUMBER),
         LocalDate.parse(FROM_DATE),
         LocalDate.parse(TO_DATE),
@@ -88,7 +89,7 @@ class ServiceSpec extends Specification {
         true,
         new ResponseDetails("200", "OK"))
 
-    DailyBalanceStatusResponse notFoundResponse = new DailyBalanceStatusResponse(
+    DailyBalanceStatusResult notFoundResponse = new DailyBalanceStatusResult(
         null,
         null,
         null,
@@ -97,7 +98,7 @@ class ServiceSpec extends Specification {
         new ResponseDetails("404", "Not Found"))
 
 
-    def remoteApiDailyBalanceResponse(Response.Status status, DailyBalanceStatusResponse response) {
+    def remoteApiDailyBalanceResponse(Response.Status status, DailyBalanceStatusResult response) {
 
         mockClient.resource({ URI url -> url.getPath().contains("balance") }) >> balanceResource
 
@@ -108,10 +109,10 @@ class ServiceSpec extends Specification {
 
         balanceResponse.getStatusInfo() >> status
         balanceResponse.getStatus() >> status.getStatusCode()
-        balanceResponse.getEntity(DailyBalanceStatusResponse.class) >> response
+        balanceResponse.getEntity(DailyBalanceStatusResult.class) >> response
     }
 
-    def remoteApiThresholdResponse(Response.Status status, ThresholdResponse response) {
+    def remoteApiThresholdResponse(Response.Status status, ThresholdResult response) {
 
         mockClient.resource({ URI url -> url.getPath().contains("threshold") }) >> thresholdResource
 
@@ -122,13 +123,13 @@ class ServiceSpec extends Specification {
 
         thresholdResponse.getStatusInfo() >> status
         thresholdResponse.getStatus() >> status.getStatusCode()
-        thresholdResponse.getEntity(ThresholdResponse.class) >> response
+        thresholdResponse.getEntity(ThresholdResult.class) >> response
     }
 
     def "processes valid request and response"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
         remoteApiDailyBalanceResponse(Response.Status.OK, passResponse)
 
         when:
@@ -247,7 +248,7 @@ class ServiceSpec extends Specification {
     def "reports remote server error as internal error"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
         remoteApiDailyBalanceResponse(Response.Status.INTERNAL_SERVER_ERROR, null)
 
         when:
@@ -270,7 +271,7 @@ class ServiceSpec extends Specification {
     def "reports remote server response processing error as internal error"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
         remoteApiDailyBalanceResponse(Response.Status.OK, null)
 
         when:
@@ -293,7 +294,7 @@ class ServiceSpec extends Specification {
     def "propagates remote server not found response"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
         remoteApiDailyBalanceResponse(Response.Status.NOT_FOUND, notFoundResponse)
 
         when:

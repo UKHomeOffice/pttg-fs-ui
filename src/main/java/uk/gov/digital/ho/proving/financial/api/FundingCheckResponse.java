@@ -1,4 +1,4 @@
-package uk.gov.digital.ho.proving.financial.model;
+package uk.gov.digital.ho.proving.financial.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ import java.util.Objects;
  * @Author Home Office Digital
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class FundingCheckResult implements Serializable {
+public final class FundingCheckResponse implements Serializable {
 
     private final String sortCode;
     private final String accountNumber;
@@ -37,12 +38,12 @@ public final class FundingCheckResult implements Serializable {
 
 
     @JsonCreator
-    public FundingCheckResult(@JsonProperty("sortCode") String sortCode,
-                              @JsonProperty("accountNumber") String accountNumber,
-                              @JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
-                              @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
-                              @JsonProperty("periodCheckedTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
-                              @JsonProperty("minimum") BigDecimal minimum) {
+    public FundingCheckResponse(@JsonProperty("sortCode") String sortCode,
+                                @JsonProperty("accountNumber") String accountNumber,
+                                @JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
+                                @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
+                                @JsonProperty("periodCheckedTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedTo,
+                                @JsonProperty("minimum") BigDecimal minimum) {
 
         this.sortCode = formatSortCode(sortCode);
         this.accountNumber = accountNumber;
@@ -52,23 +53,13 @@ public final class FundingCheckResult implements Serializable {
         this.minimum = minimum;
     }
 
-    public FundingCheckResult(DailyBalanceStatusResponse apiResult) {
-        this.sortCode = formatSortCode(apiResult.getAccount().getSortCode());
-        this.accountNumber = apiResult.getAccount().getAccountNumber();
-        this.fundingRequirementMet = apiResult.isPass();
-        this.periodCheckedFrom = apiResult.getFromDate();
-        this.periodCheckedTo = apiResult.getToDate();
-        this.minimum = apiResult.getMinimum();
-    }
-
-    /* used for account not found response */
-    public FundingCheckResult(String sortCode, String accountNumber) {
-        this.sortCode = formatSortCode(sortCode);
-        this.accountNumber = accountNumber;
-        this.fundingRequirementMet = false;
-        this.periodCheckedFrom = null;
-        this.periodCheckedTo =null;
-        this.minimum = null;
+    public FundingCheckResponse(DailyBalanceStatusResult result) {
+        this.sortCode = formatSortCode(result.getAccount().getSortCode());
+        this.accountNumber = result.getAccount().getAccountNumber();
+        this.fundingRequirementMet = result.isPass();
+        this.periodCheckedFrom = result.getFromDate();
+        this.periodCheckedTo = result.getToDate();
+        this.minimum = result.getMinimum();
     }
 
     public String getSortCode() {
@@ -97,7 +88,7 @@ public final class FundingCheckResult implements Serializable {
 
     @Override
     public String toString() {
-        return "FundingCheckResult{" +
+        return "FundingCheckResponse{" +
             "sortCode='" + sortCode + '\'' +
             ", accountNumber='" + accountNumber + '\'' +
             ", fundingRequirementMet=" + fundingRequirementMet +
@@ -111,7 +102,7 @@ public final class FundingCheckResult implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FundingCheckResult that = (FundingCheckResult) o;
+        FundingCheckResponse that = (FundingCheckResponse) o;
         return fundingRequirementMet == that.fundingRequirementMet &&
             Objects.equals(sortCode, that.sortCode) &&
             Objects.equals(accountNumber, that.accountNumber) &&

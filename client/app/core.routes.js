@@ -16,8 +16,11 @@
             .when('/financial-status-query', {
                 templateUrl : 'views/financial-status-query.html'
             })
-            .when('/financial-status-result', {
-                templateUrl : 'views/financial-status-result.html'
+            .when('/financial-status-result-pass', {
+                templateUrl : 'views/financial-status-result-pass.html'
+            })
+            .when('/financial-status-result-not-pass', {
+                templateUrl : 'views/financial-status-result-not-pass.html'
             })
             .when('/financial-status-no-record', {
                 templateUrl : 'views/financial-status-no-record.html'
