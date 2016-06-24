@@ -17,7 +17,7 @@ public class ApiConnectionHealth implements HealthIndicator {
     @Value("${api.root}")
     private String apiRoot;
 
-    @Value("${api.endpoint}")
+    @Value("${api.healthcheck.endpoint}")
     private String apiEndpoint;
 
     private UrlConnectionTester tester = new UrlConnectionTester();
@@ -25,11 +25,10 @@ public class ApiConnectionHealth implements HealthIndicator {
     @Override
     public Health health() {
 
-        // todo - connect to healthcheck uri on api server
-        int errorCode = tester.getResponseCodeFor(apiRoot + apiEndpoint);
+        int responseCode = tester.getResponseCodeFor(apiRoot + apiEndpoint);
 
-        if (errorCode == 0) {
-            return Health.down().withDetail("While trying to read financial status service, received:", errorCode).build();
+        if (responseCode != 200) {
+            return Health.down().withDetail("While trying to read financial status service, received:", responseCode).build();
         }
 
         return Health.up().withDetail("The financial status service API is responding with:", "UP").build();
@@ -44,7 +43,7 @@ public class ApiConnectionHealth implements HealthIndicator {
                 URL url = new URL(uri);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("HEAD");
+                connection.setRequestMethod("GET");
                 connection.connect();
 
                 return connection.getResponseCode();
