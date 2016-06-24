@@ -47,7 +47,7 @@ describe('Testing routes', function () {
             }));
 
         it('should load results page', function () {
-            location.path('/financial-status-result');
+            location.path('/financial-status-result-pass');
             rootScope.$digest();
             expect(route.current.templateUrl).toBe('views/financial-status-result-pass.html')
         });
@@ -61,7 +61,7 @@ describe('Testing routes', function () {
             }));
 
         it('should load results page', function () {
-            location.path('/financial-status-result');
+            location.path('/financial-status-result-not-pass');
             rootScope.$digest();
             expect(route.current.templateUrl).toBe('views/financial-status-result-not-pass.html')
         });

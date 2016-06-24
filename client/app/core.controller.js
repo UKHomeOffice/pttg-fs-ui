@@ -19,9 +19,9 @@
         var BARCLAYS_SORT_CODE_REGEX = /^(?!00-00-00)(?:13|14|2[0-9])(?:-\d{2}){2}$/;
 
         var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
+        var NUMBER_REGEX = /^\d*\.?\d*$/;
 
         /* has it*/
-
         vm.model = {
 
             endDateDay: '',
@@ -84,13 +84,14 @@
         vm.serverError = '';
         vm.serverErrorDetail = '';
 
-        vm.formatMoney = function (moneyToFormat) {
-            return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
-        };
-
         vm.formatMoneyWholePounds = function (moneyToFormat) {
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 0});
         };
+
+        vm.formatMoneyPoundsPence = function (moneyToFormat) {
+            return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 2});
+        };
+
 
         vm.getPeriodChecked = function () {
             return vm.formatDate(vm.model.periodCheckedFrom) +
@@ -109,7 +110,7 @@
         }
 
         vm.formatDate = function (dateToFormat) {
-            return moment(dateToFormat, DATE_VALIDATE_FORMAT, true).format("DD/MM/YYYY");
+            return moment(dateToFormat, DATE_VALIDATE_FORMAT, true).format(DATE_DISPLAY_FORMAT);
         }
 
         vm.getFullSortCode = function () {
@@ -242,13 +243,17 @@
                 vm.queryForm.courseLength.$setValidity(false);
                 vm.courseLengthInvalidError = true;
                 validated = false;
+            }  else if (vm.model.courseLength > 9) {
+                vm.queryForm.courseLength.$setValidity(false);
+                vm.courseLengthInvalidError = true;
+                validated = false;
             }
 
             if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
                 vm.queryForm.totalTuitionFees.$setValidity(false);
                 vm.totalTuitionFeesMissingError = true;
                 validated = false;
-            } else if (vm.model.totalTuitionFees !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.totalTuitionFees))) {
+            } else if (vm.model.totalTuitionFees !== null && !(NUMBER_REGEX.test(vm.model.totalTuitionFees))) {
                 vm.queryForm.totalTuitionFees.$setValidity(false);
                 vm.totalTuitionFeesInvalidError = true;
                 validated = false;
@@ -258,7 +263,7 @@
                 vm.queryForm.tuitionFeesAlreadyPaid.$setValidity(false);
                 vm.tuitionFeesAlreadyPaidMissingError = true;
                 validated = false;
-            } else if (vm.model.tuitionFeesAlreadyPaid !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.tuitionFeesAlreadyPaid))) {
+            } else if (vm.model.tuitionFeesAlreadyPaid !== null && !(NUMBER_REGEX.test(vm.model.tuitionFeesAlreadyPaid))) {
                 vm.queryForm.tuitionFeesAlreadyPaid.$setValidity(false);
                 vm.tuitionFeesAlreadyPaidInvalidError = true;
                 validated = false;
@@ -268,7 +273,7 @@
                 vm.queryForm.accommodationFeesAlreadyPaid.$setValidity(false);
                 vm.accommodationFeesAlreadyPaidMissingError = true;
                 validated = false;
-            } else if (vm.model.accommodationFeesAlreadyPaid !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.accommodationFeesAlreadyPaid))) {
+            } else if (vm.model.accommodationFeesAlreadyPaid !== null && !(NUMBER_REGEX.test(vm.model.accommodationFeesAlreadyPaid))) {
                 vm.queryForm.accommodationFeesAlreadyPaid.$setValidity(false);
                 vm.accommodationFeesAlreadyPaidInvalidError = true;
                 validated = false;

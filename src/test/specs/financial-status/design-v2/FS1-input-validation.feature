@@ -197,7 +197,6 @@ Feature: Show clear error details when inputs are invalid
 
 
     ######################### Validation on the Inner London Borough Field #########################
-    @WIP
     Scenario: Case Worker does NOT enter Inner London Borough
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
@@ -219,7 +218,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   |            |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -234,8 +233,23 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | A          |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
+            | Accommodation fees already paid | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | Error Message | Please provide a valid course length |
+            | Error Field   | course-length-error                  |
+
+    Scenario: Case Worker enters invalid Course Length - more than 9
+        Given caseworker is using the financial status service ui
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | Inner London Borough            | true       |
+            | Course Length                   | 10         |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
@@ -250,7 +264,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              |            |
             | Tuition fees already paid       | 0          |
@@ -265,7 +279,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              | A          |
             | Tuition fees already paid       | 0          |
@@ -281,7 +295,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       |            |
@@ -296,7 +310,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | A          |
@@ -312,7 +326,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -327,7 +341,7 @@ Feature: Show clear error details when inputs are invalid
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
-            | Inner London Borough            | Yes        |
+            | Inner London Borough            | true       |
             | Course Length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |

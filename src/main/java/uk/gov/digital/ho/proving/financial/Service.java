@@ -11,21 +11,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
-import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
 import uk.gov.digital.ho.proving.financial.exception.AccountNotFoundException;
-import uk.gov.digital.ho.proving.financial.exception.InvalidRequestParameterException;
 import uk.gov.digital.ho.proving.financial.exception.ServiceProcessingException;
 import uk.gov.digital.ho.proving.financial.integration.ApiUrls;
-import uk.gov.digital.ho.proving.financial.model.*;
+import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
+import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
+import uk.gov.digital.ho.proving.financial.model.Account;
+import uk.gov.digital.ho.proving.financial.model.Course;
+import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 import static uk.gov.digital.ho.proving.financial.model.ResponseDetails.notFoundResponseDetails;
 
@@ -54,10 +54,8 @@ public class Service {
         @Valid Course course,
         @Valid Maintenance maintenance,
         @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
-        ) {
-
+    ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}", account, course, maintenance, toDate);
-
         return checkFinancialStatus(account, toDate, course, maintenance);
     }
 

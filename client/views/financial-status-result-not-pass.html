@@ -19,11 +19,11 @@
         <tbody>
         <tr>
             <th width="50%">Total funds required</th>
-            <td id="totalFundsRequired" scope="col">{{vm.formatMoneyWholePounds(vm.model.minimum)}}</td>
+            <td id="totalFundsRequired" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimum)}}</td>
         </tr>
         <tr>
             <th>Maintenance period checked</th>
-            <td id="28-dayPeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
+            <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
         </tbody>
     </table>
@@ -53,15 +53,15 @@
         </tr>
         <tr>
             <th>Total tuition fees</th>
-            <td id="totalTuitionFees" scope="col">£{{vm.model.totalTuitionFeesChecked}}</td>
+            <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
         </tr>
         <tr>
             <th>Tuition fees already paid</th>
-            <td id="tuitionFeesAlreadyPaid" scope="col">£{{vm.model.tuitionFeesAlreadyPaidChecked}}</td>
+            <td id="tuitionFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.tuitionFeesAlreadyPaidChecked)}}</td>
         </tr>
         <tr>
             <th>Accommodation fees already paid</th>
-            <td id="accommodationFeesAlreadyPaid" scope="col">£{{vm.model.accommodationFeesAlreadyPaidChecked}}</td>
+            <td id="accommodationFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}}</td>
         </tr>
         </tbody>
     </table>

@@ -158,7 +158,7 @@
                     <span id="total-tuition-fees-error" class="error-message"
                           ng-if="vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError">
                                     Please provide a valid total tuition fees</span>
-                    £ <input type="number" class="form-control form-control-1-4" name="totalTuitionFees"
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4" name="totalTuitionFees"
                             id="totalTuitionFees"
                             ng-model="vm.model.totalTuitionFees" autocomplete="off">
                 </div>
@@ -172,7 +172,7 @@
                     <span id="tuition-fees-already-paid-error" class="error-message"
                           ng-if="vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError">
                                     Please provide a valid tuition fees already paid</span>
-                    £ <input type="number" class="form-control form-control-1-4" name="tuitionFeesAlreadyPaid"
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4" name="tuitionFeesAlreadyPaid"
                             id="tuitionFeesAlreadyPaid"
                             ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
                 </div>
@@ -186,7 +186,7 @@
                     <span id="accommodation-fees-already-paid-error" class="error-message"
                           ng-if="vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError">
                                     Please provide a valid accommodation fees already paid</span>
-                    £ <input type="number" class="form-control form-control-1-4" name="accommodationFeesAlreadyPaid"
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4" name="accommodationFeesAlreadyPaid"
                             id="accommodationFeesAlreadyPaid"
                             ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
                 </div>

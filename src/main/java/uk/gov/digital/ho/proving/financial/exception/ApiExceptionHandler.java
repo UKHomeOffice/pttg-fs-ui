@@ -15,7 +15,6 @@ import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -78,7 +77,9 @@ public class ApiExceptionHandler {
     @ExceptionHandler(BindException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ResponseDetails general(BindException exception) {LOGGER.debug("exception: " + exception.getMessage());
+    public ResponseDetails bindException(BindException exception) {LOGGER.debug("exception: " + exception.getMessage());
+
+        LOGGER.debug("Binding exception: " + exception.getMessage());
 
         // todo clean way of handling binding errors
 

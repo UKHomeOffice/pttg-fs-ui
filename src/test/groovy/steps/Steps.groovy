@@ -152,8 +152,16 @@ class Steps {
             } else {
                 def element = driver.findElement(By.id(key))
 
+                // todo - make this cleaner, more robust, more efficient
                 if (key == "innerLondonBorough") {
-                    // todo generalise this function to handle radio buttons
+                    if(v.equalsIgnoreCase("true")){
+                        By byCss = By.cssSelector("[id='innerLondonBorough-1'][type='radio']");
+                        driver.findElement(byCss).click();
+                    } else {
+                        By byCss = By.cssSelector("[id='innerLondonBorough-2'][type='radio']");
+                        driver.findElement(byCss).click();
+                    }
+
                 } else {
                     sendKeys(element, v)
                 }
