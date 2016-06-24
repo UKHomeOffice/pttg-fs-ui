@@ -11,6 +11,8 @@ describe('coreController', function () {
 
         restService = {
             checkFinancialStatus: function (accountNumber, sortCode, totalFundsRequired, endDate) {
+            },
+            calculateTotalFundsRequired: function (innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
             }
         };
 
@@ -25,6 +27,11 @@ describe('coreController', function () {
 
     spyOnSuccessful = function () {
         spyOn(restService, 'checkFinancialStatus').and.callFake(function () {
+            deferred = q.defer();
+            deferred.resolve(response);
+            return deferred.promise;
+        });
+        spyOn(restService, 'calculateTotalFundsRequired').and.callFake(function () {
             deferred = q.defer();
             deferred.resolve(response);
             return deferred.promise;
@@ -48,14 +55,14 @@ describe('coreController', function () {
         coreController.model.endDateDay = '1';
         coreController.model.endDateMonth = '2';
         coreController.model.endDateYear = '2015';
-        expect(coreController.getFullendDate()).toEqual('2015-02-01')
+        expect(coreController.getFullEndDate()).toEqual('2015-02-01')
     });
 
     it('is expected to format the maintenance period end date to DD/MM/YYYY', function () {
         coreController.model.endDateDay = '1';
         coreController.model.endDateMonth = '2';
         coreController.model.endDateYear = '2015';
-        expect(coreController.formatendDate()).toEqual('01/02/2015')
+        expect(coreController.formatEndDate()).toEqual('01/02/2015')
     });
 
     it('is expected the form submits the correct data to the service', function () {
@@ -68,7 +75,11 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.totalFundsRequired = '1';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.courseLength = '1';
+        coreController.model.totalTuitionFees = '1';
+        coreController.model.tuitionFeesAlreadyPaid = '1';
+        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
 
@@ -77,7 +88,7 @@ describe('coreController', function () {
     });
 
 
-    it('does not call service on validation failure - invalid application date', function () {
+    it('does not call service on validation failure - invalid end date', function () {
         spyOnSuccessful();
 
         coreController.model.endDateDay = '99';
@@ -87,7 +98,11 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.totalFundsRequired = '1';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.courseLength = '1';
+        coreController.model.totalTuitionFees = '1';
+        coreController.model.tuitionFeesAlreadyPaid = '1';
+        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
 
@@ -95,7 +110,7 @@ describe('coreController', function () {
         expect(restService.checkFinancialStatus.calls.count()).toBe(0);
     });
 
-    it('does not call service on validation failure - future application date', function () {
+    it('does not call service on validation failure - future end date', function () {
         spyOnSuccessful();
 
         coreController.model.endDateDay = '1';
@@ -105,7 +120,11 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.totalFundsRequired='1';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.courseLength = '1';
+        coreController.model.totalTuitionFees = '1';
+        coreController.model.tuitionFeesAlreadyPaid = '1';
+        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
 
@@ -125,7 +144,11 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.totalFundsRequired='1';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.courseLength = '1';
+        coreController.model.totalTuitionFees = '1';
+        coreController.model.tuitionFeesAlreadyPaid = '1';
+        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
         scope.$digest()
