@@ -196,7 +196,8 @@ Feature: Show clear error details when inputs are invalid
             | Error Field   | account-number-error                  |
 
 
-    ######################### Validation on the Inner London Borough Field #########################
+######################### Validation on the Inner London Borough Field #########################
+    @WIP
     Scenario: Case Worker does NOT enter Inner London Borough
         Given caseworker is using the financial status service ui
         When the financial status check is performed with

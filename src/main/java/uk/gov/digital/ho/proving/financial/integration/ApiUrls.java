@@ -39,9 +39,8 @@ public class ApiUrls {
             .queryParam("innerLondon", course.getInnerLondonBorough())
             .queryParam("courseLength", course.getCourseLength())
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
-//            .queryParam("totalTuitionFees", totalTuitionFees)
-//            .queryParam("tuitionFeesAlreadyPaid", tuitionFeesAlreadyPaid)
-//            .queryParam("accommodationFeesAlreadypaid", accommodationFeesAlreadypaid)
+            .queryParam("tuitionFeesPaid", maintenance.getTuitionFeesAlreadyPaid())
+            .queryParam("accommodationFeesPaid", maintenance.getAccommodationFeesAlreadyPaid())
             .build()
             .toUri();
 

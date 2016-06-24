@@ -45,8 +45,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | End date                        | 30/05/2016 |
             | Inner London borough            | true       |
             | Course length                   | 9          |
-            #| Total tuition fees              | 9755.50    |
-            | Total tuition fees              | 9005.00    |
+            | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
             | Sort code                       | 22-22-22   |
