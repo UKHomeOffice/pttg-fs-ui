@@ -11,6 +11,7 @@ import uk.gov.digital.ho.proving.financial.exception.ApiExceptionHandler
 import uk.gov.digital.ho.proving.financial.model.Account
 import uk.gov.digital.ho.proving.financial.model.DailyBalanceStatusResponse
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
+import uk.gov.digital.ho.proving.financial.model.ThresholdResponse
 
 import javax.ws.rs.core.Response
 import java.time.LocalDate
@@ -44,19 +45,26 @@ class ServiceSpec extends Specification {
     MockMvc mockMvc
 
     def mockClient = Mock(Client)
-    def webResource = Mock(WebResource)
-    def mockBuilder = Mock(WebResource.Builder)
-    def clientResponse = Mock(ClientResponse)
+    def balanceResource = Mock(WebResource)
+    def thresholdResource = Mock(WebResource)
+    def balanceBuilder = Mock(WebResource.Builder)
+    def thresholdBuilder = Mock(WebResource.Builder)
+    def balanceResponse = Mock(ClientResponse)
+    def thresholdResponse = Mock(ClientResponse)
 
     def service = new Service()
+    def apiUrls = new ApiUrls()
 
     def setup() {
 
         service.client = mockClient
 
-        service.apiRoot = ''
-        service.apiEndpoint = "/pttg/financialstatusservice/v1/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
+        apiUrls.apiRoot = ''
+        apiUrls.apiDailyBalanceEndpoint = "/pttg/financialstatusservice/v1/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
+        apiUrls.apiThresholdEndpoint = "/pttg/financialstatusservice/v1/maintenance/threshold"
+
         service.daysToCheck = DAYS_TO_CHECK
+        service.apiUrls = apiUrls
 
         mockMvc = standaloneSetup(service)
             .setMessageConverters(createMessageConverter())
@@ -89,31 +97,48 @@ class ServiceSpec extends Specification {
         new ResponseDetails("404", "Not Found"))
 
 
-    def remoteApiResponse(Response.Status status, DailyBalanceStatusResponse response) {
+    def remoteApiDailyBalanceResponse(Response.Status status, DailyBalanceStatusResponse response) {
 
-        mockClient.resource(_) >> webResource
+        mockClient.resource({ URI url -> url.getPath().contains("balance") }) >> balanceResource
 
-        webResource.header("accept", "application/json") >> mockBuilder
-        mockBuilder.header("content-type", "application/json") >> mockBuilder
+        balanceResource.header("accept", "application/json") >> balanceBuilder
+        balanceBuilder.header("content-type", "application/json") >> balanceBuilder
 
-        mockBuilder.get(ClientResponse.class) >> clientResponse
+        balanceBuilder.get(ClientResponse.class) >> balanceResponse
 
-        clientResponse.getStatusInfo() >> status
-        clientResponse.getStatus() >> status.getStatusCode()
-        clientResponse.getEntity(DailyBalanceStatusResponse.class) >> response
+        balanceResponse.getStatusInfo() >> status
+        balanceResponse.getStatus() >> status.getStatusCode()
+        balanceResponse.getEntity(DailyBalanceStatusResponse.class) >> response
     }
 
+    def remoteApiThresholdResponse(Response.Status status, ThresholdResponse response) {
+
+        mockClient.resource({ URI url -> url.getPath().contains("threshold") }) >> thresholdResource
+
+        thresholdResource.header("accept", "application/json") >> thresholdBuilder
+        thresholdBuilder.header("content-type", "application/json") >> thresholdBuilder
+
+        thresholdBuilder.get(ClientResponse.class) >> thresholdResponse
+
+        thresholdResponse.getStatusInfo() >> status
+        thresholdResponse.getStatus() >> status.getStatusCode()
+        thresholdResponse.getEntity(ThresholdResponse.class) >> response
+    }
 
     def "processes valid request and response"() {
 
         given:
-        remoteApiResponse(Response.Status.OK, passResponse)
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiDailyBalanceResponse(Response.Status.OK, passResponse)
 
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -128,7 +153,10 @@ class ServiceSpec extends Specification {
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -136,7 +164,7 @@ class ServiceSpec extends Specification {
             andExpect(jsonPath("code", is("0001")))
             andExpect(jsonPath("message", allOf(
                 containsString("Missing parameter"),
-                containsString("totalFundsRequired"))))
+                containsString("courseLength"))))
         }
     }
 
@@ -145,8 +173,11 @@ class ServiceSpec extends Specification {
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', '99-01-1901'))
+                .param('toDate', '99-01-1901')
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -164,8 +195,11 @@ class ServiceSpec extends Specification {
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, sortCode, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -186,8 +220,11 @@ class ServiceSpec extends Specification {
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, accountNumber)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -202,34 +239,20 @@ class ServiceSpec extends Specification {
         accountNumber << ["1234567", "123456789", "00000000"]
     }
 
-    def "invalid funds required is rejected"() {
-
-        when:
-        def response = mockMvc.perform(
-            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', "not-digits")
-                .param('toDate', TO_DATE))
-
-        then:
-        response.with {
-            andExpect(status().isBadRequest())
-            andExpect(jsonPath("code", is("0002")))
-            andExpect(jsonPath("message", allOf(
-                containsString("Invalid parameter type"),
-                containsString("totalFundsRequired"))))
-        }
-    }
-
     def "reports remote server error as internal error"() {
 
         given:
-        remoteApiResponse(Response.Status.INTERNAL_SERVER_ERROR, null)
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiDailyBalanceResponse(Response.Status.INTERNAL_SERVER_ERROR, null)
 
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -241,13 +264,17 @@ class ServiceSpec extends Specification {
     def "reports remote server response processing error as internal error"() {
 
         given:
-        remoteApiResponse(Response.Status.OK, null)
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiDailyBalanceResponse(Response.Status.OK, null)
 
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
@@ -259,13 +286,17 @@ class ServiceSpec extends Specification {
     def "propagates remote server not found response"() {
 
         given:
-        remoteApiResponse(Response.Status.NOT_FOUND, notFoundResponse)
+        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResponse(1))
+        remoteApiDailyBalanceResponse(Response.Status.NOT_FOUND, notFoundResponse)
 
         when:
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('totalFundsRequired', FUNDS_REQUIRED.toString())
-                .param('toDate', TO_DATE))
+                .param('toDate', TO_DATE)
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
 
         then:
         response.with {
