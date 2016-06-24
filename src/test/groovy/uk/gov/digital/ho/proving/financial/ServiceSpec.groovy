@@ -135,6 +135,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -154,6 +155,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1'))
@@ -174,6 +176,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', '99-01-1901')
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -196,6 +199,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, sortCode, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -221,6 +225,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, accountNumber)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -249,6 +254,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -271,6 +277,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
@@ -293,6 +300,7 @@ class ServiceSpec extends Specification {
         def response = mockMvc.perform(
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')

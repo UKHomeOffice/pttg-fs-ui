@@ -28,12 +28,17 @@ public class ApiUrls {
     private String apiThresholdEndpoint;
 
 
-    public URI thresholdUrlFor(int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
+    public URI thresholdUrlFor(Boolean innerLondonBorough, int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
+
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceEndpoint);
+
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdEndpoint)
+            .queryParam("innerLondon", innerLondonBorough)
             .queryParam("courseLength", courseLength)
-            .queryParam("totalTuitionFees", totalTuitionFees)
-            .queryParam("tuitionFeesAlreadyPaid", tuitionFeesAlreadyPaid)
-            .queryParam("accommodationFeesAlreadypaid", accommodationFeesAlreadypaid)
+            .queryParam("tuitionFees", totalTuitionFees)
+//            .queryParam("totalTuitionFees", totalTuitionFees)
+//            .queryParam("tuitionFeesAlreadyPaid", tuitionFeesAlreadyPaid)
+//            .queryParam("accommodationFeesAlreadypaid", accommodationFeesAlreadypaid)
             .build()
             .toUri();
 

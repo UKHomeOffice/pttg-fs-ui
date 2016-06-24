@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -40,19 +41,17 @@ public class Service {
     @Value("${daily-balance.days-to-check}")
     private int daysToCheck;
 
-    private Client client = getClient();
-
-    @Inject
+    @Autowired
     private ApiUrls apiUrls;
 
+    private Client client = getClient();
 
     @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(
         @PathVariable("accountNumber") String accountNumber,
         @PathVariable("sortCode") String sortCode,
         @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-        // todo handle radio button input
-        // @RequestParam(value = "innerLondonBorough", required = true) boolean innerLondonBorough,
+        @RequestParam(value = "innerLondonBorough", required = true) Boolean innerLondonBorough,
         @RequestParam(value = "courseLength", required = true) int courseLength,
         @RequestParam(value = "totalTuitionFees", required = true) int totalTuitionFees,
         @RequestParam(value = "tuitionFeesAlreadyPaid", required = true) int tuitionFeesAlreadyPaid,
@@ -73,27 +72,32 @@ public class Service {
         }
 
         // todo bundle all these params into a class
-        return checkFinancialStatus(accountNumber, sortCode, toDate, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid);
+        return checkFinancialStatus(accountNumber, sortCode, toDate, innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid);
     }
 
     private ResponseEntity checkFinancialStatus(String accountNumber,
                                                 String sortCode,
                                                 LocalDate toDate,
+                                                Boolean innerLondonBorough,
                                                 int courseLength,
                                                 int totalTuitionFees,
                                                 int tuitionFeesAlreadyPaid,
                                                 int accommodationFeesAlreadypaid) {
 
-        BigDecimal totalFundsRequired = getThreshold(courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadypaid);
+        BigDecimal totalFundsRequired = getThreshold(innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadypaid);
 
         return getDailyBalanceStatus(accountNumber, sortCode, toDate, totalFundsRequired);
     }
 
-    // todo factor all the following into classes and use a more sensible approach fro exception handling
+    // todo wrap params into request class
+    // todo extract httputils
+    // todo introduce response data class
+    // todo use optional rather than exceptions
 
-    private BigDecimal getThreshold(int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
+    private BigDecimal getThreshold(Boolean innerLondonBorough, int courseLength, int totalTuitionFees, int tuitionFeesAlreadyPaid, int accommodationFeesAlreadypaid) {
 
         WebResource thresholdResource = client.resource(apiUrls.thresholdUrlFor(
+            innerLondonBorough,
             courseLength,
             totalTuitionFees,
             tuitionFeesAlreadyPaid,
@@ -126,7 +130,7 @@ public class Service {
         ThresholdResponse apiResult = clientResponse.getEntity(ThresholdResponse.class);
         LOGGER.debug("Received threshold result: {}", apiResult.toString());
 
-        return BigDecimal.valueOf(apiResult.getThreshold());
+        return apiResult.getThreshold();
     }
 
     private ResponseEntity getDailyBalanceStatus(String accountNumber, String sortCode, LocalDate toDate, BigDecimal totalFundsRequired) {

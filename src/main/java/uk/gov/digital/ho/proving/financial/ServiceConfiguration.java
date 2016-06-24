@@ -3,6 +3,7 @@ package uk.gov.digital.ho.proving.financial;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
  * @Author Home Office Digital
  */
 @Configuration
+@ComponentScan("uk.gov.digital.ho.proving.financial")
 public class ServiceConfiguration {
 
     @Bean

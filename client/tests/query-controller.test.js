@@ -10,9 +10,7 @@ describe('coreController', function () {
         q = $q;
 
         restService = {
-            checkFinancialStatus: function (accountNumber, sortCode, totalFundsRequired, endDate) {
-            },
-            calculateTotalFundsRequired: function (innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
+            checkFinancialStatus: function (accountNumber, sortCode, endDate, innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
             }
         };
 
@@ -27,11 +25,6 @@ describe('coreController', function () {
 
     spyOnSuccessful = function () {
         spyOn(restService, 'checkFinancialStatus').and.callFake(function () {
-            deferred = q.defer();
-            deferred.resolve(response);
-            return deferred.promise;
-        });
-        spyOn(restService, 'calculateTotalFundsRequired').and.callFake(function () {
             deferred = q.defer();
             deferred.resolve(response);
             return deferred.promise;

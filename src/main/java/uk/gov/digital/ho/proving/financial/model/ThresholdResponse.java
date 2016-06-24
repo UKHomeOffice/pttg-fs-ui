@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -13,14 +14,14 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class ThresholdResponse implements Serializable {
 
-    private final int threshold;
+    private final BigDecimal threshold;
 
     @JsonCreator
-    public ThresholdResponse(@JsonProperty("threshold") int threshold){
+    public ThresholdResponse(@JsonProperty("threshold") BigDecimal threshold){
         this.threshold = threshold;
     }
 
-    public int getThreshold() {
+    public BigDecimal getThreshold() {
         return threshold;
     }
 

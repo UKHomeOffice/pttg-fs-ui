@@ -9,31 +9,23 @@
     /* @ngInject */
     function restService($http, $q) {
         return {
-            checkFinancialStatus : checkFinancialStatus,
-            calculateTotalFundsRequired : calculateTotalFundsRequired
+            checkFinancialStatus: checkFinancialStatus
         };
 
-        function checkFinancialStatus(accountNumber, sortCode, totalFundsRequired, toDate) {
-            var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode +'/' + accountNumber + '/dailybalancestatus';
-            return $http.get(url, {
-                                      params: {
-                                          totalFundsRequired: totalFundsRequired,
-                                          toDate: toDate
-                                      }
-                                  })
-
-                .then(
-                    function success(response) { return response.data },
-                    function error(response) { throw response }
-                );
-
-        }
-
-        function calculateTotalFundsRequired(insideLondon, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
-            var url = '/pttg/financialstatusservice/v1/maintenance/threshold';
+        function checkFinancialStatus(
+            accountNumber, 
+            sortCode, 
+            toDate, 
+            innerLondonBorough, 
+            courseLength,
+            totalTuitionFees, 
+            tuitionFeesAlreadyPaid, 
+            accommodationFeesAlreadyPaid) {
+            var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
             return $http.get(url, {
                 params: {
-                    insideLondon: insideLondon,
+                    toDate: toDate,
+                    innerLondonBorough: innerLondonBorough,
                     courseLength: courseLength,
                     totalTuitionFees: totalTuitionFees,
                     tuitionFeesAlreadyPaid: tuitionFeesAlreadyPaid,
@@ -42,8 +34,12 @@
             })
 
                 .then(
-                    function success(response) { return response.data },
-                    function error(response) { throw response }
+                    function success(response) {
+                        return response.data
+                    },
+                    function error(response) {
+                        throw response
+                    }
                 );
 
         }

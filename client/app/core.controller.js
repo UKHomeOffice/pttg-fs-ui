@@ -123,25 +123,15 @@
 
             if (validateForm()) {
 
-                restService.calculateTotalFundsRequired(
+                restService.checkFinancialStatus(
+                    vm.model.accountNumber,
+                    vm.getFullSortCodeDigits(),
+                    vm.getFullEndDate(),
                     vm.model.innerLondonBorough,
                     vm.model.courseLength,
                     vm.model.totalTuitionFees,
                     vm.model.tuitionFeesAlreadyPaid,
                     vm.model.accommodationFeesAlreadyPaid)
-                    .then(function (data) {
-                        vm.model.totalFundsRequired = data.totalFundsRequired;
-                    }).catch(function (error) {
-                    $log.debug("received a non success result with status: " + error.status)
-                    vm.serverError = 'Unable to process your request, please try again.';
-                    vm.serverErrorDetail = error.data.message;
-                });
-
-                restService.checkFinancialStatus(
-                    vm.model.accountNumber,
-                    vm.getFullSortCodeDigits(),
-                    vm.model.totalFundsRequired,
-                    vm.getFullEndDate())
                     .then(function (data) {
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
