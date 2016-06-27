@@ -147,7 +147,7 @@
                         vm.model.periodCheckedTo = vm.getFullEndDate();
                         vm.model.accountNumberChecked = vm.model.accountNumber;
                         vm.model.sortCodeChecked = vm.getFullSortCode();
-                        vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough;
+                        vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
                         vm.model.courseLengthChecked = vm.model.courseLength;
                         vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
                         vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;

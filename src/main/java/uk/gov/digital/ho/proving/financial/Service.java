@@ -66,7 +66,6 @@ public class Service {
         return getDailyBalanceStatus(account, toDate, totalFundsRequired);
     }
 
-    // todo wrap params into request class
     // todo extract httputils
     // todo introduce response data class
     // todo use optional rather than exceptions

@@ -15,7 +15,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
         Given the test data for account 11111111
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | true       |
+            | Inner London borough            | Yes        |
             | Course length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -26,7 +26,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Outcome                         | Not passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Inner London borough            | true                     |
+            | Inner London borough            | Yes                      |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -43,7 +43,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
         Given the test data for account 22222222
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | true       |
+            | Inner London borough            | Yes        |
             | Course length                   | 9          |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |

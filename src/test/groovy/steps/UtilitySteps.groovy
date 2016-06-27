@@ -1,5 +1,8 @@
 package steps
 
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+
 import java.text.SimpleDateFormat
 
 /**
@@ -23,4 +26,24 @@ class UtilitySteps {
     }
 
     // todo parseIsoDate
+
+    def static clickRadioButton(WebDriver driver, RadioButtonConfig radioConfig, String value) {
+
+        if (radioConfig.options.containsKey(value)) {
+
+            String id = radioConfig.options.get(value)
+
+            By byCss = By.cssSelector("[id='$id'][type='radio']")
+            driver.findElement(byCss).click()
+        }
+    }
+
+    def static class RadioButtonConfig {
+        def options = [:]
+
+        def withOption(String choice, String id) {
+            options.put(choice, id)
+            return this
+        }
+    }
 }

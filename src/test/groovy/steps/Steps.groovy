@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
 
 /**
@@ -37,8 +38,8 @@ class Steps {
     def testDataLoader
 
     def pageLocations = [
-        'queryPage'  : '#/financial-status-query',
-        'resultsPage': '#/financial-status-result',
+        'queryPage'   : '#/financial-status-query',
+        'resultsPage' : '#/financial-status-result',
         'noRecordPage': '#/financial-status-no-record'
     ]
 
@@ -48,6 +49,9 @@ class Steps {
     def dateParts = ["Day", "Month", "Year"]
     def dateDelimiter = "/"
 
+    def innerLondonRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('Yes', 'innerLondonBorough-1')
+        .withOption('No', 'innerLondonBorough-2')
 
     @Before
     def setUp(Scenario scenario) {
@@ -152,15 +156,8 @@ class Steps {
             } else {
                 def element = driver.findElement(By.id(key))
 
-                // todo - make this cleaner, more robust, more efficient
                 if (key == "innerLondonBorough") {
-                    if(v.equalsIgnoreCase("true")){
-                        By byCss = By.cssSelector("[id='innerLondonBorough-1'][type='radio']");
-                        driver.findElement(byCss).click();
-                    } else {
-                        By byCss = By.cssSelector("[id='innerLondonBorough-2'][type='radio']");
-                        driver.findElement(byCss).click();
-                    }
+                    clickRadioButton(driver, innerLondonRadio, v)
 
                 } else {
                     sendKeys(element, v)
@@ -172,6 +169,7 @@ class Steps {
         driver.sleep(delay)
         driver.findElement(By.className("button")).click();
     }
+
 
     @When("^the caseworker views the query page\$")
     public void the_caseworker_views_the_query_page() throws Throwable {
@@ -258,4 +256,5 @@ class Steps {
             assert v.contains(element.getText())
         }
     }
+
 }
