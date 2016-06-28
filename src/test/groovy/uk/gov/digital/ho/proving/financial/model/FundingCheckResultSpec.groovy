@@ -9,11 +9,13 @@ import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse
 
 import java.time.LocalDate
 
+
 /**
  * @Author Home Office Digital
  */
 class FundingCheckResultSpec extends Specification {
 
+    public static final String sampleOneFile = "fundingcheckresult-sample-one.json"
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
     def "Instance should serialize to json"() {
@@ -27,7 +29,7 @@ class FundingCheckResultSpec extends Specification {
         println actual
 
         then:
-        actual == stringFromFile("fundingcheckresult-sample-one.json")
+        actual == stringFromFile(sampleOneFile)
     }
 
 
@@ -35,7 +37,7 @@ class FundingCheckResultSpec extends Specification {
 
         given:
         def expected = sampleOne
-        def sampleOneJson = stringFromFile("fundingcheckresult-sample-one.json")
+        def sampleOneJson = stringFromFile(sampleOneFile)
 
         when:
         def actual = mapper.readValue(sampleOneJson, FundingCheckResponse.class)
@@ -44,48 +46,16 @@ class FundingCheckResultSpec extends Specification {
         actual == expected
     }
 
-    @Unroll
-    def "should not format sortCode #sortCode because #invalidBecause"() {
-
-        when:
-        def instance = new FundingCheckResponse(sortCode, null, false, null, null, null)
-
-        then:
-        instance.sortCode == sortCode
-
-        where:
-        sortCode  | invalidBecause
-        '11223'   | 'too short'
-        '1122334' | 'too long'
-    }
-
-
-    @Unroll
-    def "should format #sortCode to #formatted for presentation"() {
-
-        when:
-        def instance = new FundingCheckResponse(sortCode, null, false, null, null, null)
-
-        then:
-        instance.sortCode == formatted
-
-        where:
-        sortCode | formatted
-        '112233' | '11-22-33'
-        '002233' | '00-22-33'
-        '002200' | '00-22-00'
-    }
-
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new FundingCheckResponse("112233", null, false, null, null, null)
+        def instance = new FundingCheckResponse(false, null, null)
 
         when:
         def output = instance.toString()
 
         then:
-        output.contains("sortCode='$instance.sortCode'")
+        output.contains("fundingRequirementMet=$instance.fundingRequirementMet")
 
         and:
         !output.contains('FundingCheckResponse@')
@@ -100,11 +70,9 @@ class FundingCheckResultSpec extends Specification {
         noExceptionThrown()
     }
 
-    def sampleOne = new FundingCheckResponse("112233",
-        "1245678",
+    def sampleOne = new FundingCheckResponse(
         true,
         LocalDate.of(2015, 10, 3),
-        LocalDate.of(2015, 10, 30),
         BigDecimal.valueOf(100))
 
     def stringFromFile(String fileName) {
