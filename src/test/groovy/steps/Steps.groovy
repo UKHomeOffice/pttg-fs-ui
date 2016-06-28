@@ -10,20 +10,13 @@ import cucumber.api.java.en.When
 import groovy.json.JsonSlurper
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.Wait
-import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.annotation.Nullable
-
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
-
 /**
  * @Author Home Office Digital
  */
@@ -129,7 +122,7 @@ class Steps {
 
         def expected = pageLocations[location]
         def actual = driver.currentUrl
-
+        driver.sleep(2500)
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
@@ -207,7 +200,7 @@ class Steps {
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('noRecordPage')
-        
+
         assertTextFieldEqualityForMap(expectedResult)
     }
 
