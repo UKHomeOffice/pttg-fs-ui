@@ -28,7 +28,7 @@ public final class ThresholdResult implements Serializable {
     @Override
     public String toString() {
         return "ThresholdResult{" +
-            "threshold='" + threshold + '\'' +
+            "threshold=" + threshold +
             '}';
     }
 

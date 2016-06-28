@@ -19,7 +19,6 @@ import javax.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static uk.gov.digital.ho.proving.financial.model.ErrorCode.*;
 
 /**
@@ -28,13 +27,13 @@ import static uk.gov.digital.ho.proving.financial.model.ErrorCode.*;
 @ControllerAdvice
 public class ServiceExceptionHandler {
 
-
     private Logger LOGGER = LoggerFactory.getLogger(ServiceExceptionHandler.class);
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseDetails missingParameterHandler(MissingServletRequestParameterException exception) {
+        String name = exception.getParameterName();
         LOGGER.debug("Missing parameter: " + exception.getMessage());
         return new ResponseDetails(MISSING_PARAMETER.getCode(), MISSING_PARAMETER.getMessage() + exception.getParameterName());
     }
@@ -63,7 +62,7 @@ public class ServiceExceptionHandler {
         String detail = exception.getConstraintViolations()
             .stream()
             .map(ConstraintViolation::getMessage)
-            .collect(Collectors.joining(","));
+            .collect(Collectors.joining(", "));
         return new ResponseDetails(INVALID_PARAMETER_VALUE.getCode(), INVALID_PARAMETER_VALUE.getMessage() + detail);
     }
 

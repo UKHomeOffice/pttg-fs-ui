@@ -42,6 +42,10 @@ dependencies {
     testCompile libraries.spock
     testCompile libraries.springTest
     testCompile libraries.testUtils
+
+    // todo move these to the common plugin now I know they're used by Spock for mocking classes
+    testCompile 'cglib:cglib-nodep:3.2.1'
+    testCompile 'org.objenesis:objenesis:2.2'
 }
 
 springboot{

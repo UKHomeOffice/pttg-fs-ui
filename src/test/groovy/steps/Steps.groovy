@@ -207,7 +207,7 @@ class Steps {
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('noRecordPage')
-        
+
         assertTextFieldEqualityForMap(expectedResult)
     }
 
