@@ -30,7 +30,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Check for important text on the page
     This scenario is to check for required text on the page
-        Given Case Worker is using the Financial Status Service Case Worker Tool
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | The end of 28-day period              | 20/06/2016 |
             | Inner London Borough                  | Yes        |
@@ -40,7 +40,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Accommodation fees already paid       | 250.50     |
             | Sort code                             | 14-55-11   |
             | Account number                        | 23568599   |
-        Then The FSPS Tier 4 general Case Worker tool page provides the following result
+        Then The FSPS Tier Four general Case Worker tool page provides the following result
             | Page title         | Tier 4 (General) student (non-doctorate)                        |
             | Page sub title     | Financial Status check                                          |
             | Page static detail | This application meets all of the financial status requirements |
@@ -50,7 +50,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
-        Given Case Worker is using the Financial Status Service Case Worker Tool
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | The end of 28-day period              | 07/06/2016 |
             | Inner London Borough                  | Yes        |
@@ -60,7 +60,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Accommodation fees already paid       | 0          |
             | Sort code                             | 13-56-09   |
             | Account number                        | 12345677   |
-        Then The FSPS Tier 4 general Case Worker tool page provides the following result
+        Then The FSPS Tier Four general Case Worker tool page provides the following result
             | Page dynamic detail | Not Passed                                        |
             | Results Row 1       | Results total funds required                      |
             | Results Row 2       | Results 28-day period checked                     |
@@ -74,7 +74,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Check for important text on the page
     This scenario is to check for required text on the page
-        Given Case Worker is using the Financial Status Service Case Worker Tool
+        Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | The end of 28-day period              | 07/06/2016 |
             | Inner London Borough                  | Yes        |
@@ -84,7 +84,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Accommodation fees already paid       | 0          |
             | Sort code                             | 13-56-09   |
             | Account number                        | 12345677   |
-        Then The FSPS Tier 4 general Case Worker tool page provides the following result
+        Then The FSPS Tier Four general Case Worker tool page provides the following result
             | Page title         | Tier 4 (General Student) (non-doctorate)                                |
             | Page sub title     | Financial Status check                                                  |
             | Page static detail | This application does not meet all of the financial status requirements |
@@ -124,17 +124,10 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
 
-        Given Case worker is using the Financial Status Service Case Worker Tool
-        When Case worker is displayed the Income Proving Service Case Worker Tool input page
-            | The end of 28-day period              | 20/06/2016 |
-            | Inner London Borough                  | Yes        |
-            | Course Length                         | 9          |
-            | Total tuition fees for the first year | 9755.50    |
-            | Tuition fees already paid             | 500        |
-            | Accommodation fees already paid       | 250.50     |
-            | Sort code                             | 13-00-11   |
-            | Account number                        | 23578499   |
-        Then FSPS Tier 4 general Case Worker tool input page provides the following result
+        Given caseworker is using the financial status service ui
+        When Case worker is on the input page
+
+        Then The FSPS Tier Four general Case Worker tool input page provides the following result
             | Page title     | Tier 4 (General) student (non-doctorate)                                                             |
             | Page sub title | Financial Status Check                                                                               |
             | Page sub text  | Online statement checker for a Barclays current account holder (must be in the applicants own name). |
