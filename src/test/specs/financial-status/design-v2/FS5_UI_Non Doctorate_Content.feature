@@ -17,28 +17,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Sort code                       | 22-22-22   |
             | Account number                  | 22222222   |
         Then the service displays the following result
-            | Page dynamic heading | Passed |
+            | Page dynamic heading | Passed                                                          |
+            | Page heading         | Tier 4 (General) student (non-doctorate)                        |
+            | Page sub heading     | Financial Status check                                          |
+            | Page dynamic detail  | This application meets all of the financial status requirements |
         And the service displays the following result headers in order
             | Total funds required  |
             | 28-day period checked |
 
-
-    Scenario: Check for important text on the page
-    This scenario is to check for required text on the page
-        Given caseworker is using the financial status service ui
-        When the financial status check is performed with
-            | The end of 28-day period              | 20/06/2016 |
-            | Inner London Borough                  | Yes        |
-            | Course Length                         | 9          |
-            | Total tuition fees for the first year | 9755.50    |
-            | Tuition fees already paid             | 500        |
-            | Accommodation fees already paid       | 250.50     |
-            | Sort code                             | 14-55-11   |
-            | Account number                        | 23568599   |
-        Then The FSPS Tier Four general Case Worker tool page provides the following result
-            | Page title         | Tier 4 (General) student (non-doctorate)                        |
-            | Page sub title     | Financial Status check                                          |
-            | Page static detail | This application meets all of the financial status requirements |
 
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
