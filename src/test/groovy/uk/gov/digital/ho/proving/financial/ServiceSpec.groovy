@@ -1,26 +1,34 @@
 package uk.gov.digital.ho.proving.financial
 
-import com.sun.jersey.api.client.Client
-import com.sun.jersey.api.client.ClientResponse
-import com.sun.jersey.api.client.WebResource
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.web.client.RestTemplate
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
-import uk.gov.digital.ho.proving.financial.exception.ApiExceptionHandler
+import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 import uk.gov.digital.ho.proving.financial.integration.ApiUrls
-import uk.gov.digital.ho.proving.financial.model.Account
 import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
-import uk.gov.digital.ho.proving.financial.model.ResponseDetails
+import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker
+import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
+import uk.gov.digital.ho.proving.financial.model.Account
+import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
-import javax.ws.rs.core.Response
 import java.time.LocalDate
 
 import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.core.StringContains.containsString
+import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
+import static org.springframework.test.web.client.response.MockRestResponseCreators.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -43,35 +51,36 @@ class ServiceSpec extends Specification {
 
     final BigDecimal FUNDS_REQUIRED = 100.0
 
-    MockMvc mockMvc
+    ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
-    def mockClient = Mock(Client)
-    def balanceResource = Mock(WebResource)
-    def thresholdResource = Mock(WebResource)
-    def balanceBuilder = Mock(WebResource.Builder)
-    def thresholdBuilder = Mock(WebResource.Builder)
-    def balanceResponse = Mock(ClientResponse)
-    def thresholdResponse = Mock(ClientResponse)
+    MockMvc mockMvc
+    MockRestServiceServer mockServer
 
     def service = new Service()
     def apiUrls = new ApiUrls()
+    def checker = new FinancialStatusChecker();
 
     def setup() {
-
-        service.client = mockClient
 
         apiUrls.apiRoot = ''
         apiUrls.apiDailyBalanceEndpoint = "/pttg/financialstatusservice/v1/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
         apiUrls.apiThresholdEndpoint = "/pttg/financialstatusservice/v1/maintenance/threshold"
 
-        service.daysToCheck = DAYS_TO_CHECK
-        service.apiUrls = apiUrls
+        RestTemplate restTemplate = new RestTemplate()
+        restTemplate.errorHandler = new RestServiceErrorHandler();
+        mockServer = MockRestServiceServer.createServer(restTemplate);
+
+        checker.restTemplate = restTemplate
+        checker.daysToCheck = DAYS_TO_CHECK
+        checker.apiUrls = apiUrls
+
+        service.financialStatusChecker = checker
 
         mockMvc = standaloneSetup(service)
             .setMessageConverters(createMessageConverter())
-            .setControllerAdvice(new ApiExceptionHandler())
+            .setControllerAdvice(new ServiceExceptionHandler())
             .alwaysDo(print())
-            .alwaysExpect(content().contentType(APPLICATION_JSON_VALUE))
+//            .alwaysExpect(content().contentType(APPLICATION_JSON_VALUE))
             .build()
     }
 
@@ -81,56 +90,27 @@ class ServiceSpec extends Specification {
         converter
     }
 
-    DailyBalanceStatusResult passResponse = new DailyBalanceStatusResult(
-        new Account(SORT_CODE, ACCOUNT_NUMBER),
-        LocalDate.parse(FROM_DATE),
-        LocalDate.parse(TO_DATE),
-        BigDecimal.valueOf(FUNDS_REQUIRED),
-        true,
-        new ResponseDetails("200", "OK"))
+    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1))
+    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK")))
 
-    DailyBalanceStatusResult notFoundResponse = new DailyBalanceStatusResult(
-        null,
-        null,
-        null,
-        null,
-        false,
-        new ResponseDetails("404", "Not Found"))
+    def withResponses(threshold, balance) {
+        mockServer.expect(requestTo(containsString("threshold")))
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(threshold);
 
-
-    def remoteApiDailyBalanceResponse(Response.Status status, DailyBalanceStatusResult response) {
-
-        mockClient.resource({ URI url -> url.getPath().contains("balance") }) >> balanceResource
-
-        balanceResource.header("accept", "application/json") >> balanceBuilder
-        balanceBuilder.header("content-type", "application/json") >> balanceBuilder
-
-        balanceBuilder.get(ClientResponse.class) >> balanceResponse
-
-        balanceResponse.getStatusInfo() >> status
-        balanceResponse.getStatus() >> status.getStatusCode()
-        balanceResponse.getEntity(DailyBalanceStatusResult.class) >> response
+        mockServer.expect(requestTo(containsString("balance")))
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(balance);
     }
 
-    def remoteApiThresholdResponse(Response.Status status, ThresholdResult response) {
-
-        mockClient.resource({ URI url -> url.getPath().contains("threshold") }) >> thresholdResource
-
-        thresholdResource.header("accept", "application/json") >> thresholdBuilder
-        thresholdBuilder.header("content-type", "application/json") >> thresholdBuilder
-
-        thresholdBuilder.get(ClientResponse.class) >> thresholdResponse
-
-        thresholdResponse.getStatusInfo() >> status
-        thresholdResponse.getStatus() >> status.getStatusCode()
-        thresholdResponse.getEntity(ThresholdResult.class) >> response
-    }
 
     def "processes valid request and response"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
-        remoteApiDailyBalanceResponse(Response.Status.OK, passResponse)
+        withResponses(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withSuccess(passResponseJson, APPLICATION_JSON)
+        )
 
         when:
         def response = mockMvc.perform(
@@ -145,6 +125,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_VALUE))
             andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
@@ -188,7 +169,7 @@ class ServiceSpec extends Specification {
             andExpect(status().isBadRequest())
             andExpect(jsonPath("code", is("0002")))
             andExpect(jsonPath("message", allOf(
-                containsString("Invalid parameter type"),
+                containsString("Invalid parameter"),
                 containsString("toDate"))))
         }
     }
@@ -245,11 +226,14 @@ class ServiceSpec extends Specification {
         accountNumber << ["1234567", "123456789", "00000000"]
     }
 
-    def "reports remote server error as internal error"() {
+
+    def "reports remote server error for threshold as internal error"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
-        remoteApiDailyBalanceResponse(Response.Status.INTERNAL_SERVER_ERROR, null)
+        withResponses(
+            withServerError(),
+            withSuccess(thresholdResponseJson, APPLICATION_JSON)
+        )
 
         when:
         def response = mockMvc.perform(
@@ -264,15 +248,44 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isInternalServerError())
-            andExpect(jsonPath("code", is("0005")))
+            andExpect(jsonPath("code", is("0006")))
         }
     }
+
+
+    def "reports remote server error for dailybalancestatus as internal error"() {
+
+        given:
+        withResponses(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withServerError()
+        )
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
+
+        then:
+        response.with {
+            andExpect(status().isInternalServerError())
+            andExpect(jsonPath("code", is("0006")))
+        }
+    }
+
 
     def "reports remote server response processing error as internal error"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
-        remoteApiDailyBalanceResponse(Response.Status.OK, null)
+        withResponses(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withSuccess(null, APPLICATION_JSON)
+        )
 
         when:
         def response = mockMvc.perform(
@@ -287,15 +300,18 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isInternalServerError())
-            andExpect(jsonPath("code", is("0000")))
+            andExpect(jsonPath("code", is("000")))
         }
     }
 
-    def "propagates remote server not found response"() {
+
+    def "when 404 at API, returns 404 - the 'insufficient information' case"() {
 
         given:
-        remoteApiThresholdResponse(Response.Status.OK, new ThresholdResult(1))
-        remoteApiDailyBalanceResponse(Response.Status.NOT_FOUND, notFoundResponse)
+        withResponses(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withStatus(HttpStatus.NOT_FOUND)
+        )
 
         when:
         def response = mockMvc.perform(
