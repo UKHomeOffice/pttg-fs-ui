@@ -1,26 +1,29 @@
 package uk.gov.digital.ho.proving.financial.model
 
+import nl.jqno.equalsverifier.EqualsVerifier
+import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
-import nl.jqno.equalsverifier.*
+
+import static java.math.BigDecimal.ONE
 
 /**
  * @Author Home Office Digital
  */
-class AccountSpec extends Specification {
+class MaintenanceSpec extends Specification {
 
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new Account("112233", "12345678")
+        def instance = new Maintenance(ONE, ONE, ONE)
 
         when:
         def output = instance.toString()
 
         then:
-        output.contains("sortCode='$instance.sortCode'")
+        output.contains("totalTuitionFees=$instance.totalTuitionFees")
 
         and:
-        !output.contains('Account@')
+        !output.contains('Maintenance@')
     }
 
     def 'has valid hashcode and equals'() {
