@@ -122,7 +122,7 @@ class Steps {
     private def assertCurrentPage(String location) {
 
         def expected = pageLocations[location]
-        driver.sleep(500)
+        driver.sleep(1000)
         assert driver.currentUrl.contains(expected): "We're not at the expected page location: '$expected'. Something must have gone wrong earlier. Current page $driver.currentUrl"
     }
 
