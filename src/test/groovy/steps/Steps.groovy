@@ -206,9 +206,8 @@ class Steps {
     @Then("^the service displays the account not found page\$")
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
 
-
-
         assertCurrentPage('noRecordPage')
+        
         assertTextFieldEqualityForMap(expectedResult)
     }
 
