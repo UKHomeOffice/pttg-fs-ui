@@ -122,6 +122,7 @@ class Steps {
     private def assertCurrentPage(String location) {
 
         def expected = pageLocations[location]
+        driver.sleep(500)
         assert driver.currentUrl.contains(expected): "We're not at the expected page location: '$expected'. Something must have gone wrong earlier. Current page $driver.currentUrl"
     }
 
@@ -199,9 +200,9 @@ class Steps {
     @Then("^the service displays the account not found page\$")
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
 
+
+
         assertCurrentPage('noRecordPage')
-
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
