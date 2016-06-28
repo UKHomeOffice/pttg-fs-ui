@@ -1,4 +1,4 @@
-@DataDir=v2
+@DataDir=v2 @wiremock
 Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctorate out of London (single current account and no dependants)
 
     Requirement to meet Tier 4 passed and not passed
@@ -12,7 +12,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     She has < than the threshold for the previous 28 days
 
         Given caseworker is using the financial status service ui
-        Given the test data for account 33333333
+        Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | No         |
@@ -24,7 +24,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 33333333   |
         Then the service displays the following result
             | Outcome                         | Not passed               |
-            | Total funds required            | £5,030.00                |
+            | Total funds required            | £16,090.00                |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | No                       |
             | Course length                   | 2                        |
@@ -40,7 +40,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     She has >= than the threshold for the previous 28 days
 
         Given caseworker is using the financial status service ui
-        Given the test data for account 44444444
+        Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | No         |
@@ -52,7 +52,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 44444444   |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Total funds required       | £23,335.00               |
+            | Total funds required       | £20,390.00              |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Sort code                  | 44-44-44                 |
             | Account number             | 44444444                 |

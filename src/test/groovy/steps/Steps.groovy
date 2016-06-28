@@ -43,6 +43,9 @@ class Steps {
         'noRecordPage': '#/financial-status-no-record'
     ]
 
+    def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
+    def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
+
     def sortCodeParts = ["First", "Second", "Third"]
     def sortCodeDelimiter = "-"
 
@@ -56,11 +59,17 @@ class Steps {
     @Before
     def setUp(Scenario scenario) {
 
-        checkPrerequisites()
-
-        // todo is there a hook to allow setup before all scenarios in this feature?
-        testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
-        testDataLoader.prepareFor(scenario)
+        def isWireMock = scenario.getSourceTagNames().find {
+            it.startsWith("@wiremock")
+        }
+        if (isWireMock) {
+            testDataLoader = new WireMockTestDataLoader(barclaysStubHost, barclaysStubPort)
+            testDataLoader.prepareFor(scenario)
+        } else {
+            checkPrerequisites()
+            testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
+            testDataLoader.prepareFor(scenario)
+        }
     }
 
     @After
@@ -135,7 +144,21 @@ class Steps {
     @Given("^the test data for account (.+)\$")
     public void the_test_data_for_account_number(String fileName) {
         testDataLoader.loadTestData(fileName)
+        testDataLoader.loadThresholdTestData(fileName)
     }
+
+    @Given("^the account has sufficient funds\$")
+    public void the_account_has_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds\$")
+    public void the_account_does_not_have_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
 
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {

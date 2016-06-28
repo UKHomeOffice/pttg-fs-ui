@@ -1,4 +1,4 @@
-@DataDir=v2
+@DataDir=v2 @wiremock
 Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctorate In London (single current account and no dependants)
 
     Requirement to meet Tier 4 passed and not passed
@@ -12,7 +12,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     She has < than the threshold for the previous 28 days
 
         Given caseworker is using the financial status service ui
-        Given the test data for account 11111111
+        Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
@@ -40,7 +40,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     She has >= than the threshold for the previous 28 days
 
         Given caseworker is using the financial status service ui
-        Given the test data for account 22222222
+        Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
