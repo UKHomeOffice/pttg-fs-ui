@@ -159,15 +159,16 @@
                             $location.path('/financial-status-result-not-pass');
                         }
                     }).catch(function (error) {
-                    $log.debug("received a non success result with status: " + error.status)
+                    $log.debug("received a non success result: " + error.status + " : " + error.statusText)
                     if (error.status === 404) {
-                        vm.model.accountNumberChecked = error.data.accountNumber;
-                        vm.model.sortCodeChecked = error.data.sortCode;
+                        vm.model.accountNumberChecked = vm.model.accountNumber;
+                        vm.model.sortCodeChecked = vm.getFullSortCode();
                         $location.path('/financial-status-no-record');
                     } else {
-                        vm.serverError = 'Unable to process your request, please try again.';
+                        vm.serverError = 'Unable to process your request, please try again. ' + error.status + " : " + error.statusText;
                         vm.serverErrorDetail = error.data.message;
                     }
+
                 });
             } else {
                 vm.validateError = true;
@@ -243,7 +244,7 @@
                 vm.queryForm.courseLength.$setValidity(false);
                 vm.courseLengthInvalidError = true;
                 validated = false;
-            }  else if (vm.model.courseLength > 9) {
+            } else if (vm.model.courseLength > 9) {
                 vm.queryForm.courseLength.$setValidity(false);
                 vm.courseLengthInvalidError = true;
                 validated = false;

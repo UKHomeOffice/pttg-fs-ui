@@ -23,6 +23,10 @@ public final class ResponseDetails {
         this.code = code;
         this.message = message;
     }
+    public ResponseDetails(ErrorCode error){
+      this.code = error.getCode();
+        this.message = error.getMessage();
+    }
 
     public String getCode() {
         return code;

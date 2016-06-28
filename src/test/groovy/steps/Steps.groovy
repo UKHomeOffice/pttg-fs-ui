@@ -10,10 +10,16 @@ import cucumber.api.java.en.When
 import groovy.json.JsonSlurper
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.ExpectedCondition
+import org.openqa.selenium.support.ui.Wait
+import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
+import javax.annotation.Nullable
 
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
@@ -122,9 +128,10 @@ class Steps {
     private def assertCurrentPage(String location) {
 
         def expected = pageLocations[location]
-        assert driver.currentUrl.contains(expected): "We're not at the expected page location: '$expected'. Something must have gone wrong earlier. Current page $driver.currentUrl"
-    }
+        def actual = driver.currentUrl
 
+        assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+    }
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
@@ -167,7 +174,7 @@ class Steps {
         }
 
         driver.sleep(delay)
-        driver.findElement(By.className("button")).click();
+        driver.findElement(By.className("button")).click()
     }
 
 
@@ -201,7 +208,6 @@ class Steps {
 
         assertCurrentPage('noRecordPage')
 
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
@@ -216,7 +222,6 @@ class Steps {
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
-        driver.sleep(delay)
         assertCurrentPage('resultsPage')
 
         assertTextFieldEqualityForMap(expectedResult)
