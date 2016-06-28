@@ -133,6 +133,29 @@ class Steps {
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
+    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
+        def entriesAsList = expectedResult.asList(String.class)
+
+        entriesAsList.eachWithIndex { v, index ->
+            def oneBasedIndex = index + 1;
+            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
+            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
+        }
+    }
+
+    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
+        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
+
+        entries.each { k, v ->
+
+            String fieldName = toCamelCase(k);
+
+            WebElement element = driver.findElement(By.id(fieldName))
+
+            assert v.contains(element.getText())
+        }
+    }
+
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
         driver.get(uiUrl)
@@ -240,26 +263,20 @@ class Steps {
         assertCurrentPage('resultsPage')
 
         WebElement tableElement = driver.findElement(By.id("resultsTable"))
-        def entriesAsList = expectedResult.asList(String.class)
-
-        entriesAsList.eachWithIndex { v, index ->
-            def oneBasedIndex = index + 1;
-            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
-            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
-        }
+        verifyTableRowHeadersInOrder(expectedResult, tableElement)
     }
 
-    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
-        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
 
-        entries.each { k, v ->
 
-            String fieldName = toCamelCase(k);
+    @Then("^the service displays the following your search headers in order\$")
+    public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
 
-            WebElement element = driver.findElement(By.id(fieldName))
+        assertCurrentPage('resultsPage')
 
-            assert v.contains(element.getText())
-        }
+        WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
+        verifyTableRowHeadersInOrder(expectedResult, tableElement)
     }
+
+
 
 }
