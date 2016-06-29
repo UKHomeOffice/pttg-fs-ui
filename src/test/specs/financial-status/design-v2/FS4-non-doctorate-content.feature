@@ -26,7 +26,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | 28-day period checked |
 
 
-
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
     Scenario: Page checks for Not Passed text write up
@@ -62,44 +61,38 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
-
-
     Scenario: Caseworker enters account number and sort code where no records exist within the period stated (no test data for all 9's)
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
-            | The end of 28-day period              | 07/06/2016 |
-            | Inner London Borough                  | Yes        |
-            | Course Length                         | 6          |
-            | Total tuition fees for the first year | 8500.00    |
-            | Tuition fees already paid             | 0          |
-            | Accommodation fees already paid       | 0          |
-            | Sort code                             | 99-99-99   |
-            | Account number                        | 99999999   |
-        Then the service displays the following result
-            | Page dynamic heading  | There is no record for the sort code and account number with Barclays                                                           |
-            | Page dynamic sub text | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999 |
-        And the service displays the following your search data
-            | Your Search Row 1 | Your search Sort code                             |
-            | Your Search Row 2 | Your search Account number                        |
-            | Your Search Row 3 | Your search Inner London borough                  |
-            | Your Search Row 4 | Your search Course length                         |
-            | Your Search Row 5 | Your search Total tuition fees for the first year |
-            | Your Search Row 6 | Your search Tuition fees already paid             |
-            | Your Search Row 7 | Your search Accommodation fees already paid       |
-
+            | End date                        | 07/06/2016 |
+            | Inner London Borough            | Yes        |
+            | Course Length                   | 6          |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
+            | Accommodation fees already paid | 0          |
+            | Sort code                       | 99-99-99   |
+            | Account number                  | 99999999   |
+        Then the service displays the following page content
+            | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                           |
+            | Page dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999 |
+        And the service displays the following your search headers in order
+            | Sort code                             |
+            | Account number                        |
+            | Inner London borough                  |
+            | Course length                         |
+            | Total tuition fees for the first year |
+            | Tuition fees already paid             |
+            | Accommodation fees already paid       |
 
 
  ###################################### Section - Check for text on input page ######################################
 
-
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
-
         Given caseworker is using the financial status service ui
-        When Case worker is on the input page
-
-        Then The FSPS Tier Four general Case Worker tool input page provides the following result
-            | Page title     | Tier 4 (General) student (non-doctorate)                                                             |
-            | Page sub title | Financial Status Check                                                                               |
-            | Page sub text  | Online statement checker for a Barclays current account holder (must be in the applicants own name). |
+        When the caseworker views the query page
+        Then the service displays the following page content
+            | Page heading     | Tier 4 (General) student (non-doctorate)                                                             |
+            | Page sub heading | Financial Status Check                                                                               |
+            | Page sub text    | Online statement checker for a Barclays current account holder (must be in the applicants own name). |
 
 

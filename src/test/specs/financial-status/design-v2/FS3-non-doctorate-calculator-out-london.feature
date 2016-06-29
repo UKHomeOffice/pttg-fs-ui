@@ -10,7 +10,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
     (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
     She has < than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         Given the test data for account 33333333
         When the financial status check is performed with
@@ -38,7 +37,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     Scenario: Shelly is a Non Doctorate not inner London student and has sufficient funds
     (On a daily basis the closing balance in her account is >= than the Total funds required - at £23335)
     She has >= than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         Given the test data for account 44444444
         When the financial status check is performed with

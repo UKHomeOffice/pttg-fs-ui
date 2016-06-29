@@ -257,8 +257,6 @@ class Steps {
     @Then("^the service displays the following (.*) headers in order\$")
     public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
 
-        assertCurrentPage('resultsPage')
-
         def tableId = toCamelCase(tableName) +"Table"
 
         verifyTableRowHeadersInOrder(expectedResult, tableId)
