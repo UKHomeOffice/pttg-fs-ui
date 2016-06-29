@@ -300,7 +300,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isInternalServerError())
-            andExpect(jsonPath("code", is("000")))
+            andExpect(jsonPath("code", is("000X")))
         }
     }
 
@@ -328,5 +328,38 @@ class ServiceSpec extends Specification {
             andExpect(status().isNotFound())
         }
     }
+
+    def 'handles unexpected HTTP status from API server'() {
+
+        given:
+        withResponses(
+            withStatus(HttpStatus.BAD_GATEWAY),
+            withStatus(HttpStatus.BAD_GATEWAY)
+        )
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
+
+        then:
+        response.with {
+            andExpect(status().isInternalServerError())
+            andExpect(jsonPath("code", is("0005")))
+            andExpect(jsonPath("message", containsString("API response status")))
+            andExpect(jsonPath("message", containsString(HttpStatus.BAD_GATEWAY.toString())))
+        }
+    }
+
+    def 'connection times out in 30 seconds'() {
+
+        //todo
+    }
+
 
 }
