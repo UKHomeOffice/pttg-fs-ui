@@ -1,4 +1,4 @@
-package uk.gov.digital.ho.proving.financial.model
+package uk.gov.digital.ho.proving.financial.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import nl.jqno.equalsverifier.EqualsVerifier
@@ -13,9 +13,10 @@ import java.time.LocalDate
 /**
  * @Author Home Office Digital
  */
-class FundingCheckResultSpec extends Specification {
+class FundingCheckResponseSpec extends Specification {
 
-    public static final String sampleOneFile = "fundingcheckresult-sample-one.json"
+    static final String sampleOneFile = "fundingcheckresponse-sample-one.json"
+
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
     def "Instance should serialize to json"() {

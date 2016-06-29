@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * @Author Home Office Digital
  */
-public class Course {
+public final class Course {
 
     @NotNull(message = "Missing parameter")
     private Boolean innerLondonBorough;
@@ -51,9 +51,9 @@ public class Course {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Course that = (Course) o;
-        return courseLength == that.courseLength &&
-            Objects.equals(innerLondonBorough, that.innerLondonBorough);
+        Course course = (Course) o;
+        return Objects.equals(innerLondonBorough, course.innerLondonBorough) &&
+            Objects.equals(courseLength, course.courseLength);
     }
 
     @Override

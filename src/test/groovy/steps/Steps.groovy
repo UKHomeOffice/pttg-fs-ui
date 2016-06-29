@@ -10,20 +10,13 @@ import cucumber.api.java.en.When
 import groovy.json.JsonSlurper
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.Wait
-import org.openqa.selenium.support.ui.WebDriverWait
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.annotation.Nullable
-
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
-
 /**
  * @Author Home Office Digital
  */
@@ -136,10 +129,38 @@ class Steps {
 
     private def assertCurrentPage(String location) {
 
+        driver.sleep(200)
+
         def expected = pageLocations[location]
         def actual = driver.currentUrl
-
+        driver.sleep(2500)
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+    }
+
+    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableId) {
+
+        WebElement tableElement = driver.findElement(By.id(tableId))
+
+        def entriesAsList = expectedResult.asList(String.class)
+
+        entriesAsList.eachWithIndex { v, index ->
+            def oneBasedIndex = index + 1;
+            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
+            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
+        }
+    }
+
+    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
+        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
+
+        entries.each { k, v ->
+
+            String fieldName = toCamelCase(k);
+
+            WebElement element = driver.findElement(By.id(fieldName))
+
+            assert v.contains(element.getText())
+        }
     }
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
@@ -230,7 +251,7 @@ class Steps {
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('noRecordPage')
-        
+
         assertTextFieldEqualityForMap(expectedResult)
     }
 
@@ -242,7 +263,7 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following result\$")
+    @Then("^the service displays the following (?:result|result page content)\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('resultsPage')
@@ -256,33 +277,14 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
+    @Then("^the service displays the following (.*) headers in order\$")
+    public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
 
-    @Then("^the service displays the following result headers in order\$")
-    public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
+        def tableId = toCamelCase(tableName) +"Table"
 
-        assertCurrentPage('resultsPage')
-
-        WebElement tableElement = driver.findElement(By.id("resultsTable"))
-        def entriesAsList = expectedResult.asList(String.class)
-
-        entriesAsList.eachWithIndex { v, index ->
-            def oneBasedIndex = index + 1;
-            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
-            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
-        }
+        verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
-    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
-        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
 
-        entries.each { k, v ->
-
-            String fieldName = toCamelCase(k);
-
-            WebElement element = driver.findElement(By.id(fieldName))
-
-            assert v.contains(element.getText())
-        }
-    }
 
 }

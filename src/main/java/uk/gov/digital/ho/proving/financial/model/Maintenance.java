@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * @Author Home Office Digital
  */
-public class Maintenance {
+public final class Maintenance {
 
     @NotNull(message = "Missing parameter")
     private BigDecimal totalTuitionFees;

@@ -1,20 +1,20 @@
-package uk.gov.digital.ho.proving.financial.model
+package uk.gov.digital.ho.proving.financial.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
-import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
+import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
 import java.time.LocalDate
 
 /**
  * @Author Home Office Digital
  */
-class DailyBalanceStatusResultSpec extends Specification {
+class ThresholdResultSpec extends Specification {
 
-    static final String sampleOneFile = "dailybalancestatusresult-sample-one.json"
+    static final String sampleOneFile = "thresholdresult-sample-one.json"
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
@@ -39,7 +39,7 @@ class DailyBalanceStatusResultSpec extends Specification {
         def sampleOneJson = stringFromFile(sampleOneFile)
 
         when:
-        def actual = mapper.readValue(sampleOneJson, DailyBalanceStatusResult.class)
+        def actual = mapper.readValue(sampleOneJson, ThresholdResult.class)
 
         then:
         actual == expected
@@ -54,16 +54,16 @@ class DailyBalanceStatusResultSpec extends Specification {
         def output = sample.toString()
 
         then:
-        output.contains("pass=$sample.pass")
+        output.contains("threshold=$sample.threshold")
 
         and:
-        !output.contains('DailyBalanceStatusResult@')
+        !output.contains('ThresholdResult@')
     }
 
     def 'has valid hashcode and equals'() {
 
         when:
-        EqualsVerifier.forClass(DailyBalanceStatusResult).suppress(Warning.NONFINAL_FIELDS).verify()
+        EqualsVerifier.forClass(ThresholdResult).suppress(Warning.NONFINAL_FIELDS).verify()
 
         then:
         noExceptionThrown()
@@ -71,9 +71,7 @@ class DailyBalanceStatusResultSpec extends Specification {
 
 
     def sampleOne =
-        new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK"))
-            .withFromDate(LocalDate.of(2015, 10, 3))
-            .withMinimum(BigDecimal.valueOf(100))
+        new ThresholdResult(BigDecimal.valueOf(100))
 
     def stringFromFile(String fileName) {
         withoutSpaces(new File("src/test/resources/" + fileName).text)
