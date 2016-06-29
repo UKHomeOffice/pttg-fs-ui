@@ -127,13 +127,18 @@ class Steps {
 
     private def assertCurrentPage(String location) {
 
+        driver.sleep(200)
+
         def expected = pageLocations[location]
         def actual = driver.currentUrl
 
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
-    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
+    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableId) {
+
+        WebElement tableElement = driver.findElement(By.id(tableId))
+
         def entriesAsList = expectedResult.asList(String.class)
 
         entriesAsList.eachWithIndex { v, index ->
@@ -242,7 +247,7 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following result\$")
+    @Then("^the service displays the following (?:result|result page content)\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('resultsPage')
@@ -256,25 +261,14 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-
-    @Then("^the service displays the following result headers in order\$")
-    public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('resultsPage')
-
-        WebElement tableElement = driver.findElement(By.id("resultsTable"))
-        verifyTableRowHeadersInOrder(expectedResult, tableElement)
-    }
-
-
-
-    @Then("^the service displays the following your search headers in order\$")
-    public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
+    @Then("^the service displays the following (.*) headers in order\$")
+    public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
 
         assertCurrentPage('resultsPage')
 
-        WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
-        verifyTableRowHeadersInOrder(expectedResult, tableElement)
+        def tableId = toCamelCase(tableName) +"Table"
+
+        verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
 
