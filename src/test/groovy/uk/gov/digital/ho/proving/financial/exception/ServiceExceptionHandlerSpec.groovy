@@ -113,7 +113,7 @@ class ServiceExceptionHandlerSpec extends Specification {
         apiStatusCode                    | convertedStatusCode              | message
         HttpStatus.NOT_FOUND             | HttpStatus.NOT_FOUND             | '{}'
         HttpStatus.INTERNAL_SERVER_ERROR | HttpStatus.INTERNAL_SERVER_ERROR | 'Error at FSS API server'
-        HttpStatus.BAD_GATEWAY           | HttpStatus.INTERNAL_SERVER_ERROR | 'Internal server error'
+        HttpStatus.BAD_GATEWAY           | HttpStatus.INTERNAL_SERVER_ERROR | 'API response status: 502'
     }
 
 

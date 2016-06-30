@@ -48,16 +48,24 @@ public class FinancialStatusChecker {
     @PostConstruct
     private void setUp() {
 
+        // todo inject
         restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-        restTemplate.setErrorHandler(errorHandler);
+        configureTemplate();
 
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(asList(MediaType.APPLICATION_JSON));
 
         entity = new HttpEntity<>(headers);
+    }
+
+    public void setRestTemplate(RestTemplate template){
+        this.restTemplate = template;
+    }
+
+    private void configureTemplate() {
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.setErrorHandler(errorHandler);
     }
 
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
@@ -68,7 +76,7 @@ public class FinancialStatusChecker {
         return new FundingCheckResponse(dailyBalanceStatus);
     }
 
-    public ThresholdResult getThreshold(Course course, Maintenance maintenance) {
+    private ThresholdResult getThreshold(Course course, Maintenance maintenance) {
         URI uri = apiUrls.thresholdUrlFor(course, maintenance);
         ThresholdResult thresholdResult = getForObject(uri, ThresholdResult.class);
 
@@ -77,7 +85,7 @@ public class FinancialStatusChecker {
         return thresholdResult;
     }
 
-    public DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
+    private DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
 
         LocalDate fromDate = daysBefore(toDate);
 
