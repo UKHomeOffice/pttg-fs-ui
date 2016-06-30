@@ -67,6 +67,33 @@ describe('coreController', function () {
         expect(coreController.formatEndDate()).toEqual('01/02/2015')
     });
 
+    it('is expected to format the sort code with dashes', function () {
+        coreController.model.sortCodeFirst = '11';
+        coreController.model.sortCodeSecond = '22';
+        coreController.model.sortCodeThird = '33';
+        expect(coreController.getFullSortCode()).toEqual('11-22-33')
+    });
+
+    it('is expected to format the sort code without dashes', function () {
+        coreController.model.sortCodeFirst = '11';
+        coreController.model.sortCodeSecond = '22';
+        coreController.model.sortCodeThird = '33';
+        expect(coreController.getFullSortCodeDigits()).toEqual('112233')
+    });
+
+    it('is expected to format the date period checked', function () {
+        coreController.model.periodCheckedFrom = '2015-01-01';
+        coreController.model.periodCheckedTo = '2015-02-02';
+        expect(coreController.getPeriodChecked()).toEqual('01/01/2015 to 02/02/2015')
+    });
+
+    it('is expected to format the full end date padding with zeroes', function () {
+        coreController.model.endDateDay = '2';
+        coreController.model.endDateMonth = '12';
+        coreController.model.endDateYear = '2015';
+        expect(coreController.getFullEndDate()).toEqual('2015-12-02')
+    });
+
     it('is expected the form submits the correct data to the service', function () {
         spyOnSuccessful();
 
