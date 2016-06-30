@@ -31,6 +31,15 @@ describe('coreController', function () {
         });
     }
 
+    spyOnAccountNotFound = function(){
+        spyOn(restService, 'checkFinancialStatus').and.callFake(function() {
+            deferred = q.defer();
+            var error = {status:404, data:{error:{code: "404"}}};
+            deferred.reject(error);
+            return deferred.promise;
+        });
+    }
+
     configureTemplates = function ($compile, $templateCache) {
         templateHtml = $templateCache.get('client/views/financial-status-query.html')
         formElem = angular.element("<div>" + templateHtml + "</div>")
@@ -125,10 +134,18 @@ describe('coreController', function () {
         expect(restService.checkFinancialStatus.calls.count()).toBe(0);
     });
 
+
     it('sets returned data from service on the model ', function () {
         spyOnSuccessful();
 
-        response = {sortCode: 200203, accountNumber: 12345678, fundingRequirementMet: true, periodCheckedFrom: 2015-01-03, periodCheckedTo: 2015-01-30, threshold: 1}
+        response = {
+            sortCode: 200203,
+            accountNumber: 12345678,
+            fundingRequirementMet: true,
+            periodCheckedFrom: 2015-01-03,
+            periodCheckedTo: 2015-01-30,
+            minimum: 1
+        }
 
         coreController.model.endDateDay = '30';
         coreController.model.endDateMonth = '1';
@@ -147,10 +164,39 @@ describe('coreController', function () {
         scope.$digest()
 
         expect(coreController.model.fundingRequirementMet).toBe(true);
+        expect(coreController.model.minimum).toBe(1);
+        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
 
+
+    it('formats money to a precision of 2 decimal places with a pound sign', function(){
+        expect(coreController.formatMoneyPoundsPence(500)).toBe("£500.00");
+    });
+
+    it('handles account not found from service', function(){
+        spyOnAccountNotFound();
+        spyOn(location, 'path');
+
+        coreController.model.endDateDay = '30';
+        coreController.model.endDateMonth = '1';
+        coreController.model.endDateYear = '2015';
+        coreController.model.accountNumber = '99999999';
+        coreController.model.sortCodeFirst = '99';
+        coreController.model.sortCodeSecond = '99';
+        coreController.model.sortCodeThird = '99';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.courseLength = '1';
+        coreController.model.totalTuitionFees = '1';
+        coreController.model.tuitionFeesAlreadyPaid = '1';
+        coreController.model.accommodationFeesAlreadyPaid = '1';
+
+        coreController.submit()
+        scope.$digest();
+
+        expect(location.path).toHaveBeenCalledWith('/financial-status-no-record');
+    });
 
 });
 
