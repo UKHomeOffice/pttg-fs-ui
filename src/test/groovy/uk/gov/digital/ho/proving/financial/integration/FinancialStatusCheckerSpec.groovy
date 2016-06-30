@@ -35,8 +35,8 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def setup() {
         checker = new FinancialStatusChecker()
-        checker.setRestTemplate(template)
 
+        checker.restTemplate = template
         checker.apiUrls = urls
     }
 

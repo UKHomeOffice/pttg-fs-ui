@@ -2,12 +2,16 @@ package uk.gov.digital.ho.proving.financial
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
+import org.springframework.http.client.ClientHttpRequest
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.mock.http.client.MockClientHttpResponse
 import org.springframework.test.web.client.MockRestServiceServer
+import org.springframework.test.web.client.ResponseCreator
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
+import spock.lang.Timeout
 import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 import uk.gov.digital.ho.proving.financial.integration.ApiUrls
@@ -17,9 +21,14 @@ import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
+import java.util.concurrent.TimeUnit
+
 import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.core.StringContains.containsString
+import static org.springframework.http.HttpStatus.BAD_GATEWAY
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method
@@ -98,6 +107,8 @@ class ServiceSpec extends Specification {
             .andExpect(method(HttpMethod.GET))
             .andRespond(balance);
     }
+
+
 
 
     def "processes valid request and response"() {
@@ -306,7 +317,7 @@ class ServiceSpec extends Specification {
         given:
         apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
-            withStatus(HttpStatus.NOT_FOUND)
+            withStatus(NOT_FOUND)
         )
 
         when:
@@ -329,8 +340,8 @@ class ServiceSpec extends Specification {
 
         given:
         apiRespondsWith(
-            withStatus(HttpStatus.BAD_GATEWAY),
-            withStatus(HttpStatus.BAD_GATEWAY)
+            withStatus(BAD_GATEWAY),
+            withStatus(BAD_GATEWAY)
         )
 
         when:
@@ -348,12 +359,8 @@ class ServiceSpec extends Specification {
             andExpect(status().isInternalServerError())
             andExpect(jsonPath("code", is("0005")))
             andExpect(jsonPath("message", containsString("API response status")))
-            andExpect(jsonPath("message", containsString(HttpStatus.BAD_GATEWAY.toString())))
+            andExpect(jsonPath("message", containsString(BAD_GATEWAY.toString())))
         }
-    }
-
-    def 'connection times out in 30 seconds'() {
-        //todo
     }
 
 
