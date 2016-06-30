@@ -7,7 +7,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.client.RestTemplate
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
@@ -16,10 +15,7 @@ import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker
 import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
-import uk.gov.digital.ho.proving.financial.model.Account
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
-
-import java.time.LocalDate
 
 import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.Is.is
@@ -93,7 +89,7 @@ class ServiceSpec extends Specification {
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK")))
 
-    def withResponses(threshold, balance) {
+    def apiRespondsWith(threshold, balance) {
         mockServer.expect(requestTo(containsString("threshold")))
             .andExpect(method(HttpMethod.GET))
             .andRespond(threshold);
@@ -107,7 +103,7 @@ class ServiceSpec extends Specification {
     def "processes valid request and response"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withSuccess(passResponseJson, APPLICATION_JSON)
         )
@@ -230,7 +226,7 @@ class ServiceSpec extends Specification {
     def "reports remote server error for threshold as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withServerError(),
             withSuccess(thresholdResponseJson, APPLICATION_JSON)
         )
@@ -256,7 +252,7 @@ class ServiceSpec extends Specification {
     def "reports remote server error for dailybalancestatus as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withServerError()
         )
@@ -282,7 +278,7 @@ class ServiceSpec extends Specification {
     def "reports remote server response processing error as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withSuccess(null, APPLICATION_JSON)
         )
@@ -308,7 +304,7 @@ class ServiceSpec extends Specification {
     def "when 404 at API, returns 404 - the 'insufficient information' case"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withStatus(HttpStatus.NOT_FOUND)
         )
@@ -332,7 +328,7 @@ class ServiceSpec extends Specification {
     def 'handles unexpected HTTP status from API server'() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withStatus(HttpStatus.BAD_GATEWAY),
             withStatus(HttpStatus.BAD_GATEWAY)
         )
@@ -357,7 +353,6 @@ class ServiceSpec extends Specification {
     }
 
     def 'connection times out in 30 seconds'() {
-
         //todo
     }
 
