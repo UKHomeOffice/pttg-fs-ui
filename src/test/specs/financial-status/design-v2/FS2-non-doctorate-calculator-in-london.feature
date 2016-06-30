@@ -22,7 +22,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following result
-            | Outcome                         | Not passed               |
+            | Outcome                         | Not Passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | Yes                      |

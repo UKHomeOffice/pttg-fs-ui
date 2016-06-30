@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MissingServletRequestParameterException
+import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
@@ -112,7 +113,7 @@ class ServiceExceptionHandlerSpec extends Specification {
         apiStatusCode                    | convertedStatusCode              | message
         HttpStatus.NOT_FOUND             | HttpStatus.NOT_FOUND             | '{}'
         HttpStatus.INTERNAL_SERVER_ERROR | HttpStatus.INTERNAL_SERVER_ERROR | 'Error at FSS API server'
-        HttpStatus.BAD_GATEWAY           | HttpStatus.INTERNAL_SERVER_ERROR | 'Internal server error'
+        HttpStatus.BAD_GATEWAY           | HttpStatus.INTERNAL_SERVER_ERROR | 'API response status: 502'
     }
 
 
@@ -144,6 +145,58 @@ class ServiceExceptionHandlerSpec extends Specification {
         ResponseDetails response = handler.unknownException(e)
 
         then:
-        response.message.contains("Something went wrong")
+        response.message.contains("There was an unhandled error")
     }
+
+
+    def 'handles connection refused exception' () {
+
+        given:
+        ResourceAccessException e = Mock()
+        ConnectException ce = Mock()
+
+        e.getCause() >> ce
+        ce.getMessage() >> 'Connection refused'
+
+        when:
+        ResponseDetails response = handler.resourceException(e)
+
+        then:
+        response.message.contains("There was a problem connecting to the service")
+        response.message.contains('Connection refused')
+    }
+
+    def 'handles connection timed out exception' () {
+
+        given:
+        ResourceAccessException e = Mock()
+        ConnectException ce = Mock()
+
+        e.getCause() >> ce
+        ce.getMessage() >> 'Connection timed out'
+
+        when:
+        ResponseDetails response = handler.resourceException(e)
+
+        then:
+        response.message.contains("There was a problem connecting to the service")
+        response.message.contains('Connection timed out')
+    }
+
+    def 'handles unknown types of resource access exception' () {
+
+        given:
+        ResourceAccessException e = Mock()
+        Exception c = Mock()
+
+        e.getCause() >> c
+
+        when:
+        ResponseDetails response = handler.resourceException(e)
+
+        then:
+        response.message.contains("There was an unknown problem using the service")
+
+    }
+
 }

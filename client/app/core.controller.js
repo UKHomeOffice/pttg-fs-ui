@@ -163,10 +163,10 @@
                     }).catch(function (error) {
                     $log.debug("received a non success result: " + error.status + " : " + error.statusText)
                     if (error.status === 404) {
-                        copyInputs();                        
+                        copyInputs();
                         $location.path('/financial-status-no-record');
                     } else {
-                        vm.serverError = 'Unable to process your request, please try again. ' + error.status + " : " + error.statusText;
+                        vm.serverError = 'Unable to process your request, please try again.' ;
                         vm.serverErrorDetail = error.data.message;
                     }
 
