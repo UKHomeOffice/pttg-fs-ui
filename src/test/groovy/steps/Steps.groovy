@@ -122,8 +122,9 @@ class Steps {
 
         def expected = pageLocations[location]
         def actual = driver.currentUrl
-        driver.sleep(2500)
-        assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+        driver.sleep(2000)
+        assert driver.getCurrentUrl().contains(expected)
+       // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
     private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
@@ -142,7 +143,7 @@ class Steps {
         entries.each { k, v ->
 
             String fieldName = toCamelCase(k);
-
+            driver.sleep(1000)
             WebElement element = driver.findElement(By.id(fieldName))
 
             assert v.contains(element.getText())
@@ -200,7 +201,10 @@ class Steps {
         driver.get(uiUrl)
         assertCurrentPage('queryPage')
     }
+    @When("^Case worker is on the input page\$")
+    public void case_worker_is_on_the_input_page() throws Throwable {
 
+    }
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
@@ -238,8 +242,6 @@ class Steps {
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
 
-        assertCurrentPage('resultsPage')
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
@@ -268,6 +270,13 @@ class Steps {
 
         WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
         verifyTableRowHeadersInOrder(expectedResult, tableElement)
+    }
+
+    @Then("^The FSPS Tier Four general Case Worker tool input page provides the following result\$")
+    public void the_FSPS_Tier_Four_general_Case_Worker_tool_input_page_provides_the_following_result(DataTable arg) throws Throwable {
+
+        assertTextFieldEqualityForMap(arg)
+
     }
 
 
