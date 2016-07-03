@@ -266,10 +266,12 @@ class Steps {
     @Then("^the service displays the following your search headers in order\$")
     public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
 
-        assertCurrentPage('resultsPage')
+        //assertCurrentPage('resultsPage')
 
-        WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
-        verifyTableRowHeadersInOrder(expectedResult, tableElement)
+        //WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
+       // verifyTableRowHeadersInOrder(expectedResult, tableElement)
+
+        assertTextFieldEqualityForMap(expectedResult)
     }
 
     @Then("^The FSPS Tier Four general Case Worker tool input page provides the following result\$")
@@ -278,6 +280,18 @@ class Steps {
         assertTextFieldEqualityForMap(arg)
 
     }
+
+    @Then("^the service displays the following result page content\$")
+    public void the_service_displays_the_following_result_page_content(DataTable expectedResult) throws Throwable {
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^the service displays the following results headers in order\$")
+    public void the_service_displays_the_following_results_headers_in_order(DataTable expectedResult) throws Throwable {
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
 
 
 
