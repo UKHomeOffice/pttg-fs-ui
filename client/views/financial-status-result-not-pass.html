@@ -1,12 +1,12 @@
 <div id="page2">
-    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General Student) (non-doctorate)</span>
-        <span id="pageSubHeading">Financial Status check</span></h1>
+    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student</span>
+        <span id="pageSubHeading">Financial status check</span></h1>
 
     <div class="govuk-box-highlight panel-fail">
             <h1 class="bold-large" id="pageDynamicHeading">
-                <span id="outcome">Not Passed</span>
+                <span id="outcome">Not passed</span>
             </h1>
-            <p id="pageDynamicDetail"><span>This application does not meet all of the financial status requirements</span></p>
+            <p id="pageDynamicDetail"><span>This applicant does not meet the financial requirements</span></p>
 
     </div>
 
@@ -44,7 +44,7 @@
             <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
         </tr>
         <tr>
-            <th>Inner London borough</th>
+            <th>Inner London borough?</th>
             <td id="innerLondonBorough" scope="col">{{vm.model.innerLondonBoroughChecked}}</td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@
             <td id="courseLength" scope="col">{{vm.model.courseLengthChecked}}</td>
         </tr>
         <tr>
-            <th>Total tuition fees for the first year</th>
+            <th>Total tuition fees</th>
             <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
         </tr>
         <tr>
