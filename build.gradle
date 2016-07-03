@@ -33,6 +33,7 @@ dependencies {
     compile libraries.jersey
     compile libraries.json
     compile libraries.logging
+    compile 'org.apache.httpcomponents:httpclient:4.5.2'
 
     testCompile libraries.cucumber
     testCompile libraries.groovy
@@ -42,6 +43,7 @@ dependencies {
     testCompile libraries.spock
     testCompile libraries.springTest
     testCompile libraries.testUtils
+    testCompile 'org.apache.httpcomponents:httpclient:4.5.2'
 
     // todo move these to the common plugin now I know they're used by Spock for mocking classes
     testCompile 'cglib:cglib-nodep:3.2.1'

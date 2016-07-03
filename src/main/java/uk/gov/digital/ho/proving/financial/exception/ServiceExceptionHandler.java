@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 
+import org.apache.http.conn.ConnectTimeoutException;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.net.ConnectException;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -95,7 +99,7 @@ public class ServiceExceptionHandler {
             default:
                 LOGGER.debug("Rest service exception: {}", exception.getMessage());
                 return new ResponseEntity<ResponseDetails>(
-                    new ResponseDetails(INTERNAL_ERROR), INTERNAL_SERVER_ERROR);
+                    new ResponseDetails(INTERNAL_ERROR.getCode(), "API response status: " + exception.getStatusCode()), INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -119,11 +123,26 @@ public class ServiceExceptionHandler {
     }
 
 
+    @ExceptionHandler(ResourceAccessException.class)
+    @ResponseStatus(value = INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ResponseDetails resourceException(ResourceAccessException exception) {
+        LOGGER.debug("Resource access exception: " + exception.getMessage());
+
+        if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof ConnectTimeoutException) {
+            LOGGER.debug("Connection exception: " + exception.getCause().getMessage());
+            return new ResponseDetails("000X", "There was a problem connecting to the service: " + exception.getCause().getMessage());
+        }
+
+        return new ResponseDetails("000X", "There was an unknown problem using the service: " + exception.getCause().getMessage());
+    }
+
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseDetails unknownException(Exception exception) {
-        LOGGER.debug("Server processing fault: " + exception.getMessage());
-        return new ResponseDetails("000", "Something went wrong");
+        LOGGER.debug("Unknown exception: {} : {}", exception.getClass(), exception.getMessage());
+        return new ResponseDetails("000X", "There was an unhandled error: " + exception.getMessage());
     }
 }

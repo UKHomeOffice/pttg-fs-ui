@@ -2,13 +2,16 @@ package uk.gov.digital.ho.proving.financial
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
+import org.springframework.http.client.ClientHttpRequest
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.mock.http.client.MockClientHttpResponse
 import org.springframework.test.web.client.MockRestServiceServer
+import org.springframework.test.web.client.ResponseCreator
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.client.RestTemplate
-import spock.lang.Ignore
 import spock.lang.Specification
+import spock.lang.Timeout
 import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 import uk.gov.digital.ho.proving.financial.integration.ApiUrls
@@ -16,14 +19,16 @@ import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker
 import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
-import uk.gov.digital.ho.proving.financial.model.Account
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
-import java.time.LocalDate
+import java.util.concurrent.TimeUnit
 
 import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.core.StringContains.containsString
+import static org.springframework.http.HttpStatus.BAD_GATEWAY
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method
@@ -93,7 +98,7 @@ class ServiceSpec extends Specification {
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK")))
 
-    def withResponses(threshold, balance) {
+    def apiRespondsWith(threshold, balance) {
         mockServer.expect(requestTo(containsString("threshold")))
             .andExpect(method(HttpMethod.GET))
             .andRespond(threshold);
@@ -104,10 +109,12 @@ class ServiceSpec extends Specification {
     }
 
 
+
+
     def "processes valid request and response"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withSuccess(passResponseJson, APPLICATION_JSON)
         )
@@ -230,7 +237,7 @@ class ServiceSpec extends Specification {
     def "reports remote server error for threshold as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withServerError(),
             withSuccess(thresholdResponseJson, APPLICATION_JSON)
         )
@@ -256,7 +263,7 @@ class ServiceSpec extends Specification {
     def "reports remote server error for dailybalancestatus as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withServerError()
         )
@@ -282,7 +289,7 @@ class ServiceSpec extends Specification {
     def "reports remote server response processing error as internal error"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
             withSuccess(null, APPLICATION_JSON)
         )
@@ -300,7 +307,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isInternalServerError())
-            andExpect(jsonPath("code", is("000")))
+            andExpect(jsonPath("code", is("000X")))
         }
     }
 
@@ -308,9 +315,9 @@ class ServiceSpec extends Specification {
     def "when 404 at API, returns 404 - the 'insufficient information' case"() {
 
         given:
-        withResponses(
+        apiRespondsWith(
             withSuccess(thresholdResponseJson, APPLICATION_JSON),
-            withStatus(HttpStatus.NOT_FOUND)
+            withStatus(NOT_FOUND)
         )
 
         when:
@@ -328,5 +335,33 @@ class ServiceSpec extends Specification {
             andExpect(status().isNotFound())
         }
     }
+
+    def 'handles unexpected HTTP status from API server'() {
+
+        given:
+        apiRespondsWith(
+            withStatus(BAD_GATEWAY),
+            withStatus(BAD_GATEWAY)
+        )
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('innerLondonBorough', 'true')
+                .param('courseLength', '1')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1'))
+
+        then:
+        response.with {
+            andExpect(status().isInternalServerError())
+            andExpect(jsonPath("code", is("0005")))
+            andExpect(jsonPath("message", containsString("API response status")))
+            andExpect(jsonPath("message", containsString(BAD_GATEWAY.toString())))
+        }
+    }
+
 
 }
