@@ -118,7 +118,7 @@
         }
 
         vm.getFullSortCodeDigits = function () {
-            return vm.model.sortCodeFirst + vm.model.sortCodeSecond + vm.model.sortCodeThird;
+            return vm.model.sortCodeFirst + '' + vm.model.sortCodeSecond + '' + vm.model.sortCodeThird;
         }
 
         vm.scrollTo = function (anchor) {
