@@ -185,7 +185,7 @@
             vm.endDateMissingError = false;
 
             vm.innerLondonBoroughInvalidError = false;
-            vm.innerLondonBoroughRequiredMissingError = false;
+            vm.innerLondonBoroughMissingError = false;
 
             vm.courseLengthInvalidError = false;
             vm.courseLengthMissingError = false;

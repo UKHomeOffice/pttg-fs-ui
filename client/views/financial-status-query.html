@@ -9,7 +9,7 @@
 <div class="column-full-width">
     <div id="page1" data-bind="visible: currentPage() === 1">
         <h1 class="heading-xlarge" id="pageTitle"><span id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student (non-doctorate)</span>
-            <span id="pageSubHeading">Financial Status Check</span></h1>
+            <span id="pageSubHeading">Financial status check</span></h1>
         <div class="text">
             <p class="lede" id="pageSubText">
                 Online statement checker for a Barclays current account holder (must be in the applicants own name).
@@ -87,7 +87,7 @@
                     <fieldset>
                         <legend class="form-label-bold">End date of 28-day period</legend>
                         <div class="form-date">
-                            <p class="form-hint">For example, 21 01 2016</p>
+                            <p class="form-hint">Includes the date entered</p>
                                 <span id="end-date-error" class="error-message"
                                       ng-if="vm.endDateMissingError || vm.endDateInvalidError">
                                     Please provide a valid end date</span>
@@ -121,7 +121,7 @@
                 <div class="form-group" id="innerLondonBorough"
                      ng-class="{error : vm.innerLondonBoroughMissingError }">
                     <fieldset class="inline">
-                        <legend class="form-label-bold">Is the place of study inner London Borough?</legend>
+                        <legend class="form-label-bold">Inner London borough?</legend>
                         <span id="inner-london-borough-error" class="error-message" ng-if="vm.innerLondonBoroughMissingError">
                                         Please specify whether the course is inside or outside London</span>
                         <label class="block-label" for="innerLondonBorough-1">
@@ -203,21 +203,21 @@
                                     Please provide a valid sort code</span>
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeFirst"
-                                       id="sortCodeFirst" type="tel"
+                                       id="sortCodeFirst" type="number"
                                        ng-model="vm.model.sortCodeFirst"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeSecond"
-                                       id="sortCodeSecond" type="tel"
+                                       id="sortCodeSecond" type="number"
                                        ng-model="vm.model.sortCodeSecond"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeThird"
-                                       id="sortCodeThird" type="tel"
+                                       id="sortCodeThird" type="number"
                                        ng-model="vm.model.sortCodeThird"
                                        autocomplete="off">
                             </div>
@@ -235,9 +235,9 @@
                     <span id="account-number-error" class="error-message"
                           ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
                                     Please provide a valid account number</span>
-                    <input type="text" class="form-control form-control-1-4" name="accountNumber"
+                    <input type="number" class="form-control form-control-1-4" name="accountNumber"
                            id="accountNumber"
-                           ng-model="vm.model.accountNumber" autocomplete="off">
+                           ng-model="vm.model.accountNumber" autocomplete="off" >
                 </div>
 
                 <div class="form-group">
