@@ -129,18 +129,16 @@ class Steps {
 
     private def assertCurrentPage(String location) {
 
-        driver.sleep(200)
-
         def expected = pageLocations[location]
         def actual = driver.currentUrl
 
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+        driver.sleep(2000)
+        assert driver.getCurrentUrl().contains(expected)
+       // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
-    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableId) {
-
-        WebElement tableElement = driver.findElement(By.id(tableId))
-
+    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
         def entriesAsList = expectedResult.asList(String.class)
 
         entriesAsList.eachWithIndex { v, index ->
@@ -156,14 +154,31 @@ class Steps {
         entries.each { k, v ->
 
             String fieldName = toCamelCase(k);
-
+            driver.sleep(1000)
             WebElement element = driver.findElement(By.id(fieldName))
 
             assert v.contains(element.getText())
         }
     }
 
-    private void submitEntries(Map<String, String> entries) {
+    @Given("^(?:caseworker|user) is using the financial status service ui\$")
+    public void user_is_using_the_financial_status_service_ui() throws Throwable {
+        driver.get(uiUrl)
+        assertCurrentPage('queryPage')
+    }
+
+    @Given("^the test data for account (.+)\$")
+    public void the_test_data_for_account_number(String fileName) {
+        testDataLoader.loadTestData(fileName)
+    }
+
+    @When("^the financial status check is performed with\$")
+    public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
+
+        assertCurrentPage('queryPage')
+
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
+
         entries.each { k, v ->
             String key = toCamelCase(k)
 
@@ -248,7 +263,10 @@ class Steps {
         driver.get(uiUrl)
         assertCurrentPage('queryPage')
     }
+    @When("^Case worker is on the input page\$")
+    public void case_worker_is_on_the_input_page() throws Throwable {
 
+    }
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
@@ -256,12 +274,8 @@ class Steps {
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
-        entries.each { k, v ->
-            LOGGER.debug("\nChecking {}:{}", toCamelCase(k), v)
-            assert driver.findElement(By.id(toCamelCase(k))).getText() == v
-        }
+        assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
     }
-
 
     @Then("^the service displays the query page\$")
     public void the_service_displays_the_query_page(DataTable expectedResult) throws Throwable {
@@ -287,10 +301,8 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following (?:result|result page content)\$")
+    @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('resultsPage')
 
         assertTextFieldEqualityForMap(expectedResult)
     }
@@ -301,13 +313,48 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following (.*) headers in order\$")
-    public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
 
-        def tableId = toCamelCase(tableName) + "Table"
+    @Then("^the service displays the following result headers in order\$")
+    public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
 
-        verifyTableRowHeadersInOrder(expectedResult, tableId)
+        assertCurrentPage('resultsPage')
+
+        WebElement tableElement = driver.findElement(By.id("resultsTable"))
+        verifyTableRowHeadersInOrder(expectedResult, tableElement)
     }
+
+
+
+    @Then("^the service displays the following your search headers in order\$")
+    public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
+
+        //assertCurrentPage('resultsPage')
+
+        //WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
+       // verifyTableRowHeadersInOrder(expectedResult, tableElement)
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^The FSPS Tier Four general Case Worker tool input page provides the following result\$")
+    public void the_FSPS_Tier_Four_general_Case_Worker_tool_input_page_provides_the_following_result(DataTable arg) throws Throwable {
+
+        assertTextFieldEqualityForMap(arg)
+
+    }
+
+    @Then("^the service displays the following result page content\$")
+    public void the_service_displays_the_following_result_page_content(DataTable expectedResult) throws Throwable {
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Then("^the service displays the following results headers in order\$")
+    public void the_service_displays_the_following_results_headers_in_order(DataTable expectedResult) throws Throwable {
+
+        assertTextFieldEqualityForMap(expectedResult)
+    }
+
+
 
 
 }

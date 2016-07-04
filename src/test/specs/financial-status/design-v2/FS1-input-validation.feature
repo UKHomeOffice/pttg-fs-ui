@@ -21,7 +21,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11 |
             | Account number                  | 11111111 |
         Then the service displays the following message
-            | end-date-error | Please provide a valid end date |
+            | Error Message | Please provide a valid end date |
+            | Error Field   | end-date-error                  |
 
     Scenario: Case Worker enters invalid End Date - in the future
         Given caseworker is using the financial status service ui
@@ -35,7 +36,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | end-date-error | Please provide a valid end date |
+            | Error Message | Please provide a valid end date |
+            | Error Field   | end-date-error                  |
 
     Scenario: Case Worker enters invalid End date - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -49,7 +51,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | end-date-error | Please provide a valid end date |
+            | Error Message | Please provide a valid end date |
+            | Error Field   | end-date-error                  |
 
 
 
@@ -67,7 +70,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       |            |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | sort-code-error | Please provide a valid sort code |
+            | Error Message | Please provide a valid sort code |
+            | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - mising digits
         Given caseworker is using the financial status service ui
@@ -81,7 +85,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-1    |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | sort-code-error | Please provide a valid sort code |
+            | Error Message | Please provide a valid sort code |
+            | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - all 0's
         Given caseworker is using the financial status service ui
@@ -95,7 +100,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 00-00-00   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | sort-code-error | Please provide a valid sort code |
+            | Error Message | Please provide a valid sort code |
+            | Error Field   | sort-code-error                  |
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -109,7 +115,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-1q   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | sort-code-error | Please provide a valid sort code |
+            | Error Message | Please provide a valid sort code |
+            | Error Field   | sort-code-error                  |
 
 
 ######################### Validation on the Account Number Field #########################
@@ -126,7 +133,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  |            |
         Then the service displays the following message
-            | account-number-error | Please provide a valid account number |
+            | Error Message | Please provide a valid account number |
+            | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - too short
         Given caseworker is using the financial status service ui
@@ -140,7 +148,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 1111111    |
         Then the service displays the following message
-            | account-number-error | Please provide a valid account number |
+            | Error Message | Please provide a valid account number |
+            | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - too long
         Given caseworker is using the financial status service ui
@@ -154,7 +163,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 111111111  |
         Then the service displays the following message
-            | account-number-error | Please provide a valid account number |
+            | Error Message | Please provide a valid account number |
+            | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - all 0's
         Given caseworker is using the financial status service ui
@@ -168,7 +178,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 00000000   |
         Then the service displays the following message
-            | account-number-error | Please provide a valid account number |
+            | Error Message | Please provide a valid account number |
+            | Error Field   | account-number-error                  |
 
     Scenario: Case Worker enters invalid Account Number - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -182,7 +193,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 111a1111   |
         Then the service displays the following message
-            | account-number-error | Please provide a valid account number |
+            | Error Message | Please provide a valid account number |
+            | Error Field   | account-number-error                  |
 
 
 ######################### Validation on the Inner London Borough Field #########################
@@ -198,7 +210,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | inner-london-borough-error | Please specify whether the course is inside or outside London |
+            | Error Message | Please specify whether the course is inside or outside London |
+            | Error Field   | inner-london-borough-error                                    |
 
 
 ######################### Validation on the Course Length Field #########################
@@ -214,7 +227,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | course-length-error | Please provide a valid course length |
+            | Error Message | Please provide a valid course length |
+            | Error Field   | course-length-error                  |
 
     Scenario: Case Worker enters invalid Course Length - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -228,7 +242,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | course-length-error | Please provide a valid course length |
+            | Error Message | Please provide a valid course length |
+            | Error Field   | course-length-error                  |
 
     Scenario: Case Worker enters invalid Course Length - more than 9
         Given caseworker is using the financial status service ui
@@ -242,7 +257,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | course-length-error | Please provide a valid course length |
+            | Error Message | Please provide a valid course length |
+            | Error Field   | course-length-error                  |
 
 ######################### Validation on the Total tuition fees Field #########################
     Scenario: Case Worker does NOT enter Total tuition fees
@@ -257,7 +273,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | total-tuition-fees-error | Please provide a valid total tuition fees |
+            | Error Message | Please provide a valid total tuition fees |
+            | Error Field   | total-tuition-fees-error                  |
 
     Scenario: Case Worker enters invalid Total tuition fees - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -271,7 +288,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | total-tuition-fees-error | Please provide a valid total tuition fees |
+            | Error Message | Please provide a valid total tuition fees |
+            | Error Field   | total-tuition-fees-error                  |
 
 ######################### Validation on the Tuition fees already paid Field #########################
     Scenario: Case Worker does NOT enter Tuition fees already paid
@@ -286,7 +304,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | tuition-fees-already-paid-error | Please provide a valid tuition fees already paid |
+            | Error Message | Please provide a valid tuition fees already paid |
+            | Error Field   | tuition-fees-already-paid-error                  |
 
     Scenario: Case Worker enters invalid Tuition fees already paid - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -300,7 +319,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | tuition-fees-already-paid-error | Please provide a valid tuition fees already paid |
+            | Error Message | Please provide a valid tuition fees already paid |
+            | Error Field   | tuition-fees-already-paid-error                  |
 
 ######################### Validation on the Accommodation fees already paid Field #########################
     Scenario: Case Worker does NOT enter Accommodation fees already paid
@@ -315,7 +335,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | accommodation-fees-already-paid-error | Please provide a valid accommodation fees already paid |
+            | Error Message | Please provide a valid accommodation fees already paid |
+            | Error Field   | accommodation-fees-already-paid-error                  |
 
     Scenario: Case Worker enters invalid Accommodation fees already paid - not numbers 0-9
         Given caseworker is using the financial status service ui
@@ -329,7 +350,8 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
-            | accommodation-fees-already-paid-error | Please provide a valid accommodation fees already paid |
+            | Error Message | Please provide a valid accommodation fees already paid |
+            | Error Field   | accommodation-fees-already-paid-error                  |
 
 
 
