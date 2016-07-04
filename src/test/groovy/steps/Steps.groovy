@@ -131,8 +131,6 @@ class Steps {
 
         def expected = pageLocations[location]
         def actual = driver.currentUrl
-
-        assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
         driver.sleep(2000)
         assert driver.getCurrentUrl().contains(expected)
        // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
@@ -205,57 +203,6 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
-    @Given("^(?:caseworker|user) is using the financial status service ui\$")
-    public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiUrl)
-        assertCurrentPage('queryPage')
-    }
-
-    @Given("^the test data for account (.+)\$")
-    public void the_test_data_for_account_number(String fileName) {
-        testDataLoader.loadTestData(fileName)
-    }
-
-    @Given("^the account has sufficient funds\$")
-    public void the_account_has_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
-
-    @Given("^the account does not have sufficient funds\$")
-    public void the_account_does_not_have_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
-
-
-    @When("^the financial status check is performed\$")
-    public void the_financial_status_check_is_performed() throws Throwable {
-
-        Map<String, String> validDefaultEntries = [
-            'End date'                       : '30/05/2016',
-            'Inner London borough'           : 'Yes',
-            'Course length'                  : '1',
-            'Total tuition fees'             : '1',
-            'Tuition fees already paid'      : '0',
-            'Accommodation fees already paid': '0',
-            'Sort code'                      : '11-11-11',
-            'Account number'                 : '11111111',
-        ]
-
-        submitEntries(validDefaultEntries)
-    }
-
-    @When("^the financial status check is performed with\$")
-    public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
-
-        assertCurrentPage('queryPage')
-
-        Map<String, String> entries = arg1.asMap(String.class, String.class)
-
-        submitEntries(entries)
-    }
-
 
     @When("^the caseworker views the query page\$")
     public void the_caseworker_views_the_query_page() throws Throwable {
@@ -283,6 +230,18 @@ class Steps {
         assertCurrentPage('queryPage')
 
         assertTextFieldEqualityForMap(expectedResult)
+    }
+
+    @Given("^the account has sufficient funds\$")
+    public void the_account_has_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds\$")
+    public void the_account_does_not_have_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
     }
 
     @Then("^the service displays the account not found page\$")
