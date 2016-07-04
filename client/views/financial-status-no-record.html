@@ -3,23 +3,45 @@
     <span id="pageDynamicHeading">There is no record for the sort code and account number with Barclays</span>
 </h1>
 
-<p class="lede"><span id="pageDynamicSubText">We couldn't perform the financial requirement check as no information exists for sort code {{vm.model.sortCodeChecked}} and account number {{vm.model.accountNumberChecked}}.</span></p>
+<p class="lede">
+    <span id="pageDynamicDetail">We couldn't perform the financial requirement check as no information exists for sort code {{vm.model.sortCodeChecked}} and account number {{vm.model.accountNumberChecked}}</span>
+</p>
 
 <h2 class="heading-medium">
     Your search
 </h2>
 
-<table>
+<table id="yourSearchTable">
     <thead>
-    <tr>
-        <th scope="col">Sort code</th>
-        <th scope="col">Account number</th>
-    </tr>
     </thead>
     <tbody>
     <tr>
-        <td><span id="sortCode">{{vm.model.sortCodeChecked}}</span></td>
-        <td><span id="accountNumber">{{vm.model.accountNumberChecked}}</span></td>
+        <th width="50%">Sort code</th>
+        <td id="sortCode" scope="col">{{vm.model.sortCodeChecked}}</td>
+    </tr>
+    <tr>
+        <th>Account number</th>
+        <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
+    </tr>
+    <tr>
+        <th>Inner London borough</th>
+        <td id="innerLondonBorough" scope="col">{{vm.model.innerLondonBoroughChecked}}</td>
+    </tr>
+    <tr>
+        <th>Course length</th>
+        <td id="courseLength" scope="col">{{vm.model.courseLengthChecked}}</td>
+    </tr>
+    <tr>
+        <th>Total tuition fees for the first year</th>
+        <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
+    </tr>
+    <tr>
+        <th>Tuition fees already paid</th>
+        <td id="tuitionFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.tuitionFeesAlreadyPaidChecked)}}</td>
+    </tr>
+    <tr>
+        <th>Accommodation fees already paid</th>
+        <td id="accommodationFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}}</td>
     </tr>
     </tbody>
 </table>

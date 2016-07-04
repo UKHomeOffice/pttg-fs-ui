@@ -32,33 +32,16 @@ public class FinancialStatusChecker {
 
     private static Logger LOGGER = LoggerFactory.getLogger(FinancialStatusChecker.class);
 
+    @Value("${daily-balance.days-to-check}")
+    private int daysToCheck;
+
     @Autowired
     private ApiUrls apiUrls;
 
     @Autowired
-    private RestServiceErrorHandler errorHandler;
-
-    @Value("${daily-balance.days-to-check}")
-    private int daysToCheck;
-
     private RestTemplate restTemplate;
-    private HttpHeaders headers;
-    private HttpEntity<?> entity;
 
-    @PostConstruct
-    private void setUp() {
-
-        restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-        restTemplate.setErrorHandler(errorHandler);
-
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(asList(MediaType.APPLICATION_JSON));
-
-        entity = new HttpEntity<>(headers);
-    }
+    private HttpEntity<?> entity = new HttpEntity<>(getHeaders());
 
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
@@ -68,7 +51,7 @@ public class FinancialStatusChecker {
         return new FundingCheckResponse(dailyBalanceStatus);
     }
 
-    public ThresholdResult getThreshold(Course course, Maintenance maintenance) {
+    private ThresholdResult getThreshold(Course course, Maintenance maintenance) {
         URI uri = apiUrls.thresholdUrlFor(course, maintenance);
         ThresholdResult thresholdResult = getForObject(uri, ThresholdResult.class);
 
@@ -77,7 +60,7 @@ public class FinancialStatusChecker {
         return thresholdResult;
     }
 
-    public DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
+    private DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
 
         LocalDate fromDate = daysBefore(toDate);
 
@@ -98,6 +81,16 @@ public class FinancialStatusChecker {
     private <T> T getForObject(URI uri, Class<T> type) {
         ResponseEntity<T> responseEntity = restTemplate.exchange(uri, GET, entity, type);
         return responseEntity.getBody();
+    }
+
+    private HttpHeaders getHeaders(){
+
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(asList(MediaType.APPLICATION_JSON));
+
+        return headers;
     }
 
 }
