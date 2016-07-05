@@ -20,7 +20,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Passed                                                          |
             | Page heading         | Tier 4 (General) student (non-doctorate)                        |
             | Page sub heading     | Financial status check                                          |
-            | Page dynamic detail  | This application meets all of the financial status requirements |
+            | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
             | Total funds required       | £20,390.00               |
             | Maintenance Period Checked | 03/05/2016 to 30/05/2016 |
@@ -53,7 +53,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Not passed                                              |
             | Page heading         | Tier 4 (General) student (non-doctorate)                                 |
             | Page sub heading     | Financial status check                                  |
-            | Page dynamic detail  | This application does not meet all of the financial status requirements |
+            | Page dynamic detail  | This applicant does not meet the financial requirements |
 
         And the service displays the following results headers in order
             | Total funds required       | £16,090.00               |
@@ -98,6 +98,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Then the service displays the following page content
             | Page heading     | Tier 4 (General) student (non-doctorate)                                                             |
             | Page sub heading |  Financial status check                                                                              |
-            | Page sub text    | Online statement checker for a Barclays current account holder (must be in the applicants own name). |
+            | Page sub text    | An online statement checker for Barclays current account holder (must be in the applicant's own name). |
 
 
