@@ -17,16 +17,21 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
     She has < than the threshold for the previous 28 days
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
-           ## | End date  ?                      | 30/05/2016 |
-            | Inner London borough            | Yes      |
-            | Remaining course length         | 2        |
-            | Accommodation fees already paid | 0        |
-            | Sort code                       | 11-11-12 |
-            | Account number                  | 11111112 |
+            | End date                        | 30/05/2016 |
+            | Inner London borough            | Yes        |
+            | Remaining course length         | 2          |
+            | Accommodation fees already paid | 0          |
+            | Sort code                       | 11-11-12   |
+            | Account number                  | 11111112   |
         Then the service displays the following result
-            | Outcome                    | Not passed               |
-            | Total funds required       | £ 2,530.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Outcome                         | Not passed               |
+            | Total funds required            | £ 2,530.00               |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Inner London borough            | Yes                      |
+            | Course length                   | 2                        |
+            | Accommodation fees already paid | £0.00                    |
+            | Sort code                       | 11-11-12                 |
+            | Account number                  | 11111112                 |
 
 
     Scenario: Shelly is a Doctorate inner London student and has sufficient funds (On a daily basis the closing
@@ -38,10 +43,14 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Inner London borough            | Yes        |
             | Course length                   | 1          |
             | Accommodation fees already paid | 100        |
-            | Sort code                       | 22-22-22   |
-            | Account number                  | 22222222   |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222223   |
         Then the service displays the following result
-            | Outcome                    | Passed                   |
-            | Total funds required       | £1,165.00                |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-
+            | Outcome                         | Passed                   |
+            | Total funds required            | £1,165.00                |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Inner London borough            | Yes                      |
+            | Course length                   | 1                        |
+            | Accommodation fees already paid | £100.00                  |
+            | Sort code                       | 11-11-12                 |
+            | Account number                  | 11111112                 |
