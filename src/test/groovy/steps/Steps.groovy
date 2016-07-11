@@ -52,6 +52,10 @@ class Steps {
         .withOption('Yes', 'innerLondonBorough-1')
         .withOption('No', 'innerLondonBorough-2')
 
+    def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('Tier 4 (General) student (non-doctorate)', 'studentType-1')
+        .withOption('Tier 4 (General) student (doctorate)', 'studentType-2')
+
     @Before
     def setUp(Scenario scenario) {
 
@@ -183,6 +187,8 @@ class Steps {
                 if (key == "innerLondonBorough") {
                     clickRadioButton(driver, innerLondonRadio, v)
 
+                } else if (key == "studentType") {
+                    clickRadioButton(driver, studentTypeRadio, v)
                 } else {
                     sendKeys(element, v)
                 }

@@ -41,6 +41,9 @@
                         <li ng-if="vm.innerLondonBoroughMissingError">
                             <a href="" ng-click="vm.scrollTo('innerLondonBorough')">The inner London Borough is missing</a></li>
 
+                        <li ng-if="vm.studentTypeMissingError">
+                            <a href="" ng-click="vm.scrollTo('studentType')">The student type is missing</a></li>
+
                         <li ng-if="vm.courseLengthInvalidError">
                             <a href="" ng-click="vm.scrollTo('courseLength')">The course length is invalid</a></li>
 
@@ -94,7 +97,7 @@
                             <div class="form-group form-group-day">
                                 <label for="endDateDay">Day</label>
                                 <input class="form-control" name="endDateDay"
-                                       id="endDateDay" type="number"
+                                       id="endDateDay" type="text"
                                        ng-model="vm.model.endDateDay" autocomplete="off">
                             </div>
 
@@ -102,14 +105,14 @@
                                 <label for="endDateMonth">Month</label>
                                 <input class="form-control" name="endDateMonth"
                                        id="endDateMonth"
-                                       type="number" ng-model="vm.model.endDateMonth"
+                                       type="text" ng-model="vm.model.endDateMonth"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-year">
                                 <label for="endDateYear">Year</label>
                                 <input class="form-control" name="endDateYear"
-                                       id="endDateYear" type="number"
+                                       id="endDateYear" type="text"
                                        ng-model="vm.model.endDateYear"
                                        autocomplete="off">
                             </div>
@@ -117,6 +120,27 @@
 
                     </fieldset>
                 </div>
+
+                <div class="form-group" id="studentType"
+                     ng-class="{error : vm.studentTypeMissingError }">
+                    <fieldset style="margin-bottom:6px">
+                        <legend class="form-label-bold">Student type</legend>
+                        <span id="studentType-error" class="error-message" ng-if="vm.studentTypeMissingError">
+                                        Please provide a student type</span>
+                        <label class="block-label" for="studentType-1">
+                            <input type="radio" class="form-control form-control-1-8" name="studentType"
+                                   id="studentType-1" value="nondoctorate"
+                                   ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) student (non-doctorate)
+                        </label>
+                        </fieldset>
+                        <label class="block-label" for="studentType-2">
+                            <input type="radio" class="form-control form-control-1-8" name="studentType"
+                                   id="studentType-2" value="doctorate"
+                                   ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) student (doctorate)
+                        </label>
+                    </fieldset>
+                </div>
+
 
                 <div class="form-group" id="innerLondonBorough"
                      ng-class="{error : vm.innerLondonBoroughMissingError }">
@@ -203,21 +227,21 @@
                                     Please provide a valid sort code</span>
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeFirst"
-                                       id="sortCodeFirst" type="number"
+                                       id="sortCodeFirst" type="text"
                                        ng-model="vm.model.sortCodeFirst"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeSecond"
-                                       id="sortCodeSecond" type="number"
+                                       id="sortCodeSecond" type="text"
                                        ng-model="vm.model.sortCodeSecond"
                                        autocomplete="off">
                             </div>
 
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeThird"
-                                       id="sortCodeThird" type="number"
+                                       id="sortCodeThird" type="text"
                                        ng-model="vm.model.sortCodeThird"
                                        autocomplete="off">
                             </div>
@@ -235,7 +259,7 @@
                     <span id="account-number-error" class="error-message"
                           ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
                                     Please provide a valid account number</span>
-                    <input type="number" class="form-control form-control-1-4" name="accountNumber"
+                    <input type="text" class="form-control form-control-1-4" name="accountNumber"
                            id="accountNumber"
                            ng-model="vm.model.accountNumber" autocomplete="off" >
                 </div>
