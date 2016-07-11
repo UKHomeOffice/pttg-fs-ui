@@ -19,19 +19,11 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Then the service displays the following result page content
             | Page dynamic heading | Passed                                                          |
             | Page heading         | Tier 4 (General) student (non-doctorate)                        |
-            | Page sub heading     | Financial status check                                          |
-            | Page dynamic detail  | This applicant meets the financial requirements |
+            | Page sub heading     | Financial Status check                                          |
+            | Page dynamic detail  | This application meets all of the financial status requirements |
         And the service displays the following results headers in order
             | Total funds required       | £20,390.00               |
             | Maintenance Period Checked | 03/05/2016 to 30/05/2016 |
-        And the service displays the following your search headers in order
-            | Sort code                       | 22-22-22  |
-            | Account number                  | 22222222  |
-            | Inner London borough            | Yes       |
-            | Course length                   | 9         |
-            | Total tuition fees              | £9,755.50 |
-            | Tuition fees already paid       | £500.00     |
-            | Accommodation fees already paid | £250.50     |
 
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
@@ -51,7 +43,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Account number                  | 11111111   |
         Then the service displays the following result page content
             | Page dynamic heading | Not passed                                              |
-            | Page heading         | Tier 4 (General) student (non-doctorate)                                 |
+            | Page heading         | Tier 4 (General) student                                |
             | Page sub heading     | Financial status check                                  |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
 
@@ -83,7 +75,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Account number                  | 99999999   |
         Then the service displays the following page content
             | Page dynamic heading  | There is no record for the sort code and account number with Barclays                                                            |
-            | Page Dynamic detail | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
+            | Page Dynamic Sub Text | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
         And the service displays the following your search headers in order
             | Sort code                             | 99-99-99 |
             | Account number                        | 99999999 |

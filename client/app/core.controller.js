@@ -118,12 +118,23 @@
         }
 
         vm.getFullSortCodeDigits = function () {
-            return vm.model.sortCodeFirst + vm.model.sortCodeSecond + vm.model.sortCodeThird;
+            return vm.model.sortCodeFirst + '' + vm.model.sortCodeSecond + '' + vm.model.sortCodeThird;
         }
 
         vm.scrollTo = function (anchor) {
             $anchorScroll(anchor);
         };
+
+        function copyInputs() {
+            vm.model.periodCheckedTo = vm.getFullEndDate();
+            vm.model.accountNumberChecked = vm.model.accountNumber;
+            vm.model.sortCodeChecked = vm.getFullSortCode();
+            vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
+            vm.model.courseLengthChecked = vm.model.courseLength;
+            vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
+            vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
+            vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
+        }
 
         vm.submit = function () {
 
@@ -139,19 +150,10 @@
                     vm.model.tuitionFeesAlreadyPaid,
                     vm.model.accommodationFeesAlreadyPaid)
                     .then(function (data) {
-                        // api results
+                        copyInputs();
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.minimum = data.minimum;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
-                        // reflect inputs
-                        vm.model.periodCheckedTo = vm.getFullEndDate();
-                        vm.model.accountNumberChecked = vm.model.accountNumber;
-                        vm.model.sortCodeChecked = vm.getFullSortCode();
-                        vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
-                        vm.model.courseLengthChecked = vm.model.courseLength;
-                        vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
-                        vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
-                        vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
 
                         if (vm.model.fundingRequirementMet == true) {
                             $location.path('/financial-status-result-pass');
@@ -161,11 +163,10 @@
                     }).catch(function (error) {
                     $log.debug("received a non success result: " + error.status + " : " + error.statusText)
                     if (error.status === 404) {
-                        vm.model.accountNumberChecked = vm.model.accountNumber;
-                        vm.model.sortCodeChecked = vm.getFullSortCode();
+                        copyInputs();
                         $location.path('/financial-status-no-record');
                     } else {
-                        vm.serverError = 'Unable to process your request, please try again. ' + error.status + " : " + error.statusText;
+                        vm.serverError = 'Unable to process your request, please try again.' ;
                         vm.serverErrorDetail = error.data.message;
                     }
 
@@ -184,7 +185,7 @@
             vm.endDateMissingError = false;
 
             vm.innerLondonBoroughInvalidError = false;
-            vm.innerLondonBoroughRequiredMissingError = false;
+            vm.innerLondonBoroughMissingError = false;
 
             vm.courseLengthInvalidError = false;
             vm.courseLengthMissingError = false;

@@ -1,5 +1,5 @@
 <div id="page2">
-    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student</span>
+    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student (non-doctorate)</span>
         <span id="pageSubHeading">Financial status check</span></h1>
 
     <div class="govuk-box-highlight panel-fail">
@@ -44,7 +44,7 @@
             <td id="accountNumber" scope="col">{{vm.model.accountNumberChecked}}</td>
         </tr>
         <tr>
-            <th>Inner London borough?</th>
+            <th>Inner London borough</th>
             <td id="innerLondonBorough" scope="col">{{vm.model.innerLondonBoroughChecked}}</td>
         </tr>
         <tr>
@@ -52,7 +52,7 @@
             <td id="courseLength" scope="col">{{vm.model.courseLengthChecked}}</td>
         </tr>
         <tr>
-            <th>Total tuition fees</th>
+            <th>Total tuition fees for the first year</th>
             <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
         </tr>
         <tr>

@@ -21,7 +21,7 @@ Feature: Insufficient Information - Tier 4 (General) Student In Country (single 
 
         Then the service displays the account not found page
             | Page dynamic heading  | There is no record for the sort code and account number with Barclays                                                            |
-            | Page dynamic detail | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
+            | Page dynamic sub text | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
         And the service displays the following your search data
             | Sort Code      | 99-99-99 |
             | Account Number | 99999999 |
