@@ -35,6 +35,8 @@ dependencies {
     compile libraries.logging
     compile 'org.apache.httpcomponents:httpclient:4.5.2'
 
+    compile 'com.github.tomakehurst:wiremock:1.58'
+
     testCompile libraries.cucumber
     testCompile libraries.groovy
     testCompile libraries.jackson
