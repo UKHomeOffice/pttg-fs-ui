@@ -1,3 +1,4 @@
+@Demo
 Feature:
 
     Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds (On a daily basis the
