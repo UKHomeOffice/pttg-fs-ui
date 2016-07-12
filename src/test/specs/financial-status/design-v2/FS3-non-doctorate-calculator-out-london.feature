@@ -8,9 +8,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     borough (£1015) * course length) + total tuition fees
 
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
-    (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
-    She has < than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         Given the account does not have sufficient funds
         When the financial status check is performed with
@@ -36,9 +33,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
 
 
     Scenario: Shelly is a Non Doctorate not inner London student and has sufficient funds
-    (On a daily basis the closing balance in her account is >= than the Total funds required - at £23335)
-    She has >= than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         Given the account has sufficient funds
         When the financial status check is performed with
@@ -52,7 +46,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 44444444   |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Total funds required       | £20,390.00               |
+            | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Sort code                  | 44-44-44                 |
             | Account number             | 44444444                 |

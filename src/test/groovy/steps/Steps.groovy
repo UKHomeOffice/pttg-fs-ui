@@ -70,7 +70,6 @@ class Steps {
             testDataLoader = new WireMockTestDataLoader(barclaysStubHost, barclaysStubPort)
             testDataLoader.prepareFor(scenario)
         } else {
-            checkPrerequisites()
             testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
             testDataLoader.prepareFor(scenario)
         }
@@ -134,14 +133,18 @@ class Steps {
 
     private def assertCurrentPage(String location) {
 
+        driver.sleep(200)
+
         def expected = pageLocations[location]
         def actual = driver.currentUrl
-        driver.sleep(2000)
-        assert driver.getCurrentUrl().contains(expected)
-        // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+
+        assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
-    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
+    private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableId) {
+
+        WebElement tableElement = driver.findElement(By.id(tableId))
+
         def entriesAsList = expectedResult.asList(String.class)
 
         entriesAsList.eachWithIndex { v, index ->
@@ -157,74 +160,13 @@ class Steps {
         entries.each { k, v ->
 
             String fieldName = toCamelCase(k);
-            driver.sleep(1000)
             WebElement element = driver.findElement(By.id(fieldName))
 
             assert v.contains(element.getText())
         }
     }
 
-    @Given("^(?:caseworker|user) is using the financial status service ui\$")
-    public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiUrl)
-        assertCurrentPage('queryPage')
-    }
-
-    @Given("^the test data for account (.+)\$")
-    public void the_test_data_for_account_number(String fileName) {
-        testDataLoader.loadTestData(fileName)
-    }
-
-    @Given("^the account has sufficient funds\$")
-    public void the_account_has_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
-
-    @Given("^the account does not have sufficient funds\$")
-    public void the_account_does_not_have_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
-
-
-    @Given("^the api response is delayed for (\\d+) seconds\$")
-    public void the_api_response_is_delayed_for_seconds(int delay) throws Throwable {
-        testDataLoader.withDelayedResponse(thresholdUrlRegex, delay)
-    }
-
-    @Given("^the api response is garbage\$")
-    public void the_api_response_is_garbage() throws Throwable {
-        testDataLoader.withGarbageResponse(thresholdUrlRegex)
-    }
-
-    @Given("^the api response is empty\$")
-    public void the_api_response_is_empty() throws Throwable {
-        testDataLoader.withEmptyResponse(thresholdUrlRegex)
-    }
-
-    @Given("^the api response has status (\\d+)\$")
-    public void the_api_response_has_status(int status) throws Throwable {
-        testDataLoader.withResponseStatus(thresholdUrlRegex, status)
-    }
-
-    @Given("^the api is unreachable\$")
-    public void the_api_is_unreachable() throws Throwable {
-        testDataLoader.withServiceDown()
-    }
-
-    @When("^the financial status check is performed with\$")
-    public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
-
-        assertCurrentPage('queryPage')
-
-        Map<String, String> entries = arg1.asMap(String.class, String.class)
-
-        submitEntries(entries)
-    }
-
-    private Map<String, String> submitEntries(Map<String, String> entries) {
-
+    private void submitEntries(Map<String, String> entries) {
         entries.each { k, v ->
             String key = toCamelCase(k)
 
@@ -251,18 +193,83 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
-    @When("^the financial status check is performed with valid inputs\$")
-    public void the_financial_status_check_is_performed_with_valid_inputs() throws Throwable {
+    @Given("^(?:caseworker|user) is using the financial status service ui\$")
+    public void user_is_using_the_financial_status_service_ui() throws Throwable {
+        driver.get(uiUrl)
+        assertCurrentPage('queryPage')
+    }
 
-        Map<String, String> entries = [:]
-        entries.put('End date', '30/05/2016')
-        entries.put('Inner London borough', 'Yes')
-        entries.put('Course length', '6')
-        entries.put('Total tuition fees', '8500.00')
-        entries.put('Tuition fees already paid', '0')
-        entries.put('Accommodation fees already paid', '0')
-        entries.put('Sort code', '11-11-11')
-        entries.put('Account number', '11111111')
+    @Given("^the test data for account (.+)\$")
+    public void the_test_data_for_account_number(String fileName) {
+        testDataLoader.loadTestData(fileName)
+    }
+
+    @Given("^the account has sufficient funds\$")
+    public void the_account_has_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds\$")
+    public void the_account_does_not_have_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the api response is delayed for (\\d+) seconds\$")
+    public void the_api_response_is_delayed_for_seconds(int delay) throws Throwable {
+        testDataLoader.withDelayedResponse(thresholdUrlRegex, delay)
+    }
+
+    @Given("^the api response is garbage\$")
+    public void the_api_response_is_garbage() throws Throwable {
+        testDataLoader.withGarbageResponse(thresholdUrlRegex)
+    }
+
+    @Given("^the api response is empty\$")
+    public void the_api_response_is_empty() throws Throwable {
+        testDataLoader.withEmptyResponse(thresholdUrlRegex)
+    }
+
+    @Given("^the api response has status (\\d+)\$")
+    public void the_api_response_has_status(int status) throws Throwable {
+        testDataLoader.withResponseStatus(thresholdUrlRegex, status)
+    }
+
+    @Given("^the api is unreachable\$")
+    public void the_api_is_unreachable() throws Throwable {
+        testDataLoader.withServiceDown()
+    }
+
+    @Given("^no record for the account\$")
+    public void no_record_for_the_account() throws Throwable{
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+        testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
+    }
+
+    @When("^the financial status check is performed\$")
+    public void the_financial_status_check_is_performed() throws Throwable {
+
+        Map<String, String> validDefaultEntries = [
+            'End date'                       : '30/05/2016',
+            'Inner London borough'           : 'Yes',
+            'Course length'                  : '1',
+            'Total tuition fees'             : '1',
+            'Tuition fees already paid'      : '0',
+            'Accommodation fees already paid': '0',
+            'Sort code'                      : '11-11-11',
+            'Account number'                 : '11111111',
+        ]
+
+        submitEntries(validDefaultEntries)
+    }
+
+    @When("^the financial status check is performed with\$")
+    public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
+
+        assertCurrentPage('queryPage')
+
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
 
         submitEntries(entries)
     }
@@ -281,7 +288,10 @@ class Steps {
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
-        assert driver.findElement(By.id(entries.get("Error Field"))).getText() == entries.get("Error Message")
+        entries.each { k, v ->
+            LOGGER.debug("\nChecking {}:{}", toCamelCase(k), v)
+            assert driver.findElement(By.id(toCamelCase(k))).getText() == v
+        }
     }
 
     @Then("^the service displays the query page\$")
@@ -309,8 +319,10 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following result\$")
+    @Then("^the service displays the following (?:result|result page content)\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+
+        assertCurrentPage('resultsPage')
 
         assertTextFieldEqualityForMap(expectedResult)
     }
@@ -330,41 +342,12 @@ class Steps {
     }
 
 
-    @Then("^the service displays the following result headers in order\$")
-    public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
+    @Then("^the service displays the following (.*) headers in order\$")
+    public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
 
-        assertCurrentPage('resultsPage')
+        def tableId = toCamelCase(tableName) + "Table"
 
-        WebElement tableElement = driver.findElement(By.id("resultsTable"))
-        verifyTableRowHeadersInOrder(expectedResult, tableElement)
+        verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
-
-
-    @Then("^the service displays the following your search headers in order\$")
-    public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
-
-        //assertCurrentPage('resultsPage')
-
-        //WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
-        // verifyTableRowHeadersInOrder(expectedResult, tableElement)
-
-        assertTextFieldEqualityForMap(expectedResult)
-    }
-
-    @Then("^The FSPS Tier Four general Case Worker tool input page provides the following result\$")
-    public void the_FSPS_Tier_Four_general_Case_Worker_tool_input_page_provides_the_following_result(DataTable arg) throws Throwable {
-        assertTextFieldEqualityForMap(arg)
-    }
-
-    @Then("^the service displays the following result page content\$")
-    public void the_service_displays_the_following_result_page_content(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForMap(expectedResult)
-    }
-
-    @Then("^the service displays the following results headers in order\$")
-    public void the_service_displays_the_following_results_headers_in_order(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForMap(expectedResult)
-    }
-
 
 }

@@ -44,6 +44,8 @@ class WireMockTestDataLoader {
 
         dataDir = new File("$dataDirPath/$dataDirName")
 
+
+
         if (!dataDir.isDirectory()) {
             println ''
             LOGGER.warn("WARNING: $dataDir.absolutePath is not a directory. No test data files will be loaded")
@@ -156,4 +158,5 @@ class WireMockTestDataLoader {
     def withServiceDown(){
         wireMockServer.stop()
     }
+
 }

@@ -1,11 +1,4 @@
 {
-    "account" : {
-        "sortCode" : "111111",
-        "accountNumber" : "11111111"
-    },
-    "fromDate" : "2016-05-03",
-    "toDate" : "2016-05-30",
-    "minimum" : "16090.00",
     "pass" : false,
     "status" : {
         "code" : "200",
