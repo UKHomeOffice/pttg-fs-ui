@@ -15,8 +15,10 @@ import org.openqa.selenium.WebElement
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import static java.util.concurrent.TimeUnit.SECONDS
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
+
 /**
  * @Author Home Office Digital
  */
@@ -26,7 +28,10 @@ class Steps {
 
     @Managed
     WebDriver driver;
-    private def delay = 500
+
+    def defaultTimeout = 2000
+
+    def delay = 500
 
     def uiHost = "localhost"
     def uiPort = 8001
@@ -133,7 +138,7 @@ class Steps {
         def actual = driver.currentUrl
         driver.sleep(2000)
         assert driver.getCurrentUrl().contains(expected)
-       // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
+        // assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
     private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableElement) {
@@ -170,12 +175,55 @@ class Steps {
         testDataLoader.loadTestData(fileName)
     }
 
+    @Given("^the account has sufficient funds\$")
+    public void the_account_has_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds\$")
+    public void the_account_does_not_have_sufficient_funds() {
+        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+
+    @Given("^the api response is delayed for (\\d+) seconds\$")
+    public void the_api_response_is_delayed_for_seconds(int delay) throws Throwable {
+        testDataLoader.withDelayedResponse(thresholdUrlRegex, delay)
+    }
+
+    @Given("^the api response is garbage\$")
+    public void the_api_response_is_garbage() throws Throwable {
+        testDataLoader.withGarbageResponse(thresholdUrlRegex)
+    }
+
+    @Given("^the api response is empty\$")
+    public void the_api_response_is_empty() throws Throwable {
+        testDataLoader.withEmptyResponse(thresholdUrlRegex)
+    }
+
+    @Given("^the api response has status (\\d+)\$")
+    public void the_api_response_has_status(int status) throws Throwable {
+        testDataLoader.withResponseStatus(thresholdUrlRegex, status)
+    }
+
+    @Given("^the api is unreachable\$")
+    public void the_api_is_unreachable() throws Throwable {
+        testDataLoader.withServiceDown()
+    }
+
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
 
         assertCurrentPage('queryPage')
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
+
+        submitEntries(entries)
+    }
+
+    private Map<String, String> submitEntries(Map<String, String> entries) {
 
         entries.each { k, v ->
             String key = toCamelCase(k)
@@ -203,6 +251,21 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
+    @When("^the financial status check is performed with valid inputs\$")
+    public void the_financial_status_check_is_performed_with_valid_inputs() throws Throwable {
+
+        Map<String, String> entries = [:]
+        entries.put('End date', '30/05/2016')
+        entries.put('Inner London borough', 'Yes')
+        entries.put('Course length', '6')
+        entries.put('Total tuition fees', '8500.00')
+        entries.put('Tuition fees already paid', '0')
+        entries.put('Accommodation fees already paid', '0')
+        entries.put('Sort code', '11-11-11')
+        entries.put('Account number', '11111111')
+
+        submitEntries(entries)
+    }
 
     @When("^the caseworker views the query page\$")
     public void the_caseworker_views_the_query_page() throws Throwable {
@@ -210,10 +273,7 @@ class Steps {
         driver.get(uiUrl)
         assertCurrentPage('queryPage')
     }
-    @When("^Case worker is on the input page\$")
-    public void case_worker_is_on_the_input_page() throws Throwable {
 
-    }
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
 
@@ -232,17 +292,6 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Given("^the account has sufficient funds\$")
-    public void the_account_has_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
-
-    @Given("^the account does not have sufficient funds\$")
-    public void the_account_does_not_have_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
-        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-    }
 
     @Then("^the service displays the account not found page\$")
     public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
@@ -272,6 +321,14 @@ class Steps {
         assertTextFieldEqualityForMap(expectedResult)
     }
 
+    @Then("^the service displays the following result page content within (\\d+) seconds\$")
+    public void the_service_displays_the_following_result_page_content_within_seconds(long timeout, DataTable expectedResult) throws Throwable {
+
+        driver.manage().timeouts().implicitlyWait(timeout, SECONDS)
+        assertTextFieldEqualityForMap(expectedResult)
+        driver.manage().timeouts().implicitlyWait(defaultTimeout, SECONDS)
+    }
+
 
     @Then("^the service displays the following result headers in order\$")
     public void the_service_displays_the_following_result_headers_in_order(DataTable expectedResult) throws Throwable {
@@ -283,23 +340,20 @@ class Steps {
     }
 
 
-
     @Then("^the service displays the following your search headers in order\$")
     public void the_service_displays_the_following_your_search_headers_in_order(DataTable expectedResult) throws Throwable {
 
         //assertCurrentPage('resultsPage')
 
         //WebElement tableElement = driver.findElement(By.id("yourSearchTable"))
-       // verifyTableRowHeadersInOrder(expectedResult, tableElement)
+        // verifyTableRowHeadersInOrder(expectedResult, tableElement)
 
         assertTextFieldEqualityForMap(expectedResult)
     }
 
     @Then("^The FSPS Tier Four general Case Worker tool input page provides the following result\$")
     public void the_FSPS_Tier_Four_general_Case_Worker_tool_input_page_provides_the_following_result(DataTable arg) throws Throwable {
-
         assertTextFieldEqualityForMap(arg)
-
     }
 
     @Then("^the service displays the following result page content\$")
@@ -309,11 +363,8 @@ class Steps {
 
     @Then("^the service displays the following results headers in order\$")
     public void the_service_displays_the_following_results_headers_in_order(DataTable expectedResult) throws Throwable {
-
         assertTextFieldEqualityForMap(expectedResult)
     }
-
-
 
 
 }
