@@ -11,8 +11,6 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
 
     Scenario: Case Worker does NOT select student type
         Given caseworker is using the financial status service ui
-        When the financial status check is performed with
-            | Student type |  |
+        When the student type choice is submitted
         Then the service displays the following message
-            | Error Message | Select an option   |
-            | Error Field   | student-type-error |
+            | student-type-error | Select an option   |

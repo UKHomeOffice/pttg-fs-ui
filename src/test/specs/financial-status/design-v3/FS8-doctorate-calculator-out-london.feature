@@ -1,3 +1,4 @@
+@DataDir=wiremock @wiremock
 Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate out of London (single current account and no dependants)
 
     Acceptance criteria
@@ -11,10 +12,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
     borough (£1015) * remaining course length) -  Accommodation fees already paid
 
 
-    Scenario: Ann is a Doctorate not inner London student and does not have sufficient funds (On a daily basis the
-    closing balance in her account is < than the Total funds required - at £2,030)
-    She has < than the threshold for the previous 28 days
+    Scenario: Ann is a Doctorate not inner London student and does not have sufficient funds
         Given caseworker is using the financial status service ui
+        And the doctorate student type is chosen
+        Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | No         |
@@ -24,7 +25,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Account number                  | 11111114   |
         Then the service displays the following result
             | Outcome                         | Not passed               |
-            | Total funds required            | £ 2,030.00               |
+            | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | No                       |
             | Course length                   | 2                        |
@@ -33,10 +34,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Account number                  | 11111114                 |
 
 
-    Scenario: Laura is a Doctorate not inner London student and has sufficient funds (On a daily basis the closing
-    balance in her account is >= than the Total funds required - at £750)
-    She has >= than the threshold for the previous 28 days
+    Scenario: Laura is a Doctorate not inner London student and has sufficient funds
         Given caseworker is using the financial status service ui
+        And the doctorate student type is chosen
+        Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | No         |
@@ -46,7 +47,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Account number                  | 22222223   |
         Then the service displays the following result
             | Outcome                         | Passed                   |
-            | Total funds required            | £750.00                  |
+            | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | No                       |
             | Course length                   | 1                        |

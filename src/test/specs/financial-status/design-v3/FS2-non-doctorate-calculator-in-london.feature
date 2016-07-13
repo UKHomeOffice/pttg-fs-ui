@@ -1,4 +1,4 @@
-@DataDir=v2
+@DataDir=wiremock @wiremock
 Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctorate In London (single current account and no dependants)
 
     Requirement to meet Tier 4 passed and not passed
@@ -7,12 +7,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     Maintenance threshold amount- (Required Maintenance funds non doctorate inner London
     borough (£1265) * course length) + total tuition fees
 
-    Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds (On a daily basis the
-    closing balance in her account is < than the Total funds required - at £16089)
-    She has < than the threshold for the previous 28 days
-
+    Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds
         Given caseworker is using the financial status service ui
-        Given the test data for account 11111111
+        And the non-doctorate student type is chosen
+        Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
@@ -35,12 +33,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 11111111                 |
 
 
-    Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds (On a daily basis the closing
-    balance in her account is >= than the Total funds required - at £21140.50)
-    She has >= than the threshold for the previous 28 days
-
+    Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds
         Given caseworker is using the financial status service ui
-        Given the test data for account 22222222
+        And the non-doctorate student type is chosen
+        Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
@@ -52,7 +48,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 22222222   |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Total funds required       | £20,390.00               |
+            | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Sort code                  | 22-22-22                 |
             | Account number             | 22222222                 |

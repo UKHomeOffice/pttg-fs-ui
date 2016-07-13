@@ -6,6 +6,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
     Scenario: Page checks for Passed text write up
     This is a scenario to check if applicant meets minimum financial requirement text write up
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         Given the account has sufficient funds
         When the financial status check is performed
         Then the service displays the following result page content
@@ -31,6 +32,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following result page content
@@ -55,6 +57,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Caseworker enters account number and sort code where no records exist within the period stated (no test data for all 9's)
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         Given no record for the account
         When the financial status check is performed
         Then the service displays the following page content
@@ -70,6 +73,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         When the caseworker views the query page
         Then the service displays the following page content
             | Page heading     | Tier 4 (General) student (non-doctorate)                                                               |

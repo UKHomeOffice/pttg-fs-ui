@@ -1,4 +1,4 @@
-@DataDir=v2 @wiremock
+@DataDir=wiremock @wiremock
 Feature: Insufficient Information - Tier 4 (General) Student In Country (single current account and no dependants)
     Tool identifies account number and sort code does not exit with Barclay's
 

@@ -1,9 +1,9 @@
+@Demo
 Feature:
 
     Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds (On a daily basis the
     closing balance in her account is < than the Total funds required - at £16089)
     She has < than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -30,7 +30,6 @@ Feature:
     Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds (On a daily basis the closing
     balance in her account is >= than the Total funds required - at £21140.50)
     She has >= than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -52,7 +51,6 @@ Feature:
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
     (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
     She has < than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -79,7 +77,6 @@ Feature:
     Scenario: Shelly is a Non Doctorate not inner London student and has sufficient funds
     (On a daily basis the closing balance in her account is >= than the Total funds required - at £23335)
     She has >= than the threshold for the previous 28 days
-
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
