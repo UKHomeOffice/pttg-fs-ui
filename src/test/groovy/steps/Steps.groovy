@@ -2,18 +2,24 @@ package steps
 
 import cucumber.api.DataTable
 import cucumber.api.Scenario
-import cucumber.api.java.After
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
-import groovy.json.JsonSlurper
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.test.IntegrationTest
+import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.web.WebAppConfiguration
+import uk.gov.digital.ho.proving.financial.ServiceConfiguration
+import uk.gov.digital.ho.proving.financial.ServiceRunner
+import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static steps.UtilitySteps.clickRadioButton
@@ -22,9 +28,18 @@ import static steps.UtilitySteps.toCamelCase
 /**
  * @Author Home Office Digital
  */
+@SpringApplicationConfiguration(ServiceRunner.class)
+@WebAppConfiguration
+@IntegrationTest
+@ActiveProfiles("test")
 class Steps {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Steps.class);
+
+    @Value('${wiremock}')
+    private Boolean wiremock;
+
+    def testDataLoader
 
     @Managed
     WebDriver driver;
@@ -41,10 +56,6 @@ class Steps {
         'non-doctorate query': uiUrl + '?',  // todo what is the url?
         'student type'       : uiUrl
     ]
-
-    def barclaysStubHost = "localhost"
-    def barclaysStubPort = 8082
-    def testDataLoader
 
     def pageLocations = [
         'studentType'    : '#/financial-status-query', // todo update this
@@ -70,42 +81,11 @@ class Steps {
 
     @Before
     def setUp(Scenario scenario) {
-
-        def isWireMock = scenario.getSourceTagNames().find {
-            it.startsWith("@wiremock")
-        }
-        if (isWireMock) {
-            testDataLoader = new WireMockTestDataLoader(barclaysStubHost, barclaysStubPort)
-            testDataLoader.prepareFor(scenario)
-        } else {
-            testDataLoader = new TestDataLoader(barclaysStubHost, barclaysStubPort)
-            testDataLoader.prepareFor(scenario)
+        if (wiremock) {
+            testDataLoader = new WireMockTestDataLoader()
         }
     }
 
-    @After
-    def tearDown() {
-        testDataLoader?.clearTestData()
-    }
-
-    private def checkPrerequisites() {
-
-        String healthCheckText = readHealthCheck()
-        def health = new JsonSlurper().parseText(healthCheckText)
-
-        assert health.status == "UP": "Health check failure. Are the UI, API and STUB all running? Healthcheck said: $healthCheckText"
-    }
-
-    private String readHealthCheck() {
-
-        try {
-            def healthCheckUrl = uiUrl + "health"
-            return healthCheckUrl.toURL().text
-        } catch (Exception e) {
-            e.printStackTrace()
-            assert false: "Could not connect to UI server at $healthCheckUrl. Is it running?"
-        }
-    }
 
     def sendKeys(WebElement element, String v) {
         element.clear();
@@ -193,7 +173,6 @@ class Steps {
                 } else {
                     sendKeys(element, v)
                 }
-
             }
         }
 
@@ -206,11 +185,11 @@ class Steps {
         submitStudentTypeChoice()
     }
 
-    private void selectStudentType(String type){
+    private void selectStudentType(String type) {
         clickRadioButton(driver, studentTypeRadio, type)
     }
 
-    private void submitStudentTypeChoice(){
+    private void submitStudentTypeChoice() {
         driver.findElement(By.className("button")).click()
     }
 
@@ -223,11 +202,6 @@ class Steps {
     @Given("^the (.*) student type is chosen\$")
     public void the_student_type_is_chosen(String type) {
         chooseAndSubmitStudentType(type)
-    }
-
-    @Given("^the test data for account (.+)\$")
-    public void the_test_data_for_account_number(String fileName) {
-        testDataLoader.loadTestData(fileName)
     }
 
     @Given("^the account has sufficient funds\$")
@@ -274,7 +248,7 @@ class Steps {
     }
 
     @When("^the student type choice is submitted\$")
-    public void the_student_type_choice_is_submitted(){
+    public void the_student_type_choice_is_submitted() {
         submitStudentTypeChoice()
     }
 
@@ -325,7 +299,7 @@ class Steps {
 
     @Then("^the service displays the (.*) page heading\$")
     public void the_service_displays_the_page_heading(String pageHeading) throws Throwable {
-        assertTextFieldEqualityForMap(['pageHeading' : pageHeading])
+        assertTextFieldEqualityForMap(['pageHeading': pageHeading])
     }
 
     @Then("^the service displays the following your search data\$")

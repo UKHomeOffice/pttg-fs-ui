@@ -16,13 +16,11 @@ import static java.util.concurrent.TimeUnit.SECONDS
 
 /**
  * @Author Home Office Digital
- * //todo enable test (excluded as preventing build)
  */
 @SpringApplicationConfiguration(classes = ServiceRunner.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 @TestPropertySource(properties = ["api.root=http://10.255.255.1", "rest.connection.connect-timeout=500"])
-@Ignore
 class ServiceConnTimeoutIntegrationSpec extends Specification {
 
     @Value('${local.server.port}')

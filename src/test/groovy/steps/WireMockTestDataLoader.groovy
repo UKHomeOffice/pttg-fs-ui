@@ -3,7 +3,6 @@ package steps
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.http.Fault
-import cucumber.api.Scenario
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -11,45 +10,15 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*
 
 class WireMockTestDataLoader {
 
-
     private static Logger LOGGER = LoggerFactory.getLogger(WireMockTestDataLoader.class);
 
-    def dataDirTagName = "@DataDir="
-    def dataDirPath = "src/test/resources/account-data"
-    def dataDirName
-    def dataDir
+    def dataDirName = 'test-data'
 
     def WireMockServer wireMockServer
 
-    WireMockTestDataLoader(String host, int port) {
-
-        //todo port from test context
+    WireMockTestDataLoader() {
         wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
         wireMockServer.start()
-    }
-
-    def prepareFor(Scenario scenario) {
-
-        def dataDirTag = scenario.getSourceTagNames().find {
-            it.startsWith(dataDirTagName)
-        }
-
-        if (dataDirTag != null) {
-            dataDirName = dataDirTag - dataDirTagName
-
-        } else {
-            println ''
-            LOGGER.warn('WARNING: No data directory specified. Tag the feature to specify the directory containing test data files, eg @DataDir=name')
-        }
-
-        dataDir = new File("$dataDirPath/$dataDirName")
-
-
-
-        if (!dataDir.isDirectory()) {
-            println ''
-            LOGGER.warn("WARNING: $dataDir.absolutePath is not a directory. No test data files will be loaded")
-        }
     }
 
     def stubTestData(String fileName, String url) {
@@ -65,15 +34,13 @@ class WireMockTestDataLoader {
 
     }
 
-
     private def jsonFromFile(String fileName) {
 
         println ''
-        LOGGER.debug("Loading test data for $fileName from: $dataDir")
+        def fileLocation = "/$dataDirName/$fileName" + ".json"
+        LOGGER.debug("Loading test data for {}", fileLocation.toString())
 
-        def file = dataDir.listFiles().find {
-            it.name.contains(fileName)
-        }
+        def file = this.getClass().getResource(fileLocation)
 
         if (file == null) {
             return null
@@ -96,11 +63,6 @@ class WireMockTestDataLoader {
         println ''
         LOGGER.debug("Completed Stubbing Response data with $fileName")
     }
-
-    def clearTestData() {
-        wireMockServer.stop()
-    }
-
 
     def withDelayedResponse(String url, int delay) {
 
@@ -155,7 +117,7 @@ class WireMockTestDataLoader {
         LOGGER.debug("Completed stubbing response with status")
     }
 
-    def withServiceDown(){
+    def withServiceDown() {
         wireMockServer.stop()
     }
 

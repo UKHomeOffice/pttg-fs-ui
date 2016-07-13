@@ -1,4 +1,3 @@
-@DataDir=wiremock @wiremock
 Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate In London (single current account and no dependants)
 
     Acceptance criteria

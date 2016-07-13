@@ -1,4 +1,3 @@
-@DataDir=wiremock @wiremock
 Feature: Non Doctorate Content - Tier 4 (General) student (single current account and no dependants)
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################

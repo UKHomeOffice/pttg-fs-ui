@@ -1,4 +1,3 @@
-@DataDir=wiremock @wiremock
 Feature: System errors - specify messages shown in response to (simulated) connection failures etc
 
     Scenario: Connection timeout

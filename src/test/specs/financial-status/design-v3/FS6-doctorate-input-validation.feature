@@ -1,4 +1,3 @@
-@DataDir=wiremock @wiremock
 Feature: Show clear error details when inputs are invalid
 
     Acceptance criteria

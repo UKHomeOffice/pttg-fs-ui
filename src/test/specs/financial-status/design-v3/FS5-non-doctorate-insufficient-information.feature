@@ -1,4 +1,3 @@
-@DataDir=wiremock @wiremock
 Feature: Insufficient Information
     Tool identifies account number and sort code does not exist with Barclay's
 
