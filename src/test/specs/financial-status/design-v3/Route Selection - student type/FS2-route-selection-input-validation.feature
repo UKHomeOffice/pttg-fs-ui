@@ -4,8 +4,8 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
 
     Fields mandatory to fill in:
     Student Types:
-    Tier 4 (General) student (non-doctorate)
-    Tier 4 (General) student (doctorate)
+    Tier 4 (General) student
+    Tier 4 (General) doctorate extension scheme
 
 ######################### Validation on the Student type Field #########################
 

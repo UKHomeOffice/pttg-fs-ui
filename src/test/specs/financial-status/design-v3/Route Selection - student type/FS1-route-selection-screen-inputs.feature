@@ -16,7 +16,7 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
 
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
-            | Tier 4 (General) student (non-doctorate) | Yes |
+            | Tier 4 (General) student | Yes |
         Then the service displays the following result
           # End Data??  | End Date                        |  |
             | Inner London borough            |  |
@@ -32,7 +32,7 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
 
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
-            | Tier 4 (General) student (doctorate) | Yes |
+            | Tier 4 (General) doctorate extension scheme | Yes |
         Then the service displays the following result
           # End Data??  | End Date                        |  |
             | Inner London borough            |  |
