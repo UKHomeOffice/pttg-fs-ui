@@ -21,6 +21,9 @@
         var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
         var NUMBER_REGEX = /^\d*\.?\d*$/;
 
+        var STUDENT_TYPE_NON_DOCTORATE_DISPLAY="Tier 4 (General) student (non-doctorate)";
+        var STUDENT_TYPE_DOCTORATE_DISPLAY="Tier 4 (General) student (doctorate)";
+
         /* has it*/
         vm.model = {
 
@@ -29,6 +32,7 @@
             endDateYear: '',
 
             innerLondonBorough: '',
+            studentType: '',
             courseLength: '',
             totalTuitionFees: '',
             tuitionFeesAlreadyPaid: '',
@@ -48,6 +52,7 @@
             periodCheckedFrom: '',
             periodCheckedTo: '',
             innerLondonBoroughChecked: '',
+            studentTypeChecked: '',
             courseLengthChecked: '',
             totalTuitionFeesChecked: '',
             tuitionFeesAlreadyPaidChecked: '',
@@ -62,6 +67,8 @@
 
         vm.innerLondonBoroughInvalidError = false;
         vm.innerLondonBoroughMissingError = false;
+
+        vm.studentTypeMissingError = false;
 
         vm.courseLengthInvalidError = false;
         vm.courseLengthMissingError = false;
@@ -100,8 +107,8 @@
         }
 
         vm.getFullEndDate = function () {
-            var month = vm.model.endDateMonth > 9 ? vm.model.endDateMonth : '0' + vm.model.endDateMonth;
-            var day = vm.model.endDateDay > 9 ? vm.model.endDateDay : '0' + vm.model.endDateDay
+            var month = vm.model.endDateMonth.length > 1 ? vm.model.endDateMonth : '0' + vm.model.endDateMonth;
+            var day = vm.model.endDateDay.length > 1 ? vm.model.endDateDay : '0' + vm.model.endDateDay
             return vm.model.endDateYear + '-' + month + '-' + day;
         };
 
@@ -118,7 +125,7 @@
         }
 
         vm.getFullSortCodeDigits = function () {
-            return vm.model.sortCodeFirst + '' + vm.model.sortCodeSecond + '' + vm.model.sortCodeThird;
+            return vm.model.sortCodeFirst + vm.model.sortCodeSecond + vm.model.sortCodeThird;
         }
 
         vm.scrollTo = function (anchor) {
@@ -130,6 +137,7 @@
             vm.model.accountNumberChecked = vm.model.accountNumber;
             vm.model.sortCodeChecked = vm.getFullSortCode();
             vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
+            vm.model.studentTypeChecked = vm.model.studentType == 'doctorate' ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
             vm.model.courseLengthChecked = vm.model.courseLength;
             vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
@@ -145,6 +153,7 @@
                     vm.getFullSortCodeDigits(),
                     vm.getFullEndDate(),
                     vm.model.innerLondonBorough,
+                    vm.model.studentType,
                     vm.model.courseLength,
                     vm.model.totalTuitionFees,
                     vm.model.tuitionFeesAlreadyPaid,
@@ -187,6 +196,8 @@
             vm.innerLondonBoroughInvalidError = false;
             vm.innerLondonBoroughMissingError = false;
 
+            vm.studentTypeMissingError = false;
+
             vm.courseLengthInvalidError = false;
             vm.courseLengthMissingError = false;
 
@@ -214,7 +225,6 @@
             var validated = true;
             clearErrors();
 
-
             if (vm.model.endDateDay === null ||
                 vm.model.endDateMonth === null ||
                 vm.model.endDateYear === null) {
@@ -234,6 +244,13 @@
             if (vm.model.innerLondonBorough === '' || vm.model.innerLondonBorough === null) {
                 vm.queryForm.innerLondonBorough.$setValidity(false);
                 vm.innerLondonBoroughMissingError = true;
+                validated = false;
+            }
+
+
+            if (vm.model.studentType == null || vm.model.studentType === '') {
+                vm.queryForm.studentType.$setValidity(false);
+                vm.studentTypeMissingError = true;
                 validated = false;
             }
 

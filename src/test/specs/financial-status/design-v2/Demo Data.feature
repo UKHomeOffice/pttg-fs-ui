@@ -8,6 +8,7 @@ Feature:
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
+            | Student type                    | Tier 4 (General) student (non-doctorate)  |
             | Course length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -19,6 +20,7 @@ Feature:
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | Yes                      |
+            | Student type                    | Tier 4 (General) student (non-doctorate)  |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -34,6 +36,7 @@ Feature:
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
+            | Student type                    | Tier 4 (General) student (non-doctorate)  |
             | Course length                   | 9          |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
@@ -54,6 +57,7 @@ Feature:
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
+            | Student type                    | Tier 4 (General) student (non-doctorate)  |
             | Inner London borough            | No         |
             | Course length                   | 2          |
             | Total tuition fees              | 3000.00    |
@@ -81,6 +85,7 @@ Feature:
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | No         |
+            | Student type                    | Tier 4 (General) student (non-doctorate)  |
             | Course length                   | 9          |
             | Total tuition fees              | 15500.00   |
             | Tuition fees already paid       | 100        |

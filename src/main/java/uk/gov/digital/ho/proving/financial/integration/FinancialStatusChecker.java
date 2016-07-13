@@ -8,7 +8,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
@@ -16,7 +15,6 @@ import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
 import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;

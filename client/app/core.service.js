@@ -13,19 +13,21 @@
         };
 
         function checkFinancialStatus(
-            accountNumber, 
-            sortCode, 
-            toDate, 
-            innerLondonBorough, 
+            accountNumber,
+            sortCode,
+            toDate,
+            innerLondonBorough,
+            studentType,
             courseLength,
-            totalTuitionFees, 
-            tuitionFeesAlreadyPaid, 
+            totalTuitionFees,
+            tuitionFeesAlreadyPaid,
             accommodationFeesAlreadyPaid) {
             var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
             return $http.get(url, {
                 params: {
                     toDate: toDate,
                     innerLondonBorough: innerLondonBorough,
+                    studentType: studentType,
                     courseLength: courseLength,
                     totalTuitionFees: totalTuitionFees,
                     tuitionFeesAlreadyPaid: tuitionFeesAlreadyPaid,

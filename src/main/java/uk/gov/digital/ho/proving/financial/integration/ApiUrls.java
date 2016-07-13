@@ -37,6 +37,7 @@ public class ApiUrls {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdEndpoint)
             .queryParam("innerLondon", course.getInnerLondonBorough())
+            .queryParam("studentType", course.getStudentType())
             .queryParam("courseLength", course.getCourseLength())
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
             .queryParam("tuitionFeesPaid", maintenance.getTuitionFeesAlreadyPaid())

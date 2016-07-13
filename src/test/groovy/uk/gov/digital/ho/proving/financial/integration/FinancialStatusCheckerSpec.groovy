@@ -24,7 +24,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
     Account account = new Account("", "")
     LocalDate toDate = LocalDate.now()
-    Course course = new Course(true, 1)
+    Course course = new Course(true, 1, "nondoctorate")
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE)
 
     def thresholdResponse = thresholdOf(ONE)

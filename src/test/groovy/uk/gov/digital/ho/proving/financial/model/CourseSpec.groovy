@@ -12,7 +12,7 @@ class CourseSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new Course(true, 1)
+        def instance = new Course(true, 1, "doctorate")
 
         when:
         def output = instance.toString()

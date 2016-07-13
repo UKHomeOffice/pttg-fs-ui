@@ -4,13 +4,16 @@ describe('coreController', function () {
 
     beforeEach(module("app.core"));
 
+    //required for $templatecache to work
+    beforeEach(module("templates"));
+
     beforeEach(inject(function ($rootScope, $controller, $location, $templateCache, $compile, $anchorScroll, $q) {
         scope = $rootScope.$new();
         location = $location;
         q = $q;
 
         restService = {
-            checkFinancialStatus: function (accountNumber, sortCode, endDate, innerLondonBorough, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
+            checkFinancialStatus: function (accountNumber, sortCode, endDate, innerLondonBorough, studentType, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
             }
         };
 
@@ -54,23 +57,23 @@ describe('coreController', function () {
 
 
     it('is expected to get the maintenance period end date in ISO format', function () {
-        coreController.model.endDateDay = '1';
-        coreController.model.endDateMonth = '2';
-        coreController.model.endDateYear = '2015';
+        coreController.model.endDateDay = 1;
+        coreController.model.endDateMonth = 2;
+        coreController.model.endDateYear = 2015;
         expect(coreController.getFullEndDate()).toEqual('2015-02-01')
     });
 
     it('is expected to format the maintenance period end date to DD/MM/YYYY', function () {
-        coreController.model.endDateDay = '1';
-        coreController.model.endDateMonth = '2';
-        coreController.model.endDateYear = '2015';
+        coreController.model.endDateDay = 1;
+        coreController.model.endDateMonth = 2;
+        coreController.model.endDateYear = 2015;
         expect(coreController.formatEndDate()).toEqual('01/02/2015')
     });
 
     it('is expected to format the sort code with dashes', function () {
-        coreController.model.sortCodeFirst = '11';
-        coreController.model.sortCodeSecond = '22';
-        coreController.model.sortCodeThird = '33';
+        coreController.model.sortCodeFirst = 11;
+        coreController.model.sortCodeSecond = 22;
+        coreController.model.sortCodeThird = 33;
         expect(coreController.getFullSortCode()).toEqual('11-22-33')
     });
 
@@ -97,18 +100,7 @@ describe('coreController', function () {
     it('is expected the form submits the correct data to the service', function () {
         spyOnSuccessful();
 
-        coreController.model.endDateDay = '1';
-        coreController.model.endDateMonth = '2';
-        coreController.model.endDateYear = '2015';
-        coreController.model.accountNumber = '12345678';
-        coreController.model.sortCodeFirst = '20';
-        coreController.model.sortCodeSecond = '02';
-        coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
-        coreController.model.courseLength = '1';
-        coreController.model.totalTuitionFees = '1';
-        coreController.model.tuitionFeesAlreadyPaid = '1';
-        coreController.model.accommodationFeesAlreadyPaid = '1';
+        initialiseModelWithValues();
 
         coreController.submit()
 
@@ -120,18 +112,8 @@ describe('coreController', function () {
     it('does not call service on validation failure - invalid end date', function () {
         spyOnSuccessful();
 
+        initialiseModelWithValues();
         coreController.model.endDateDay = '99';
-        coreController.model.endDateMonth = '2';
-        coreController.model.endDateYear = '2015';
-        coreController.model.accountNumber = '12345678';
-        coreController.model.sortCodeFirst = '20';
-        coreController.model.sortCodeSecond = '02';
-        coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
-        coreController.model.courseLength = '1';
-        coreController.model.totalTuitionFees = '1';
-        coreController.model.tuitionFeesAlreadyPaid = '1';
-        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
 
@@ -142,23 +124,47 @@ describe('coreController', function () {
     it('does not call service on validation failure - future end date', function () {
         spyOnSuccessful();
 
-        coreController.model.endDateDay = '1';
-        coreController.model.endDateMonth = '2';
+        initialiseModelWithValues();
         coreController.model.endDateYear = '2999';
-        coreController.model.accountNumber = '12345678';
-        coreController.model.sortCodeFirst = '20';
-        coreController.model.sortCodeSecond = '02';
-        coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
-        coreController.model.courseLength = '1';
-        coreController.model.totalTuitionFees = '1';
-        coreController.model.tuitionFeesAlreadyPaid = '1';
-        coreController.model.accommodationFeesAlreadyPaid = '1';
 
         coreController.submit()
 
         expect(coreController.validateError).toBeTruthy();
         expect(restService.checkFinancialStatus.calls.count()).toBe(0);
+    });
+
+    it('does not call service on validation failure - studentType not specified', function () {
+        spyOnSuccessful();
+
+        initialiseModelWithValues();
+        coreController.model.studentType = undefined;
+
+        coreController.submit()
+
+        expect(coreController.validateError).toBeTruthy();
+        expect(restService.checkFinancialStatus.calls.count()).toBe(0);
+    });
+
+    it('is expected the student display test (different from the submitted value) is set correctly after submit', function () {
+        spyOnSuccessful();
+
+        response = {
+            sortCode: 200203,
+            accountNumber: '12345678',
+            fundingRequirementMet: true,
+            periodCheckedFrom: 2015-01-03,
+            periodCheckedTo: 2015-01-30,
+            minimum: 1
+        }
+
+        initialiseModelWithValues();
+
+        coreController.submit()
+        scope.$digest()
+
+        expect(coreController.validateError).toBeFalsy();
+        expect(restService.checkFinancialStatus).toHaveBeenCalled();
+        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) student (doctorate)");
     });
 
 
@@ -167,25 +173,14 @@ describe('coreController', function () {
 
         response = {
             sortCode: 200203,
-            accountNumber: 12345678,
+            accountNumber: '12345678',
             fundingRequirementMet: true,
             periodCheckedFrom: 2015-01-03,
             periodCheckedTo: 2015-01-30,
             minimum: 1
         }
 
-        coreController.model.endDateDay = '30';
-        coreController.model.endDateMonth = '1';
-        coreController.model.endDateYear = '2015';
-        coreController.model.accountNumber = '12345678';
-        coreController.model.sortCodeFirst = '20';
-        coreController.model.sortCodeSecond = '02';
-        coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
-        coreController.model.courseLength = '1';
-        coreController.model.totalTuitionFees = '1';
-        coreController.model.tuitionFeesAlreadyPaid = '1';
-        coreController.model.accommodationFeesAlreadyPaid = '1';
+        initialiseModelWithValues();
 
         coreController.submit()
         scope.$digest()
@@ -206,24 +201,30 @@ describe('coreController', function () {
         spyOnAccountNotFound();
         spyOn(location, 'path');
 
-        coreController.model.endDateDay = '30';
-        coreController.model.endDateMonth = '1';
-        coreController.model.endDateYear = '2015';
-        coreController.model.accountNumber = '99999999';
-        coreController.model.sortCodeFirst = '99';
-        coreController.model.sortCodeSecond = '99';
-        coreController.model.sortCodeThird = '99';
-        coreController.model.innerLondonBorough = 'yes';
-        coreController.model.courseLength = '1';
-        coreController.model.totalTuitionFees = '1';
-        coreController.model.tuitionFeesAlreadyPaid = '1';
-        coreController.model.accommodationFeesAlreadyPaid = '1';
+        initialiseModelWithValues();
 
         coreController.submit()
         scope.$digest();
 
         expect(location.path).toHaveBeenCalledWith('/financial-status-no-record');
     });
+
+
+    function initialiseModelWithValues(){
+        coreController.model.endDateDay = '30';
+        coreController.model.endDateMonth = '1';
+        coreController.model.endDateYear = '2015';
+        coreController.model.accountNumber = '12345678';
+        coreController.model.sortCodeFirst = '20';
+        coreController.model.sortCodeSecond = '02';
+        coreController.model.sortCodeThird = '03';
+        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.studentType = 'doctorate';
+        coreController.model.courseLength = 1;
+        coreController.model.totalTuitionFees = 1;
+        coreController.model.tuitionFeesAlreadyPaid = 1;
+        coreController.model.accommodationFeesAlreadyPaid = 1;
+    }
 
 });
 
