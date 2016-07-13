@@ -16,6 +16,7 @@ Feature: Insufficient Information
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
         Then the service displays the account not found page
+        And the service displays the following page content
             | Page dynamic heading  | There is no record for the sort code and account number with Barclays                                                            |
             | Page dynamic detail | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
         And the service displays the following your search data

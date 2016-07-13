@@ -74,7 +74,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
-        When the caseworker views the query page
+        When the caseworker views the non-doctorate query page
         Then the service displays the following page content
             | Page heading     | Tier 4 (General) student (non-doctorate)                                                               |
             | Page sub heading | Financial status check                                                                                 |

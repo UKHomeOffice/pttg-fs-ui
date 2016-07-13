@@ -10,9 +10,9 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
 
     Scenario Outline: Caseworker selects the student type - Tier 4 (General) student (non-doctorate)
         Given caseworker is using the financial status service ui
-        When the <student> type is chosen and submitted
-        Then the service displays the <page-title> page
+        When the <student-type> student type is chosen
+        Then the service displays the <page-heading> page heading
         Examples:
-            | student       | page-title                               |
-            | non-doctorate | Tier 4 (General) student (non-doctorate) |
+            | student-type  | page-heading                             |
             | doctorate     | Tier 4 (General) student (doctorate)     |
+            | non-doctorate | Tier 4 (General) student (non-doctorate) |

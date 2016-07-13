@@ -37,14 +37,18 @@ class Steps {
     def uiPort = 8001
     def uiUrl = "http://$uiHost:$uiPort/"
 
+    def pageUrls = [
+        'non-doctorate query': uiUrl + '?',  // todo what is the url?
+        'student type'       : uiUrl
+    ]
+
     def barclaysStubHost = "localhost"
     def barclaysStubPort = 8082
     def testDataLoader
 
     def pageLocations = [
-        'queryPage'   : '#/financial-status-query',
-        'resultsPage' : '#/financial-status-result',
-        'noRecordPage': '#/financial-status-no-record'
+        'studentType'    : '#/financial-status-query', // todo update this
+        'accountNotFound': '#/financial-status-no-record'
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -59,6 +63,10 @@ class Steps {
     def innerLondonRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('Yes', 'innerLondonBorough-1')
         .withOption('No', 'innerLondonBorough-2')
+
+    def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('doctorate', 'studentType-1')
+        .withOption('non-doctorate', 'studentType-2')
 
     @Before
     def setUp(Scenario scenario) {
@@ -193,10 +201,28 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
+    private void chooseAndSubmitStudentType(String type) {
+        selectStudentType(type)
+        submitStudentTypeChoice()
+    }
+
+    private void selectStudentType(String type){
+        clickRadioButton(driver, studentTypeRadio, type)
+    }
+
+    private void submitStudentTypeChoice(){
+        driver.findElement(By.className("button")).click()
+    }
+
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
         driver.get(uiUrl)
-        assertCurrentPage('queryPage')
+        assertCurrentPage('studentType')
+    }
+
+    @Given("^the (.*) student type is chosen\$")
+    public void the_student_type_is_chosen(String type) {
+        chooseAndSubmitStudentType(type)
     }
 
     @Given("^the test data for account (.+)\$")
@@ -242,9 +268,14 @@ class Steps {
     }
 
     @Given("^no record for the account\$")
-    public void no_record_for_the_account() throws Throwable{
+    public void no_record_for_the_account() throws Throwable {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
         testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
+    }
+
+    @When("^the student type choice is submitted\$")
+    public void the_student_type_choice_is_submitted(){
+        submitStudentTypeChoice()
     }
 
     @When("^the financial status check is performed\$")
@@ -266,25 +297,18 @@ class Steps {
 
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
-
-        assertCurrentPage('queryPage')
-
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-
         submitEntries(entries)
     }
 
-    @When("^the caseworker views the query page\$")
-    public void the_caseworker_views_the_query_page() throws Throwable {
-
-        driver.get(uiUrl)
-        assertCurrentPage('queryPage')
+    @When("^the caseworker views the (.*) page\$")
+    public void the_caseworker_views_the_query_page(String pageName) throws Throwable {
+        driver.get(pageUrls[pageName])
+        assertCurrentPage(pageName + 'Page')
     }
 
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
-
-        assertCurrentPage('queryPage')
 
         Map<String, String> entries = arg1.asMap(String.class, String.class)
 
@@ -294,48 +318,33 @@ class Steps {
         }
     }
 
-    @Then("^the service displays the query page\$")
-    public void the_service_displays_the_query_page(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('queryPage')
-
-        assertTextFieldEqualityForMap(expectedResult)
+    @Then("^the service displays the (.*) page\$")
+    public void the_service_displays_the_named_page(String pageName) throws Throwable {
+        assertCurrentPage(toCamelCase(pageName))
     }
 
-
-    @Then("^the service displays the account not found page\$")
-    public void the_service_displays_the_account_not_found_page(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('noRecordPage')
-
-        assertTextFieldEqualityForMap(expectedResult)
+    @Then("^the service displays the (.*) page heading\$")
+    public void the_service_displays_the_page_heading(String pageHeading) throws Throwable {
+        assertTextFieldEqualityForMap(['pageHeading' : pageHeading])
     }
 
     @Then("^the service displays the following your search data\$")
     public void the_service_displays_the_following_your_search_date(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('noRecordPage')
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following (?:result|result page content)\$")
+    @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
-
-        assertCurrentPage('resultsPage')
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
     @Then("^the service displays the following page content\$")
     public void the_service_displays_the_following_page_content(DataTable expectedResult) throws Throwable {
-
         assertTextFieldEqualityForMap(expectedResult)
     }
 
-    @Then("^the service displays the following result page content within (\\d+) seconds\$")
-    public void the_service_displays_the_following_result_page_content_within_seconds(long timeout, DataTable expectedResult) throws Throwable {
-
+    @Then("^the service displays the following page content within (\\d+) seconds\$")
+    public void the_service_displays_the_following_page_content_within_seconds(long timeout, DataTable expectedResult) throws Throwable {
         driver.manage().timeouts().implicitlyWait(timeout, SECONDS)
         assertTextFieldEqualityForMap(expectedResult)
         driver.manage().timeouts().implicitlyWait(defaultTimeout, SECONDS)
