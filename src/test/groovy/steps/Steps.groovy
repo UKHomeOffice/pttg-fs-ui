@@ -170,6 +170,8 @@ class Steps {
                 if (key == "innerLondonBorough") {
                     clickRadioButton(driver, innerLondonRadio, v)
 
+                } else if (key == "studentType") {
+                    clickRadioButton(driver, studentTypeRadio, v)
                 } else {
                     sendKeys(element, v)
                 }

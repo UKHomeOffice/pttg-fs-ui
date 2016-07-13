@@ -27,7 +27,7 @@ class ServiceConnTimeoutIntegrationSpec extends Specification {
     def port
 
     def path = "/pttg/financialstatusservice/v1/accounts/123456/12345678/dailybalancestatus?"
-    def params = "toDate=2015-01-01&innerLondonBorough=true&courseLength=1&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1"
+    def params = "toDate=2015-01-01&innerLondonBorough=true&studentType=nondoctorate&courseLength=1&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1"
     def url
 
     RestTemplate restTemplate
