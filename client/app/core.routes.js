@@ -11,7 +11,11 @@
         $locationProvider.html5Mode(false);
         $routeProvider
             .when('/', {
-                redirectTo: '/financial-status-query'
+                redirectTo: '/financial-status-student-type',
+                controller: 'routeController as vm'
+            })
+            .when('/financial-status-student-type', {
+                templateUrl : 'views/financial-status-student-type.html',
             })
             .when('/financial-status-query', {
                 templateUrl : 'views/financial-status-query.html'

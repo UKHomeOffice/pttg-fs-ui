@@ -90,65 +90,42 @@
                     </ul>
                 </div>
 
-                <div class="form-group" id="studentType"
-                     ng-class="{error : vm.studentTypeMissingError }">
-                    <fieldset style="margin-bottom:6px">
-                        <legend class="form-label-bold">Student type</legend>
-                        <span id="studentType-error" class="error-message" ng-if="vm.studentTypeMissingError">
-                                        Please provide a student type</span>
-                        <label class="block-label" for="studentType-1">
-                            <input type="radio" class="form-control form-control-1-8" name="studentType"
-                                   id="studentType-1" value="nondoctorate"
-                                   ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) student
-                            (non-doctorate)
-                        </label>
-                    </fieldset>
-                    <label class="block-label" for="studentType-2">
-                        <input type="radio" class="form-control form-control-1-8" name="studentType"
-                               id="studentType-2" value="doctorate"
-                               ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) student (doctorate)
-                    </label>
-                    </fieldset>
-                </div>
+                <div class="form-group " id="end-date"
+                     ng-class="{error : vm.endDateMissingError || vm.endDateInvalidError}">
 
-                <div ng-if="vm.model.studentType">
-
-                    <div class="form-group " id="end-date"
-                         ng-class="{error : vm.endDateMissingError || vm.endDateInvalidError}">
-
-                        <fieldset>
-                            <legend class="form-label-bold">End date of 28-day period</legend>
-                            <div class="form-date">
-                                <p class="form-hint">Includes the date entered</p>
-                                <span id="end-date-error" class="error-message"
-                                      ng-if="vm.endDateMissingError || vm.endDateInvalidError">
-                                    Please provide a valid end date</span>
-                                <div class="form-group form-group-day">
-                                    <label for="endDateDay">Day</label>
-                                    <input class="form-control" name="endDateDay"
-                                           id="endDateDay" type="text"
-                                           ng-model="vm.model.endDateDay" autocomplete="off">
-                                </div>
-
-                                <div class="form-group form-group-month">
-                                    <label for="endDateMonth">Month</label>
-                                    <input class="form-control" name="endDateMonth"
-                                           id="endDateMonth"
-                                           type="text" ng-model="vm.model.endDateMonth"
-                                           autocomplete="off">
-                                </div>
-
-                                <div class="form-group form-group-year">
-                                    <label for="endDateYear">Year</label>
-                                    <input class="form-control" name="endDateYear"
-                                           id="endDateYear" type="text"
-                                           ng-model="vm.model.endDateYear"
-                                           autocomplete="off">
-                                </div>
+                    <fieldset>
+                        <legend class="form-label-bold">End date of 28-day period</legend>
+                        <div class="form-date">
+                            <p class="form-hint">Includes the date entered</p>
+                            <span id="end-date-error" class="error-message"
+                                  ng-if="vm.endDateMissingError || vm.endDateInvalidError">
+                                Please provide a valid end date</span>
+                            <div class="form-group form-group-day">
+                                <label for="endDateDay">Day</label>
+                                <input class="form-control" name="endDateDay"
+                                       id="endDateDay" type="text"
+                                       ng-model="vm.model.endDateDay" autocomplete="off">
                             </div>
 
-                        </fieldset>
-                    </div>
+                            <div class="form-group form-group-month">
+                                <label for="endDateMonth">Month</label>
+                                <input class="form-control" name="endDateMonth"
+                                       id="endDateMonth"
+                                       type="text" ng-model="vm.model.endDateMonth"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="endDateYear">Year</label>
+                                <input class="form-control" name="endDateYear"
+                                       id="endDateYear" type="text"
+                                       ng-model="vm.model.endDateYear"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
 
                     <div class="form-group" id="innerLondonBorough"
                          ng-class="{error : vm.innerLondonBoroughMissingError }">
@@ -279,7 +256,6 @@
                         <p><input type="submit" class="button continue-button" value="Check financial status"></p>
                     </div>
 
-                </div>
 
             </form>
         </div>
