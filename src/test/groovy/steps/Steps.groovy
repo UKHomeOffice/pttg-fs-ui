@@ -54,6 +54,7 @@ class Steps {
 
     def pageUrls = [
         'non-doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
+        'doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
         'studentType'       : uiUrl
     ]
 

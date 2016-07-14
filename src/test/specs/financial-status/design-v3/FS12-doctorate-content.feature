@@ -25,11 +25,14 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Sort code                       |
             | Account number                  |
 
+    # todo is the above order correct and are we changing the order for non-doctorate also?
+    # todo what about student type?
+
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
-        Given the account has sufficient funds
+        Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
@@ -48,12 +51,12 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
-    Scenario: Caseworker enters account number and sort code where no records exist within the period stated (no test data for all 9's)
+    Scenario: Caseworker enters account number and sort code where no records exist within the period stated
         Given no record for the account
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading  | There is no record for the sort code and account number with Barclays                                                            |
-            | Page Dynamic Sub Text | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
+            | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                            |
+            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
         And the service displays the following your search headers in order
             | Sort code      |
             | Account number |

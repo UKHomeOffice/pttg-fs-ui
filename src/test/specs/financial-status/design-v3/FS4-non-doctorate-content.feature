@@ -22,6 +22,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the service displays the following your search headers in order
             | Sort code                       |
             | Account number                  |
+            | Student type                    |
             | Inner London borough            |
             | Course length                   |
             | Total tuition fees              |
@@ -46,6 +47,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the service displays the following your search headers in order
             | Sort code                       |
             | Account number                  |
+            | Student type                    |
             | Inner London borough            |
             | Course length                   |
             | Total tuition fees              |
@@ -55,7 +57,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
-    Scenario: Caseworker enters account number and sort code where no records exist within the period stated (no test data for all 9's)
+    Scenario: Caseworker enters account number and sort code where no records exist within the period stated
         Given no record for the account
         When the financial status check is performed
         Then the service displays the following page content
