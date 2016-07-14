@@ -6,9 +6,12 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
     Maintenance threshold amount- (Required Maintenance funds non doctorate inner London
     borough (£1265) * course length) + total tuition fees
 
-    Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds
+    Background:
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
+
+
+    Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -33,8 +36,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
 
 
     Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds
-        Given caseworker is using the financial status service ui
-        And the non-doctorate student type is chosen
         Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |

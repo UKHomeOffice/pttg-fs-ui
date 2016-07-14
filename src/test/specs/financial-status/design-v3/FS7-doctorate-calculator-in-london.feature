@@ -10,10 +10,12 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
     Maintenance threshold amount =  (Required Maintenance funds doctorate inner London
     borough (£1265) * remaining course length) -  Accommodation fees already paid
 
-
-    Scenario: Raj is a Doctorate inner London student and does not have sufficient funds
+    Background:
         Given caseworker is using the financial status service ui
         And the doctorate student type is chosen
+
+
+    Scenario: Raj is a Doctorate inner London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -34,8 +36,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
 
 
     Scenario: Shelly is a Doctorate inner London student and has sufficient funds
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |

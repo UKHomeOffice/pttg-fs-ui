@@ -12,11 +12,13 @@ Feature: Show clear error details when inputs are invalid
     Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
     Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
 
+    Background:
+        Given caseworker is using the financial status service ui
+        And the doctorate student type is chosen
+
 ######################### Validation on the End Date Field #########################
 
     Scenario: Case Worker does NOT enter End Date
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        |          |
             | Inner London Borough            | Yes      |
@@ -30,8 +32,6 @@ Feature: Show clear error details when inputs are invalid
             | end-date-error  | Please provide a valid end date |
 
     Scenario: Case Worker enters invalid End Date - in the future
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2099 |
             | Inner London Borough            | Yes        |
@@ -45,8 +45,6 @@ Feature: Show clear error details when inputs are invalid
             | end-date-error  | Please provide a valid end date |
 
     Scenario: Case Worker enters invalid End date - not numbers 0-9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/0d/2016 |
             | Inner London Borough            | Yes        |
@@ -64,8 +62,6 @@ Feature: Show clear error details when inputs are invalid
 ######################### Validation on the Sort Code Field #########################
 
     Scenario: Case Worker does NOT enter Sort Code
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -79,8 +75,6 @@ Feature: Show clear error details when inputs are invalid
             | sort-code-error  | Please provide a valid sort code |
 
     Scenario: Case Worker enters invalid Sort Code - mising digits
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -94,8 +88,6 @@ Feature: Show clear error details when inputs are invalid
             | sort-code-error  | Please provide a valid sort code |
 
     Scenario: Case Worker enters invalid Sort Code - all 0's
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -109,8 +101,6 @@ Feature: Show clear error details when inputs are invalid
             | sort-code-error  | Please provide a valid sort code |
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -127,8 +117,6 @@ Feature: Show clear error details when inputs are invalid
 ######################### Validation on the Account Number Field #########################
 
     Scenario: Case Worker does NOT enter Account Number
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -142,8 +130,6 @@ Feature: Show clear error details when inputs are invalid
             | account-number-error    | Please provide a valid account number |
 
     Scenario: Case Worker enters invalid Account Number - too short
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -157,8 +143,6 @@ Feature: Show clear error details when inputs are invalid
             | account-number-error    | Please provide a valid account number |
 
     Scenario: Case Worker enters invalid Account Number - too long
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -172,8 +156,6 @@ Feature: Show clear error details when inputs are invalid
             | account-number-error    | Please provide a valid account number |
 
     Scenario: Case Worker enters invalid Account Number - all 0's
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -187,8 +169,6 @@ Feature: Show clear error details when inputs are invalid
             | account-number-error    | Please provide a valid account number |
 
     Scenario: Case Worker enters invalid Account Number - not numbers 0-9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
@@ -204,8 +184,6 @@ Feature: Show clear error details when inputs are invalid
 
 ######################### Validation on the Inner London Borough Field #########################
     Scenario: Case Worker does NOT enter Inner London Borough
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            |            |
@@ -221,8 +199,6 @@ Feature: Show clear error details when inputs are invalid
 
 ######################### Validation on the Course Length Field #########################
     Scenario: Case Worker does NOT enter Course Length
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | true       |
@@ -236,8 +212,6 @@ Feature: Show clear error details when inputs are invalid
             | course-length-error | Please provide a valid course length |
 
     Scenario: Case Worker enters invalid Course Length - not numbers 0-9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | true       |
@@ -251,8 +225,6 @@ Feature: Show clear error details when inputs are invalid
             | course-length-error | Please provide a valid course length |
 
     Scenario: Case Worker enters invalid Course Length - more than 9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | yes        |
@@ -268,8 +240,6 @@ Feature: Show clear error details when inputs are invalid
 
 ######################### Validation on the Accommodation fees already paid Field #########################
     Scenario: Case Worker does NOT enter Accommodation fees already paid
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | yes        |
@@ -283,8 +253,6 @@ Feature: Show clear error details when inputs are invalid
             | accommodation-fees-already-paid-error  | Please provide a valid accommodation fees already paid |
 
     Scenario: Case Worker enters invalid Accommodation fees already paid - not numbers 0-9
-        Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | yes        |
