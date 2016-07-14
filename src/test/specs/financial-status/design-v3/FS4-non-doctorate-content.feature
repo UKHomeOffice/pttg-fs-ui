@@ -34,7 +34,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the non-doctorate student type is chosen
         Given the account does not have sufficient funds
         When the financial status check is performed
-        Then the service displays the following result page content
+        Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
             | Page heading         | Tier 4 (General) student (non-doctorate)                |
             | Page sub heading     | Financial status check                                  |
