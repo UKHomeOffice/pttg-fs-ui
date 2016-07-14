@@ -2,6 +2,7 @@ package steps
 
 import cucumber.api.DataTable
 import cucumber.api.Scenario
+import cucumber.api.java.After
 import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
@@ -17,7 +18,6 @@ import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
-import uk.gov.digital.ho.proving.financial.ServiceConfiguration
 import uk.gov.digital.ho.proving.financial.ServiceRunner
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 
@@ -28,7 +28,7 @@ import static steps.UtilitySteps.toCamelCase
 /**
  * @Author Home Office Digital
  */
-@SpringApplicationConfiguration(ServiceRunner.class)
+@SpringApplicationConfiguration([ServiceRunner.class, ServiceExceptionHandler.class])
 @WebAppConfiguration
 @IntegrationTest
 @ActiveProfiles("test")
@@ -53,13 +53,14 @@ class Steps {
     def uiUrl = "http://$uiHost:$uiPort/"
 
     def pageUrls = [
-        'non-doctorate query': uiUrl + '?',  // todo what is the url?
-        'student type'       : uiUrl
+        'non-doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
+        'studentType'       : uiUrl
     ]
 
     def pageLocations = [
-        'studentType'    : '#/financial-status-query', // todo update this
-        'accountNotFound': '#/financial-status-no-record'
+        'studentType'       : '#/financial-status-query', // todo update this
+        'accountNotFound'   : '#/financial-status-no-record',
+        'non-doctorateQuery': '#/financial-status-query'// todo update this
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -84,6 +85,11 @@ class Steps {
         if (wiremock) {
             testDataLoader = new WireMockTestDataLoader()
         }
+    }
+
+    @After
+    def tearDown() {
+        testDataLoader?.stop()
     }
 
 
@@ -142,11 +148,14 @@ class Steps {
         }
     }
 
-    private void assertTextFieldEqualityForMap(DataTable expectedResult) {
+    private void assertTextFieldEqualityForTable(DataTable expectedResult) {
         Map<String, String> entries = expectedResult.asMap(String.class, String.class)
+        assertTextFieldEqualityForMap(entries)
+    }
+
+    private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
 
         entries.each { k, v ->
-
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
 
@@ -192,7 +201,7 @@ class Steps {
     }
 
     private void submitStudentTypeChoice() {
-        driver.findElement(By.className("button")).click()
+        //  driver.findElement(By.className("button")).click()
     }
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
@@ -279,8 +288,9 @@ class Steps {
 
     @When("^the caseworker views the (.*) page\$")
     public void the_caseworker_views_the_query_page(String pageName) throws Throwable {
-        driver.get(pageUrls[pageName])
-        assertCurrentPage(pageName + 'Page')
+        def url = pageUrls[toCamelCase(pageName)]
+        driver.get(url)
+        assertCurrentPage(toCamelCase(pageName))
     }
 
     @Then("^the service displays the following message\$")
@@ -301,37 +311,34 @@ class Steps {
 
     @Then("^the service displays the (.*) page heading\$")
     public void the_service_displays_the_page_heading(String pageHeading) throws Throwable {
-        assertTextFieldEqualityForMap(['pageHeading': pageHeading])
+        assertTextFieldEqualityForMap(['page heading': pageHeading])
     }
 
     @Then("^the service displays the following your search data\$")
     public void the_service_displays_the_following_your_search_date(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForMap(expectedResult)
+        assertTextFieldEqualityForTable(expectedResult)
     }
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForMap(expectedResult)
+        assertTextFieldEqualityForTable(expectedResult)
     }
 
     @Then("^the service displays the following page content\$")
     public void the_service_displays_the_following_page_content(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForMap(expectedResult)
+        assertTextFieldEqualityForTable(expectedResult)
     }
 
     @Then("^the service displays the following page content within (\\d+) seconds\$")
     public void the_service_displays_the_following_page_content_within_seconds(long timeout, DataTable expectedResult) throws Throwable {
         driver.manage().timeouts().implicitlyWait(timeout, SECONDS)
-        assertTextFieldEqualityForMap(expectedResult)
+        assertTextFieldEqualityForTable(expectedResult)
         driver.manage().timeouts().implicitlyWait(defaultTimeout, SECONDS)
     }
 
-
     @Then("^the service displays the following (.*) headers in order\$")
     public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
-
         def tableId = toCamelCase(tableName) + "Table"
-
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 

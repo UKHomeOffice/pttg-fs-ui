@@ -9,7 +9,7 @@ Feature: Route selection screen content - Tier 4 (General) student non Doctorate
         Given caseworker is using the financial status service ui
         When the caseworker views the student type page
         Then the service displays the following page content
-            | Page heading  | Financial status check                                                                                |
-            | Page sub text | Online statement checker for a Barclays current account holder (must be in the applicant’s own name). |
+            | Page sub heading | Financial status check                                                                                |
+            | Page sub text    | Online statement checker for a Barclays current account holder (must be in the applicant’s own name). |
 
 

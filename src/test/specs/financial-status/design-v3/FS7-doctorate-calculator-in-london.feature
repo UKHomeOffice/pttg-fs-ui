@@ -18,7 +18,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
-            | Remaining course length         | 2          |
+            | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-12   |
             | Account number                  | 11111112   |

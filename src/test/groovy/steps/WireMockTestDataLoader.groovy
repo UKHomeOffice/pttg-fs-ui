@@ -118,7 +118,10 @@ class WireMockTestDataLoader {
     }
 
     def withServiceDown() {
-        wireMockServer.stop()
+        stop()
     }
 
+    def stop() {
+        wireMockServer.stop()
+    }
 }
