@@ -20,14 +20,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order
-            | Sort code                       |
-            | Account number                  |
-            | Student type                    |
-            | Inner London borough            |
-            | Course length                   |
-            | Total tuition fees              |
-            | Tuition fees already paid       |
-            | Accommodation fees already paid |
+            | Student type                          |
+            | Inner London borough                  |
+            | Course length                         |
+            | Total tuition fees for the first year |
+            | Tuition fees already paid             |
+            | Accommodation fees already paid       |
+            | Sort code                             |
+            | Account number                        |
 
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
@@ -45,14 +45,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order
-            | Sort code                       |
-            | Account number                  |
-            | Student type                    |
-            | Inner London borough            |
-            | Course length                   |
-            | Total tuition fees              |
-            | Tuition fees already paid       |
-            | Accommodation fees already paid |
+            | Student type                          |
+            | Inner London borough                  |
+            | Course length                         |
+            | Total tuition fees for the first year |
+            | Tuition fees already paid             |
+            | Accommodation fees already paid       |
+            | Sort code                             |
+            | Account number                        |
 
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
@@ -61,8 +61,8 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Given no record for the account
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                            |
-            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 11-11-11 and account number 11111111. |
+            | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                           |
+            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 11-11-11 and account number 11111111 |
         And the service displays the following your search headers in order
             | Sort code      |
             | Account number |
@@ -74,8 +74,8 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         When the caseworker views the non-doctorate query page
         Then the service displays the following page content
-            | Page heading     | Tier 4 (General) student (non-doctorate)                                                               |
-            | Page sub heading | Financial status check                                                                                 |
-            | Page sub text    | An online statement checker for Barclays current account holder (must be in the applicant's own name). |
+            | Page heading     | Tier 4 (General) student (non-doctorate)                                                                 |
+            | Page sub heading | Financial status check                                                                                   |
+            | Page sub text    | An online statement checker for a Barclays current account holder (must be in the applicant's own name). |
 
 

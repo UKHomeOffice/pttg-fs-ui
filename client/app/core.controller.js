@@ -56,8 +56,9 @@
             courseLengthChecked: '',
             totalTuitionFeesChecked: '',
             tuitionFeesAlreadyPaidChecked: '',
-            accommodationFeesAlreadyPaidChecked: ''
+            accommodationFeesAlreadyPaidChecked: '',
 
+            doctorate: false
         };
 
         vm.validateError = false;
@@ -142,6 +143,8 @@
             vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
             vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
+            
+            vm.model.doctorate = vm.model.studentType == 'doctorate' ? true : false;
         }
 
         vm.submit = function () {

@@ -52,18 +52,20 @@ class Steps {
 
     def uiHost = "localhost"
     def uiPort = 8001
-    def uiUrl = "http://$uiHost:$uiPort/"
+    def uiRoot = "http://$uiHost:$uiPort/"
 
     def pageUrls = [
-        'non-doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
-        'doctorateQuery'    : uiUrl + '#/financial-status-query',  // todo update this
-        'studentType'       : uiUrl
+        'studentType'       : uiRoot,
+        'doctorateQuery'    : uiRoot + '#/financial-status-query',
+        'non-doctorateQuery': uiRoot + '#/financial-status-query'
     ]
 
+    // todo update page locations for new UI
     def pageLocations = [
-        'studentType'       : '#/financial-status-query', // todo update this
-        'accountNotFound'   : '#/financial-status-no-record',
-        'non-doctorateQuery': '#/financial-status-query'// todo update this
+        'studentType'       : '#/financial-status-query',
+        'doctorateQuery'    : '#/financial-status-query',
+        'non-doctorateQuery': '#/financial-status-query',
+        'accountNotFound'   : '#/financial-status-no-record'
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -80,27 +82,17 @@ class Steps {
         .withOption('No', 'innerLondonBorough-2')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('doctorate', 'studentType-1')
-        .withOption('non-doctorate', 'studentType-2')
+        .withOption('non-doctorate', 'studentType-1')
+        .withOption('doctorate', 'studentType-2')
 
 //    @Before
 //    def setUp() {
 //        if(wiremock && !wiremockStarted) {
-//
 //            Runtime.getRuntime().addShutdownHook(new Thread() {
 //                public void run() {
-//                    LOGGER.debug("")
-//                    LOGGER.debug("")
-//                    LOGGER.debug("STOPPING WIREMOCK")
-//                    LOGGER.debug("")
 //                    testDataLoader.stop();
 //                }
 //            });
-//
-//            LOGGER.debug("")
-//            LOGGER.debug("")
-//            LOGGER.debug("STARTING WIREMOCK")
-//            LOGGER.debug("")
 //            testDataLoader = new WireMockTestDataLoader()
 //            wiremockStarted = true;
 //        }
@@ -185,7 +177,7 @@ class Steps {
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
 
-            assert v.contains(element.getText())
+            assert element.getText() == v
         }
     }
 
@@ -232,7 +224,7 @@ class Steps {
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiUrl)
+        driver.get(uiRoot)
         assertCurrentPage('studentType')
     }
 
@@ -321,13 +313,8 @@ class Steps {
 
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
-
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-
-        entries.each { k, v ->
-            LOGGER.debug("\nChecking {}:{}", toCamelCase(k), v)
-            assert driver.findElement(By.id(toCamelCase(k))).getText() == v
-        }
+        assertTextFieldEqualityForMap(entries)
     }
 
     @Then("^the service displays the (.*) page\$")
