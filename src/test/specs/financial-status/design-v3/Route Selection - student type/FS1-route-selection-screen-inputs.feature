@@ -12,7 +12,7 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
     One of the options is mandatory to select before going to the next page
 
 
-    Scenario: Caseworker selects the student type - Tier 4 (General) student (non-doctorate)
+    Scenario: Caseworker selects the student type - Tier 4 (General) student
 
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
@@ -28,7 +28,7 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
             | Account number                  |  |
 
 
-    Scenario: Caseworker selects the student type - Tier 4 (General) student (doctorate)
+    Scenario: Caseworker selects the student type - Tier 4 (General) doctorate extension scheme
 
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
