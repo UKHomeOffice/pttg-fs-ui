@@ -36,10 +36,12 @@ class Steps {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Steps.class);
 
+    def testDataLoader
+//    def static testDataLoader
+//    def static wiremockStarted = false;
+
     @Value('${wiremock}')
     private Boolean wiremock;
-
-    def testDataLoader
 
     @Managed
     WebDriver driver;
@@ -54,7 +56,7 @@ class Steps {
 
     def pageUrls = [
         'non-doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
-        'doctorateQuery': uiUrl + '#/financial-status-query',  // todo update this
+        'doctorateQuery'    : uiUrl + '#/financial-status-query',  // todo update this
         'studentType'       : uiUrl
     ]
 
@@ -80,6 +82,29 @@ class Steps {
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('doctorate', 'studentType-1')
         .withOption('non-doctorate', 'studentType-2')
+
+//    @Before
+//    def setUp() {
+//        if(wiremock && !wiremockStarted) {
+//
+//            Runtime.getRuntime().addShutdownHook(new Thread() {
+//                public void run() {
+//                    LOGGER.debug("")
+//                    LOGGER.debug("")
+//                    LOGGER.debug("STOPPING WIREMOCK")
+//                    LOGGER.debug("")
+//                    testDataLoader.stop();
+//                }
+//            });
+//
+//            LOGGER.debug("")
+//            LOGGER.debug("")
+//            LOGGER.debug("STARTING WIREMOCK")
+//            LOGGER.debug("")
+//            testDataLoader = new WireMockTestDataLoader()
+//            wiremockStarted = true;
+//        }
+//    }
 
     @Before
     def setUp(Scenario scenario) {

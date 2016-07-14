@@ -19,6 +19,14 @@ class WireMockTestDataLoader {
     WireMockTestDataLoader() {
         wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
         wireMockServer.start()
+
+        LOGGER.debug("")
+        LOGGER.debug("")
+        LOGGER.debug("")
+        LOGGER.debug("STARTED Wiremock server. Running = {}", wireMockServer.running)
+        LOGGER.debug("")
+        LOGGER.debug("")
+        LOGGER.debug("")
     }
 
     def stubTestData(String fileName, String url) {

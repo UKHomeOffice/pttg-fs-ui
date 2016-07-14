@@ -9,7 +9,8 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
 
 ######################### Validation on the Student type Field #########################
 
-
+    # wait until there is a button to click to choose the student type
+    @WIP
     Scenario: Case Worker does NOT select student type
         Given caseworker is using the financial status service ui
         When the student type choice is submitted

@@ -56,7 +56,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                            |
-            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999. |
+            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 11-11-11 and account number 11111111. |
         And the service displays the following your search headers in order
             | Sort code      |
             | Account number |
