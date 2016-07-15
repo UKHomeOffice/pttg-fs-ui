@@ -5,6 +5,7 @@ Feature:
     closing balance in her account is < than the Total funds required - at £16089)
     She has < than the threshold for the previous 28 days
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
@@ -18,6 +19,7 @@ Feature:
             | Outcome                         | Not passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Student type                    | Tier 4 (General) student |
             | Inner London borough            | Yes                      |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
@@ -27,10 +29,35 @@ Feature:
             | Account number                  | 77777777                 |
 
 
+    Scenario: Shelly is a Doctorate inner London student and does not have sufficient funds (On a daily basis the
+    closing balance in her account is < than the Total funds required - at £2529)
+    She has < than the threshold for the previous 28 days
+        Given caseworker is using the financial status service ui
+        And the doctorate student type is chosen
+        When the financial status check is performed with
+            | End date                        | 30/05/2016 |
+            | Inner London borough            | Yes        |
+            | Course length                   | 2          |
+            | Accommodation fees already paid | 0          |
+            | Sort code                       | 11-11-12   |
+            | Account number                  | 77777777   |
+        Then the service displays the following result
+            | Outcome                         | Not passed                                  |
+            | Total funds required            | £2,530.00                                   |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                    |
+            | Student type                    | Tier 4 (General) doctorate extension scheme |
+            | Inner London borough            | Yes                                         |
+            | Course length                   | 2                                           |
+            | Accommodation fees already paid | £0.00                                       |
+            | Sort code                       | 11-11-12                                    |
+            | Account number                  | 77777777                                    |
+
+
     Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds (On a daily basis the closing
     balance in her account is >= than the Total funds required - at £21140.50)
     She has >= than the threshold for the previous 28 days
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | Inner London borough            | Yes        |
@@ -44,9 +71,30 @@ Feature:
             | Outcome                    | Passed                   |
             | Total funds required       | £20,390.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Student type               | Tier 4 (General) student |
             | Sort code                  | 22-22-22                 |
             | Account number             | 88888888                 |
 
+
+    Scenario: Shelly is a Doctorate inner London student and has sufficient funds (On a daily basis the closing
+    balance in her account is >= than the Total funds required - at £2279.50)
+    She has >= than the threshold for the previous 28 days
+        Given caseworker is using the financial status service ui
+        And the doctorate student type is chosen
+        When the financial status check is performed with
+            | End date                        | 30/05/2016 |
+            | Inner London borough            | Yes        |
+            | Course length                   | 2          |
+            | Accommodation fees already paid | 250.50     |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 88888888   |
+        Then the service displays the following result
+            | Outcome                    | Passed                                      |
+            | Total funds required       | £2,279.50                                   |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                    |
+            | Student type               | Tier 4 (General) doctorate extension scheme |
+            | Sort code                  | 22-22-23                                    |
+            | Account number             | 88888888                                    |
 
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
     (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
