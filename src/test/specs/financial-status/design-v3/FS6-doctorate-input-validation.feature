@@ -23,8 +23,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        |          |
             | Inner London Borough            | Yes      |
             | Course Length                   | 6        |
-            | Total tuition fees              | 8500.00  |
-            | Tuition fees already paid       | 0        |
             | Accommodation fees already paid | 0        |
             | Sort code                       | 11-11-11 |
             | Account number                  | 11111111 |
@@ -36,8 +34,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        | 30/05/2099 |
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
@@ -48,8 +44,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/0d/2016 |
             | Inner London Borough            | Yes        |
-            | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-11   |
@@ -66,8 +60,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       |            |
             | Account number                  | 11111111   |
@@ -79,8 +71,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-1    |
             | Account number                  | 11111111   |
@@ -92,8 +82,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 00-00-00   |
             | Account number                  | 11111111   |
@@ -105,8 +93,6 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-1q   |
             | Account number                  | 11111111   |
