@@ -20,17 +20,20 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following result
             | Outcome                         | Not passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Student type                    | Tier 4 (General) student |
             | Inner London borough            | Yes                      |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
             | Accommodation fees already paid | £0.00                    |
+            | Number of dependants            | 0                        |
             | Sort code                       | 11-11-11                 |
             | Account number                  | 11111111                 |
 
@@ -44,12 +47,20 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
+            | Number of dependants            | 0          |
             | Sort code                       | 22-22-22   |
             | Account number                  | 22222222   |
         Then the service displays the following result
-            | Outcome                    | Passed                   |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Sort code                  | 22-22-22                 |
-            | Account number             | 22222222                 |
+            | Outcome                         | Passed                   |
+            | Total funds required            | £16,090.00               |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Student type                    | Tier 4 (General) student |
+            | Inner London borough            | Yes                      |
+            | Course length                   | 9                        |
+            | Total tuition fees              | £9,755.50                |
+            | Tuition fees already paid       | £500.00                  |
+            | Accommodation fees already paid | £250.50                  |
+            | Number of dependants            | 0                        |
+            | Sort code                       | 22-22-22                 |
+            | Account number                  | 22222222                 |
 

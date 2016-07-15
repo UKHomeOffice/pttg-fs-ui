@@ -21,7 +21,8 @@
             courseLength,
             totalTuitionFees,
             tuitionFeesAlreadyPaid,
-            accommodationFeesAlreadyPaid) {
+            accommodationFeesAlreadyPaid,
+            numberOfDependants) {
             var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
             return $http.get(url, {
                 params: {
@@ -31,7 +32,8 @@
                     courseLength: courseLength,
                     totalTuitionFees: totalTuitionFees,
                     tuitionFeesAlreadyPaid: tuitionFeesAlreadyPaid,
-                    accommodationFeesAlreadyPaid: accommodationFeesAlreadyPaid
+                    accommodationFeesAlreadyPaid: accommodationFeesAlreadyPaid,
+                    numberOfDependants: numberOfDependants,
                 }
             })
 

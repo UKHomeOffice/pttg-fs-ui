@@ -52,9 +52,6 @@ class ServiceSpec extends Specification {
     final String ACCOUNT_NUMBER = "12345678"
 
     final String TO_DATE = '2015-10-30'
-    final String FROM_DATE = '2015-10-03'
-
-    final BigDecimal FUNDS_REQUIRED = 100.0
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
@@ -124,11 +121,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -146,10 +145,12 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -168,11 +169,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', '99-01-1901')
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -192,11 +195,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, sortCode, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -219,11 +224,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, accountNumber)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -252,11 +259,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -279,11 +288,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -306,11 +317,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -333,11 +346,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {
@@ -358,11 +373,13 @@ class ServiceSpec extends Specification {
             get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
                 .param('toDate', TO_DATE)
                 .param('innerLondonBorough', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'non-doctorate')
                 .param('courseLength', '1')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1'))
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
 
         then:
         response.with {

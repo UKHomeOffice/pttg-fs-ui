@@ -291,6 +291,7 @@ class Steps {
             'Inner London borough'           : 'Yes',
             'Course length'                  : '1',
             'Accommodation fees already paid': '0',
+            'Number of dependants'           : '1',
             'Sort code'                      : '11-11-11',
             'Account number'                 : '11111111',
         ]

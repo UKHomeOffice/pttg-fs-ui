@@ -23,6 +23,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Inner London borough            |
             | Course length                   |
             | Accommodation fees already paid |
+            | Number of dependants            |
             | Sort code                       |
             | Account number                  |
 
@@ -46,6 +47,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Inner London borough            |
             | Course length                   |
             | Accommodation fees already paid |
+            | Number of dependants            |
             | Sort code                       |
             | Account number                  |
 
@@ -65,7 +67,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) doctorate extension scheme                                                              |
+            | Page sub heading | Tier 4 (General) doctorate extension scheme |
 
 
 

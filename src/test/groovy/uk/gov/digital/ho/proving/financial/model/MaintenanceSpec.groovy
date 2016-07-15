@@ -14,7 +14,7 @@ class MaintenanceSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new Maintenance(ONE, ONE, ONE)
+        def instance = new Maintenance(ONE, ONE, ONE, 1)
 
         when:
         def output = instance.toString()

@@ -35,7 +35,7 @@ public class Service {
         @Valid Maintenance maintenance,
         @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
     ) {
-        LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}", account, course, maintenance, toDate);
+        LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
 
         FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance);
         return ResponseEntity.ok(result);

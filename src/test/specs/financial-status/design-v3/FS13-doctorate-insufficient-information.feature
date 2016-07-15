@@ -10,6 +10,7 @@ Feature: Insufficient Information
             | Inner London borough            | No         |
             | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
         Then the service displays the following page content

@@ -25,7 +25,7 @@ class FinancialStatusCheckerSpec extends Specification {
     Account account = new Account("", "")
     LocalDate toDate = LocalDate.now()
     Course course = new Course(true, 1, "nondoctorate")
-    Maintenance maintenance = new Maintenance(ONE, ONE, ONE)
+    Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
     def thresholdResponse = thresholdOf(ONE)
     def dailyBalanceResponse = new ResponseEntity(new DailyBalanceStatusResult(true, new ResponseDetails("", "")), OK)

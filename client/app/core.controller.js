@@ -21,7 +21,7 @@
             var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
             var NUMBER_REGEX = /^\d*\.?\d*$/;
 
-            var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student (non-doctorate)";
+            var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
             var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) doctorate extension scheme";
 
             /* has it*/
@@ -37,6 +37,7 @@
                 totalTuitionFees: '',
                 tuitionFeesAlreadyPaid: '',
                 accommodationFeesAlreadyPaid: '',
+                numberOfDependants: '',
 
                 accountNumber: '',
                 sortCodeFirst: '',
@@ -57,6 +58,7 @@
                 totalTuitionFeesChecked: '',
                 tuitionFeesAlreadyPaidChecked: '',
                 accommodationFeesAlreadyPaidChecked: '',
+                numberOfDependantsChecked: '',
 
                 doctorate: false
             };
@@ -85,6 +87,9 @@
 
             vm.accountNumberInvalidError = false;
             vm.accountNumberMissingError = false;
+
+            vm.numberOfDependantsInvalidError = false;
+            vm.numberOfDependantsMissingError = false;
 
             vm.sortCodeInvalidError = false;
             vm.sortCodeMissingError = false;
@@ -142,6 +147,7 @@
                 vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
                 vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
                 vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
+                vm.model.numberOfDependantsChecked = vm.model.numberOfDependants;
             }
 
             vm.submit = function () {
@@ -157,7 +163,9 @@
                         vm.model.courseLength,
                         vm.model.totalTuitionFees,
                         vm.model.tuitionFeesAlreadyPaid,
-                        vm.model.accommodationFeesAlreadyPaid)
+                        vm.model.accommodationFeesAlreadyPaid,
+                        vm.model.numberOfDependants
+                    )
                         .then(function (data) {
                             copyInputs();
                             vm.model.fundingRequirementMet = data.fundingRequirementMet;
@@ -186,7 +194,7 @@
             };
 
             vm.newSearch = function () {
-                $location.path('/financial-status-query');
+                $location.path('/financial-status-student-type');
             };
 
             function clearErrors() {
@@ -209,6 +217,9 @@
 
                 vm.accommodationFeesAlreadyPaidInvalidError = false;
                 vm.accommodationFeesAlreadyPaidMissingError = false;
+
+                vm.numberOfDependantsInvalidError = false;
+                vm.numberOfDependantsMissingError = false;
 
                 vm.accountNumberInvalidError = false;
                 vm.accountNumberMissingError = false;
@@ -255,7 +266,11 @@
                     vm.queryForm.courseLength.$setValidity(false);
                     vm.courseLengthInvalidError = true;
                     validated = false;
-                } else if (vm.model.courseLength > 9) {
+                } else if (!vm.model.doctorate && vm.model.courseLength > 9) {
+                    vm.queryForm.courseLength.$setValidity(false);
+                    vm.courseLengthInvalidError = true;
+                    validated = false;
+                }  else if (vm.model.doctorate && vm.model.courseLength > 2) {
                     vm.queryForm.courseLength.$setValidity(false);
                     vm.courseLengthInvalidError = true;
                     validated = false;
@@ -293,6 +308,16 @@
                         vm.accommodationFeesAlreadyPaidInvalidError = true;
                         validated = false;
                     }
+                }
+                
+                if (vm.model.numberOfDependants === '' || vm.model.numberOfDependants === null) {
+                    vm.queryForm.numberOfDependants.$setValidity(false);
+                    vm.numberOfDependantsMissingError = true;
+                    validated = false;
+                } else if (vm.model.numberOfDependants !== null && !(NUMBER_REGEX.test(vm.model.numberOfDependants))) {
+                    vm.queryForm.numberOfDependants.$setValidity(false);
+                    vm.numberOfDependantsInvalidError = true;
+                    validated = false;
                 }
 
                 if (vm.model.sortCodeFirst === null ||

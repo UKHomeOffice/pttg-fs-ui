@@ -73,6 +73,12 @@
                             <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees
                                 already paid is missing</a></li>
 
+                        <li ng-if="vm.numberOfDependantsInvalidError">
+                            <a href="" ng-click="vm.scrollTo('numberOfDependants')">The number of dependants is invalid</a></li>
+
+                        <li ng-if="vm.numberOfDependantsMissingError">
+                            <a href="" ng-click="vm.scrollTo('numberOfDependants')">The number of dependants is missing</a></li>
+
                         <li ng-if="vm.accountNumberInvalidError">
                             <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is invalid</a></li>
 
@@ -202,6 +208,20 @@
                              name="accommodationFeesAlreadyPaid"
                              id="accommodationFeesAlreadyPaid"
                              ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.numberOfDependantsInvalidError || vm.numberOfDependantsMissingError }">
+                    <label class="form-label-bold" for="numberOfDependants">
+                        Number of dependants
+                    </label>
+                    <span id="number-of-dependants-error" class="error-message"
+                          ng-if="vm.numberOfDependantsInvalidError || vm.numberOfDependantsMissingError">
+                                    Please provide a valid number of dependants</span>
+                    <input type="number" class="form-control form-control-1-4"
+                             name="numberOfDependants"
+                             id="numberOfDependants"
+                             ng-model="vm.model.numberOfDependants" autocomplete="off">
                 </div>
 
 

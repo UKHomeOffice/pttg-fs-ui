@@ -22,6 +22,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Inner London borough            | No         |
             | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-14   |
             | Account number                  | 11111114   |
         Then the service displays the following result
@@ -31,6 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Inner London borough            | No                       |
             | Course length                   | 2                        |
             | Accommodation fees already paid | £0.00                    |
+            | Number of dependants            | 0                        |
             | Sort code                       | 11-11-14                 |
             | Account number                  | 11111114                 |
 
@@ -42,6 +44,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Inner London borough            | No         |
             | Course length                   | 1          |
             | Accommodation fees already paid | 265        |
+            | Number of dependants            | 0          |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         Then the service displays the following result
@@ -51,5 +54,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Inner London borough            | No                       |
             | Course length                   | 1                        |
             | Accommodation fees already paid | £265.00                  |
+            | Number of dependants            | 0                        |
             | Sort code                       | 22-22-23                 |
             | Account number                  | 22222223                 |

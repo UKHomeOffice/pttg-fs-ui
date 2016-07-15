@@ -34,7 +34,7 @@ class ApiUrlsSpec extends Specification {
 
         given:
         def course = new Course(true, 1, "doctorate")
-        def maintenance = new Maintenance(ONE, ONE, ONE)
+        def maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
         when:
         def url = apiUrls.thresholdUrlFor(course, maintenance)
@@ -45,7 +45,7 @@ class ApiUrlsSpec extends Specification {
 
         url.path == thresholdEndpoint
 
-        url.query == 'innerLondon=true&studentType=doctorate&courseLength=1&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1'
+        url.query == 'innerLondon=true&studentType=doctorate&courseLength=1&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
     }
 
     def "generates daily balance url"() {

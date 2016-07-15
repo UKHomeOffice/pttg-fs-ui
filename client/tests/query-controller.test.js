@@ -141,16 +141,16 @@ describe('coreController', function () {
     });
 
     it('does not call service on validation failure - studentType not specified', function () {
-        
+
         coreController.model.studentType = undefined;
         coreController.submitStudentType()
-    
+
         expect(coreController.validateError).toBeTruthy();
     });
-    
+
     it('is expected the student display test (different from the submitted value) is set correctly after submit', function () {
         spyOnSuccessful();
-    
+
         response = {
             sortCode: 200203,
             accountNumber: '12345678',
@@ -159,13 +159,13 @@ describe('coreController', function () {
             periodCheckedTo: 2015-01-30,
             minimum: 1
         }
-    
+
         initialiseModelWithValues();
-    
+
         coreController.submitStudentType()
         coreController.submit()
         scope.$digest()
-    
+
         expect(coreController.validateError).toBeFalsy();
         expect(restService.checkFinancialStatus).toHaveBeenCalled();
         expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) doctorate extension scheme");
@@ -213,6 +213,15 @@ describe('coreController', function () {
         expect(location.path).toHaveBeenCalledWith('/financial-status-no-record');
     });
 
+    it('routes to student selection page for new search', function(){
+        spyOn(location, 'path');
+
+        coreController.newSearch()
+        scope.$digest();
+
+        expect(location.path).toHaveBeenCalledWith('/financial-status-student-type');
+    });
+
 
     function initialiseModelWithValues(){
         coreController.model.endDateDay = '30';
@@ -228,6 +237,7 @@ describe('coreController', function () {
         coreController.model.totalTuitionFees = 1;
         coreController.model.tuitionFeesAlreadyPaid = 1;
         coreController.model.accommodationFeesAlreadyPaid = 1;
+        coreController.model.numberOfDependants = 1;
     }
 
 });

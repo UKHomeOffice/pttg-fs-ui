@@ -24,6 +24,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes      |
             | Course Length                   | 6        |
             | Accommodation fees already paid | 0        |
+            | Number of dependants            | 0        |
             | Sort code                       | 11-11-11 |
             | Account number                  | 11111111 |
         Then the service displays the following message
@@ -35,6 +36,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -46,6 +48,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -61,6 +64,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       |            |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -72,6 +76,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-1    |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -83,6 +88,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 00-00-00   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -94,6 +100,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-1q   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -108,6 +115,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  |            |
         Then the service displays the following message
@@ -119,6 +127,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 1111111    |
         Then the service displays the following message
@@ -130,6 +139,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 111111111  |
         Then the service displays the following message
@@ -141,6 +151,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 00000000   |
         Then the service displays the following message
@@ -152,6 +163,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | Yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 111a1111   |
         Then the service displays the following message
@@ -165,6 +177,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            |            |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -178,6 +191,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | true       |
             | Course Length                   |            |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -189,17 +203,19 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | true       |
             | Course Length                   | A          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
             | course-length-error | Please provide a valid course length |
 
-    Scenario: Case Worker enters invalid Course Length - more than 9
+    Scenario: Case Worker enters invalid Course Length - more than 2
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | Inner London Borough            | yes        |
-            | Course Length                   | 10         |
+            | Course Length                   | 3          |
             | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -213,6 +229,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid |            |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -224,6 +241,7 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | A          |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
@@ -235,7 +253,33 @@ Feature: Show clear error details when inputs are invalid
             | Inner London Borough            | yes        |
             | Course Length                   | 6          |
             | Accommodation fees already paid | 1266       |
+            | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following message
             | accommodation-fees-already-paid-error | Please provide a valid accommodation fees already paid |
+
+ ######################### Validation on the number of dependants Field #########################
+    Scenario: Case Worker does NOT enter number of dependants
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | Inner London Borough            | yes        |
+            | Course Length                   | 6          |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            |            |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | number-of-dependants-error | Please provide a valid number of dependants |
+
+    Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | Inner London Borough            | yes        |
+            | Course Length                   | 6          |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | A          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | number-of-dependants-error | Please provide a valid number of dependants |
