@@ -50,6 +50,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Inner London borough            | No                       |
             | Course length                   | 1                        |
-            | Accommodation fees already paid | £100.00                  |
-            | Sort code                       | 11-11-15                 |
-            | Account number                  | 11111115                 |
+            | Accommodation fees already paid | £265.00                  |
+            | Sort code                       | 22-22-23                 |
+            | Account number                  | 22222223                 |
