@@ -327,9 +327,9 @@ class Steps {
         assertCurrentPage(toCamelCase(pageName))
     }
 
-    @Then("^the service displays the (.*) page heading\$")
-    public void the_service_displays_the_page_heading(String pageHeading) throws Throwable {
-        assertTextFieldEqualityForMap(['page heading': pageHeading])
+    @Then("^the service displays the (.*) page sub heading\$")
+    public void the_service_displays_the_page_sub_heading(String pageSubHeading) throws Throwable {
+        assertTextFieldEqualityForMap(['page sub heading': pageSubHeading])
     }
 
     @Then("^the service displays the following your search data\$")

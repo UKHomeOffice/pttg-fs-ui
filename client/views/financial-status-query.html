@@ -8,15 +8,11 @@
 
 <div class="column-full-width">
     <div id="page1" data-bind="visible: currentPage() === 1">
-        <h1 class="heading-xlarge" id="pageTitle">
-            <span ng-if="!vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>
-            <span ng-if="vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) doctorate extension scheme</span>
-            <span id="pageSubHeading">Financial status check</span></h1>
-        <div class="text">
-            <p class="lede" id="pageSubText">
-                An online statement checker for a Barclays current account holder (must be in the applicant's own name).
-            </p>
-        </div>
+        <h1 class="heading-large" id="pageTitle">
+            <span ng-if="!vm.model.doctorate" id="pageSubHeading">Tier 4 (General) student</span>
+            <span ng-if="vm.model.doctorate" id="pageSubHeading">Tier 4 (General) doctorate extension scheme</span>
+        </h1>
+
 
         <div class="form-group">
             <form name="vm.queryForm" ng-submit="vm.submit()">
