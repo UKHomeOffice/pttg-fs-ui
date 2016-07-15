@@ -51,5 +51,5 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Inner London borough            | Yes                      |
             | Course length                   | 1                        |
             | Accommodation fees already paid | £100.00                  |
-            | Sort code                       | 11-11-12                 |
-            | Account number                  | 11111112                 |
+            | Sort code                       | 22-22-23                 |
+            | Account number                  | 22222223                 |
