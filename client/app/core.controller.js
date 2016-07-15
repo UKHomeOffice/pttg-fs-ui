@@ -138,7 +138,6 @@
             vm.model.accountNumberChecked = vm.model.accountNumber;
             vm.model.sortCodeChecked = vm.getFullSortCode();
             vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
-            vm.model.studentTypeChecked = vm.model.studentType == 'doctorate' ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
             vm.model.courseLengthChecked = vm.model.courseLength;
             vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
@@ -250,13 +249,6 @@
                 validated = false;
             }
 
-
-            if (vm.model.studentType == null || vm.model.studentType === '') {
-                vm.queryForm.studentType.$setValidity(false);
-                vm.studentTypeMissingError = true;
-                validated = false;
-            }
-
             if (vm.model.courseLength === '' || vm.model.courseLength === null) {
                 vm.queryForm.courseLength.$setValidity(false);
                 vm.courseLengthMissingError = true;
@@ -326,6 +318,35 @@
                     vm.queryForm.accountNumber.$setValidity(false);
                     validated = false;
                 }
+            }
+
+            return validated;
+        }
+
+
+        vm.submitStudentType = function () {
+
+            if (validateStudentTypeForm()) {
+                vm.model.studentTypeChecked = vm.model.studentType == 'doctorate' ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+                $location.path('/financial-status-query');
+            } else {
+                vm.validateError = true;
+            }
+        }
+
+        vm.next = function () {
+            $location.path('/financial-status-query');
+        }
+
+
+        function validateStudentTypeForm() {
+            var validated = true;
+            clearErrors();
+
+            if (vm.model.studentType == null || vm.model.studentType === '') {
+                vm.queryForm.studentType.$setValidity(false);
+                vm.studentTypeMissingError = true;
+                validated = false;
             }
 
             return validated;
