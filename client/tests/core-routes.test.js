@@ -14,12 +14,40 @@ describe('Testing routes', function () {
     describe('Starting route', function () {
         beforeEach(inject(
             function ($httpBackend) {
+                $httpBackend.expectGET('views/financial-status-student-type.html')
+                    .respond(200);
+            }));
+
+        it('should load the student type page on entry', function () {
+            location.path('/');
+            rootScope.$digest();
+            expect(route.current.templateUrl).toBe('views/financial-status-student-type.html')
+        });
+    });
+
+    describe('Doctorate query route', function () {
+        beforeEach(inject(
+            function ($httpBackend) {
                 $httpBackend.expectGET('views/financial-status-query.html')
                     .respond(200);
             }));
 
-        it('should load the query page on entry', function () {
-            location.path('/');
+        it('should load the query page', function () {
+            location.path('/financial-status-query-doctorate');
+            rootScope.$digest();
+            expect(route.current.templateUrl).toBe('views/financial-status-query.html')
+        });
+    });
+
+    describe('Non-doctorate query route', function () {
+        beforeEach(inject(
+            function ($httpBackend) {
+                $httpBackend.expectGET('views/financial-status-query.html')
+                    .respond(200);
+            }));
+
+        it('should load the query page', function () {
+            location.path('/financial-status-query-non-doctorate');
             rootScope.$digest();
             expect(route.current.templateUrl).toBe('views/financial-status-query.html')
         });

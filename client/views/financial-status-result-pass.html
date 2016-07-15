@@ -1,12 +1,14 @@
 <div id="page2">
-    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student (non-doctorate) </span>
+    <h1 class="heading-xlarge">
+        <span ng-if="!vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>
+        <span ng-if="vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) doctorate extension scheme</span>
         <span id="pageSubHeading">Financial status check</span></h1>
 
     <div class="govuk-box-highlight">
-            <h1 class="bold-large" id="pageDynamicHeading">
-                <span id="outcome">Passed</span>
-            </h1>
-            <p id="pageDynamicDetail"><span>This applicant meets the financial requirements</span>
+        <h1 class="bold-large" id="pageDynamicHeading">
+            <span id="outcome">Passed</span>
+        </h1>
+        <p id="pageDynamicDetail"><span>This applicant meets the financial requirements</span>
     </div>
 
     <h2 class="heading-medium">
@@ -46,17 +48,21 @@
             <th>Course length</th>
             <td id="courseLength" scope="col">{{vm.model.courseLengthChecked}}</td>
         </tr>
-        <tr ng-if="!vm.model.doctorate" >
+        <tr ng-if="!vm.model.doctorate">
             <th>Total tuition fees for the first year</th>
             <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
         </tr>
         <tr ng-if="!vm.model.doctorate">
             <th>Tuition fees already paid</th>
-            <td id="tuitionFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.tuitionFeesAlreadyPaidChecked)}}</td>
+            <td id="tuitionFeesAlreadyPaid" scope="col">
+                {{vm.formatMoneyPoundsPence(vm.model.tuitionFeesAlreadyPaidChecked)}}
+            </td>
         </tr>
         <tr>
             <th>Accommodation fees already paid</th>
-            <td id="accommodationFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}}</td>
+            <td id="accommodationFeesAlreadyPaid" scope="col">
+                {{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}}
+            </td>
         </tr>
         <tr>
             <th width="50%">Sort code</th>
@@ -68,7 +74,6 @@
         </tr>
         </tbody>
     </table>
-
 
 
     <br/>

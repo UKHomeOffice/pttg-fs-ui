@@ -1,5 +1,7 @@
 <div id="page2">
-    <h1 class="heading-xlarge" ><span id="pageHeading" class="heading-secondary">Tier 4 (General) student (non-doctorate)</span>
+    <h1 class="heading-xlarge" >
+        <span ng-if="!vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>
+        <span ng-if="vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) doctorate extension scheme</span>
         <span id="pageSubHeading">Financial status check</span></h1>
 
     <div class="govuk-box-highlight panel-fail">

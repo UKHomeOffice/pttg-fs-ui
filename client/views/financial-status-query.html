@@ -8,7 +8,9 @@
 
 <div class="column-full-width">
     <div id="page1" data-bind="visible: currentPage() === 1">
-        <h1 class="heading-xlarge" id="pageTitle"><span id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student (non-doctorate)</span>
+        <h1 class="heading-xlarge" id="pageTitle">
+            <span ng-if="!vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>
+            <span ng-if="vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) doctorate extension scheme</span>
             <span id="pageSubHeading">Financial status check</span></h1>
         <div class="text">
             <p class="lede" id="pageSubText">
@@ -127,134 +129,136 @@
                     </fieldset>
                 </div>
 
-                    <div class="form-group" id="innerLondonBorough"
-                         ng-class="{error : vm.innerLondonBoroughMissingError }">
-                        <fieldset class="inline">
-                            <legend class="form-label-bold">Inner London borough?</legend>
+                <div class="form-group" id="innerLondonBorough"
+                     ng-class="{error : vm.innerLondonBoroughMissingError }">
+                    <fieldset class="inline">
+                        <legend class="form-label-bold">Inner London borough?</legend>
                         <span id="inner-london-borough-error" class="error-message"
                               ng-if="vm.innerLondonBoroughMissingError">
                                         Please specify whether the course is inside or outside London</span>
-                            <label class="block-label" for="innerLondonBorough-1">
-                                <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
-                                       id="innerLondonBorough-1" value="true"
-                                       ng-model="vm.model.innerLondonBorough" autocomplete="off">Yes
-                            </label>
-                            <label class="block-label" for="innerLondonBorough-2">
-                                <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
-                                       id="innerLondonBorough-2" value="false"
-                                       ng-model="vm.model.innerLondonBorough" autocomplete="off">No
-                            </label>
-                        </fieldset>
-                    </div>
-
-                    <div class="form-group"
-                         ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
-                        <label class="form-label-bold" for="courseLength">
-                            Course length
-                            <span class="form-hint">Enter the number of months, up to 9 months</span>
+                        <label class="block-label" for="innerLondonBorough-1">
+                            <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
+                                   id="innerLondonBorough-1" value="true"
+                                   ng-model="vm.model.innerLondonBorough" autocomplete="off">Yes
                         </label>
+                        <label class="block-label" for="innerLondonBorough-2">
+                            <input type="radio" class="form-control form-control-1-8" name="innerLondonBorough"
+                                   id="innerLondonBorough-2" value="false"
+                                   ng-model="vm.model.innerLondonBorough" autocomplete="off">No
+                        </label>
+                    </fieldset>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
+                    <label class="form-label-bold" for="courseLength">
+                        Course length
+                        <span class="form-hint">Enter the number of months, up to 9 months</span>
+                    </label>
                     <span id="course-length-error" class="error-message"
                           ng-if="vm.courseLengthInvalidError || vm.courseLengthMissingError">
                                     Please provide a valid course length</span>
-                        <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
-                               ng-model="vm.model.courseLength" autocomplete="off">
-                    </div>
+                    <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
+                           ng-model="vm.model.courseLength" autocomplete="off">
+                </div>
 
-                    <div class="form-group"
-                         ng-class="{error : vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError }">
-                        <label class="form-label-bold" for="totalTuitionFees">
-                            Total tuition fees for the first year
-                            <span class="form-hint">For example, 9000</span>
-                        </label>
+                <div ng-if="!vm.model.doctorate"
+                     class="form-group"
+                     ng-class="{error : vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError }">
+                    <label class="form-label-bold" for="totalTuitionFees">
+                        Total tuition fees for the first year
+                        <span class="form-hint">For example, 9000</span>
+                    </label>
                     <span id="total-tuition-fees-error" class="error-message"
                           ng-if="vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError">
                                     Please provide a valid total tuition fees</span>
-                        £ <input type="number" step="0.01" class="form-control form-control-1-4" name="totalTuitionFees"
-                                 id="totalTuitionFees"
-                                 ng-model="vm.model.totalTuitionFees" autocomplete="off">
-                    </div>
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4" name="totalTuitionFees"
+                             id="totalTuitionFees"
+                             ng-model="vm.model.totalTuitionFees" autocomplete="off">
+                </div>
 
-                    <div class="form-group"
-                         ng-class="{error : vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError }">
-                        <label class="form-label-bold" for="tuitionFeesAlreadyPaid">
-                            Tuition fees already paid
-                            <span class="form-hint">For example, 3000</span>
-                        </label>
+                <div ng-if="!vm.model.doctorate"
+                     class="form-group"
+                     ng-class="{error : vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError }">
+                    <label class="form-label-bold" for="tuitionFeesAlreadyPaid">
+                        Tuition fees already paid
+                        <span class="form-hint">For example, 3000</span>
+                    </label>
                     <span id="tuition-fees-already-paid-error" class="error-message"
                           ng-if="vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError">
                                     Please provide a valid tuition fees already paid</span>
-                        £ <input type="number" step="0.01" class="form-control form-control-1-4"
-                                 name="tuitionFeesAlreadyPaid"
-                                 id="tuitionFeesAlreadyPaid"
-                                 ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
-                    </div>
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4"
+                             name="tuitionFeesAlreadyPaid"
+                             id="tuitionFeesAlreadyPaid"
+                             ng-model="vm.model.tuitionFeesAlreadyPaid" autocomplete="off">
+                </div>
 
-                    <div class="form-group"
-                         ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError }">
-                        <label class="form-label-bold" for="accommodationFeesAlreadyPaid">
-                            Accommodation fees already paid
-                            <span class="form-hint">For example, 500</span>
-                        </label>
+                <div class="form-group"
+                     ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError }">
+                    <label class="form-label-bold" for="accommodationFeesAlreadyPaid">
+                        Accommodation fees already paid
+                        <span class="form-hint">For example, 500 (up to 1265)</span>
+                    </label>
                     <span id="accommodation-fees-already-paid-error" class="error-message"
                           ng-if="vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError">
                                     Please provide a valid accommodation fees already paid</span>
-                        £ <input type="number" step="0.01" class="form-control form-control-1-4"
-                                 name="accommodationFeesAlreadyPaid"
-                                 id="accommodationFeesAlreadyPaid"
-                                 ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
-                    </div>
+                    £ <input type="number" step="0.01" class="form-control form-control-1-4"
+                             name="accommodationFeesAlreadyPaid"
+                             id="accommodationFeesAlreadyPaid"
+                             ng-model="vm.model.accommodationFeesAlreadyPaid" autocomplete="off">
+                </div>
 
 
-                    <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
-                        <fieldset>
-                            <legend class="form-label-bold">Sort code</legend>
-                            <div class="form-date">
-                                <p class="form-hint">For example, 12 34 56</p>
+                <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
+                    <fieldset>
+                        <legend class="form-label-bold">Sort code</legend>
+                        <div class="form-date">
+                            <p class="form-hint">For example, 12 34 56</p>
                             <span id="sort-code-error" class="error-message"
                                   ng-if="vm.sortCodeInvalidError || vm.sortCodeMissingError">
                                     Please provide a valid sort code</span>
-                                <div class="form-group form-group-day">
-                                    <input class="form-control" name="sortCodeFirst"
-                                           id="sortCodeFirst" type="text"
-                                           ng-model="vm.model.sortCodeFirst"
-                                           autocomplete="off">
-                                </div>
-
-                                <div class="form-group form-group-day">
-                                    <input class="form-control" name="sortCodeSecond"
-                                           id="sortCodeSecond" type="text"
-                                           ng-model="vm.model.sortCodeSecond"
-                                           autocomplete="off">
-                                </div>
-
-                                <div class="form-group form-group-day">
-                                    <input class="form-control" name="sortCodeThird"
-                                           id="sortCodeThird" type="text"
-                                           ng-model="vm.model.sortCodeThird"
-                                           autocomplete="off">
-                                </div>
+                            <div class="form-group form-group-day">
+                                <input class="form-control" name="sortCodeFirst"
+                                       id="sortCodeFirst" type="text"
+                                       ng-model="vm.model.sortCodeFirst"
+                                       autocomplete="off">
                             </div>
 
-                        </fieldset>
-                    </div>
+                            <div class="form-group form-group-day">
+                                <input class="form-control" name="sortCodeSecond"
+                                       id="sortCodeSecond" type="text"
+                                       ng-model="vm.model.sortCodeSecond"
+                                       autocomplete="off">
+                            </div>
 
-                    <div class="form-group"
-                         ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
-                        <label class="form-label-bold" for="accountNumber">
-                            Account number
-                            <span class="form-hint">For example, 12345678</span>
-                        </label>
+                            <div class="form-group form-group-day">
+                                <input class="form-control" name="sortCodeThird"
+                                       id="sortCodeThird" type="text"
+                                       ng-model="vm.model.sortCodeThird"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="form-group"
+                     ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
+                    <label class="form-label-bold" for="accountNumber">
+                        Account number
+                        <span class="form-hint">For example, 12345678</span>
+                    </label>
                     <span id="account-number-error" class="error-message"
                           ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
                                     Please provide a valid account number</span>
-                        <input type="text" class="form-control form-control-1-4" name="accountNumber"
-                               id="accountNumber"
-                               ng-model="vm.model.accountNumber" autocomplete="off">
-                    </div>
+                    <input type="text" class="form-control form-control-1-4" name="accountNumber"
+                           id="accountNumber"
+                           ng-model="vm.model.accountNumber" autocomplete="off">
+                </div>
 
-                    <div class="form-group">
-                        <p><input type="submit" class="button continue-button" value="Check financial status"></p>
-                    </div>
+                <div class="form-group">
+                    <p><input type="submit" class="button continue-button" value="Check financial status"></p>
+                </div>
 
 
             </form>

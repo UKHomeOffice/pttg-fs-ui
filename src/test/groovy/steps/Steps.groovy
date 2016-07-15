@@ -56,15 +56,14 @@ class Steps {
 
     def pageUrls = [
         'studentType'       : uiRoot,
-        'doctorateQuery'    : uiRoot + '#/financial-status-query',
-        'non-doctorateQuery': uiRoot + '#/financial-status-query'
+        'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
+        'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate'
     ]
 
-    // todo update page locations for new UI
     def pageLocations = [
-        'studentType'       : '#/financial-status-query',
-        'doctorateQuery'    : '#/financial-status-query',
-        'non-doctorateQuery': '#/financial-status-query',
+        'studentType'       : '#/financial-status-student-type',
+        'doctorateQuery'    : '#/financial-status-query-doctorate',
+        'non-doctorateQuery': '#/financial-status-query-non-doctorate',
         'accountNotFound'   : '#/financial-status-no-record'
     ]
 
@@ -84,6 +83,8 @@ class Steps {
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
         .withOption('doctorate', 'studentType-2')
+
+    def studentType
 
 //    @Before
 //    def setUp() {
@@ -219,7 +220,7 @@ class Steps {
     }
 
     private void submitStudentTypeChoice() {
-        //  driver.findElement(By.className("button")).click()
+        driver.findElement(By.className("button")).click()
     }
 
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
@@ -230,6 +231,7 @@ class Steps {
 
     @Given("^the (.*) student type is chosen\$")
     public void the_student_type_is_chosen(String type) {
+        studentType = type
         chooseAndSubmitStudentType(type)
     }
 
@@ -288,12 +290,15 @@ class Steps {
             'End date'                       : '30/05/2016',
             'Inner London borough'           : 'Yes',
             'Course length'                  : '1',
-            'Total tuition fees'             : '1',
-            'Tuition fees already paid'      : '0',
             'Accommodation fees already paid': '0',
             'Sort code'                      : '11-11-11',
             'Account number'                 : '11111111',
         ]
+
+        if (studentType.equalsIgnoreCase('non-doctorate')) {
+            validDefaultEntries['Total tuition fees'] = '1';
+            validDefaultEntries['Tuition fees already paid'] = '0';
+        }
 
         submitEntries(validDefaultEntries)
     }

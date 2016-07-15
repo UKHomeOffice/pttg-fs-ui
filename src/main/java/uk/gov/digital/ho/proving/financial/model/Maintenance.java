@@ -9,10 +9,7 @@ import java.util.Objects;
  */
 public final class Maintenance {
 
-    @NotNull(message = "Missing parameter")
     private BigDecimal totalTuitionFees;
-
-    @NotNull(message = "Missing parameter")
     private BigDecimal tuitionFeesAlreadyPaid;
 
     @NotNull(message = "Missing parameter")

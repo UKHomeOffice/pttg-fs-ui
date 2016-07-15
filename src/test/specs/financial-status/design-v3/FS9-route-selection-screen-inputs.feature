@@ -14,5 +14,5 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
         Then the service displays the <page-heading> page heading
         Examples:
             | student-type  | page-heading                                |
-            | doctorate     | Tier 4 (General) student                    |
-            | non-doctorate | Tier 4 (General) doctorate extension scheme |
+            | non-doctorate | Tier 4 (General) student                    |
+            | doctorate     | Tier 4 (General) doctorate extension scheme |

@@ -3,9 +3,7 @@ describe('coreController', function () {
     var location, coreController, form, restService, scope, response, deferred;
 
     beforeEach(module("app.core"));
-
-    //required for $templatecache to work
-    beforeEach(module("templates"));
+    beforeEach(module("templates")); //required for $templatecache to work
 
     beforeEach(inject(function ($rootScope, $controller, $location, $templateCache, $compile, $anchorScroll, $q) {
         scope = $rootScope.$new();
@@ -24,6 +22,7 @@ describe('coreController', function () {
             '$anchorScroll': $anchorScroll
         });
         configureTemplates($compile, $templateCache);
+        configureStudentTypeTemplate($compile, $templateCache);
     }));
 
     spyOnSuccessful = function () {
@@ -45,6 +44,14 @@ describe('coreController', function () {
 
     configureTemplates = function ($compile, $templateCache) {
         templateHtml = $templateCache.get('client/views/financial-status-query.html')
+        formElem = angular.element("<div>" + templateHtml + "</div>")
+        $compile(formElem)(scope)
+        form = scope.form
+        scope.$apply()
+    }
+
+    configureStudentTypeTemplate = function ($compile, $templateCache) {
+        templateHtml = $templateCache.get('client/views/financial-status-student-type.html')
         formElem = angular.element("<div>" + templateHtml + "</div>")
         $compile(formElem)(scope)
         form = scope.form
@@ -134,20 +141,16 @@ describe('coreController', function () {
     });
 
     it('does not call service on validation failure - studentType not specified', function () {
-        spyOnSuccessful();
-
-        initialiseModelWithValues();
+        
         coreController.model.studentType = undefined;
-
-        coreController.submit()
-
+        coreController.submitStudentType()
+    
         expect(coreController.validateError).toBeTruthy();
-        expect(restService.checkFinancialStatus.calls.count()).toBe(0);
     });
-
+    
     it('is expected the student display test (different from the submitted value) is set correctly after submit', function () {
         spyOnSuccessful();
-
+    
         response = {
             sortCode: 200203,
             accountNumber: '12345678',
@@ -156,15 +159,16 @@ describe('coreController', function () {
             periodCheckedTo: 2015-01-30,
             minimum: 1
         }
-
+    
         initialiseModelWithValues();
-
+    
+        coreController.submitStudentType()
         coreController.submit()
         scope.$digest()
-
+    
         expect(coreController.validateError).toBeFalsy();
         expect(restService.checkFinancialStatus).toHaveBeenCalled();
-        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) student (doctorate)");
+        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) doctorate extension scheme");
     });
 
 

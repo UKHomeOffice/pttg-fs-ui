@@ -17,7 +17,10 @@
             .when('/financial-status-student-type', {
                 templateUrl : 'views/financial-status-student-type.html',
             })
-            .when('/financial-status-query', {
+            .when('/financial-status-query-non-doctorate', {
+                templateUrl : 'views/financial-status-query.html'
+            })
+            .when('/financial-status-query-doctorate', {
                 templateUrl : 'views/financial-status-query.html'
             })
             .when('/financial-status-result-pass', {

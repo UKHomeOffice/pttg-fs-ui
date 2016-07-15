@@ -313,6 +313,17 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | accommodation-fees-already-paid-error | Please provide a valid accommodation fees already paid |
 
-
+    Scenario: Case Worker enters invalid Accommodation fees already paid - above max value of 1265
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | Inner London Borough            | yes        |
+            | Course Length                   | 6          |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
+            | Accommodation fees already paid | 1266       |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | accommodation-fees-already-paid-error | Please provide a valid accommodation fees already paid |
 
 

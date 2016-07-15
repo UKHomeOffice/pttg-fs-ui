@@ -13,7 +13,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Passed                                          |
-            | Page heading         | Tier 4 (General) student (non-doctorate)        |
+            | Page heading         | Tier 4 (General) student                        |
             | Page sub heading     | Financial status check                          |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
@@ -38,7 +38,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page heading         | Tier 4 (General) student (non-doctorate)                |
+            | Page heading         | Tier 4 (General) student                                |
             | Page sub heading     | Financial status check                                  |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
@@ -72,9 +72,8 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
  ###################################### Section - Check for text on input page ######################################
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
-        When the caseworker views the non-doctorate query page
         Then the service displays the following page content
-            | Page heading     | Tier 4 (General) student (non-doctorate)                                                                 |
+            | Page heading     | Tier 4 (General) student                                                                                 |
             | Page sub heading | Financial status check                                                                                   |
             | Page sub text    | An online statement checker for a Barclays current account holder (must be in the applicant's own name). |
 
