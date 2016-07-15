@@ -44,7 +44,7 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/0d/2016 |
             | Inner London Borough            | Yes        |
-            | Tuition fees already paid       | 0          |
+            | Course Length                   | 6          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
