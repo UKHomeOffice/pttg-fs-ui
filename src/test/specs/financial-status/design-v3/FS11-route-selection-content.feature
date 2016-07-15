@@ -2,7 +2,7 @@ Feature: Route selection screen content - Tier 4 (General) student non Doctorate
 
  ###################################### Section - Check for text on route selection page ######################################
 
-    Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
+    Scenario: Input Page checks for student type selection
         Given caseworker is using the financial status service ui
         Then the service displays the following page content
             | Page sub heading     | Financial status check                                                                                   |
