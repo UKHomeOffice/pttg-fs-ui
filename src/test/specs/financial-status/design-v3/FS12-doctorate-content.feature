@@ -65,9 +65,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page heading     | Tier 4 (General) doctorate extension scheme                                                              |
-            | Page sub heading | Financial status check                                                                                   |
-            | Page sub text    | An online statement checker for a Barclays current account holder (must be in the applicant's own name). |
+            | Page sub heading | Tier 4 (General) doctorate extension scheme                                                              |
 
 
 
