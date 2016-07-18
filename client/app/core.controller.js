@@ -309,7 +309,7 @@
                         validated = false;
                     }
                 }
-                
+
                 if (vm.model.numberOfDependants === '' || vm.model.numberOfDependants === null) {
                     vm.queryForm.numberOfDependants.$setValidity(false);
                     vm.numberOfDependantsMissingError = true;

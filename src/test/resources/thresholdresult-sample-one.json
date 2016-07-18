@@ -1,3 +1,7 @@
 {
-    "threshold": 100
+    "threshold": 100,
+    "status": {
+        "code": "200",
+        "message": "OK"
+    }
 }

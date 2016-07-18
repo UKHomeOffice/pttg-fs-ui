@@ -92,7 +92,7 @@ class ServiceSpec extends Specification {
         converter
     }
 
-    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1))
+    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, new ResponseDetails("200", "OK")))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK")))
 
     def apiRespondsWith(threshold, balance) {

@@ -42,7 +42,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def thresholdOf(BigDecimal minimum) {
         def threshold = BigDecimal.valueOf(minimum)
-        thresholdResponse = new ResponseEntity(new ThresholdResult(threshold), OK)
+        thresholdResponse = new ResponseEntity(new ThresholdResult(threshold, new ResponseDetails("200", "OK")), OK)
     }
 
     def 'delegates construction of api service urls'() {
