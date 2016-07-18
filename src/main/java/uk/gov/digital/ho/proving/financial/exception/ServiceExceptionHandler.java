@@ -84,6 +84,10 @@ public class ServiceExceptionHandler {
 
         switch (exception.getStatusCode()) {
 
+            case BAD_REQUEST:
+                LOGGER.warn("Rest service exception - bad request, which means that there may be a mismatch between UI and API");
+                return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_CLIENT_ERROR), INTERNAL_SERVER_ERROR);
+
             case INTERNAL_SERVER_ERROR:
                 LOGGER.debug("Rest service exception - internal server error");
                 return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_SERVER_ERROR), INTERNAL_SERVER_ERROR);

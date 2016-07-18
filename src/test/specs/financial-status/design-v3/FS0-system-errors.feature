@@ -38,4 +38,18 @@ Feature: System errors - specify messages shown in response to (simulated) conne
         When the financial status check is performed
         Then the service displays the following page content
             | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | Server Error Detail | Please try again later.|
+
+    Scenario: Handling API server validation errors - missing parameter
+        Given the api response is a validation error - missing parameter
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | Server Error Detail | Please try again later.|
+
+    Scenario: Handling API server validation errors - invalid parameter
+        Given the api response is a validation error - invalid parameter
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | Server Error Detail | Please try again later.|

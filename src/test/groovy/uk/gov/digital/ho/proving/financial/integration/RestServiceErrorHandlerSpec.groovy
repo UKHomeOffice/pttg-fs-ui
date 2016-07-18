@@ -39,7 +39,7 @@ class RestServiceErrorHandlerSpec extends Specification {
         HttpStatus.OK                    | false
     }
 
-    def 'throws exception containing response status code' (){
+    def 'throws exception containing response status code'() {
 
         given:
         response.statusCode >> HttpStatus.NOT_FOUND
@@ -50,5 +50,76 @@ class RestServiceErrorHandlerSpec extends Specification {
         then:
         RestServiceException rse = thrown()
         rse.getStatusCode() == HttpStatus.NOT_FOUND
+    }
+
+    def 'extracts error status message and code, if present, when error is a client error'() {
+
+        def jsonErrorResponse = "{\n" +
+            "    \"threshold\" : null,\n" +
+            "    \"status\" : {\n" +
+            "        \"code\" : \"0101\",\n" +
+            "        \"message\" : \"Parameter error: Invalid courseLength\"\n" +
+            "    }\n" +
+            "}"
+
+        given:
+        response.statusCode >> HttpStatus.BAD_REQUEST
+        response.getBody() >> new ByteArrayInputStream(jsonErrorResponse.getBytes("UTF-8"))
+
+        when:
+        handler.handleError(response)
+
+        then:
+        RestServiceException rse = thrown()
+
+        with(rse) {
+            getStatusCode() == HttpStatus.BAD_REQUEST
+            getReasonMessage() == "Parameter error: Invalid courseLength"
+            getReasonCode() == "0101"
+        }
+
+    }
+
+    def 'just uses response status code if error status message and code not present when error is a client error'() {
+
+        given:
+
+        response.statusCode >> HttpStatus.BAD_REQUEST
+        response.getBody() >> new ByteArrayInputStream(responseBodyString.getBytes("UTF-8"))
+
+        when:
+        handler.handleError(response)
+
+        then:
+        RestServiceException rse = thrown()
+
+        with(rse) {
+            getStatusCode() == HttpStatus.BAD_REQUEST
+            getReasonMessage() == HttpStatus.BAD_REQUEST.reasonPhrase
+            getReasonCode() == ""
+        }
+
+        where:
+        responseBodyString << ["", "bad-json", "{\"wrong\":\"json\""]
+    }
+
+    def 'just uses response status code if no response body when error is a client error'() {
+
+        given:
+
+        response.statusCode >> HttpStatus.BAD_REQUEST
+        response.getBody() >> null
+
+        when:
+        handler.handleError(response)
+
+        then:
+        RestServiceException rse = thrown()
+
+        with(rse) {
+            getStatusCode() == HttpStatus.BAD_REQUEST
+            getReasonMessage() == HttpStatus.BAD_REQUEST.reasonPhrase
+            getReasonCode() == ""
+        }
     }
 }

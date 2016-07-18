@@ -23,8 +23,9 @@ public final class ResponseDetails {
         this.code = code;
         this.message = message;
     }
-    public ResponseDetails(ErrorCode error){
-      this.code = error.getCode();
+
+    public ResponseDetails(ErrorCode error) {
+        this.code = error.getCode();
         this.message = error.getMessage();
     }
 

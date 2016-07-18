@@ -72,6 +72,24 @@ class WireMockTestDataLoader {
         LOGGER.debug("Completed Stubbing Response data with $fileName")
     }
 
+    def stubErrorData(String fileName, String url, int status) {
+
+        println ''
+        LOGGER.debug("Stubbing error Response data with $fileName")
+
+        def json = jsonFromFile(fileName)
+
+        stubFor(get(urlPathMatching(url))
+            .willReturn(aResponse()
+            .withBody(json)
+            .withHeader("Content-Type", "application/json")
+            .withStatus(status)));
+
+        println ''
+        LOGGER.debug("Completed Stubbing error Response data with $fileName")
+
+    }
+
     def withDelayedResponse(String url, int delay) {
 
         println ''

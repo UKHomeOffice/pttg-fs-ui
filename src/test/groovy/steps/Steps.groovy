@@ -272,6 +272,11 @@ class Steps {
         testDataLoader.withServiceDown()
     }
 
+    @Given("^the api response is a validation error - (.*) parameter\$")
+    public void the_api_response_is_a_validation_error(String type) throws Throwable {
+        testDataLoader.stubErrorData("validation-error-$type", thresholdUrlRegex, 400)
+    }
+
     @Given("^no record for the account\$")
     public void no_record_for_the_account() throws Throwable {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)

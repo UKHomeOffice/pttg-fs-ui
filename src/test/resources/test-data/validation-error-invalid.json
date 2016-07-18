@@ -1,0 +1,7 @@
+{
+    "threshold" : null,
+    "status" : {
+        "code" : "0000",
+        "message" : "Parameter error: Invalid courseLength"
+    }
+}
