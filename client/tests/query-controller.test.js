@@ -207,7 +207,7 @@ describe('coreController', function () {
 
         initialiseModelWithValues();
 
-        coreController.submit()
+        coreController.submit();
         scope.$digest();
 
         expect(location.path).toHaveBeenCalledWith('/financial-status-no-record');
@@ -216,12 +216,26 @@ describe('coreController', function () {
     it('routes to student selection page for new search', function(){
         spyOn(location, 'path');
 
-        coreController.newSearch()
+        coreController.newSearch();
         scope.$digest();
 
         expect(location.path).toHaveBeenCalledWith('/financial-status-student-type');
     });
 
+    it('clears previous model on new search', function(){
+
+        initialiseModelWithValues();
+
+        coreController.newSearch();
+        scope.$digest();
+
+        expect(coreController.model.endDateDay).toBe('');
+        expect(coreController.model.endDateMonth).toBe('');
+        expect(coreController.model.endDateYear).toBe('');
+        expect(coreController.model.numberOfDependants).toBe('');
+        expect(coreController.model.courseLength).toBe('');
+        expect(coreController.model.innerLondonBorough).toBe('');
+    });
 
     function initialiseModelWithValues(){
         coreController.model.endDateDay = '30';
