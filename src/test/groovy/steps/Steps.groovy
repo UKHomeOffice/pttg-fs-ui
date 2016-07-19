@@ -37,8 +37,6 @@ class Steps {
     private static Logger LOGGER = LoggerFactory.getLogger(Steps.class);
 
     def testDataLoader
-//    def static testDataLoader
-//    def static wiremockStarted = false;
 
     @Value('${wiremock}')
     private Boolean wiremock;
@@ -85,19 +83,6 @@ class Steps {
         .withOption('doctorate', 'studentType-2')
 
     def studentType
-
-//    @Before
-//    def setUp() {
-//        if(wiremock && !wiremockStarted) {
-//            Runtime.getRuntime().addShutdownHook(new Thread() {
-//                public void run() {
-//                    testDataLoader.stop();
-//                }
-//            });
-//            testDataLoader = new WireMockTestDataLoader()
-//            wiremockStarted = true;
-//        }
-//    }
 
     @Before
     def setUp(Scenario scenario) {
