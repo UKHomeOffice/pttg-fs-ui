@@ -135,10 +135,10 @@ public class ServiceExceptionHandler {
 
         if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof ConnectTimeoutException) {
             LOGGER.debug("Connection exception: " + exception.getCause().getMessage());
-            return new ResponseDetails("000X", "There was a problem connecting to the service: " + exception.getCause().getMessage());
+            return new ResponseDetails(API_CONNECTION_ERROR.getCode(), "There was a problem connecting to the service: " + exception.getCause().getMessage());
         }
 
-        return new ResponseDetails("000X", "There was an unknown problem using the service: " + exception.getCause().getMessage());
+        return new ResponseDetails(API_CONNECTION_ERROR.getCode(), "There was an unknown problem using the service: " + exception.getCause().getMessage());
     }
 
 
@@ -147,6 +147,6 @@ public class ServiceExceptionHandler {
     @ResponseBody
     public ResponseDetails unknownException(Exception exception) {
         LOGGER.debug("Unknown exception: {} : {}", exception.getClass(), exception.getMessage());
-        return new ResponseDetails("000X", "There was an unhandled error: " + exception.getMessage());
+        return new ResponseDetails(INTERNAL_ERROR.getCode(), "There was an unhandled error: " + exception.getMessage());
     }
 }

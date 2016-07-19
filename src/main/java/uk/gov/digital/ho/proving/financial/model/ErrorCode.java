@@ -12,7 +12,7 @@ public enum ErrorCode {
     INTERNAL_ERROR("0005", "Internal server error"),
     API_SERVER_ERROR("0006", "Error at FSS API server"),
     API_CLIENT_ERROR("0007", "Bad request to FSS API server"),
-    ;
+    API_CONNECTION_ERROR("0008", "Error connecting to the FSS API server");
 
     private String code;
     private String message;

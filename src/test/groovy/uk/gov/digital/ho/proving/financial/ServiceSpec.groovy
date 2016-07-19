@@ -328,7 +328,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isInternalServerError())
-            andExpect(jsonPath("code", is("000X")))
+            andExpect(jsonPath("code", is("0005")))
         }
     }
 
