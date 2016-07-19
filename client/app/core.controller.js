@@ -24,7 +24,7 @@
         var NUMBER_REGEX = /^\d*\.?\d*$/;
 
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
-        var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) doctorate extension scheme";
+        var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
         
         initialise();
 

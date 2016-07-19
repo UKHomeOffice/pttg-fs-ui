@@ -26,15 +26,16 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Sort code                       | 11-11-14   |
             | Account number                  | 11111114   |
         Then the service displays the following result
-            | Outcome                         | Not passed               |
-            | Total funds required            | £16,090.00               |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Inner London borough            | No                       |
-            | Course length                   | 2                        |
-            | Accommodation fees already paid | £0.00                    |
-            | Number of dependants            | 0                        |
-            | Sort code                       | 11-11-14                 |
-            | Account number                  | 11111114                 |
+            | Outcome                         | Not passed                                            |
+            | Total funds required            | £16,090.00                                            |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
+            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | Inner London borough            | No                                                    |
+            | Course length                   | 2                                                     |
+            | Accommodation fees already paid | £0.00                                                 |
+            | Number of dependants            | 0                                                     |
+            | Sort code                       | 11-11-14                                              |
+            | Account number                  | 11111114                                              |
 
 
     Scenario: Laura is a Doctorate not inner London student and has sufficient funds
@@ -48,12 +49,13 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         Then the service displays the following result
-            | Outcome                         | Passed                   |
-            | Total funds required            | £16,090.00               |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Inner London borough            | No                       |
-            | Course length                   | 1                        |
-            | Accommodation fees already paid | £265.00                  |
-            | Number of dependants            | 0                        |
-            | Sort code                       | 22-22-23                 |
-            | Account number                  | 22222223                 |
+            | Outcome                         | Passed                                                |
+            | Total funds required            | £16,090.00                                            |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
+            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | Inner London borough            | No                                                    |
+            | Course length                   | 1                                                     |
+            | Accommodation fees already paid | £265.00                                               |
+            | Number of dependants            | 0                                                     |
+            | Sort code                       | 22-22-23                                              |
+            | Account number                  | 22222223                                              |

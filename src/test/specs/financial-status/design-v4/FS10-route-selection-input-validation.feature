@@ -3,9 +3,7 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
     Acceptance criteria
 
     Fields mandatory to fill in:
-    Student Types:
-    Tier 4 (General) student
-    Tier 4 (General) doctorate extension scheme
+    Student Type
 
 ######################### Validation on the Student type Field #########################
 
@@ -13,4 +11,4 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
         Given caseworker is using the financial status service ui
         When the student type choice is submitted
         Then the service displays the following message
-            | student-type-error | Please select a student type   |
+            | student-type-error | Select an option   |

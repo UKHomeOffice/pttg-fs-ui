@@ -14,21 +14,20 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Then the service displays the following page content
             | Page dynamic heading | Passed                                          |
             | Page heading         | Tier 4 (General) student                        |
-            | Page sub heading     | Financial status check                          |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order
-            | Student type                          |
-            | Inner London borough                  |
-            | Course length                         |
-            | Total tuition fees for the first year |
-            | Tuition fees already paid             |
-            | Accommodation fees already paid       |
-            | Number of dependants                  |
-            | Sort code                             |
-            | Account number                        |
+            | Student type                    |
+            | Inner London borough            |
+            | Course length                   |
+            | Total tuition fees              |
+            | Tuition fees already paid       |
+            | Accommodation fees already paid |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
 
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
@@ -40,21 +39,20 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
             | Page heading         | Tier 4 (General) student                                |
-            | Page sub heading     | Financial status check                                  |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order
-            | Student type                          |
-            | Inner London borough                  |
-            | Course length                         |
-            | Total tuition fees for the first year |
-            | Tuition fees already paid             |
-            | Accommodation fees already paid       |
-            | Number of dependants                  |
-            | Sort code                             |
-            | Account number                        |
+            | Student type                    |
+            | Inner London borough            |
+            | Course length                   |
+            | Total tuition fees              |
+            | Tuition fees already paid       |
+            | Accommodation fees already paid |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
 
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
@@ -75,4 +73,4 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) student                                                                                 |
+            | Page sub heading | Tier 4 (General) student |

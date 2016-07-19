@@ -11,10 +11,9 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         Given the account has sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Passed                                          |
-            | Page heading         | Tier 4 (General) doctorate extension scheme     |
-            | Page sub heading     | Financial status check                          |
-            | Page dynamic detail  | This applicant meets the financial requirements |
+            | Page dynamic heading | Passed                                                |
+            | Page heading         | Tier 4 (General) student (doctorate extension scheme) |
+            | Page dynamic detail  | This applicant meets the financial requirements       |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
@@ -36,8 +35,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page heading         | Tier 4 (General) doctorate extension scheme             |
-            | Page sub heading     | Financial status check                                  |
+            | Page heading         | Tier 4 (General) student (doctorate extension scheme)   |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -67,7 +65,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) doctorate extension scheme |
+            | Page sub heading | Tier 4 (General) student (doctorate extension scheme) |
 
 
 

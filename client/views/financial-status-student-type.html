@@ -23,7 +23,7 @@
                     <ul class="error-summary-list">
 
                         <li ng-if="vm.studentTypeMissingError">
-                            <a href="" ng-click="vm.scrollTo('routeType')">The student type is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('routeType')">The student type is invalid</a></li>
 
                     </ul>
                 </div>
@@ -33,7 +33,7 @@
                     <fieldset style="margin-bottom:6px">
                         <legend class="form-label-bold">Student type</legend>
                         <span id="student-type-error" class="error-message" ng-if="vm.studentTypeMissingError">
-                                        Please select a student type</span>
+                                        Select an option</span>
                         <label class="block-label" for="studentType-1" id="studentType-1Label">
                             <input type="radio" class="form-control form-control-1-8" name="studentType"
                                    id="studentType-1" value="nondoctorate"
@@ -43,7 +43,7 @@
                     <label class="block-label" for="studentType-2" id="studentType-2Label">
                         <input type="radio" class="form-control form-control-1-8" name="studentType"
                                id="studentType-2" value="doctorate"
-                               ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) doctorate extension scheme
+                               ng-model="vm.model.studentType" autocomplete="off">Tier 4 (General) student (doctorate extension scheme)
                     </label>
                     </fieldset>
                 </div>
