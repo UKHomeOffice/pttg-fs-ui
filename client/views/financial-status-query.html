@@ -1,5 +1,5 @@
 <div class="error-summary" ng-if="vm.serverError !== ''">
-    <h1 class="heading-medium error-summary-heading" id="error-summary-heading">
+    <h1 class="heading-medium error-summary-heading" id="server-error-summary-heading">
         Something's gone wrong
     </h1>
     <p id="serverError">You can’t use this service just now. The problem will be fixed as soon as possible</p>
@@ -10,7 +10,7 @@
     <div id="page1" data-bind="visible: currentPage() === 1">
         <h1 class="heading-large" id="pageTitle">
             <span ng-if="!vm.model.doctorate" id="pageSubHeading">Tier 4 (General) student</span>
-            <span ng-if="vm.model.doctorate" id="pageSubHeading">Tier 4 (General) doctorate extension scheme</span>
+            <span ng-if="vm.model.doctorate" id="pageSubHeading">Tier 4 (General) student (doctorate extension scheme)</span>
         </h1>
 
 
@@ -20,76 +20,76 @@
                 <div ng-if="vm.validateError || vm.restError" class="error-summary"
                      role="group" aria-labelledby="error-summary-heading-example-2" tabindex="-1">
 
-                    <h1 class="heading-medium error-summary-heading" id="error-summary-heading-example-2">
-                        There's some missing information
+                    <h1 class="heading-medium error-summary-heading" id="validation-error-summary-heading">
+                        There's some invalid information
                     </h1>
 
-                    <p>Make sure that all the fields have been completed</p>
+                    <p id="validation-error-summary-text">Make sure that all the fields have been completed</p>
 
-                    <ul class="error-summary-list">
+                    <ul class="error-summary-list" id="error-summary-list" >
 
                         <li ng-if="vm.endDateMissingError">
-                            <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
-                                missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('end-date-label')">The end date is
+                                invalid</a></li>
 
                         <li ng-if="vm.endDateInvalidError">
-                            <a href="" ng-click="vm.scrollTo('endDateDay')">The end date is
+                            <a href="" ng-click="vm.scrollTo('end-date-label')">The end date is
                                 invalid</a></li>
 
                         <li ng-if="vm.innerLondonBoroughMissingError">
-                            <a href="" ng-click="vm.scrollTo('innerLondonBorough')">The inner London Borough is
-                                missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('innerLondonBorough-label')">The inner London borough is
+                                invalid</a></li>
 
                         <li ng-if="vm.studentTypeMissingError">
-                            <a href="" ng-click="vm.scrollTo('studentType')">The student type is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('studentType-label')">The student type is invalid</a></li>
 
                         <li ng-if="vm.courseLengthInvalidError">
-                            <a href="" ng-click="vm.scrollTo('courseLength')">The course length is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('courseLength-label')">The course length is invalid</a></li>
 
                         <li ng-if="vm.courseLengthMissingError">
-                            <a href="" ng-click="vm.scrollTo('courseLength')">The course length is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('courseLength-label')">The course length is invalid</a></li>
 
                         <li ng-if="vm.totalTuitionFeesInvalidError">
-                            <a href="" ng-click="vm.scrollTo('totalTuitionFees')">The total tuition fees is invalid</a>
+                            <a href="" ng-click="vm.scrollTo('totalTuitionFees-label')">The total tuition fees is invalid</a>
                         </li>
 
                         <li ng-if="vm.totalTuitionFeesMissingError">
-                            <a href="" ng-click="vm.scrollTo('totalTuitionFees')">The total tuition fees is missing</a>
+                            <a href="" ng-click="vm.scrollTo('totalTuitionFees-label')">The total tuition fees is invalid</a>
                         </li>
 
                         <li ng-if="vm.tuitionFeesAlreadyPaidInvalidError">
-                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid')">The tuition fees already paid is
+                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid-label')">The tuition fees already paid is
                                 invalid</a></li>
 
                         <li ng-if="vm.tuitionFeesAlreadyPaidMissingError">
-                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid')">The tuition fees already paid is
-                                missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('tuitionFeesAlreadyPaid-label')">The tuition fees already paid is
+                                invalid</a></li>
 
                         <li ng-if="vm.accommodationFeesAlreadyPaidInvalidError">
-                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees
+                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid-label')">The accommodation fees
                                 already paid is invalid</a></li>
 
                         <li ng-if="vm.accommodationFeesAlreadyPaidMissingError">
-                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid')">The accommodation fees
-                                already paid is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('accommodationFeesAlreadyPaid-label')">The accommodation fees
+                                already paid is invalid</a></li>
 
                         <li ng-if="vm.numberOfDependantsInvalidError">
-                            <a href="" ng-click="vm.scrollTo('numberOfDependants')">The number of dependants is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('numberOfDependants-label')">The number of dependants is invalid</a></li>
 
                         <li ng-if="vm.numberOfDependantsMissingError">
-                            <a href="" ng-click="vm.scrollTo('numberOfDependants')">The number of dependants is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('numberOfDependants-label')">The number of dependants is invalid</a></li>
 
                         <li ng-if="vm.accountNumberInvalidError">
-                            <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('accountNumber-label')">The account number is invalid</a></li>
 
                         <li ng-if="vm.accountNumberMissingError">
-                            <a href="" ng-click="vm.scrollTo('accountNumber')">The account number is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('accountNumber-label')">The account number is invalid</a></li>
 
                         <li ng-if="vm.sortCodeInvalidError">
-                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sort code is invalid</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCode-label')">The sort code is invalid</a></li>
 
                         <li ng-if="vm.sortCodeMissingError">
-                            <a href="" ng-click="vm.scrollTo('sortCodeFirst')">The sort code is missing</a></li>
+                            <a href="" ng-click="vm.scrollTo('sortCode-label')">The sort code is invalid</a></li>
 
                     </ul>
                 </div>
@@ -98,12 +98,12 @@
                      ng-class="{error : vm.endDateMissingError || vm.endDateInvalidError}">
 
                     <fieldset>
-                        <legend class="form-label-bold">End date of 28-day period</legend>
+                        <legend class="form-label-bold" id="end-date-label">End date of 28-day period</legend>
                         <div class="form-date">
                             <p class="form-hint">Includes the date entered</p>
                             <span id="end-date-error" class="error-message"
                                   ng-if="vm.endDateMissingError || vm.endDateInvalidError">
-                                Please provide a valid end date</span>
+                                Enter a valid end date</span>
                             <div class="form-group form-group-day">
                                 <label for="endDateDay">Day</label>
                                 <input class="form-control" name="endDateDay"
@@ -134,7 +134,7 @@
                 <div class="form-group" id="innerLondonBorough"
                      ng-class="{error : vm.innerLondonBoroughMissingError }">
                     <fieldset class="inline">
-                        <legend class="form-label-bold">Inner London borough?</legend>
+                        <legend class="form-label-bold" id="innerLondonBorough-label">Inner London borough?</legend>
                         <span id="inner-london-borough-error" class="error-message"
                               ng-if="vm.innerLondonBoroughMissingError">
                                         Please specify whether the course is inside or outside London</span>
@@ -153,13 +153,13 @@
 
                 <div class="form-group"
                      ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
-                    <label class="form-label-bold" for="courseLength">
-                        Remaining course length
+                    <label class="form-label-bold" for="courseLength" id="courseLength-label">
+                        Course length
                         <span class="form-hint">Enter the number of months, up to 9 months</span>
                     </label>
                     <span id="course-length-error" class="error-message"
                           ng-if="vm.courseLengthInvalidError || vm.courseLengthMissingError">
-                                    Please provide a valid course length</span>
+                                    Enter a valid course length</span>
                     <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
                            ng-model="vm.model.courseLength" autocomplete="off">
                 </div>
@@ -167,13 +167,13 @@
                 <div ng-if="!vm.model.doctorate"
                      class="form-group"
                      ng-class="{error : vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError }">
-                    <label class="form-label-bold" for="totalTuitionFees">
+                    <label class="form-label-bold" for="totalTuitionFees" id="totalTuitionFees-label">
                         Total tuition fees for the first year
                         <span class="form-hint">For example, 9000</span>
                     </label>
                     <span id="total-tuition-fees-error" class="error-message"
                           ng-if="vm.totalTuitionFeesInvalidError || vm.totalTuitionFeesMissingError">
-                                    Please provide a valid total tuition fees</span>
+                                    Enter a valid total tuition fees</span>
                     £ <input type="number" step="0.01" class="form-control form-control-1-4" name="totalTuitionFees"
                              id="totalTuitionFees"
                              ng-model="vm.model.totalTuitionFees" autocomplete="off">
@@ -182,13 +182,13 @@
                 <div ng-if="!vm.model.doctorate"
                      class="form-group"
                      ng-class="{error : vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError }">
-                    <label class="form-label-bold" for="tuitionFeesAlreadyPaid">
+                    <label class="form-label-bold" for="tuitionFeesAlreadyPaid" id="tuitionFeesAlreadyPaid-label">
                         Tuition fees already paid
                         <span class="form-hint">For example, 3000</span>
                     </label>
                     <span id="tuition-fees-already-paid-error" class="error-message"
                           ng-if="vm.tuitionFeesAlreadyPaidInvalidError || vm.tuitionFeesAlreadyPaidMissingError">
-                                    Please provide a valid tuition fees already paid</span>
+                                    Enter a valid tuition fees already paid</span>
                     £ <input type="number" step="0.01" class="form-control form-control-1-4"
                              name="tuitionFeesAlreadyPaid"
                              id="tuitionFeesAlreadyPaid"
@@ -197,13 +197,13 @@
 
                 <div class="form-group"
                      ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError }">
-                    <label class="form-label-bold" for="accommodationFeesAlreadyPaid">
+                    <label class="form-label-bold" for="accommodationFeesAlreadyPaid" id="accommodationFeesAlreadyPaid-label">
                         Accommodation fees already paid
                         <span class="form-hint">Up to 1265</span>
                     </label>
                     <span id="accommodation-fees-already-paid-error" class="error-message"
                           ng-if="vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError">
-                                    Please provide a valid accommodation fees already paid</span>
+                                    Enter a valid accommodation fees already paid</span>
                     £ <input type="number" step="0.01" class="form-control form-control-1-4"
                              name="accommodationFeesAlreadyPaid"
                              id="accommodationFeesAlreadyPaid"
@@ -212,12 +212,12 @@
 
                 <div class="form-group"
                      ng-class="{error : vm.numberOfDependantsInvalidError || vm.numberOfDependantsMissingError }">
-                    <label class="form-label-bold" for="numberOfDependants">
+                    <label class="form-label-bold" for="numberOfDependants" id="numberOfDependants-label">
                         Number of dependants
                     </label>
                     <span id="number-of-dependants-error" class="error-message"
                           ng-if="vm.numberOfDependantsInvalidError || vm.numberOfDependantsMissingError">
-                                    Please provide a valid number of dependants</span>
+                                    Enter a valid number of dependants</span>
                     <input type="number" class="form-control form-control-1-4"
                              name="numberOfDependants"
                              id="numberOfDependants"
@@ -227,12 +227,12 @@
 
                 <div class="form-group" ng-class="{error : vm.sortCodeInvalidError || vm.sortCodeMissingError}">
                     <fieldset>
-                        <legend class="form-label-bold">Sort code</legend>
+                        <legend class="form-label-bold" id="sortCode-label">Sort code</legend>
                         <div class="form-date">
                             <p class="form-hint">For example, 12 34 56</p>
                             <span id="sort-code-error" class="error-message"
                                   ng-if="vm.sortCodeInvalidError || vm.sortCodeMissingError">
-                                    Please provide a valid sort code</span>
+                                    Enter a valid sort code</span>
                             <div class="form-group form-group-day">
                                 <input class="form-control" name="sortCodeFirst"
                                        id="sortCodeFirst" type="text"
@@ -260,13 +260,13 @@
 
                 <div class="form-group"
                      ng-class="{error : vm.accountNumberInvalidError || vm.accountNumberMissingError}">
-                    <label class="form-label-bold" for="accountNumber">
+                    <label class="form-label-bold" for="accountNumber" id="accountNumber-label">
                         Account number
                         <span class="form-hint">For example, 12345678</span>
                     </label>
                     <span id="account-number-error" class="error-message"
                           ng-if="vm.accountNumberInvalidError || vm.accountNumberMissingError">
-                                    Please provide a valid account number</span>
+                                    Enter a valid account number</span>
                     <input type="text" class="form-control form-control-1-4" name="accountNumber"
                            id="accountNumber"
                            ng-model="vm.model.accountNumber" autocomplete="off">

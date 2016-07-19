@@ -351,4 +351,17 @@ class Steps {
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
+    @Then("^the error summary list contains the text\$")
+    public void the_error_summary_list_contains_the_text(DataTable expectedText){
+
+        List<String> errorSummaryTextItems = expectedText.asList(String.class)
+
+        WebElement errorSummaryList = driver.findElement(By.id("error-summary-list"))
+        def errorText = errorSummaryList.text
+
+        errorSummaryTextItems.each {
+            assert errorText.contains(it): "Error text did not contain: $it"
+        }
+    }
+
 }
