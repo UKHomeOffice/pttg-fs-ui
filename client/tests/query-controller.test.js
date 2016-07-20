@@ -148,7 +148,7 @@ describe('coreController', function () {
         expect(coreController.validateError).toBeTruthy();
     });
 
-    it('is expected the student display test (different from the submitted value) is set correctly after submit', function () {
+    it('sets the student type checked display text', function () {
         spyOnSuccessful();
 
         response = {
@@ -162,7 +162,7 @@ describe('coreController', function () {
 
         initialiseModelWithValues();
 
-        coreController.submitStudentType()
+        coreController.submitStudentType()  // doctorate
         coreController.submit()
         scope.$digest()
 
@@ -196,6 +196,34 @@ describe('coreController', function () {
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
 
+    it('sets returned minimum balance data from service on the model when not passed ', function () {
+        spyOnSuccessful();
+
+        response = {
+            sortCode: 200203,
+            accountNumber: '12345678',
+            fundingRequirementMet: false,
+            periodCheckedFrom: 2015-01-03,
+            periodCheckedTo: 2015-01-30,
+            minimum: 1,
+            minimumBalanceDate: 2015-01-29,
+            minimumBalanceValue: 100
+        }
+
+        initialiseModelWithValues();
+
+        coreController.submit()
+        scope.$digest()
+
+        expect(coreController.model.fundingRequirementMet).toBe(false);
+        expect(coreController.model.minimum).toBe(1);
+        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
+        expect(coreController.model.minimumBalanceDate).toBe(2015-01-29);
+        expect(coreController.model.minimumBalanceValue).toBe(100);
+
+        expect(restService.checkFinancialStatus.calls.count()).toBe(1);
+    });
+
 
     it('formats money to a precision of 2 decimal places with a pound sign', function(){
         expect(coreController.formatMoneyPoundsPence(500)).toBe("£500.00");
@@ -220,6 +248,52 @@ describe('coreController', function () {
         scope.$digest();
 
         expect(location.path).toHaveBeenCalledWith('/financial-status-student-type');
+    });
+
+    it('routes to pass page for pass', function(){
+        spyOn(location, 'path');
+        spyOnSuccessful();
+
+        response = {
+            sortCode: 200203,
+            accountNumber: '12345678',
+            fundingRequirementMet: true,
+            periodCheckedFrom: 2015-01-03,
+            periodCheckedTo: 2015-01-30,
+            minimum: 1,
+            minimumBalanceDate: 2015-01-29,
+            minimumBalanceValue: 100
+        }
+
+        initialiseModelWithValues();
+
+        coreController.submit()
+        scope.$digest()
+
+        expect(location.path).toHaveBeenCalledWith('/financial-status-result-pass');
+    });
+
+    it('routes to not pass page for not pass', function(){
+        spyOn(location, 'path');
+        spyOnSuccessful();
+
+        response = {
+            sortCode: 200203,
+            accountNumber: '12345678',
+            fundingRequirementMet: false,
+            periodCheckedFrom: 2015-01-03,
+            periodCheckedTo: 2015-01-30,
+            minimum: 1,
+            minimumBalanceDate: 2015-01-29,
+            minimumBalanceValue: 100
+        }
+
+        initialiseModelWithValues();
+
+        coreController.submit()
+        scope.$digest()
+
+        expect(location.path).toHaveBeenCalledWith('/financial-status-result-not-pass');
     });
 
     it('clears previous model on new search', function(){
