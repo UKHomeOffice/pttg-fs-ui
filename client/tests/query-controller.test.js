@@ -168,7 +168,7 @@ describe('coreController', function () {
 
         expect(coreController.validateError).toBeFalsy();
         expect(restService.checkFinancialStatus).toHaveBeenCalled();
-        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) doctorate extension scheme");
+        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) student (doctorate extension scheme)");
     });
 
 
