@@ -27,11 +27,11 @@
             <th>28-day period checked</th>
             <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
-        <tr>
+        <tr ng-if="vm.model.minimumBalanceDate != null">
             <th>Date total funds required not met</th>
             <td id="minimumBalanceDate" scope="col">{{vm.formatDate(vm.model.minimumBalanceDate)}}</td>
         </tr>
-        <tr>
+        <tr ng-if="vm.model.minimumBalanceValue != null">
             <th>Amount on that date</th>
             <td id="minimumBalanceValue" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimumBalanceValue)}}</td>
         </tr>
