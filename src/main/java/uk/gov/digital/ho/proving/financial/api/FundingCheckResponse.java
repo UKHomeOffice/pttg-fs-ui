@@ -56,8 +56,8 @@ public final class FundingCheckResponse implements Serializable {
         this.fundingRequirementMet = result.isPass();
         this.periodCheckedFrom = result.getFromDate();
         this.minimum = result.getMinimum();
-        this.minimumBalanceDate = result.getMinimumBalanceDate();
-        this.minimumBalanceValue = result.getMinimumBalanceValue();
+        this.minimumBalanceDate = result.getDateFundsNotMet();
+        this.minimumBalanceValue = result.getAmount();
     }
 
     public boolean getFundingRequirementMet() {

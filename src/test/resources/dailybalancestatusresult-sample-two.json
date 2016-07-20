@@ -1,7 +1,7 @@
 {
     "pass": true,
-    "minimumBalanceDate": "2015-10-03",
-    "minimumBalanceValue": 100,
+    "dateFundsNotMet": "2015-10-03",
+    "amount": 100,
     "status": {
         "code": "200",
         "message": "OK"

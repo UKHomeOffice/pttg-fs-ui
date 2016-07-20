@@ -63,13 +63,15 @@ public class FinancialStatusChecker {
         LocalDate fromDate = daysBefore(toDate);
 
         URI uri = apiUrls.dailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
-        DailyBalanceStatusResult dailyBalanceStatusResult = getForObject(uri, DailyBalanceStatusResult.class);
+
+        DailyBalanceStatusResult dailyBalanceStatusResult =
+            getForObject(uri, DailyBalanceStatusResult.class)
+                .withMinimum(totalFundsRequired)
+                .withFromDate(fromDate);
 
         LOGGER.debug("Daily balance status result: {}", dailyBalanceStatusResult);
 
-        return dailyBalanceStatusResult
-            .withMinimum(totalFundsRequired)
-            .withFromDate(fromDate);
+        return dailyBalanceStatusResult;
     }
 
     private LocalDate daysBefore(LocalDate toDate) {

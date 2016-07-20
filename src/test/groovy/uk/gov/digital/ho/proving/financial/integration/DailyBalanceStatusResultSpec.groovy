@@ -37,10 +37,10 @@ class DailyBalanceStatusResultSpec extends Specification {
     def "json should deserialize to instance"() {
 
         given:
-        def sampleOneJson = stringFromFile(fileName)
+        def json = stringFromFile(fileName)
 
         when:
-        def actual = mapper.readValue(sampleOneJson, DailyBalanceStatusResult.class)
+        def actual = mapper.readValue(json, DailyBalanceStatusResult.class)
 
         then:
         actual == expected

@@ -1,7 +1,7 @@
 {
-  "name": "migration-family",
+  "name": "financial-status-servie-ui",
   "version": "1.0.0",
-  "description": "migration family case worker tool",
+  "description": "financial status service ui",
   "scripts": {
     "init": "npm install",
     "install": "bower install --allow-root",

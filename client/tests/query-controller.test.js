@@ -206,8 +206,8 @@ describe('coreController', function () {
             periodCheckedFrom: 2015-01-03,
             periodCheckedTo: 2015-01-30,
             minimum: 1,
-            minimumBalanceDate: 2015-01-29,
-            minimumBalanceValue: 100
+            dateFundsNotMet: 2015-01-29,
+            amount: 100
         }
 
         initialiseModelWithValues();
@@ -261,8 +261,8 @@ describe('coreController', function () {
             periodCheckedFrom: 2015-01-03,
             periodCheckedTo: 2015-01-30,
             minimum: 1,
-            minimumBalanceDate: 2015-01-29,
-            minimumBalanceValue: 100
+            dateFundsNotMet: 2015-01-29,
+            amount: 100
         }
 
         initialiseModelWithValues();
@@ -284,8 +284,8 @@ describe('coreController', function () {
             periodCheckedFrom: 2015-01-03,
             periodCheckedTo: 2015-01-30,
             minimum: 1,
-            minimumBalanceDate: 2015-01-29,
-            minimumBalanceValue: 100
+            dateFundsNotMet: 2015-01-29,
+            amount: 100
         }
 
         initialiseModelWithValues();
