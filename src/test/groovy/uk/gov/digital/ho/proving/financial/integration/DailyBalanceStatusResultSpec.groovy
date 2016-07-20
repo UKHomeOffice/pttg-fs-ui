@@ -5,7 +5,6 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
-import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
 import java.time.LocalDate
@@ -16,34 +15,40 @@ import java.time.LocalDate
 class DailyBalanceStatusResultSpec extends Specification {
 
     static final String sampleOneFile = "dailybalancestatusresult-sample-one.json"
+    static final String sampleTwoFile = "dailybalancestatusresult-sample-two.json"
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
 
     def "Instance should serialize to json"() {
 
-        given:
-        def instance = sampleOne
-
         when:
         def actual = withoutSpaces(mapper.writeValueAsString(instance))
 
         then:
-        actual == stringFromFile(sampleOneFile)
-    }
+        actual == stringFromFile(fileName)
 
+        where:
+        instance  | fileName
+        sampleOne | sampleOneFile
+        sampleTwo | sampleTwoFile
+    }
 
     def "json should deserialize to instance"() {
 
         given:
-        def expected = sampleOne
-        def sampleOneJson = stringFromFile(sampleOneFile)
+        def sampleOneJson = stringFromFile(fileName)
 
         when:
         def actual = mapper.readValue(sampleOneJson, DailyBalanceStatusResult.class)
 
         then:
         actual == expected
+
+        where:
+        expected  | fileName
+        sampleOne | sampleOneFile
+        sampleTwo | sampleTwoFile
     }
 
     def "generates meaningful toString instead of just a hash"() {
@@ -71,8 +76,13 @@ class DailyBalanceStatusResultSpec extends Specification {
     }
 
 
-    def sampleOne =
-        new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK"))
+    def static sampleOne =
+        new DailyBalanceStatusResult(true, null, null, new ResponseDetails("200", "OK"))
+            .withFromDate(LocalDate.of(2015, 10, 3))
+            .withMinimum(BigDecimal.valueOf(100))
+
+    def static sampleTwo =
+        new DailyBalanceStatusResult(true, LocalDate.of(2015, 10, 3), BigDecimal.valueOf(100), new ResponseDetails("200", "OK"))
             .withFromDate(LocalDate.of(2015, 10, 3))
             .withMinimum(BigDecimal.valueOf(100))
 

@@ -1,0 +1,11 @@
+{
+    "pass": true,
+    "minimumBalanceDate": "2015-10-03",
+    "minimumBalanceValue": 100,
+    "status": {
+        "code": "200",
+        "message": "OK"
+    },
+    "minimum": 100,
+    "fromDate": "2015-10-03"
+}

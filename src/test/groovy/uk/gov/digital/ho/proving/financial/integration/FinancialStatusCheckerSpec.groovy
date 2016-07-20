@@ -28,7 +28,7 @@ class FinancialStatusCheckerSpec extends Specification {
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
     def thresholdResponse = thresholdOf(ONE)
-    def dailyBalanceResponse = new ResponseEntity(new DailyBalanceStatusResult(true, new ResponseDetails("", "")), OK)
+    def dailyBalanceResponse = new ResponseEntity(new DailyBalanceStatusResult(true, toDate, ONE, new ResponseDetails("", "")), OK)
 
     ApiUrls urls = Mock()
     RestTemplate template = Mock()

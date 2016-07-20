@@ -81,7 +81,7 @@ public class FinancialStatusChecker {
         return responseEntity.getBody();
     }
 
-    private HttpHeaders getHeaders(){
+    private HttpHeaders getHeaders() {
 
         HttpHeaders headers = new HttpHeaders();
 

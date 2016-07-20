@@ -41,8 +41,10 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page heading         | Tier 4 (General) student                                |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
-            | Total funds required  |
-            | 28-day period checked |
+            | Total funds required         |
+            | 28-day period checked        |
+            | Date minimum balance not met |
+            | Balance on that date         |
         And the service displays the following your search headers in order
             | Student type                    |
             | Inner London borough            |

@@ -6,7 +6,6 @@
         .controller('coreController', coreController);
 
 
-
     coreController.$inject = ['$rootScope', '$location', 'restService', '$anchorScroll', '$log'];
     /* @ngInject */
     function coreController($rootScope, $location, restService, $anchorScroll, $log) {
@@ -22,10 +21,11 @@
 
         var NON_ZERO_WHOLE_NUMBER_REGEX = /^0*[1-9]\d*$/; //allows leading zeros
         var NUMBER_REGEX = /^\d*\.?\d*$/;
+        var WHOLE_NUMBER_REGEX = /^\d*$/;
 
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
-        
+
         initialise();
 
         vm.formatMoneyWholePounds = function (moneyToFormat) {
@@ -106,6 +106,8 @@
                         if (vm.model.fundingRequirementMet == true) {
                             $location.path('/financial-status-result-pass');
                         } else {
+                            vm.model.minimumBalanceDate = data.minimumBalanceDate;
+                            vm.model.minimumBalanceValue = data.minimumBalanceValue;
                             $location.path('/financial-status-result-not-pass');
                         }
                     }).catch(function (error) {
@@ -164,6 +166,8 @@
                 tuitionFeesAlreadyPaidChecked: '',
                 accommodationFeesAlreadyPaidChecked: '',
                 numberOfDependantsChecked: '',
+                minimumBalanceDate: '',
+                minimumBalanceValue: '',
 
                 doctorate: false
             };
@@ -320,7 +324,7 @@
                 vm.queryForm.numberOfDependants.$setValidity(false);
                 vm.numberOfDependantsMissingError = true;
                 validated = false;
-            } else if (vm.model.numberOfDependants !== null && !(NUMBER_REGEX.test(vm.model.numberOfDependants))) {
+            } else if (vm.model.numberOfDependants !== null && !(WHOLE_NUMBER_REGEX.test(vm.model.numberOfDependants))) {
                 vm.queryForm.numberOfDependants.$setValidity(false);
                 vm.numberOfDependantsInvalidError = true;
                 validated = false;

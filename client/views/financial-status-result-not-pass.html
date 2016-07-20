@@ -27,6 +27,14 @@
             <th>28-day period checked</th>
             <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
+        <tr>
+            <th>Date total funds required not met</th>
+            <td id="minimumBalanceDate" scope="col">{{vm.formatDate(vm.model.minimumBalanceDate)}}</td>
+        </tr>
+        <tr>
+            <th>Amount on that date</th>
+            <td id="minimumBalanceValue" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimumBalanceValue)}}</td>
+        </tr>
         </tbody>
     </table>
 

@@ -93,7 +93,7 @@ class ServiceSpec extends Specification {
     }
 
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, new ResponseDetails("200", "OK")))
-    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, new ResponseDetails("200", "OK")))
+    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, null, new ResponseDetails("200", "OK")))
 
     def apiRespondsWith(threshold, balance) {
         mockServer.expect(requestTo(containsString("threshold")))

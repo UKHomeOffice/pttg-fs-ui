@@ -26,6 +26,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Outcome                         | Not passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
+            | Minimum Balance Date            | 03/10/2016               |
+            | Minimum Balance Value           | £100.00                  |
             | Student type                    | Tier 4 (General) student |
             | Inner London borough            | No                       |
             | Course length                   | 2                        |

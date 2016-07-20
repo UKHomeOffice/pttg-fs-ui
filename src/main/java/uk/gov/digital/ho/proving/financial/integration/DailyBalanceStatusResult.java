@@ -22,19 +22,32 @@ import java.util.Objects;
 public final class DailyBalanceStatusResult implements Serializable {
 
     private boolean pass;
+
     private BigDecimal minimum;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate fromDate;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private LocalDate minimumBalanceDate;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private BigDecimal minimumBalanceValue;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final ResponseDetails status;
 
     @JsonCreator
     public DailyBalanceStatusResult(@JsonProperty("pass") boolean pass,
+                                    @JsonProperty("minimumBalanceDate") LocalDate minimumBalanceDate,
+                                    @JsonProperty("minimumBalanceValue") BigDecimal minimumBalanceValue,
                                     @JsonProperty("status") ResponseDetails status) {
         this.pass = pass;
+        this.minimumBalanceDate = minimumBalanceDate;
+        this.minimumBalanceValue = minimumBalanceValue;
         this.status = status;
     }
 
@@ -64,14 +77,12 @@ public final class DailyBalanceStatusResult implements Serializable {
         return status;
     }
 
-    @Override
-    public String toString() {
-        return "DailyBalanceStatusResult{" +
-            "pass=" + pass +
-            ", minimum=" + minimum +
-            ", fromDate=" + fromDate +
-            ", status=" + status +
-            '}';
+    public LocalDate getMinimumBalanceDate() {
+        return minimumBalanceDate;
+    }
+
+    public BigDecimal getMinimumBalanceValue() {
+        return minimumBalanceValue;
     }
 
     @Override
@@ -82,11 +93,25 @@ public final class DailyBalanceStatusResult implements Serializable {
         return pass == that.pass &&
             Objects.equals(minimum, that.minimum) &&
             Objects.equals(fromDate, that.fromDate) &&
+            Objects.equals(minimumBalanceDate, that.minimumBalanceDate) &&
+            Objects.equals(minimumBalanceValue, that.minimumBalanceValue) &&
             Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pass, minimum, fromDate, status);
+        return Objects.hash(pass, minimum, fromDate, minimumBalanceDate, minimumBalanceValue, status);
+    }
+
+    @Override
+    public String toString() {
+        return "DailyBalanceStatusResult{" +
+            "pass=" + pass +
+            ", minimum=" + minimum +
+            ", fromDate=" + fromDate +
+            ", minimumBalanceDate=" + minimumBalanceDate +
+            ", minimumBalanceValue=" + minimumBalanceValue +
+            ", status=" + status +
+            '}';
     }
 }
