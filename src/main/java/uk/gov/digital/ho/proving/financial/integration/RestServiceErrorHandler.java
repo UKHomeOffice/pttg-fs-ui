@@ -43,7 +43,7 @@ public class RestServiceErrorHandler implements ResponseErrorHandler {
         HttpStatus statusCode = response.getStatusCode();
 
         if (statusCode.is4xxClientError()) {
-            LOGGER.error("FSS API reported client error - possible version mismatch?");
+            LOGGER.debug("FSS API reported client error - possible version mismatch?");
             throwClientErrorDetails(response, statusCode);
         }
 
@@ -53,7 +53,7 @@ public class RestServiceErrorHandler implements ResponseErrorHandler {
     private void throwClientErrorDetails(ClientHttpResponse response, HttpStatus statusCode) {
         try {
             ResponseDetails details = readResponseDetails(response);
-            LOGGER.warn("FSS API reported client error with message: '{}', and code: '{}'", details.getMessage(), details.getCode());
+            LOGGER.debug("FSS API reported client error with message: '{}', and code: '{}'", details.getMessage(), details.getCode());
 
             throw new RestServiceException(statusCode, details.getMessage(), details.getCode());
 

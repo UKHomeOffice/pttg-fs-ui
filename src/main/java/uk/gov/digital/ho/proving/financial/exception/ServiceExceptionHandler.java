@@ -85,15 +85,15 @@ public class ServiceExceptionHandler {
         switch (exception.getStatusCode()) {
 
             case BAD_REQUEST:
-                LOGGER.warn("Rest service exception - bad request, which means that there may be a mismatch between UI and API");
+                LOGGER.error("Rest service exception - bad request, which means that there may be a mismatch between UI and API");
                 return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_CLIENT_ERROR), INTERNAL_SERVER_ERROR);
 
             case INTERNAL_SERVER_ERROR:
-                LOGGER.debug("Rest service exception - internal server error");
+                LOGGER.error("Rest service exception - internal server error");
                 return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_SERVER_ERROR), INTERNAL_SERVER_ERROR);
 
             case NOT_FOUND:
-                LOGGER.debug("Rest service exception - not found");
+                LOGGER.warn("Rest service exception - not found");
                 // Without the empty json response body, Phantom JS fails to propagate the response status through
                 // the angular restservice error handler and into the angular controller for routing to the
                 // 'no record' page. I don't know why. It works fine without the response body in at least
@@ -101,7 +101,7 @@ public class ServiceExceptionHandler {
                 return new ResponseEntity<>("{}", HttpStatus.NOT_FOUND);
 
             default:
-                LOGGER.debug("Rest service exception: {}", exception.getMessage());
+                LOGGER.error("Rest service exception: {}", exception.getMessage());
                 return new ResponseEntity<ResponseDetails>(
                     new ResponseDetails(INTERNAL_ERROR.getCode(), "API response status: " + exception.getStatusCode()), INTERNAL_SERVER_ERROR);
         }
