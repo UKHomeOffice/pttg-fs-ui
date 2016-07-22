@@ -155,8 +155,8 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1
         }
 
@@ -179,8 +179,8 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1
         }
 
@@ -191,7 +191,7 @@ describe('coreController', function () {
 
         expect(coreController.model.fundingRequirementMet).toBe(true);
         expect(coreController.model.minimum).toBe(1);
-        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
+        expect(coreController.model.periodCheckedFrom).toBe('2015-01-03');
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
@@ -203,10 +203,10 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: false,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            minimumBalanceDate: 2015-01-29,
+            minimumBalanceDate: '2015-01-29',
             minimumBalanceValue: 100
         }
 
@@ -217,8 +217,8 @@ describe('coreController', function () {
 
         expect(coreController.model.fundingRequirementMet).toBe(false);
         expect(coreController.model.minimum).toBe(1);
-        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
-        expect(coreController.model.minimumBalanceDate).toBe(2015-01-29);
+        expect(coreController.model.periodCheckedFrom).toBe('2015-01-03');
+        expect(coreController.model.minimumBalanceDate).toBe('2015-01-29');
         expect(coreController.model.minimumBalanceValue).toBe(100);
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
@@ -258,10 +258,10 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            dateFundsNotMet: 2015-01-29,
+            dateFundsNotMet: '2015-01-29',
             amount: 100
         }
 
@@ -281,10 +281,10 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: false,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            dateFundsNotMet: 2015-01-29,
+            dateFundsNotMet: '2015-01-29',
             amount: 100
         }
 
