@@ -15,10 +15,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 
-import org.apache.http.conn.ConnectTimeoutException;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.util.stream.Collectors;
 
@@ -133,7 +132,8 @@ public class ServiceExceptionHandler {
     public ResponseDetails resourceException(ResourceAccessException exception) {
         LOGGER.debug("Resource access exception: " + exception.getMessage());
 
-        if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof ConnectTimeoutException) {
+        if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof InterruptedIOException
+            ) {
             LOGGER.debug("Connection exception: " + exception.getCause().getMessage());
             return new ResponseDetails(API_CONNECTION_ERROR.getCode(), "There was a problem connecting to the service: " + exception.getCause().getMessage());
         }

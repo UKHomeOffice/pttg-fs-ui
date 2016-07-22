@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.retry.annotation.EnableRetry
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
 import uk.gov.digital.ho.proving.financial.ServiceRunner
@@ -52,6 +53,8 @@ class Steps {
     def uiPort = 8001
     def uiRoot = "http://$uiHost:$uiPort/"
 
+    def wiremockPort = 8080
+
     def pageUrls = [
         'studentType'       : uiRoot,
         'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
@@ -87,7 +90,7 @@ class Steps {
     @Before
     def setUp(Scenario scenario) {
         if (wiremock) {
-            testDataLoader = new WireMockTestDataLoader()
+            testDataLoader = new WireMockTestDataLoader(wiremockPort)
         }
     }
 
@@ -307,6 +310,15 @@ class Steps {
         assertCurrentPage(toCamelCase(pageName))
     }
 
+    @When("^after at least (\\d+) seconds\$")
+    def after_at_least_x_seconds(int seconds){
+        try{
+            Thread.sleep(seconds*1000);
+        } catch(Exception e){
+            assert false : 'Sleep interrupted'
+        }
+    }
+
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
@@ -362,6 +374,11 @@ class Steps {
         errorSummaryTextItems.each {
             assert errorText.contains(it): "Error text did not contain: $it"
         }
+    }
+
+    @Then("^the connection attempt count should be (\\d+)\$")
+    def the_connection_attempt_count_should_be_count(int count){
+        testDataLoader.verifyGetCount(count, thresholdUrlRegex)
     }
 
 }

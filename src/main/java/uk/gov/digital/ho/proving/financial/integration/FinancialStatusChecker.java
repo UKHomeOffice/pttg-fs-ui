@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
@@ -41,6 +42,7 @@ public class FinancialStatusChecker {
 
     private HttpEntity<?> entity = new HttpEntity<>(getHeaders());
 
+    @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
         BigDecimal totalFundsRequired = getThreshold(course, maintenance).getThreshold();
@@ -78,10 +80,13 @@ public class FinancialStatusChecker {
         return toDate.minusDays(daysToCheck - 1);
     }
 
+
     private <T> T getForObject(URI uri, Class<T> type) {
+        LOGGER.debug("Calling API with URI: {} for type: {}", uri, type);
         ResponseEntity<T> responseEntity = restTemplate.exchange(uri, GET, entity, type);
         return responseEntity.getBody();
     }
+
 
     private HttpHeaders getHeaders() {
 
