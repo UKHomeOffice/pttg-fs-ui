@@ -32,6 +32,7 @@ import static steps.UtilitySteps.toCamelCase
 @WebAppConfiguration
 @IntegrationTest
 @ActiveProfiles("test")
+//@ActiveProfiles("endtoend")
 class Steps {
 
     private static Logger LOGGER = LoggerFactory.getLogger(Steps.class);
