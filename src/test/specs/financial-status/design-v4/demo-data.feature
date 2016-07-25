@@ -1,4 +1,4 @@
-#@Demo
+@Demo
 Feature:
 
     Scenario: Shelly is a Non Doctorate inner London student and does not have sufficient funds (On a daily basis the
@@ -8,7 +8,7 @@ Feature:
         And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -21,7 +21,7 @@ Feature:
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Student type                    | Tier 4 (General) student |
-            | Inner London borough            | Yes                      |
+            | In London                       | Yes                      |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -37,25 +37,22 @@ Feature:
         And the doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-12   |
             | Account number                  | 11111112   |
         Then the service displays the following result
-            | Outcome                         | Not passed                                            |
-            | Total funds required            | £2,530.00                                             |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Minimum Balance Date            | 03/05/2016                                            |
-            | Minimum Balance Value           | £2,529.00                                             |
-            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
-            | Inner London borough            | Yes                                                   |
-            | Course length                   | 2                                                     |
-            | Accommodation fees already paid | £0.00                                                 |
-            | Number of dependants            | 0                                                     |
-            | Sort code                       | 11-11-12                                              |
-            | Account number                  | 11111112                                              |
+            | Outcome                         | Not passed                                  |
+            | Total funds required            | £2,530.00                                   |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                    |
+            | Student type                    | Tier 4 (General) doctorate extension scheme |
+            | In London                       | Yes                                         |
+            | Course length                   | 2                                           |
+            | Accommodation fees already paid | £0.00                                       |
+            | Sort code                       | 11-11-12                                    |
+            | Account number                  | 77777777                                    |
 
 
     Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds (On a daily basis the closing
@@ -65,7 +62,7 @@ Feature:
         And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 9          |
             | Total tuition fees              | 9755.50    |
             | Number of dependants            | 0          |
@@ -89,19 +86,19 @@ Feature:
         And the doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 2          |
             | Number of dependants            | 0          |
             | Accommodation fees already paid | 250.50     |
-            | Sort code                       | 22-22-22   |
+            | Sort code                       | 22-22-23   |
             | Account number                  | 88888888   |
         Then the service displays the following result
-            | Outcome                    | Passed                                                |
-            | Total funds required       | £2,279.50                                             |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016                              |
-            | Student type               | Tier 4 (General) student (doctorate extension scheme) |
-            | Sort code                  | 22-22-22                                              |
-            | Account number             | 88888888                                              |
+            | Outcome                    | Passed                                      |
+            | Total funds required       | £2,279.50                                   |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                    |
+            | Student type               | Tier 4 (General) doctorate extension scheme |
+            | Sort code                  | 22-22-23                                    |
+            | Account number             | 88888888                                    |
 
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
     (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
@@ -109,7 +106,7 @@ Feature:
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | No         |
+            | In London                       | No         |
             | Course length                   | 2          |
             | Total tuition fees              | 3000.00    |
             | Tuition fees already paid       | 0          |
@@ -120,7 +117,7 @@ Feature:
             | Outcome                         | Not passed               |
             | Total funds required            | £5,030.00                |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Inner London borough            | No                       |
+            | In London                       | No                       |
             | Course length                   | 2                        |
             | Total tuition fees              | £3,000.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -135,7 +132,7 @@ Feature:
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | No         |
+            | In London                       | No         |
             | Course length                   | 9          |
             | Total tuition fees              | 15500.00   |
             | Tuition fees already paid       | 100        |

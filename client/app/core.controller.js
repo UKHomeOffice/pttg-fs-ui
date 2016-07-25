@@ -73,7 +73,7 @@
             vm.model.periodCheckedTo = vm.getFullEndDate();
             vm.model.accountNumberChecked = vm.model.accountNumber;
             vm.model.sortCodeChecked = vm.getFullSortCode();
-            vm.model.innerLondonBoroughChecked = vm.model.innerLondonBorough == 'true' ? 'Yes' : 'No';
+            vm.model.inLondonChecked = vm.model.inLondon == 'true' ? 'Yes' : 'No';
             vm.model.courseLengthChecked = vm.model.courseLength;
             vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
@@ -89,7 +89,7 @@
                     vm.model.accountNumber,
                     vm.getFullSortCodeDigits(),
                     vm.getFullEndDate(),
-                    vm.model.innerLondonBorough,
+                    vm.model.inLondon,
                     vm.model.studentType,
                     vm.model.courseLength,
                     vm.model.totalTuitionFees,
@@ -138,7 +138,7 @@
                 endDateMonth: '',
                 endDateYear: '',
 
-                innerLondonBorough: '',
+                inLondon: '',
                 studentType: '',
                 courseLength: '',
                 totalTuitionFees: '',
@@ -159,7 +159,7 @@
                 sortCodeChecked: '',
                 periodCheckedFrom: '',
                 periodCheckedTo: '',
-                innerLondonBoroughChecked: '',
+                inLondonChecked: '',
                 studentTypeChecked: '',
                 courseLengthChecked: '',
                 totalTuitionFeesChecked: '',
@@ -177,8 +177,8 @@
             vm.endDateInvalidError = false;
             vm.endDateMissingError = false;
 
-            vm.innerLondonBoroughInvalidError = false;
-            vm.innerLondonBoroughMissingError = false;
+            vm.inLondonInvalidError = false;
+            vm.inLondonMissingError = false;
 
             vm.studentTypeMissingError = false;
 
@@ -211,8 +211,8 @@
             vm.endDateInvalidError = false;
             vm.endDateMissingError = false;
 
-            vm.innerLondonBoroughInvalidError = false;
-            vm.innerLondonBoroughMissingError = false;
+            vm.inLondonInvalidError = false;
+            vm.inLondonMissingError = false;
 
             vm.studentTypeMissingError = false;
 
@@ -262,9 +262,9 @@
                 validated = false;
             }
 
-            if (vm.model.innerLondonBorough === '' || vm.model.innerLondonBorough === null) {
-                vm.queryForm.innerLondonBorough.$setValidity(false);
-                vm.innerLondonBoroughMissingError = true;
+            if (vm.model.inLondon === '' || vm.model.inLondon === null) {
+                vm.queryForm.inLondon.$setValidity(false);
+                vm.inLondonMissingError = true;
                 validated = false;
             }
 

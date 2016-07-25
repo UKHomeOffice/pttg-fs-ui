@@ -11,7 +11,7 @@ describe('coreController', function () {
         q = $q;
 
         restService = {
-            checkFinancialStatus: function (accountNumber, sortCode, endDate, innerLondonBorough, studentType, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
+            checkFinancialStatus: function (accountNumber, sortCode, endDate, inLondon, studentType, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
             }
         };
 
@@ -155,8 +155,8 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1
         }
 
@@ -179,8 +179,8 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1
         }
 
@@ -191,7 +191,7 @@ describe('coreController', function () {
 
         expect(coreController.model.fundingRequirementMet).toBe(true);
         expect(coreController.model.minimum).toBe(1);
-        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
+        expect(coreController.model.periodCheckedFrom).toBe('2015-01-03');
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
@@ -203,10 +203,10 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: false,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            minimumBalanceDate: 2015-01-29,
+            minimumBalanceDate: '2015-01-29',
             minimumBalanceValue: 100
         }
 
@@ -217,8 +217,8 @@ describe('coreController', function () {
 
         expect(coreController.model.fundingRequirementMet).toBe(false);
         expect(coreController.model.minimum).toBe(1);
-        expect(coreController.model.periodCheckedFrom).toBe(2015-01-03);
-        expect(coreController.model.minimumBalanceDate).toBe(2015-01-29);
+        expect(coreController.model.periodCheckedFrom).toBe('2015-01-03');
+        expect(coreController.model.minimumBalanceDate).toBe('2015-01-29');
         expect(coreController.model.minimumBalanceValue).toBe(100);
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
@@ -258,11 +258,11 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: true,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            dateFundsNotMet: 2015-01-29,
-            amount: 100
+            minimumBalanceDate: '2015-01-29',
+            minimumBalanceValue: 100
         }
 
         initialiseModelWithValues();
@@ -281,11 +281,11 @@ describe('coreController', function () {
             sortCode: 200203,
             accountNumber: '12345678',
             fundingRequirementMet: false,
-            periodCheckedFrom: 2015-01-03,
-            periodCheckedTo: 2015-01-30,
+            periodCheckedFrom: '2015-01-03',
+            periodCheckedTo: '2015-01-30',
             minimum: 1,
-            dateFundsNotMet: 2015-01-29,
-            amount: 100
+            minimumBalanceDate: '2015-01-29',
+            minimumBalanceValue: 100
         }
 
         initialiseModelWithValues();
@@ -308,7 +308,7 @@ describe('coreController', function () {
         expect(coreController.model.endDateYear).toBe('');
         expect(coreController.model.numberOfDependants).toBe('');
         expect(coreController.model.courseLength).toBe('');
-        expect(coreController.model.innerLondonBorough).toBe('');
+        expect(coreController.model.inLondon).toBe('');
     });
 
     function initialiseModelWithValues(){
@@ -319,7 +319,7 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.inLondon = 'yes';
         coreController.model.studentType = 'doctorate';
         coreController.model.courseLength = 1;
         coreController.model.totalTuitionFees = 1;

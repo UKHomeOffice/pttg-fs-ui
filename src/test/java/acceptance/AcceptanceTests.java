@@ -5,5 +5,10 @@ import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(features={"src/test/specs/financial-status/design-v4"}, glue={"steps"}, tags = {"~@WIP", "~@Demo"})
-public class AcceptanceTests {}
+@CucumberOptions(
+    features = {"src/test/specs/financial-status/design-v4"},
+    glue = {"steps"},
+    tags = {"~@WIP", "~@Demo"})
+    //tags = {"~@WIP", "~@Demo", "~@Slow"}) // Exclude slow tests if you want
+public class AcceptanceTests {
+}

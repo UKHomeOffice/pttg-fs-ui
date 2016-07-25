@@ -17,7 +17,11 @@ class WireMockTestDataLoader {
     def WireMockServer wireMockServer
 
     WireMockTestDataLoader() {
-        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(8080))
+        this(8080)
+    }
+
+    WireMockTestDataLoader(int port) {
+        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(port))
         wireMockServer.start()
 
         LOGGER.debug("")
@@ -63,10 +67,11 @@ class WireMockTestDataLoader {
         LOGGER.debug("Stubbing Response data with $fileName")
 
         stubFor(get(urlPathMatching(url))
-            .willReturn(aResponse()
-            .withBody(json)
-            .withHeader("Content-Type", "application/json")
-            .withStatus(200)));
+            .willReturn(
+            aResponse()
+                .withBody(json)
+                .withHeader("Content-Type", "application/json")
+                .withStatus(200)));
 
         println ''
         LOGGER.debug("Completed Stubbing Response data with $fileName")
@@ -150,4 +155,9 @@ class WireMockTestDataLoader {
     def stop() {
         wireMockServer.stop()
     }
+
+    def verifyGetCount(int count, String url){
+        verify(count, getRequestedFor(urlPathMatching(url)))
+    }
+
 }

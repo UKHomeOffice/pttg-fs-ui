@@ -52,6 +52,8 @@ class Steps {
     def uiPort = 8001
     def uiRoot = "http://$uiHost:$uiPort/"
 
+    def wiremockPort = 8080
+
     def pageUrls = [
         'studentType'       : uiRoot,
         'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
@@ -74,9 +76,9 @@ class Steps {
     def dateParts = ["Day", "Month", "Year"]
     def dateDelimiter = "/"
 
-    def innerLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('Yes', 'innerLondonBorough-1')
-        .withOption('No', 'innerLondonBorough-2')
+    def inLondonRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('Yes', 'inLondon-1')
+        .withOption('No', 'inLondon-2')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
@@ -87,7 +89,7 @@ class Steps {
     @Before
     def setUp(Scenario scenario) {
         if (wiremock) {
-            testDataLoader = new WireMockTestDataLoader()
+            testDataLoader = new WireMockTestDataLoader(wiremockPort)
         }
     }
 
@@ -180,8 +182,8 @@ class Steps {
             } else {
                 def element = driver.findElement(By.id(key))
 
-                if (key == "innerLondonBorough") {
-                    clickRadioButton(driver, innerLondonRadio, v)
+                if (key == "inLondon") {
+                    clickRadioButton(driver, inLondonRadio, v)
 
                 } else if (key == "studentType") {
                     clickRadioButton(driver, studentTypeRadio, v)
@@ -278,7 +280,7 @@ class Steps {
 
         Map<String, String> validDefaultEntries = [
             'End date'                       : '30/05/2016',
-            'Inner London borough'           : 'Yes',
+            'In London'                      : 'Yes',
             'Course length'                  : '1',
             'Accommodation fees already paid': '0',
             'Number of dependants'           : '1',
@@ -305,6 +307,15 @@ class Steps {
         def url = pageUrls[toCamelCase(pageName)]
         driver.get(url)
         assertCurrentPage(toCamelCase(pageName))
+    }
+
+    @When("^after at least (\\d+) seconds\$")
+    def after_at_least_x_seconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (Exception e) {
+            assert false: 'Sleep interrupted'
+        }
     }
 
     @Then("^the service displays the following message\$")
@@ -352,7 +363,7 @@ class Steps {
     }
 
     @Then("^the error summary list contains the text\$")
-    public void the_error_summary_list_contains_the_text(DataTable expectedText){
+    public void the_error_summary_list_contains_the_text(DataTable expectedText) {
 
         List<String> errorSummaryTextItems = expectedText.asList(String.class)
 
@@ -362,6 +373,11 @@ class Steps {
         errorSummaryTextItems.each {
             assert errorText.contains(it): "Error text did not contain: $it"
         }
+    }
+
+    @Then("^the connection attempt count should be (\\d+)\$")
+    def the_connection_attempt_count_should_be_count(int count) {
+        testDataLoader.verifyGetCount(count, thresholdUrlRegex)
     }
 
 }

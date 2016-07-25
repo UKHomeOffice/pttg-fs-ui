@@ -10,7 +10,7 @@ public final class Course {
 
 
     @NotNull(message = "Missing parameter")
-    private Boolean innerLondonBorough;
+    private Boolean inLondon;
 
     @NotNull(message = "Missing parameter")
     private Integer courseLength;
@@ -22,18 +22,18 @@ public final class Course {
 
     }
 
-    public Course(Boolean innerLondonBorough, Integer courseLength, String studentType) {
-        this.innerLondonBorough = innerLondonBorough;
+    public Course(Boolean inLondon, Integer courseLength, String studentType) {
+        this.inLondon = inLondon;
         this.courseLength = courseLength;
         this.studentType = studentType;
     }
 
-    public Boolean getInnerLondonBorough() {
-        return innerLondonBorough;
+    public Boolean getInLondon() {
+        return inLondon;
     }
 
-    public void setInnerLondonBorough(Boolean innerLondonBorough) {
-        this.innerLondonBorough = innerLondonBorough;
+    public void setInLondon(Boolean inLondon) {
+        this.inLondon = inLondon;
     }
 
     public Integer getCourseLength() {
@@ -55,7 +55,7 @@ public final class Course {
     @Override
     public String toString() {
         return "Course{" +
-            "innerLondonBorough=" + innerLondonBorough +
+            "inLondon=" + inLondon +
             ", courseLength=" + courseLength +
             '}';
     }
@@ -67,7 +67,7 @@ public final class Course {
 
         Course course = (Course) o;
 
-        if (innerLondonBorough != null ? !innerLondonBorough.equals(course.innerLondonBorough) : course.innerLondonBorough != null)
+        if (inLondon != null ? !inLondon.equals(course.inLondon) : course.inLondon != null)
             return false;
         if (courseLength != null ? !courseLength.equals(course.courseLength) : course.courseLength != null)
             return false;
@@ -77,7 +77,7 @@ public final class Course {
 
     @Override
     public int hashCode() {
-        int result = innerLondonBorough != null ? innerLondonBorough.hashCode() : 0;
+        int result = inLondon != null ? inLondon.hashCode() : 0;
         result = 31 * result + (courseLength != null ? courseLength.hashCode() : 0);
         result = 31 * result + (studentType != null ? studentType.hashCode() : 0);
         return result;
