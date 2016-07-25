@@ -67,7 +67,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) student (doctorate extension scheme) |
-
+            | Page sub heading   | Tier 4 (General) student (doctorate extension scheme) |
+            | course-length-hint | Enter the number of months, up to 2 months            |
 
 

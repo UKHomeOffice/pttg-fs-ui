@@ -75,4 +75,5 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) student |
+            | Page sub heading   | Tier 4 (General) student                   |
+            | course-length-hint | Enter the number of months, up to 9 months |
