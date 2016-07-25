@@ -44,15 +44,15 @@ Feature:
             | Sort code                       | 11-11-12   |
             | Account number                  | 11111112   |
         Then the service displays the following result
-            | Outcome                         | Not passed                                  |
-            | Total funds required            | £2,530.00                                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                    |
-            | Student type                    | Tier 4 (General) doctorate extension scheme |
-            | In London                       | Yes                                         |
-            | Course length                   | 2                                           |
-            | Accommodation fees already paid | £0.00                                       |
-            | Sort code                       | 11-11-12                                    |
-            | Account number                  | 77777777                                    |
+            | Outcome                         | Not passed                                            |
+            | Total funds required            | £2,530.00                                             |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
+            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | In London                       | Yes                                                   |
+            | Course length                   | 2                                                     |
+            | Accommodation fees already paid | £0.00                                                 |
+            | Sort code                       | 11-11-12                                              |
+            | Account number                  | 11111112                                              |
 
 
     Scenario: Shelly is a Non Doctorate inner London student and has sufficient funds (On a daily basis the closing
@@ -91,24 +91,26 @@ Feature:
             | Number of dependants            | 0          |
             | Accommodation fees already paid | 250.50     |
             | Sort code                       | 22-22-23   |
-            | Account number                  | 88888888   |
+            | Account number                  | 88888889   |
         Then the service displays the following result
-            | Outcome                    | Passed                                      |
-            | Total funds required       | £2,279.50                                   |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016                    |
-            | Student type               | Tier 4 (General) doctorate extension scheme |
-            | Sort code                  | 22-22-23                                    |
-            | Account number             | 88888888                                    |
+            | Outcome                    | Passed                                                |
+            | Total funds required       | £2,279.50                                             |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                              |
+            | Student type               | Tier 4 (General) student (doctorate extension scheme) |
+            | Sort code                  | 22-22-23                                              |
+            | Account number             | 88888889                                              |
 
     Scenario: Shelly is a Non Doctorate not inner London student and does not have sufficient funds
     (On a daily basis the closing balance in her account is < than the Total funds required - at £5029)
     She has < than the threshold for the previous 28 days
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course length                   | 2          |
             | Total tuition fees              | 3000.00    |
+            | Number of dependants            | 0          |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 33-33-33   |
@@ -130,11 +132,13 @@ Feature:
     (On a daily basis the closing balance in her account is >= than the Total funds required - at £23335)
     She has >= than the threshold for the previous 28 days
         Given caseworker is using the financial status service ui
+        And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course length                   | 9          |
             | Total tuition fees              | 15500.00   |
+            | Number of dependants            | 0          |
             | Tuition fees already paid       | 100        |
             | Accommodation fees already paid | 1200       |
             | Sort code                       | 44-44-44   |
