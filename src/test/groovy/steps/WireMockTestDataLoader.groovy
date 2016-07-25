@@ -1,6 +1,7 @@
 package steps
 
 import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.http.Fault
 import org.slf4j.Logger
@@ -21,8 +22,9 @@ class WireMockTestDataLoader {
     }
 
     WireMockTestDataLoader(int port) {
-        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(port))
+        wireMockServer = new WireMockServer(port)
         wireMockServer.start()
+        WireMock.configureFor("127.0.0.1", port);
 
         LOGGER.debug("")
         LOGGER.debug("")
