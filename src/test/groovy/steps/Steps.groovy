@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.retry.annotation.EnableRetry
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.web.WebAppConfiguration
 import uk.gov.digital.ho.proving.financial.ServiceRunner
@@ -77,9 +76,9 @@ class Steps {
     def dateParts = ["Day", "Month", "Year"]
     def dateDelimiter = "/"
 
-    def innerLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('Yes', 'innerLondonBorough-1')
-        .withOption('No', 'innerLondonBorough-2')
+    def inLondonRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('Yes', 'inLondon-1')
+        .withOption('No', 'inLondon-2')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
@@ -183,8 +182,8 @@ class Steps {
             } else {
                 def element = driver.findElement(By.id(key))
 
-                if (key == "innerLondonBorough") {
-                    clickRadioButton(driver, innerLondonRadio, v)
+                if (key == "inLondon") {
+                    clickRadioButton(driver, inLondonRadio, v)
 
                 } else if (key == "studentType") {
                     clickRadioButton(driver, studentTypeRadio, v)
@@ -281,7 +280,7 @@ class Steps {
 
         Map<String, String> validDefaultEntries = [
             'End date'                       : '30/05/2016',
-            'Inner London borough'           : 'Yes',
+            'In London'                      : 'Yes',
             'Course length'                  : '1',
             'Accommodation fees already paid': '0',
             'Number of dependants'           : '1',
@@ -311,11 +310,11 @@ class Steps {
     }
 
     @When("^after at least (\\d+) seconds\$")
-    def after_at_least_x_seconds(int seconds){
-        try{
-            Thread.sleep(seconds*1000);
-        } catch(Exception e){
-            assert false : 'Sleep interrupted'
+    def after_at_least_x_seconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (Exception e) {
+            assert false: 'Sleep interrupted'
         }
     }
 
@@ -364,7 +363,7 @@ class Steps {
     }
 
     @Then("^the error summary list contains the text\$")
-    public void the_error_summary_list_contains_the_text(DataTable expectedText){
+    public void the_error_summary_list_contains_the_text(DataTable expectedText) {
 
         List<String> errorSummaryTextItems = expectedText.asList(String.class)
 
@@ -377,7 +376,7 @@ class Steps {
     }
 
     @Then("^the connection attempt count should be (\\d+)\$")
-    def the_connection_attempt_count_should_be_count(int count){
+    def the_connection_attempt_count_should_be_count(int count) {
         testDataLoader.verifyGetCount(count, thresholdUrlRegex)
     }
 

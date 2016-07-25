@@ -11,7 +11,7 @@ describe('coreController', function () {
         q = $q;
 
         restService = {
-            checkFinancialStatus: function (accountNumber, sortCode, endDate, innerLondonBorough, studentType, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
+            checkFinancialStatus: function (accountNumber, sortCode, endDate, inLondon, studentType, courseLength, totalTuitionFees, tuitionFeesAlreadyPaid, accommodationFeesAlreadyPaid) {
             }
         };
 
@@ -308,7 +308,7 @@ describe('coreController', function () {
         expect(coreController.model.endDateYear).toBe('');
         expect(coreController.model.numberOfDependants).toBe('');
         expect(coreController.model.courseLength).toBe('');
-        expect(coreController.model.innerLondonBorough).toBe('');
+        expect(coreController.model.inLondon).toBe('');
     });
 
     function initialiseModelWithValues(){
@@ -319,7 +319,7 @@ describe('coreController', function () {
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';
         coreController.model.sortCodeThird = '03';
-        coreController.model.innerLondonBorough = 'yes';
+        coreController.model.inLondon = 'yes';
         coreController.model.studentType = 'doctorate';
         coreController.model.courseLength = 1;
         coreController.model.totalTuitionFees = 1;

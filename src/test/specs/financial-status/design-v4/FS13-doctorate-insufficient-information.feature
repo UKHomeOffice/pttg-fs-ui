@@ -7,7 +7,7 @@ Feature: Insufficient Information
         Given no record for the account
         When the financial status check is performed with
             | End date                        | 10/06/2016 |
-            | Inner London borough            | No         |
+            | In London                       | No         |
             | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |

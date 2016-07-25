@@ -20,7 +20,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | 28-day period checked |
         And the service displays the following your search headers in order
             | Student type                    |
-            | Inner London borough            |
+            | In London                       |
             | Course length                   |
             | Total tuition fees              |
             | Tuition fees already paid       |
@@ -44,10 +44,10 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Total funds required              |
             | 28-day period checked             |
             | Date total funds required not met |
-            | Amount on that date               |
+            | Lowest balance on this date       |
         And the service displays the following your search headers in order
             | Student type                    |
-            | Inner London borough            |
+            | In London                       |
             | Course length                   |
             | Total tuition fees              |
             | Tuition fees already paid       |

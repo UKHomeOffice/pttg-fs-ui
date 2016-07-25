@@ -16,7 +16,7 @@
             accountNumber,
             sortCode,
             toDate,
-            innerLondonBorough,
+            inLondon,
             studentType,
             courseLength,
             totalTuitionFees,
@@ -27,7 +27,7 @@
             return $http.get(url, {
                 params: {
                     toDate: toDate,
-                    innerLondonBorough: innerLondonBorough,
+                    inLondon: inLondon,
                     studentType: studentType,
                     courseLength: courseLength,
                     totalTuitionFees: totalTuitionFees,

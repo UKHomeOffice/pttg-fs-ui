@@ -8,7 +8,7 @@ Feature:
         And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 6          |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -20,7 +20,7 @@ Feature:
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
             | Student type                    | Tier 4 (General) student |
-            | Inner London borough            | Yes                      |
+            | In London                       | Yes                      |
             | Course length                   | 6                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -36,7 +36,7 @@ Feature:
         And the doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 2          |
             | Accommodation fees already paid | 0          |
             | Sort code                       | 11-11-12   |
@@ -46,7 +46,7 @@ Feature:
             | Total funds required            | £2,530.00                                   |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                    |
             | Student type                    | Tier 4 (General) doctorate extension scheme |
-            | Inner London borough            | Yes                                         |
+            | In London                       | Yes                                         |
             | Course length                   | 2                                           |
             | Accommodation fees already paid | £0.00                                       |
             | Sort code                       | 11-11-12                                    |
@@ -60,7 +60,7 @@ Feature:
         And the non-doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 9          |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
@@ -83,7 +83,7 @@ Feature:
         And the doctorate student type is chosen
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | Yes        |
+            | In London                       | Yes        |
             | Course length                   | 2          |
             | Accommodation fees already paid | 250.50     |
             | Sort code                       | 22-22-23   |
@@ -102,7 +102,7 @@ Feature:
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | No         |
+            | In London                       | No         |
             | Course length                   | 2          |
             | Total tuition fees              | 3000.00    |
             | Tuition fees already paid       | 0          |
@@ -113,7 +113,7 @@ Feature:
             | Outcome                         | Not passed               |
             | Total funds required            | £5,030.00                |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Inner London borough            | No                       |
+            | In London                       | No                       |
             | Course length                   | 2                        |
             | Total tuition fees              | £3,000.00                |
             | Tuition fees already paid       | £0.00                    |
@@ -128,7 +128,7 @@ Feature:
         Given caseworker is using the financial status service ui
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
-            | Inner London borough            | No         |
+            | In London                       | No         |
             | Course length                   | 9          |
             | Total tuition fees              | 15500.00   |
             | Tuition fees already paid       | 100        |
