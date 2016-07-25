@@ -22,7 +22,7 @@ import static java.util.concurrent.TimeUnit.SECONDS
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 @TestPropertySource(properties = [
-    "api.root=http://localhost:8080",
+    "api.root=http://localhost:8989",
     "rest.connection.connection-request-timeout=200",
     "rest.connection.connect-timeout=200",
     "rest.connection.read-timeout=200",
@@ -47,7 +47,7 @@ class ServiceConnRetryIntegrationSpec extends Specification {
         restTemplate = new TestRestTemplate()
         url = "http://localhost:" + port + path + params
 
-        apiServerMock = new WireMockTestDataLoader(8080)
+        apiServerMock = new WireMockTestDataLoader(8989)
     }
 
     @Timeout(value = 4, unit = SECONDS) // ensure it doesn't accidentally run forever...
