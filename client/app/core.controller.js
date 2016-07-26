@@ -28,6 +28,20 @@
 
         initialise();
 
+        vm.getCourseLength = function () {
+            var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
+            var end = moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true);
+            var months = end.diff(start, 'months', true);
+            return months;
+        };
+
+        vm.getCourseDatesChecked = function () {
+            var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
+            var end = moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true);
+
+            return start.format(DATE_DISPLAY_FORMAT) + ' to ' + end.format(DATE_DISPLAY_FORMAT);
+        };
+
         vm.formatMoneyWholePounds = function (moneyToFormat) {
             return accounting.formatMoney(moneyToFormat, {symbol: CURRENCY_SYMBOL, precision: 0});
         };
@@ -43,10 +57,23 @@
                 vm.formatDate(vm.model.periodCheckedTo)
         }
 
+        vm.getFullDate = function (d, m, y) {
+            var month = m.length > 1 ? m : '0' + m;
+            var day = d.length > 1 ? d : '0' + d
+            var result = y + '-' + month + '-' + day;
+            return result;
+        };
+
         vm.getFullEndDate = function () {
-            var month = vm.model.endDateMonth.length > 1 ? vm.model.endDateMonth : '0' + vm.model.endDateMonth;
-            var day = vm.model.endDateDay.length > 1 ? vm.model.endDateDay : '0' + vm.model.endDateDay
-            return vm.model.endDateYear + '-' + month + '-' + day;
+            return vm.getFullDate(vm.model.endDateDay, vm.model.endDateMonth, vm.model.endDateYear);
+        };
+
+        vm.getFullCourseStartDate = function () {
+            return vm.getFullDate(vm.model.courseStartDateDay, vm.model.courseStartDateMonth, vm.model.courseStartDateYear);
+        };
+
+        vm.getFullCourseEndDate = function () {
+            return vm.getFullDate(vm.model.courseEndDateDay, vm.model.courseEndDateMonth, vm.model.courseEndDateYear);
         };
 
         vm.formatEndDate = function () {
@@ -74,7 +101,7 @@
             vm.model.accountNumberChecked = vm.model.accountNumber;
             vm.model.sortCodeChecked = vm.getFullSortCode();
             vm.model.inLondonChecked = vm.model.inLondon == 'true' ? 'Yes' : 'No';
-            vm.model.courseLengthChecked = vm.model.courseLength;
+            vm.model.courseDatesChecked = vm.getCourseDatesChecked();
             vm.model.totalTuitionFeesChecked = vm.model.totalTuitionFees;
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
             vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
@@ -82,7 +109,6 @@
         }
 
         vm.submit = function () {
-
             if (validateForm()) {
 
                 restService.checkFinancialStatus(
@@ -132,11 +158,20 @@
         };
 
         function initialise() {
+
             vm.model = {
 
                 endDateDay: '',
                 endDateMonth: '',
                 endDateYear: '',
+
+                courseEndDateDay: '',
+                courseEndDateMonth: '',
+                courseEndDateYear: '',
+
+                courseStartDateDay: '',
+                courseStartDateMonth: '',
+                courseStartDateYear: '',
 
                 inLondon: '',
                 studentType: '',
@@ -177,6 +212,12 @@
             vm.endDateInvalidError = false;
             vm.endDateMissingError = false;
 
+            vm.courseEndDateInvalidError = false;
+            vm.courseEndDateMissingError = false;
+
+            vm.courseStartDateInvalidError = false;
+            vm.courseStartDateMissingError = false;
+
             vm.inLondonInvalidError = false;
             vm.inLondonMissingError = false;
 
@@ -205,6 +246,19 @@
 
             vm.serverError = '';
             vm.serverErrorDetail = '';
+
+            // if refreshing on a query page, default the student type
+            // to that reflected in the url
+            switch($location.path()) {
+                case '/financial-status-query-non-doctorate':
+                    vm.model.studentType = 'nondoctorate';
+                    vm.model.doctorate = false;
+                    break;
+                case '/financial-status-query-doctorate':
+                    vm.model.studentType = 'doctorate';
+                    vm.model.doctorate = true;
+                    break;
+            };
         }
 
         function clearErrors() {
@@ -215,6 +269,12 @@
             vm.inLondonMissingError = false;
 
             vm.studentTypeMissingError = false;
+
+            vm.courseEndDateInvalidError = false;
+            vm.courseEndDateMissingError = false;
+
+            vm.courseStartDateInvalidError = false;
+            vm.courseStartDateMissingError = false;
 
             vm.courseLengthInvalidError = false;
             vm.courseLengthMissingError = false;
@@ -268,22 +328,42 @@
                 validated = false;
             }
 
-            if (vm.model.courseLength === '' || vm.model.courseLength === null) {
-                vm.queryForm.courseLength.$setValidity(false);
-                vm.courseLengthMissingError = true;
+
+            // validate the course start date
+            if (vm.model.courseStartDateDay === null ||
+                vm.model.courseStartDateMonth === null ||
+                vm.model.courseStartDateYear === null) {
+                vm.queryForm.courseStartDateDay.$setValidity(false);
+                vm.queryForm.courseStartDateMonth.$setValidity(false);
+                vm.queryForm.courseStartDateYear.$setValidity(false);
+                vm.courseStartDateMissingError = true;
                 validated = false;
-            } else if (vm.model.courseLength !== null && !(NON_ZERO_WHOLE_NUMBER_REGEX.test(vm.model.courseLength))) {
-                vm.queryForm.courseLength.$setValidity(false);
-                vm.courseLengthInvalidError = true;
+            } else if (!moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                vm.courseStartDateInvalidError = true;
                 validated = false;
-            } else if (!vm.model.doctorate && vm.model.courseLength > 9) {
-                vm.queryForm.courseLength.$setValidity(false);
-                vm.courseLengthInvalidError = true;
+            }
+
+
+            // validate the course end date
+            if (vm.model.courseEndDateDay === null ||
+                vm.model.courseEndDateMonth === null ||
+                vm.model.courseEndDateYear === null) {
+                vm.queryForm.courseEndDateDay.$setValidity(false);
+                vm.queryForm.courseEndDateMonth.$setValidity(false);
+                vm.queryForm.courseEndDateYear.$setValidity(false);
+                vm.courseEndDateMissingError = true;
                 validated = false;
-            } else if (vm.model.doctorate && vm.model.courseLength > 2) {
-                vm.queryForm.courseLength.$setValidity(false);
-                vm.courseLengthInvalidError = true;
+            } else if (!moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                vm.courseEndDateInvalidError = true;
                 validated = false;
+            }
+
+            // set the course length based on the start and end dates
+            vm.model.courseLength = Math.ceil(vm.getCourseLength());
+            if (vm.model.studentType == 'doctorate') {
+                vm.courseLengthInvalidError = (vm.model.courseLength > 2) ? true : false;
+            } else {
+                vm.courseLengthInvalidError = (vm.model.courseLength > 9) ? true : false;
             }
 
             if (!vm.model.doctorate) {
@@ -362,7 +442,6 @@
 
 
         vm.submitStudentType = function () {
-
             if (validateStudentTypeForm()) {
                 vm.model.studentTypeChecked = vm.model.studentType == 'doctorate' ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
                 vm.model.doctorate = vm.model.studentType == 'doctorate' ? true : false;
