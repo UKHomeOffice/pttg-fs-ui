@@ -68,7 +68,7 @@ Feature:
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/02/2017 |
+            | Course end date                 | 28/02/2017 |
             | Total tuition fees              | 9755.50    |
             | Number of dependants            | 0          |
             | Tuition fees already paid       | 500        |
@@ -79,7 +79,7 @@ Feature:
             | Outcome                    | Passed                   |
             | Total funds required       | £20,390.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Course dates checked       | 03/05/2016 to 30/02/2017 |
+            | Course dates checked       | 03/05/2016 to 28/02/2017 |
             | Student type               | Tier 4 (General) student |
             | Sort code                  | 22-22-22                 |
             | Account number             | 88888888                 |
@@ -147,7 +147,7 @@ Feature:
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/02/2017 |
+            | Course end date                 | 28/02/2017 |
             | Total tuition fees              | 15500.00   |
             | Number of dependants            | 0          |
             | Tuition fees already paid       | 100        |
@@ -158,7 +158,7 @@ Feature:
             | Outcome                    | Passed                   |
             | Total funds required       | £23,335.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Course dates checked       | 03/05/2016 to 30/02/2017 |
+            | Course dates checked       | 03/05/2016 to 28/02/2017 |
             | Sort code                  | 44-44-44                 |
             | Account number             | 13131313                 |
 
