@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-    features = {"src/test/specs/financial-status/design-v4"},
+    features = {"src/test/specs/financial-status/design-v5"},
     glue = {"steps"},
     tags = {"~@WIP", "~@Demo"})
     //tags = {"~@WIP", "~@Demo", "~@Slow"}) // Exclude slow tests if you want

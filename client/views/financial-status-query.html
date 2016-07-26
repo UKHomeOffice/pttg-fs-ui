@@ -43,6 +43,25 @@
                         <li ng-if="vm.studentTypeMissingError">
                             <a href="" ng-click="vm.scrollTo('student-type-label')">The student type is invalid</a></li>
 
+
+                        <li ng-if="vm.courseStartDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('course-start-date-label')">The course start date is
+                                invalid</a></li>
+
+                        <li ng-if="vm.courseStartDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('course-start-date-label')">The course start date is
+                                invalid</a></li>
+
+
+                        <li ng-if="vm.courseEndDateMissingError">
+                            <a href="" ng-click="vm.scrollTo('course-end-date-label')">The course end date is
+                                invalid</a></li>
+
+                        <li ng-if="vm.courseEndDateInvalidError">
+                            <a href="" ng-click="vm.scrollTo('course-end-date-label')">The course end date is
+                                invalid</a></li>
+
+
                         <li ng-if="vm.courseLengthInvalidError">
                             <a href="" ng-click="vm.scrollTo('course-length-label')">The course length is invalid</a></li>
 
@@ -151,7 +170,84 @@
                     </fieldset>
                 </div>
 
-                <div class="form-group"
+
+                <div class="form-group " id="course-start-date"
+                     ng-class="{error : vm.courseStartDateMissingError || vm.courseStartDateInvalidError}">
+
+                    <fieldset>
+                        <legend class="form-label-bold" id="course-start-date-label">Course start date</legend>
+                        <div class="form-date">
+                            <span id="course-start-date-error" class="error-message"
+                                  ng-if="vm.courseStartDateMissingError || vm.courseStartDateInvalidError">
+                                      Enter a valid course start date</span>
+                            <span id="course-length-error" class="error-message"
+                                  ng-if="vm.courseLengthInvalidError || vm.courseLengthMissingError">
+                                      Enter a valid course length</span>
+                            <div class="form-group form-group-day">
+                                <label for="courseStartDateDay">Day</label>
+                                <input class="form-control" name="courseStartDateDay"
+                                       id="courseStartDateDay" type="text"
+                                       ng-model="vm.model.courseStartDateDay" autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-month">
+                                <label for="courseStartDateMonth">Month</label>
+                                <input class="form-control" name="courseStartDateMonth"
+                                       id="courseStartDateMonth"
+                                       type="text" ng-model="vm.model.courseStartDateMonth"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="courseStartDateYear">Year</label>
+                                <input class="form-control" name="courseStartDateYear"
+                                       id="courseStartDateYear" type="text"
+                                       ng-model="vm.model.courseStartDateYear"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+
+                <div class="form-group " id="course-end-date"
+                     ng-class="{error : vm.courseEndDateMissingError || vm.courseEndDateInvalidError}">
+
+                    <fieldset>
+                        <legend class="form-label-bold" id="course-end-date-label">Course end date</legend>
+                        <div class="form-date">
+                            <span id="course-end-date-error" class="error-message"
+                                  ng-if="vm.courseEndDateMissingError || vm.courseEndDateInvalidError">
+                                Enter a valid course end date</span>
+                            <div class="form-group form-group-day">
+                                <label for="courseEndDateDay">Day</label>
+                                <input class="form-control" name="courseEndDateDay"
+                                       id="courseEndDateDay" type="text"
+                                       ng-model="vm.model.courseEndDateDay" autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-month">
+                                <label for="courseEndDateMonth">Month</label>
+                                <input class="form-control" name="courseEndDateMonth"
+                                       id="courseEndDateMonth"
+                                       type="text" ng-model="vm.model.courseEndDateMonth"
+                                       autocomplete="off">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="courseEndDateYear">Year</label>
+                                <input class="form-control" name="courseEndDateYear"
+                                       id="courseEndDateYear" type="text"
+                                       ng-model="vm.model.courseEndDateYear"
+                                       autocomplete="off">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <!-- <div class="form-group"
                      ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
                     <label class="form-label-bold" for="courseLength" id="course-length-label">
                         Course length
@@ -163,7 +259,7 @@
                                     Enter a valid course length</span>
                     <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
                            ng-model="vm.model.courseLength" autocomplete="off">
-                </div>
+                </div> -->
 
                 <div ng-if="!vm.model.doctorate"
                      class="form-group"

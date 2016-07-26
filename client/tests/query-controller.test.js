@@ -109,7 +109,7 @@ describe('coreController', function () {
 
         initialiseModelWithValues();
 
-        coreController.submit()
+        coreController.submit();
 
         expect(coreController.validateError).toBeFalsy();
         expect(restService.checkFinancialStatus).toHaveBeenCalled();
@@ -315,6 +315,15 @@ describe('coreController', function () {
         coreController.model.endDateDay = '30';
         coreController.model.endDateMonth = '1';
         coreController.model.endDateYear = '2015';
+
+        coreController.model.courseStartDateDay = '13';
+        coreController.model.courseStartDateMonth = '5';
+        coreController.model.courseStartDateYear = '2016';
+
+        coreController.model.courseEndDateDay = '13';
+        coreController.model.courseEndDateMonth = '9';
+        coreController.model.courseEndDateYear = '2016';
+
         coreController.model.accountNumber = '12345678';
         coreController.model.sortCodeFirst = '20';
         coreController.model.sortCodeSecond = '02';

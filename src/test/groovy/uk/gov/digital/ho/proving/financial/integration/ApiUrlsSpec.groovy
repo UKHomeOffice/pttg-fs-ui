@@ -45,7 +45,7 @@ class ApiUrlsSpec extends Specification {
 
         url.path == thresholdEndpoint
 
-        url.query == 'innerLondon=true&studentType=doctorate&courseLength=1&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
+        url.query == 'inLondon=true&studentType=doctorate&courseLength=1&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
     }
 
     def "generates daily balance url"() {
