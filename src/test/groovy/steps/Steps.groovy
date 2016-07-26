@@ -84,6 +84,7 @@ class Steps {
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
         .withOption('doctorate', 'studentType-2')
+        //.withOption('pgdd', 'studentType-3')
 
     def studentType
 
@@ -282,7 +283,8 @@ class Steps {
         Map<String, String> validDefaultEntries = [
             'End date'                       : '30/05/2016',
             'In London'                      : 'Yes',
-            'Course length'                  : '1',
+            'Course start date'              : '30/05/2016',
+            'Course end date'                : '30/06/2016',
             'Accommodation fees already paid': '0',
             'Number of dependants'           : '1',
             'Sort code'                      : '11-11-11',
