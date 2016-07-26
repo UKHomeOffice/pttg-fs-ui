@@ -36,7 +36,7 @@ public class ApiUrls {
         LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceEndpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdEndpoint)
-            .queryParam("innerLondon", course.getInLondon())
+            .queryParam("inLondon", course.getInLondon())
             .queryParam("studentType", course.getStudentType())
             .queryParam("courseLength", course.getCourseLength())
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
