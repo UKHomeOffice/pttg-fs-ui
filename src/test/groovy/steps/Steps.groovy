@@ -78,8 +78,8 @@ class Steps {
     def dateDelimiter = "/"
 
     def inLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('Yes', 'inLondon-1')
-        .withOption('No', 'inLondon-2')
+        .withOption('yes', 'inLondon-1')
+        .withOption('no', 'inLondon-2')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')

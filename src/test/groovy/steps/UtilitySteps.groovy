@@ -29,9 +29,11 @@ class UtilitySteps {
 
     def static clickRadioButton(WebDriver driver, RadioButtonConfig radioConfig, String value) {
 
-        if (radioConfig.options.containsKey(value)) {
+        def choice = value.toLowerCase()
 
-            String id = radioConfig.options.get(value)
+        if (radioConfig.options.containsKey(choice)) {
+
+            String id = radioConfig.options.get(choice)
 
             By byCss = By.cssSelector("[id='$id'][type='radio']")
             driver.findElement(byCss).click()
@@ -42,7 +44,7 @@ class UtilitySteps {
         def options = [:]
 
         def withOption(String choice, String id) {
-            options.put(choice, id)
+            options.put(choice.toLowerCase(), id)
             return this
         }
     }
