@@ -364,10 +364,13 @@
             // set the course length based on the start and end dates
             vm.model.courseLength = Math.ceil(vm.getCourseLength());
             if (vm.model.studentType == 'doctorate') {
+                vm.model.studentTypeChecked = STUDENT_TYPE_DOCTORATE_DISPLAY;
                 vm.courseLengthInvalidError = (vm.model.courseLength > 2 || vm.model.courseLength <= 0) ? true : false;
             } else {
+                vm.model.studentTypeChecked = STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
                 vm.courseLengthInvalidError = (vm.model.courseLength > 9 || vm.model.courseLength <= 0) ? true : false;
             }
+
 
             if (vm.courseLengthInvalidError) {
                 // the course length is invalid so stop
@@ -458,6 +461,8 @@
                 } else {
                     $location.path('/financial-status-query-non-doctorate');
                 }
+                // initialise after all functions etc are defined
+                initialise();
             } else {
                 vm.validateError = true;
             }
