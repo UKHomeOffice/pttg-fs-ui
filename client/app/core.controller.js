@@ -26,7 +26,7 @@
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
 
-        initialise();
+
 
         vm.getCourseLength = function () {
             var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
@@ -137,11 +137,13 @@
                             vm.model.minimumBalanceValue = data.minimumBalanceValue;
                             $location.path('/financial-status-result-not-pass');
                         }
+                        vm.scrollTo('content');
                     }).catch(function (error) {
                     $log.debug("received a non success result: " + error.status + " : " + error.statusText)
                     if (error.status === 404) {
                         copyInputs();
                         $location.path('/financial-status-no-record');
+                        vm.scrollTo('content');
                     } else {
                         vm.serverError = 'Unable to process your request, please try again.';
                         vm.serverErrorDetail = error.data.message;
@@ -159,7 +161,7 @@
         };
 
         function initialise() {
-
+            vm.scrollTo('content');
             vm.model = {
 
                 endDateDay: '',
@@ -478,6 +480,10 @@
 
             return validated;
         }
+
+
+        // initialise after all functions etc are defined
+        initialise();
     }
 
 })();
