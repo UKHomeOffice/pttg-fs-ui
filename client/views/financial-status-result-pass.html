@@ -27,8 +27,8 @@
             <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
         <tr>
-            <th>Course dates checked</th>
-            <td id="courseDatesChecked" scope="col">{{vm.model.courseDatesChecked}}</td>
+            <th>Course length</th>
+            <td id="courseLength" scope="col">{{vm.model.courseLength}}</td>
         </tr>
         </tbody>
     </table>
@@ -48,12 +48,10 @@
             <th>In London?</th>
             <td id="inLondon" scope="col">{{vm.model.inLondonChecked}}</td>
         </tr>
-
         <tr>
-            <th>Course length</th>
-            <td id="courseLength" scope="col">{{vm.model.courseLength}}</td>
+            <th>Course dates checked</th>
+            <td id="courseDatesChecked" scope="col">{{vm.model.courseDatesChecked}}</td>
         </tr>
-
         <tr ng-if="!vm.model.doctorate">
             <th>Total tuition fees for the first year</th>
             <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>

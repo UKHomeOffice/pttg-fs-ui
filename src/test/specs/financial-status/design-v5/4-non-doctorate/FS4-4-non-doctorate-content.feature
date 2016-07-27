@@ -18,11 +18,11 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
-            | Course dates checked  |
+            | Course length         |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course length                   |
+            | Course dates checked            |
             | Total tuition fees              |
             | Tuition fees already paid       |
             | Accommodation fees already paid |
@@ -44,13 +44,13 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the service displays the following results headers in order
             | Total funds required              |
             | 28-day period checked             |
-            | Course dates checked              |
+            | Course length                     |
             | Date total funds required not met |
             | Lowest balance on this date       |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course length                   |
+            | Course dates checked            |
             | Total tuition fees              |
             | Tuition fees already paid       |
             | Accommodation fees already paid |
