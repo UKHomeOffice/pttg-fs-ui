@@ -172,9 +172,9 @@
 
 
                 <div class="form-group " id="course-start-date"
-                     ng-class="{error : vm.courseStartDateMissingError || vm.courseStartDateInvalidError}">
+                     ng-class="{error : vm.courseStartDateMissingError || vm.courseStartDateInvalidError || vm.courseLengthInvalidError}">
 
-                    <fieldset>
+                <fieldset>
                         <legend class="form-label-bold" id="course-start-date-label">Course start date</legend>
                         <div class="form-date">
                             <span id="course-start-date-error" class="error-message"
@@ -212,9 +212,9 @@
 
 
                 <div class="form-group " id="course-end-date"
-                     ng-class="{error : vm.courseEndDateMissingError || vm.courseEndDateInvalidError}">
+                     ng-class="{error : vm.courseEndDateMissingError || vm.courseEndDateInvalidError || vm.courseLengthInvalidError}">
 
-                    <fieldset>
+                <fieldset>
                         <legend class="form-label-bold" id="course-end-date-label">Course end date</legend>
                         <div class="form-date">
                             <span id="course-end-date-error" class="error-message"
