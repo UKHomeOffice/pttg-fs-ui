@@ -32,6 +32,7 @@
             var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
             var end = moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true);
             var months = end.diff(start, 'months', true);
+            console.log('months', months);
             return months;
         };
 
@@ -361,9 +362,9 @@
             // set the course length based on the start and end dates
             vm.model.courseLength = Math.ceil(vm.getCourseLength());
             if (vm.model.studentType == 'doctorate') {
-                vm.courseLengthInvalidError = (vm.model.courseLength > 2) ? true : false;
+                vm.courseLengthInvalidError = (vm.model.courseLength > 2 || vm.model.courseLength <= 0) ? true : false;
             } else {
-                vm.courseLengthInvalidError = (vm.model.courseLength > 9) ? true : false;
+                vm.courseLengthInvalidError = (vm.model.courseLength > 9 || vm.model.courseLength <= 0) ? true : false;
             }
 
             if (vm.courseLengthInvalidError) {
