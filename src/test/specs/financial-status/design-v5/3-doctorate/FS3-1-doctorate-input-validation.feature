@@ -291,6 +291,34 @@ Feature: Show clear error details when inputs are invalid
             | validation-error-summary-heading | There's some invalid information |
             | course-length-error              | Enter a valid course length      |
 
+    Scenario: Case Worker enters invalid Course Length - same day
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/05/2016 |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | course-length-error              | Enter a valid course length      |
+
+    Scenario: Case Worker enters invalid Course Length - end date is before the start
+        When the financial status check is performed with
+            | End Date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/04/2016 |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | course-length-error              | Enter a valid course length      |
+
 
 ######################### Validation on the Accommodation fees already paid Field #########################
     Scenario: Case Worker does NOT enter Accommodation fees already paid
