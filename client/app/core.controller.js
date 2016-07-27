@@ -366,6 +366,11 @@
                 vm.courseLengthInvalidError = (vm.model.courseLength > 9) ? true : false;
             }
 
+            if (vm.courseLengthInvalidError) {
+                // the course length is invalid so stop
+                validated = false;
+            }
+
             if (!vm.model.doctorate) {
                 if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
                     vm.queryForm.totalTuitionFees.$setValidity(false);
