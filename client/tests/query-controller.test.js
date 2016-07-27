@@ -321,7 +321,7 @@ describe('coreController', function () {
         coreController.model.courseStartDateYear = '2016';
 
         coreController.model.courseEndDateDay = '13';
-        coreController.model.courseEndDateMonth = '9';
+        coreController.model.courseEndDateMonth = '6';
         coreController.model.courseEndDateYear = '2016';
 
         coreController.model.accountNumber = '12345678';
