@@ -247,19 +247,6 @@
                     </fieldset>
                 </div>
 
-                <!-- <div class="form-group"
-                     ng-class="{error : vm.courseLengthInvalidError || vm.courseLengthMissingError }">
-                    <label class="form-label-bold" for="courseLength" id="course-length-label">
-                        Course length
-                        <span ng-if="!vm.model.doctorate" class="form-hint" id="course-length-hint">Enter the number of months, up to 9 months</span>
-                        <span ng-if="vm.model.doctorate" class="form-hint" id="course-length-hint">Enter the number of months, up to 2 months</span>
-                    </label>
-                    <span id="course-length-error" class="error-message"
-                          ng-if="vm.courseLengthInvalidError || vm.courseLengthMissingError">
-                                    Enter a valid course length</span>
-                    <input type="number" class="form-control form-control-1-8" name="courseLength" id="courseLength"
-                           ng-model="vm.model.courseLength" autocomplete="off">
-                </div> -->
 
                 <div ng-if="!vm.model.doctorate"
                      class="form-group"
@@ -315,7 +302,7 @@
                     <span id="number-of-dependants-error" class="error-message"
                           ng-if="vm.numberOfDependantsInvalidError || vm.numberOfDependantsMissingError">
                                     Enter a valid number of dependants</span>
-                    <input type="number" class="form-control form-control-1-4"
+                    <input type="text" class="form-control form-control-1-4"
                              name="numberOfDependants"
                              id="numberOfDependants"
                              ng-model="vm.model.numberOfDependants" autocomplete="off">

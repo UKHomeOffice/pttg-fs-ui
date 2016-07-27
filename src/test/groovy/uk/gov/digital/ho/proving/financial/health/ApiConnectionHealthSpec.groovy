@@ -39,7 +39,5 @@ class ApiConnectionHealthSpec extends Specification {
 
         then:
         result.getStatus() == Status.UP
-
-        // todo tests for error status codes when we have a server healthcheck to call
     }
 }
