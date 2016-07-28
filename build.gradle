@@ -41,6 +41,7 @@ dependencies {
     testCompile libraries.jackson
     testCompile libraries.jersey
     testCompile libraries.json
+    testCompile libraries.restassured
     testCompile libraries.spock
     testCompile libraries.springTest
     testCompile libraries.testUtils

@@ -1,5 +1,6 @@
 package steps
 
+import com.jayway.restassured.response.Response
 import cucumber.api.DataTable
 import cucumber.api.Scenario
 import cucumber.api.java.After
@@ -21,6 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration
 import uk.gov.digital.ho.proving.financial.ServiceRunner
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 
+import static com.jayway.restassured.RestAssured.given
 import static java.util.concurrent.TimeUnit.SECONDS
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
@@ -53,6 +55,8 @@ class Steps {
     def uiPort = 8001
     def uiRoot = "http://$uiHost:$uiPort/"
 
+    def healthUriRegex = "/health"
+
     def wiremockPort = 8080
 
     def pageUrls = [
@@ -84,7 +88,6 @@ class Steps {
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
         .withOption('doctorate', 'studentType-2')
-        //.withOption('pgdd', 'studentType-3')
 
     def studentType
 
@@ -212,6 +215,14 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
+    def responseStatusFor(String url) {
+        Response response = given()
+            .get(url)
+            .then().extract().response();
+
+        return response.getStatusCode();
+    }
+
     @Given("^(?:caseworker|user) is using the financial status service ui\$")
     public void user_is_using_the_financial_status_service_ui() throws Throwable {
         driver.get(uiRoot)
@@ -254,6 +265,11 @@ class Steps {
     @Given("^the api response has status (\\d+)\$")
     public void the_api_response_has_status(int status) throws Throwable {
         testDataLoader.withResponseStatus(thresholdUrlRegex, status)
+    }
+
+    @Given("^the api health check response has status (\\d+)\$")
+    public void the_api_healthcheck_response_has_status(int status) throws Throwable {
+        testDataLoader.withResponseStatus(healthUriRegex, status)
     }
 
     @Given("^the api is unreachable\$")
@@ -383,4 +399,9 @@ class Steps {
         testDataLoader.verifyGetCount(count, thresholdUrlRegex)
     }
 
+    @Then("^the health check response status should be (\\d+)\$")
+    def the_response_status_should_be(int expected) {
+        driver.sleep(800) // Seems to need a delay to let wiremock catch up
+        assert responseStatusFor(uiRoot + "health") == expected
+    }
 }
