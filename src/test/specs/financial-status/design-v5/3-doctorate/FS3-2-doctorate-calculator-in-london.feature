@@ -35,7 +35,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Minimum Balance Value           | £100.00                                               |
             | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
             | In London                       | Yes                                                   |
-            | Course length                   | 2                                                     |
+            | Course length                   | 3                                                     |
             | Accommodation fees already paid | £0.00                                                 |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 11-11-12                                              |
@@ -60,7 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Course dates checked            | 30/05/2016 to 30/06/2016                              |
             | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
             | In London                       | Yes                                                   |
-            | Course length                   | 1                                                     |
+            | Course length                   | 2                                                     |
             | Accommodation fees already paid | £100.00                                               |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 22-22-23                                              |

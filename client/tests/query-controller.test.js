@@ -148,28 +148,28 @@ describe('coreController', function () {
         expect(coreController.validateError).toBeTruthy();
     });
 
-    it('sets the student type checked display text', function () {
-        spyOnSuccessful();
+    // it('sets the student type checked display text', function () {
+    //     spyOnSuccessful();
 
-        response = {
-            sortCode: 200203,
-            accountNumber: '12345678',
-            fundingRequirementMet: true,
-            periodCheckedFrom: '2015-01-03',
-            periodCheckedTo: '2015-01-30',
-            minimum: 1
-        }
+    //     response = {
+    //         sortCode: 200203,
+    //         accountNumber: '12345678',
+    //         fundingRequirementMet: true,
+    //         periodCheckedFrom: '2015-01-03',
+    //         periodCheckedTo: '2015-01-30',
+    //         minimum: 1
+    //     }
 
-        initialiseModelWithValues();
+    //     initialiseModelWithValues();
 
-        coreController.submitStudentType()  // doctorate
-        coreController.submit()
-        scope.$digest()
+    //     coreController.submitStudentType()  // doctorate
+    //     coreController.submit()
+    //     scope.$digest()
 
-        expect(coreController.validateError).toBeFalsy();
-        expect(restService.checkFinancialStatus).toHaveBeenCalled();
-        expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) student (doctorate extension scheme)");
-    });
+    //     expect(coreController.validateError).toBeFalsy();
+    //     expect(restService.checkFinancialStatus).toHaveBeenCalled();
+    //     expect(coreController.model.studentTypeChecked).toBe("Tier 4 (General) student (doctorate extension scheme)");
+    // });
 
 
     it('sets returned data from service on the model ', function () {
@@ -309,6 +309,39 @@ describe('coreController', function () {
         expect(coreController.model.numberOfDependants).toBe('');
         expect(coreController.model.courseLength).toBe('');
         expect(coreController.model.inLondon).toBe('');
+    });
+
+    describe('course length calculator', function () {
+        var tests = [
+            {start: '2016-07-01', end: '2016-07-01', result: 0},
+            {start: '2016-07-01', end: '2016-07-02', result: 1},
+            {start: '2016-07-02', end: '2016-07-01', result: 0},
+            {start: '2016-07-01', end: '2016-04-01', result: -2},
+            {start: '2016-07-01', end: '2016-08-01', result: 2},
+            {start: '2016-07-01', end: '2016-07-31', result: 1},
+            {start: '2016-04-01', end: '2016-07-31', result: 4},
+            {start: '2016-04-01', end: '2016-08-01', result: 5},
+            {start: '2016-04-01', end: '2017-04-01', result: 13},
+            {start: '2016-04-01', end: '2017-03-31', result: 12},
+        ];
+
+        _.each(tests, function (t) {
+            it('should calculate ' + t.result + ' months using start: ' + t.start + ', end: ' + t.end, function () {
+                coreController.model.courseStartDateDay = t.start.substr(8,2);
+                coreController.model.courseStartDateMonth = t.start.substr(5,2);
+                coreController.model.courseStartDateYear = t.start.substr(0,4);
+
+                coreController.model.courseEndDateDay = t.end.substr(8,2);
+                coreController.model.courseEndDateMonth = t.end.substr(5,2);
+                coreController.model.courseEndDateYear = t.end.substr(0,4);
+
+                var months = Math.ceil(coreController.getCourseLength());
+                // console.log(months, 'getCourseLength', t);
+                expect(months).toBe(t.result);
+            });
+        });
+
+
     });
 
     function initialiseModelWithValues(){

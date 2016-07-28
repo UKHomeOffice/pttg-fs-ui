@@ -33,7 +33,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Minimum Balance Value           | £100.00                  |
             | Student type                    | Tier 4 (General) student |
             | In London                       | Yes                      |
-            | Course length                   | 6                        |
+            | Course length                   | 7                        |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
             | Accommodation fees already paid | £0.00                    |

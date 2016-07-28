@@ -20,6 +20,7 @@ module.exports = function(config) {
         'bower_components/angular-mocks/angular-mocks.js',
         'bower_components/moment/moment.js',
         'bower_components/accounting/accounting.js',
+        'node_modules/underscore/underscore-min.js',
         'client/tests/*.test.js',
         'client/app/core.module.js',
         'client/app/app.module.js',
@@ -46,7 +47,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['spec'],
 
 
     // web server port
@@ -69,22 +70,22 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-         'PhantomJS'
+        'PhantomJS'
     ],
 
     plugins: [
-                'karma-jasmine',
-                'karma-ng-html2js-preprocessor',
-                'karma-phantomjs-launcher'
+        'karma-jasmine',
+        'karma-ng-html2js-preprocessor',
+        'karma-phantomjs-launcher',
+        'karma-spec-reporter'
      ],
 
      ngHtml2JsPreprocessor: {
         stripPrefix: '',
-           stripSuffix: '',
-           // prepend this to the
-           prependPrefix: '',
-
-       moduleName: 'templates'
+        stripSuffix: '',
+        // prepend this to the
+        prependPrefix: '',
+        moduleName: 'templates'
      },
 
 

@@ -32,6 +32,15 @@
             var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
             var end = moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true);
             var months = end.diff(start, 'months', true);
+            if (start.date() === end.date() && !start.isSame(end)) {
+                // when using moment diff months, the same day in months being compared
+                // rounds down the months
+                // eg 1st June to 1st July equals 1 month, NOT 1 month and 1 day which is the result we want
+                // therefore if the start and end days are equal add a day onto the month.
+                months += 1/31;
+            }
+
+
             return months;
         };
 

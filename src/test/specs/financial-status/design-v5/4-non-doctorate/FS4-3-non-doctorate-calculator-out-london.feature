@@ -16,7 +16,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
+            | Course end date                 | 29/07/2016 |
             | Total tuition fees              | 3000.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
@@ -27,7 +27,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Outcome                         | Not passed               |
             | Total funds required            | £16,090.00               |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Course dates checked            | 30/05/2016 to 30/07/2016 |
+            | Course dates checked            | 30/05/2016 to 29/07/2016 |
             | Minimum Balance Date            | 03/10/2016               |
             | Minimum Balance Value           | £100.00                  |
             | Student type                    | Tier 4 (General) student |
@@ -61,7 +61,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Course dates checked            | 30/05/2016 to 30/07/2016 |
             | Student type                    | Tier 4 (General) student |
             | In London                       | No                       |
-            | Course length                   | 2                        |
+            | Course length                   | 3                        |
             | Total tuition fees              | £15,500.00               |
             | Tuition fees already paid       | £100.00                  |
             | Accommodation fees already paid | £1,200.00                |
