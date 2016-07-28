@@ -32,7 +32,6 @@
             var start = moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true);
             var end = moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true);
             var months = end.diff(start, 'months', true);
-            console.log('months', months);
             return months;
         };
 
@@ -363,19 +362,16 @@
 
             // set the course length based on the start and end dates
             vm.model.courseLength = Math.ceil(vm.getCourseLength());
-            if (vm.model.studentType == 'doctorate') {
-                vm.model.studentTypeChecked = STUDENT_TYPE_DOCTORATE_DISPLAY;
-                vm.courseLengthInvalidError = (vm.model.courseLength > 2 || vm.model.courseLength <= 0) ? true : false;
-            } else {
-                vm.model.studentTypeChecked = STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
-                vm.courseLengthInvalidError = (vm.model.courseLength > 9 || vm.model.courseLength <= 0) ? true : false;
-            }
-
-
-            if (vm.courseLengthInvalidError) {
-                // the course length is invalid so stop
+            if (vm.model.courseLength <= 0) {
+                // course length must be greater than zero
+                // negative would indicate that the end date was before the start data
+                vm.courseLengthInvalidError = true;
                 validated = false;
             }
+
+            // make sure that the student type display string is correctly set for the results screens
+            vm.model.studentTypeChecked = (vm.model.studentType == 'doctorate') ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+
 
             if (!vm.model.doctorate) {
                 if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
