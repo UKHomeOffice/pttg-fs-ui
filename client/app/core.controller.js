@@ -409,7 +409,7 @@
                 vm.accommodationFeesAlreadyPaidMissingError = true;
                 validated = false;
             } else if (vm.model.accommodationFeesAlreadyPaid !== null) {
-                if (!(NUMBER_REGEX.test(vm.model.accommodationFeesAlreadyPaid)) || vm.model.accommodationFeesAlreadyPaid > 1265) {
+                if (!(NUMBER_REGEX.test(vm.model.accommodationFeesAlreadyPaid))) {
                     vm.queryForm.accommodationFeesAlreadyPaid.$setValidity(false);
                     vm.accommodationFeesAlreadyPaidInvalidError = true;
                     validated = false;
