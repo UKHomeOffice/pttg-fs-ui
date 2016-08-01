@@ -31,13 +31,9 @@
             <th>Course length</th>
             <td id="courseLength" scope="col">{{vm.model.courseLength}}</td>
         </tr>
-        <tr ng-if="vm.model.minimumBalanceDate != null">
-            <th>Date total funds required not met</th>
-            <td id="minimumBalanceDate" scope="col">{{vm.formatDate(vm.model.minimumBalanceDate)}}</td>
-        </tr>
         <tr ng-if="vm.model.minimumBalanceValue != null">
-            <th>Lowest balance on this date</th>
-            <td id="minimumBalanceValue" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimumBalanceValue)}}</td>
+            <th>Lowest balance</th>
+            <td id="minimumBalanceValue" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimumBalanceValue)}} on {{vm.formatDate(vm.model.minimumBalanceDate)}}</td>
         </tr>
         </tbody>
     </table>
@@ -58,7 +54,7 @@
             <td id="inLondon" scope="col">{{vm.model.inLondonChecked}}</td>
         </tr>
         <tr>
-            <th>Course dates checked</th>
+            <th>Course dates</th>
             <td id="courseDatesChecked" scope="col">{{vm.model.courseDatesChecked}}</td>
         </tr>
         <tr ng-if="!vm.model.doctorate">
