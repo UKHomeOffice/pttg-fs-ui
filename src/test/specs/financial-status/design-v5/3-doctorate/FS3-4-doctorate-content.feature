@@ -21,7 +21,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course dates checked            |
+            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
@@ -42,12 +42,11 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Total funds required              |
             | 28-day period checked             |
             | Course length                     |
-            | Date total funds required not met |
-            | Lowest balance on this date       |
+            | Lowest balance                    |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course dates checked            |
+            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
