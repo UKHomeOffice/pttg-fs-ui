@@ -292,7 +292,6 @@
                      ng-class="{error : vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError }">
                     <label class="form-label-bold" for="accommodationFeesAlreadyPaid" id="accommodation-fees-already-paid-label">
                         Accommodation fees already paid
-                        <span class="form-hint">Up to £1265</span>
                     </label>
                     <span id="accommodation-fees-already-paid-error" class="error-message"
                           ng-if="vm.accommodationFeesAlreadyPaidInvalidError || vm.accommodationFeesAlreadyPaidMissingError">
@@ -323,7 +322,7 @@
                     <fieldset>
                         <legend class="form-label-bold" id="sort-code-label">Sort code</legend>
                         <div class="form-date">
-                            <p class="form-hint">For example, 12 34 56</p>
+                            <span class="form-hint">For example, 12 34 56</span>
                             <span id="sort-code-error" class="error-message"
                                   ng-if="vm.sortCodeInvalidError || vm.sortCodeMissingError">
                                     Enter a valid sort code</span>
