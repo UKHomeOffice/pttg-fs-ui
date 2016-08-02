@@ -1,7 +1,7 @@
 Feature: Insufficient Information
     Tool identifies account number and sort code does not exist with Barclay's
 
-    Scenario: Caseworker enters account number and sort code where no records exist within the period stated
+    Scenario: No records exist within the period stated
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         Given no record for the account
