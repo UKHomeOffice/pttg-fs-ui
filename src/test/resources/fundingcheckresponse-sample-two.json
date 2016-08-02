@@ -3,5 +3,9 @@
     "periodCheckedFrom": "2015-10-03",
     "minimum": 100,
     "minimumBalanceDate": "2015-10-03",
-    "minimumBalanceValue": 100
+    "minimumBalanceValue": 100,
+    "cappedValues" : {
+        "accommodationFeesPaid": "1265.00",
+        "courseLength": 9
+    }
 }
