@@ -19,6 +19,7 @@ import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker
 import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult
+import uk.gov.digital.ho.proving.financial.model.CappedValues
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
 import java.util.concurrent.TimeUnit
@@ -92,7 +93,7 @@ class ServiceSpec extends Specification {
         converter
     }
 
-    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, new ResponseDetails("200", "OK")))
+    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, new CappedValues("100", 9), new ResponseDetails("200", "OK")))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, null, new ResponseDetails("200", "OK")))
 
     def apiRespondsWith(threshold, balance) {
