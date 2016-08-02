@@ -401,7 +401,21 @@ class Steps {
 
     @Then("^the health check response status should be (\\d+)\$")
     def the_response_status_should_be(int expected) {
-        driver.sleep(800) // Seems to need a delay to let wiremock catch up
-        assert responseStatusFor(uiRoot + "health") == expected
+
+        def result = getHealthCheckStatus()
+
+        // Sometimes needs a retry, not sure why
+        2.times {
+            if (result != expected) {
+                sleep(500)
+                result = getHealthCheckStatus()
+            }
+        }
+
+        assert result == expected
+    }
+
+    private int getHealthCheckStatus() {
+        responseStatusFor(uiRoot + "health")
     }
 }
