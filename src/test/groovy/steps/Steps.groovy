@@ -62,12 +62,14 @@ class Steps {
     def pageUrls = [
         'studentType'       : uiRoot,
         'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
-        'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate'
+        'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate',
+        'pgddQuery'         : uiRoot + '#/financial-status-query-pgdd',
     ]
 
     def pageLocations = [
         'studentType'       : '#/financial-status-student-type',
         'doctorateQuery'    : '#/financial-status-query-doctorate',
+        'pgddQuery'         : '#/financial-status-query-pgdd',
         'non-doctorateQuery': '#/financial-status-query-non-doctorate',
         'accountNotFound'   : '#/financial-status-no-record'
     ]
@@ -88,6 +90,7 @@ class Steps {
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('non-doctorate', 'studentType-1')
         .withOption('doctorate', 'studentType-2')
+        .withOption('pgdd', 'studentType-3')
 
     def studentType
 

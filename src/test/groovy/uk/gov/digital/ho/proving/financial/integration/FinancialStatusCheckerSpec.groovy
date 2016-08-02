@@ -4,10 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
-import uk.gov.digital.ho.proving.financial.model.Account
-import uk.gov.digital.ho.proving.financial.model.Course
-import uk.gov.digital.ho.proving.financial.model.Maintenance
-import uk.gov.digital.ho.proving.financial.model.ResponseDetails
+import uk.gov.digital.ho.proving.financial.model.*
 
 import java.time.LocalDate
 
@@ -42,7 +39,8 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def thresholdOf(BigDecimal minimum) {
         def threshold = BigDecimal.valueOf(minimum)
-        thresholdResponse = new ResponseEntity(new ThresholdResult(threshold, new ResponseDetails("200", "OK")), OK)
+        def thresholdResult = new ThresholdResult(threshold, new CappedValues("100", 9), new ResponseDetails("200", "OK"))
+        thresholdResponse = new ResponseEntity(thresholdResult, OK);
     }
 
     def 'delegates construction of api service urls'() {
@@ -93,7 +91,7 @@ class FinancialStatusCheckerSpec extends Specification {
         10     | 9
     }
 
-    def 'adds calculated threshold and fromDate to outgoing result' () {
+    def 'adds calculated threshold and fromDate to outgoing result'() {
 
         given:
         checker.daysToCheck = 10
