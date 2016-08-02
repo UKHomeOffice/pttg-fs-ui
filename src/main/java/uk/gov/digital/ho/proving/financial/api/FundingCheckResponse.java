@@ -10,6 +10,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
+import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
+import uk.gov.digital.ho.proving.financial.model.CappedValues;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -38,26 +40,34 @@ public final class FundingCheckResponse implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final BigDecimal minimumBalanceValue;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private final CappedValues cappedValues;
+
     @JsonCreator
     public FundingCheckResponse(@JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                                 @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
                                 @JsonProperty("minimum") BigDecimal minimum,
                                 @JsonProperty("minimumBalanceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate minimumBalanceDate,
-                                @JsonProperty("minimumBalanceValue") BigDecimal minimumBalanceValue
+                                @JsonProperty("minimumBalanceValue") BigDecimal minimumBalanceValue,
+                                @JsonProperty("cappedValues") CappedValues cappedValues
     ) {
         this.fundingRequirementMet = fundingRequirementMet;
         this.periodCheckedFrom = periodCheckedFrom;
         this.minimum = minimum;
         this.minimumBalanceDate = minimumBalanceDate;
         this.minimumBalanceValue = minimumBalanceValue;
+        this.cappedValues = cappedValues;
     }
 
-    public FundingCheckResponse(DailyBalanceStatusResult result) {
-        this.fundingRequirementMet = result.isPass();
-        this.periodCheckedFrom = result.getFromDate();
-        this.minimum = result.getMinimum();
-        this.minimumBalanceDate = result.getDateFundsNotMet();
-        this.minimumBalanceValue = result.getAmount();
+    public FundingCheckResponse(DailyBalanceStatusResult balanceStatus, ThresholdResult threshold) {
+
+        this.fundingRequirementMet = balanceStatus.isPass();
+        this.periodCheckedFrom = balanceStatus.getFromDate();
+        this.minimumBalanceDate = balanceStatus.getDateFundsNotMet();
+        this.minimumBalanceValue = balanceStatus.getAmount();
+
+        this.cappedValues = threshold.getCappedValues();
+        this.minimum = threshold.getThreshold();
     }
 
     public boolean getFundingRequirementMet() {
@@ -84,6 +94,10 @@ public final class FundingCheckResponse implements Serializable {
         return minimumBalanceValue;
     }
 
+    public CappedValues getCappedValues() {
+        return cappedValues;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,12 +107,13 @@ public final class FundingCheckResponse implements Serializable {
             Objects.equals(periodCheckedFrom, that.periodCheckedFrom) &&
             Objects.equals(minimum, that.minimum) &&
             Objects.equals(minimumBalanceDate, that.minimumBalanceDate) &&
-            Objects.equals(minimumBalanceValue, that.minimumBalanceValue);
+            Objects.equals(minimumBalanceValue, that.minimumBalanceValue) &&
+            Objects.equals(cappedValues, that.cappedValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, minimumBalanceDate, minimumBalanceValue);
+        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, minimumBalanceDate, minimumBalanceValue, cappedValues);
     }
 
     @Override
@@ -109,6 +124,7 @@ public final class FundingCheckResponse implements Serializable {
             ", minimum=" + minimum +
             ", minimumBalanceDate=" + minimumBalanceDate +
             ", minimumBalanceValue=" + minimumBalanceValue +
+            ", cappedValues=" + cappedValues +
             '}';
     }
 }

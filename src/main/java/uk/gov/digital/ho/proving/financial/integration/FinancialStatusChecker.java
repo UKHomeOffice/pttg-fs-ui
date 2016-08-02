@@ -45,10 +45,10 @@ public class FinancialStatusChecker {
     @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
-        BigDecimal totalFundsRequired = getThreshold(course, maintenance).getThreshold();
-        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, totalFundsRequired);
+        ThresholdResult thresholdResult = getThreshold(course, maintenance);
+        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold());
 
-        return new FundingCheckResponse(dailyBalanceStatus);
+        return new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
     }
 
     private ThresholdResult getThreshold(Course course, Maintenance maintenance) {
@@ -68,7 +68,6 @@ public class FinancialStatusChecker {
 
         DailyBalanceStatusResult dailyBalanceStatusResult =
             getForObject(uri, DailyBalanceStatusResult.class)
-                .withMinimum(totalFundsRequired)
                 .withFromDate(fromDate);
 
         LOGGER.debug("Daily balance status result: {}", dailyBalanceStatusResult);

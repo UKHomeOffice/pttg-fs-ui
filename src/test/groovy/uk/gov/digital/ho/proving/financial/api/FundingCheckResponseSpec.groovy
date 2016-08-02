@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
+import uk.gov.digital.ho.proving.financial.model.CappedValues
 
 import java.time.LocalDate
 
@@ -51,7 +52,7 @@ class FundingCheckResponseSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new FundingCheckResponse(false, null, null, null, null)
+        def instance = new FundingCheckResponse(false, null, null, null, null, null)
 
         when:
         def output = instance.toString()
@@ -77,6 +78,7 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         null,
+        null,
         null
     )
 
@@ -85,7 +87,8 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         LocalDate.of(2015, 10, 3),
-        BigDecimal.valueOf(100)
+        BigDecimal.valueOf(100),
+        new CappedValues("1265.00", 9)
     )
 
     def stringFromFile(String fileName) {

@@ -5,9 +5,8 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
+import uk.gov.digital.ho.proving.financial.model.CappedValues
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
-
-import java.time.LocalDate
 
 /**
  * @Author Home Office Digital
@@ -70,8 +69,10 @@ class ThresholdResultSpec extends Specification {
     }
 
 
-    def sampleOne =
-        new ThresholdResult(BigDecimal.valueOf(100), new ResponseDetails("200", "OK"))
+    def sampleOne = new ThresholdResult(
+        BigDecimal.valueOf(100),
+        new CappedValues("1265.00", 9),
+        new ResponseDetails("200", "OK"))
 
     def stringFromFile(String fileName) {
         withoutSpaces(new File("src/test/resources/" + fileName).text)
