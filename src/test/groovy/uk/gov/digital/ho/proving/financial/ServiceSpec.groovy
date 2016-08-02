@@ -93,8 +93,11 @@ class ServiceSpec extends Specification {
         converter
     }
 
-    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, new CappedValues("100", 9), new ResponseDetails("200", "OK")))
-    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, null, new ResponseDetails("200", "OK")))
+    ResponseDetails details = new ResponseDetails("200", "OK")
+    CappedValues cappedValues= new CappedValues("100", 9)
+
+    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, cappedValues, details))
+    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, null, details))
 
     def apiRespondsWith(threshold, balance) {
         mockServer.expect(requestTo(containsString("threshold")))
@@ -105,10 +108,7 @@ class ServiceSpec extends Specification {
             .andExpect(method(HttpMethod.GET))
             .andRespond(balance);
     }
-
-
-
-
+    
     def "processes valid request and response"() {
 
         given:
