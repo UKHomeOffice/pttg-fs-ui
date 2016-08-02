@@ -6,9 +6,9 @@
         .controller('coreController', coreController);
 
 
-    coreController.$inject = ['$rootScope', '$location', 'restService', '$anchorScroll', '$log'];
+    coreController.$inject = ['$rootScope', '$location', 'restService', '$anchorScroll', '$log', '$scope'];
     /* @ngInject */
-    function coreController($rootScope, $location, restService, $anchorScroll, $log) {
+    function coreController($rootScope, $location, restService, $anchorScroll, $log, $scope) {
         var vm = this;
 
         var CURRENCY_SYMBOL = '£';
@@ -25,6 +25,7 @@
 
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
+        var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (postgraduate doctor/dentist)";
 
 
 
@@ -103,6 +104,31 @@
 
         vm.scrollTo = function (anchor) {
             $anchorScroll(anchor);
+        };
+
+        vm.setStudentType = function (typ) {
+            switch (typ) {
+                case 'nondoctorate':
+                    vm.model.studentType = 'nondoctorate';
+                    vm.model.doctorate = false;
+                    vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+                    break;
+
+                case 'doctorate':
+                    vm.model.studentType = 'doctorate';
+                    vm.model.doctorate = true;
+                    vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_DOCTORATE_DISPLAY;
+                    break;
+
+                case 'pgdd':
+                    vm.model.studentType = 'pgdd';
+                    vm.model.doctorate = true;
+                    vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_PGDD_DISPLAY;
+                    break;
+
+                default:
+                    console.log('ERROR INVALID STUDENT TYPE');
+            }
         };
 
         function copyInputs() {
@@ -262,13 +288,19 @@
             // to that reflected in the url
             switch($location.path()) {
                 case '/financial-status-query-non-doctorate':
-                    vm.model.studentType = 'nondoctorate';
-                    vm.model.doctorate = false;
+                    vm.setStudentType('nondoctorate');
                     break;
+
                 case '/financial-status-query-doctorate':
-                    vm.model.studentType = 'doctorate';
-                    vm.model.doctorate = true;
+                    vm.setStudentType('doctorate');
                     break;
+
+                case '/financial-status-query-pgdd':
+                    vm.setStudentType('pgdd');
+                    break;
+
+                default:
+                    console.log('UKNOWN PAGE');
             };
         }
 
@@ -379,7 +411,7 @@
             }
 
             // make sure that the student type display string is correctly set for the results screens
-            vm.model.studentTypeChecked = (vm.model.studentType == 'doctorate') ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+            // vm.model.studentTypeChecked = (vm.model.studentType == 'doctorate') ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
 
 
             if (!vm.model.doctorate) {
@@ -460,12 +492,25 @@
         vm.submitStudentType = function () {
             if (validateStudentTypeForm()) {
                 vm.model.studentTypeChecked = vm.model.studentType == 'doctorate' ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+
                 vm.model.doctorate = vm.model.studentType == 'doctorate' ? true : false;
-                if (vm.model.doctorate) {
-                    $location.path('/financial-status-query-doctorate');
-                } else {
-                    $location.path('/financial-status-query-non-doctorate');
+
+                switch (vm.model.studentType) {
+                    case 'doctorate':
+                        vm.setStudentType('doctorate');
+                        $location.path('/financial-status-query-doctorate');
+                        break;
+
+                    case 'pgdd':
+                        vm.setStudentType('pgdd');
+                        $location.path('/financial-status-query-pgdd');
+                        break;
+
+                    default:
+                        vm.setStudentType('nondoctorate');
+                        $location.path('/financial-status-query-non-doctorate');
                 }
+
                 // initialise after all functions etc are defined
                 initialise();
             } else {
