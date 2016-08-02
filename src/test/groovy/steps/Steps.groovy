@@ -246,8 +246,14 @@ class Steps {
 
     @Given("^the account does not have sufficient funds\$")
     public void the_account_does_not_have_sufficient_funds() {
-        testDataLoader.stubTestData("dailyBalanceFail", balanceCheckUrlRegex)
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+        testDataLoader.stubTestData("dailyBalanceFail-low-balance", balanceCheckUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient records\$")
+    public void the_account_does_not_have_sufficient_records() {
+        testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+        testDataLoader.stubTestData("dailyBalanceFail-record-count", balanceCheckUrlRegex)
     }
 
     @Given("^the api response is delayed for (\\d+) seconds\$")

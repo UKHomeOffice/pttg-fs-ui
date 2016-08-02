@@ -3,8 +3,10 @@ package uk.gov.digital.ho.proving.financial.api
 import com.fasterxml.jackson.databind.ObjectMapper
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
+import spock.lang.Unroll
 import uk.gov.digital.ho.proving.financial.ServiceConfiguration
 import uk.gov.digital.ho.proving.financial.model.CappedValues
+import uk.gov.digital.ho.proving.financial.model.FailureReason
 
 import java.time.LocalDate
 
@@ -15,10 +17,12 @@ class FundingCheckResponseSpec extends Specification {
 
     static final String sampleOneFile = "fundingcheckresponse-sample-one.json"
     static final String sampleTwoFile = "fundingcheckresponse-sample-two.json"
+    static final String sampleThreeFile = "fundingcheckresponse-sample-three.json"
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
-    def "Instance should serialize to json"() {
+    @Unroll
+    def "Instance should serialize to json in #fileName"() {
 
         when:
         def actual = withoutSpaces(mapper.writeValueAsString(instance))
@@ -27,12 +31,14 @@ class FundingCheckResponseSpec extends Specification {
         actual == stringFromFile(fileName)
 
         where:
-        instance  | fileName
-        sampleOne | sampleOneFile
-        sampleTwo | sampleTwoFile
+        instance    | fileName
+        sampleOne   | sampleOneFile
+        sampleTwo   | sampleTwoFile
+        sampleThree | sampleThreeFile
     }
 
-    def "json should deserialize to instance"() {
+    @Unroll
+    def "json from #fileName should deserialize to instance"() {
 
         given:
         def json = stringFromFile(fileName)
@@ -47,12 +53,13 @@ class FundingCheckResponseSpec extends Specification {
         expected  | fileName
         sampleOne | sampleOneFile
         sampleTwo | sampleTwoFile
+        sampleThree | sampleThreeFile
     }
 
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new FundingCheckResponse(false, null, null, null, null, null)
+        def instance = new FundingCheckResponse(false, null, null, null, null)
 
         when:
         def output = instance.toString()
@@ -73,11 +80,13 @@ class FundingCheckResponseSpec extends Specification {
         noExceptionThrown()
     }
 
+    def static lowBalanceFailure = new FailureReason(LocalDate.of(2015, 10, 3), BigDecimal.valueOf(100))
+    def static recordCountFailure = new FailureReason(27)
+
     def static sampleOne = new FundingCheckResponse(
         true,
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
-        null,
         null,
         null
     )
@@ -86,8 +95,15 @@ class FundingCheckResponseSpec extends Specification {
         true,
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
+        lowBalanceFailure,
+        new CappedValues("1265.00", 9)
+    )
+
+    def static sampleThree = new FundingCheckResponse(
+        true,
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
+        recordCountFailure,
         new CappedValues("1265.00", 9)
     )
 

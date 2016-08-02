@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import uk.gov.digital.ho.proving.financial.integration.DailyBalanceStatusResult;
 import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
 import uk.gov.digital.ho.proving.financial.model.CappedValues;
+import uk.gov.digital.ho.proving.financial.model.FailureReason;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -32,13 +33,9 @@ public final class FundingCheckResponse implements Serializable {
 
     private final BigDecimal minimum;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final LocalDate minimumBalanceDate;
+    private final FailureReason failureReason;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final BigDecimal minimumBalanceValue;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final CappedValues cappedValues;
@@ -47,15 +44,13 @@ public final class FundingCheckResponse implements Serializable {
     public FundingCheckResponse(@JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                                 @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
                                 @JsonProperty("minimum") BigDecimal minimum,
-                                @JsonProperty("minimumBalanceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate minimumBalanceDate,
-                                @JsonProperty("minimumBalanceValue") BigDecimal minimumBalanceValue,
+                                @JsonProperty("failureReason") FailureReason failureReason,
                                 @JsonProperty("cappedValues") CappedValues cappedValues
     ) {
         this.fundingRequirementMet = fundingRequirementMet;
         this.periodCheckedFrom = periodCheckedFrom;
         this.minimum = minimum;
-        this.minimumBalanceDate = minimumBalanceDate;
-        this.minimumBalanceValue = minimumBalanceValue;
+        this.failureReason = failureReason;
         this.cappedValues = cappedValues;
     }
 
@@ -63,8 +58,7 @@ public final class FundingCheckResponse implements Serializable {
 
         this.fundingRequirementMet = balanceStatus.isPass();
         this.periodCheckedFrom = balanceStatus.getFromDate();
-        this.minimumBalanceDate = balanceStatus.getDateFundsNotMet();
-        this.minimumBalanceValue = balanceStatus.getAmount();
+        this.failureReason = balanceStatus.getFailureReason();
 
         this.cappedValues = threshold.getCappedValues();
         this.minimum = threshold.getThreshold();
@@ -86,16 +80,12 @@ public final class FundingCheckResponse implements Serializable {
         return minimum;
     }
 
-    public LocalDate getMinimumBalanceDate() {
-        return minimumBalanceDate;
-    }
-
-    public BigDecimal getMinimumBalanceValue() {
-        return minimumBalanceValue;
-    }
-
     public CappedValues getCappedValues() {
         return cappedValues;
+    }
+
+    public FailureReason getFailureReason() {
+        return failureReason;
     }
 
     @Override
@@ -106,14 +96,13 @@ public final class FundingCheckResponse implements Serializable {
         return fundingRequirementMet == that.fundingRequirementMet &&
             Objects.equals(periodCheckedFrom, that.periodCheckedFrom) &&
             Objects.equals(minimum, that.minimum) &&
-            Objects.equals(minimumBalanceDate, that.minimumBalanceDate) &&
-            Objects.equals(minimumBalanceValue, that.minimumBalanceValue) &&
+            Objects.equals(failureReason, that.failureReason) &&
             Objects.equals(cappedValues, that.cappedValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, minimumBalanceDate, minimumBalanceValue, cappedValues);
+        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, failureReason, cappedValues);
     }
 
     @Override
@@ -122,8 +111,7 @@ public final class FundingCheckResponse implements Serializable {
             "fundingRequirementMet=" + fundingRequirementMet +
             ", periodCheckedFrom=" + periodCheckedFrom +
             ", minimum=" + minimum +
-            ", minimumBalanceDate=" + minimumBalanceDate +
-            ", minimumBalanceValue=" + minimumBalanceValue +
+            ", failureReason=" + failureReason +
             ", cappedValues=" + cappedValues +
             '}';
     }

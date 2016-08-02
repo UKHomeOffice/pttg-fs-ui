@@ -54,7 +54,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
-    Scenario: Caseworker enters account number and sort code where no records exist within the period stated
+    Scenario: No records exist within the period stated
         Given no record for the account
         When the financial status check is performed
         Then the service displays the following page content

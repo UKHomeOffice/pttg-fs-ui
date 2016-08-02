@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import uk.gov.digital.ho.proving.financial.model.FailureReason;
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 
 import java.io.Serializable;
@@ -29,25 +30,18 @@ public final class DailyBalanceStatusResult implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate fromDate;
 
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDate dateFundsNotMet; //minimumBalanceDate
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private BigDecimal amount; //minimumBalanceValue
+    private FailureReason failureReason;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final ResponseDetails status;
 
     @JsonCreator
     public DailyBalanceStatusResult(@JsonProperty("pass") boolean pass,
-                                    @JsonProperty("dateFundsNotMet") LocalDate dateFundsNotMet,
-                                    @JsonProperty("amount") BigDecimal amount,
+                                    @JsonProperty("failureReason") FailureReason failureReason,
                                     @JsonProperty("status") ResponseDetails status) {
         this.pass = pass;
-        this.dateFundsNotMet = dateFundsNotMet;
-        this.amount = amount;
+        this.failureReason = failureReason;
         this.status = status;
     }
 
@@ -77,12 +71,8 @@ public final class DailyBalanceStatusResult implements Serializable {
         return status;
     }
 
-    public LocalDate getDateFundsNotMet() {
-        return dateFundsNotMet;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
+    public FailureReason getFailureReason() {
+        return failureReason;
     }
 
     @Override
@@ -93,14 +83,13 @@ public final class DailyBalanceStatusResult implements Serializable {
         return pass == that.pass &&
             Objects.equals(minimum, that.minimum) &&
             Objects.equals(fromDate, that.fromDate) &&
-            Objects.equals(dateFundsNotMet, that.dateFundsNotMet) &&
-            Objects.equals(amount, that.amount) &&
+            Objects.equals(failureReason, that.failureReason) &&
             Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pass, minimum, fromDate, dateFundsNotMet, amount, status);
+        return Objects.hash(pass, minimum, fromDate, failureReason, status);
     }
 
     @Override
@@ -109,8 +98,7 @@ public final class DailyBalanceStatusResult implements Serializable {
             "pass=" + pass +
             ", minimum=" + minimum +
             ", fromDate=" + fromDate +
-            ", dateFundsNotMet=" + dateFundsNotMet +
-            ", amount=" + amount +
+            ", failureReason=" + failureReason +
             ", status=" + status +
             '}';
     }

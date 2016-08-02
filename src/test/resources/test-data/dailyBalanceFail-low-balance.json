@@ -1,7 +1,9 @@
 {
     "pass" : false,
-    "dateFundsNotMet": "2016-10-03",
-    "amount": 100,
+    "failureReason" : {
+        "dateFundsNotMet": "2016-10-03",
+        "amount": 100
+    },
     "status" : {
         "code" : "200",
         "message" : "OK"
