@@ -32,10 +32,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Minimum Balance Value           | £100.00 on 03/10/2016    |
             | Student type                    | Tier 4 (General) student |
             | In London                       | Yes                      |
-            | Course length                   | 7                        |
+            | Course length                   | 7 (limited to 9)         |
             | Total tuition fees              | £8,500.00                |
             | Tuition fees already paid       | £0.00                    |
-            | Accommodation fees already paid | £0.00                    |
+            | Accommodation fees already paid | £0.00 (limited to £1265.00)                   |
             | Number of dependants            | 0                        |
             | Sort code                       | 11-11-11                 |
             | Account number                  | 11111111                 |
@@ -61,10 +61,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Course dates checked            | 30/05/2016 to 28/02/2017 |
             | Student type                    | Tier 4 (General) student |
             | In London                       | Yes                      |
-            | Course length                   | 9                        |
+            | Course length                   | 9 (limited to 9)         |
             | Total tuition fees              | £9,755.50                |
             | Tuition fees already paid       | £500.00                  |
-            | Accommodation fees already paid | £250.50                  |
+            | Accommodation fees already paid | £250.50 (limited to £1265.00)                 |
             | Number of dependants            | 0                        |
             | Sort code                       | 22-22-22                 |
             | Account number                  | 22222222                 |

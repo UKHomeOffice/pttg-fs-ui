@@ -25,7 +25,7 @@
 
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
-        var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (postgraduate doctor/dentist)";
+        var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (post-graduate doctor or dentist)";
 
 
 
@@ -163,12 +163,13 @@
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.minimum = data.minimum;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
+                        vm.cappedValues = (data.cappedValues) ? data.cappedValues : null;
 
                         if (vm.model.fundingRequirementMet == true) {
                             $location.path('/financial-status-result-pass');
                         } else {
-                            vm.model.minimumBalanceDate = data.minimumBalanceDate;
-                            vm.model.minimumBalanceValue = data.minimumBalanceValue;
+                            vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
+                            vm.model.minimumBalanceValue = data.failureReason.lowestBalanceValue;
                             $location.path('/financial-status-result-not-pass');
                         }
                         vm.scrollTo('content');

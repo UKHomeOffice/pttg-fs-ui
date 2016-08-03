@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th>Course length</th>
-            <td id="courseLength" scope="col">{{vm.model.courseLength}}</td>
+            <td id="courseLength" scope="col">{{vm.model.courseLength}} <span ng-if="vm.cappedValues.courseLength"> (limited to {{ vm.cappedValues.courseLength }})</span></td>
         </tr>
         </tbody>
     </table>
@@ -64,7 +64,7 @@
         <tr>
             <th>Accommodation fees already paid</th>
             <td id="accommodationFeesAlreadyPaid" scope="col">
-                {{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}}
+                {{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}} <span ng-if="vm.cappedValues.accommodationFeesPaid"> (limited to £{{ vm.cappedValues.accommodationFeesPaid }})</span>
             </td>
         </tr>
         <tr>
