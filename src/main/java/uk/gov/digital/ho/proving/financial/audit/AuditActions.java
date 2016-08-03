@@ -18,14 +18,11 @@ public class AuditActions {
         return UUID.randomUUID();
     }
 
-    public static AuditApplicationEvent auditEvent(AuditEventType type, String... data) {
-        AuditEvent e = new AuditEvent(getPrincipal(), type.name(), data);
-        return new AuditApplicationEvent(e);
-    }
+    public static AuditApplicationEvent auditEvent(AuditEventType type, UUID id, Map<String, Object> data) {
 
-    public static AuditApplicationEvent auditEvent(AuditEventType type, Map<String, Object> data) {
-        AuditEvent e = new AuditEvent(getPrincipal(), type.name(), data);
-        return new AuditApplicationEvent(e);
+        data.put("eventId", id);
+
+        return new AuditApplicationEvent(getPrincipal(), type.name(), data);
     }
 
     private static String getPrincipal() {

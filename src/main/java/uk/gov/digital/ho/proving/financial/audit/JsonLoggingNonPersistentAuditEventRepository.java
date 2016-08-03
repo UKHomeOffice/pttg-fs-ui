@@ -24,12 +24,12 @@ public class JsonLoggingNonPersistentAuditEventRepository implements AuditEventR
 
     private static final String AUDIT_EVENT_LOG_MARKER = "AUDIT";
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     public JsonLoggingNonPersistentAuditEventRepository() {
+        mapper = new ObjectMapper();
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"));
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        //mapper.disable(SerializationFeature.INDENT_OUTPUT);
     }
 
     @Override

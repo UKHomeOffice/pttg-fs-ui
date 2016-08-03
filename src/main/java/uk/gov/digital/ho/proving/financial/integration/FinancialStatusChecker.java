@@ -57,15 +57,15 @@ public class FinancialStatusChecker {
     @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
-        UUID requestId = AuditActions.nextId();
-        auditor.publishEvent(auditEvent(SEARCH, auditData(requestId, account, toDate, course, maintenance)));
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, course, maintenance)));
 
         ThresholdResult thresholdResult = getThreshold(course, maintenance);
         DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold());
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
 
-        auditor.publishEvent(auditEvent(SEARCH_RESULT, auditData(requestId, fundingCheckResponse)));
+        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, auditData(fundingCheckResponse)));
 
         return fundingCheckResponse;
     }
@@ -116,11 +116,10 @@ public class FinancialStatusChecker {
         return headers;
     }
 
-    private Map<String, Object> auditData(UUID requestId, Account account, LocalDate toDate, Course course, Maintenance maintenance) {
+    private Map<String, Object> auditData(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
         Map<String, Object> auditData = new HashMap<>();
 
-        auditData.put("requestId", requestId);
         auditData.put("method", "daily-balance-status");
         auditData.put("account", account);
         auditData.put("toDate", toDate.format(DateTimeFormatter.ISO_DATE));
@@ -130,11 +129,10 @@ public class FinancialStatusChecker {
         return auditData;
     }
 
-    private Map<String, Object> auditData(UUID requestId, FundingCheckResponse response) {
+    private Map<String, Object> auditData(FundingCheckResponse response) {
 
         Map<String, Object> auditData = new HashMap<>();
 
-        auditData.put("requestId", requestId);
         auditData.put("method", "daily-balance-status");
         auditData.put("response", response);
 
