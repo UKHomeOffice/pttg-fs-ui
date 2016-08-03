@@ -34,8 +34,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
             | Minimum Balance Value           | £100.00 on 03/10/2016                                 |
             | Student type                    | Tier 4 (General) student (postgraduate doctor/dentist)|
             | In London                       | Yes                                                   |
-            | Course length                   | 3                                                     |
-            | Accommodation fees already paid | £0.00                                                 |
+            | Course length                   | 3 (limited to 9)                                                    |
+            | Accommodation fees already paid | £0.00 (limited to £1265.00)                                                |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 11-11-12                                              |
             | Account number                  | 11111112                                              |
@@ -59,8 +59,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
             | Course dates checked            | 30/05/2016 to 30/06/2016                              |
             | Student type                    | Tier 4 (General) student (postgraduate doctor/dentist)|
             | In London                       | Yes                                                   |
-            | Course length                   | 2                                                     |
-            | Accommodation fees already paid | £100.00                                               |
+            | Course length                   | 2 (limited to 9)                                                    |
+            | Accommodation fees already paid | £100.00 (limited to £1265.00)                                              |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 22-22-23                                              |
             | Account number                  | 22222223                                              |
