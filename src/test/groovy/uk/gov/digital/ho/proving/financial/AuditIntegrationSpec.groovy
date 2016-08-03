@@ -50,7 +50,7 @@ class AuditIntegrationSpec extends Specification {
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
     def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
 
-    def logAppender = Mock(Appender.class)
+    Appender logAppender = Mock()
 
     def setup() {
         restTemplate = new TestRestTemplate()

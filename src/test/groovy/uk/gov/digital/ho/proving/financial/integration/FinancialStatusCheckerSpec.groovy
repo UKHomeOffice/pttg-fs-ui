@@ -1,13 +1,18 @@
 package uk.gov.digital.ho.proving.financial.integration
 
+import groovy.json.JsonSlurper
+import org.springframework.boot.actuate.audit.AuditEvent
+import org.springframework.boot.actuate.audit.listener.AuditApplicationEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
+import uk.gov.digital.ho.proving.financial.audit.AuditEventType
 import uk.gov.digital.ho.proving.financial.model.*
 
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 import static java.math.BigDecimal.ONE
 import static java.time.temporal.ChronoUnit.DAYS
@@ -32,14 +37,14 @@ class FinancialStatusCheckerSpec extends Specification {
 
     ApiUrls urls = Mock()
     RestTemplate template = Mock()
+    ApplicationEventPublisher auditor = Mock()
 
     def setup() {
         checker = new FinancialStatusChecker()
 
         checker.restTemplate = template
         checker.apiUrls = urls
-
-        checker.auditor = Mock(ApplicationEventPublisher.class)
+        checker.auditor = auditor
     }
 
     def thresholdOf(BigDecimal minimum) {
@@ -112,5 +117,32 @@ class FinancialStatusCheckerSpec extends Specification {
         response.periodCheckedFrom == toDate.minusDays(9)
     }
 
+    def 'audits search inputs and response'() {
 
+        given:
+        template.exchange(_, _, _, ThresholdResult.class) >> thresholdResponse
+        template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
+
+        AuditEvent event1
+        AuditEvent event2
+        1 * auditor.publishEvent(_) >> {args -> event1 = args[0].auditEvent}
+        1 * auditor.publishEvent(_) >> {args -> event2 = args[0].auditEvent}
+
+        when:
+        checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+
+        then:
+
+        event1.type == AuditEventType.SEARCH.name()
+        event2.type == AuditEventType.SEARCH_RESULT.name()
+
+        event1.data['eventId'] == event2.data['eventId']
+
+        event1.data['account'] == account
+        event1.data['toDate'] == toDate.format(DateTimeFormatter.ISO_DATE)
+        event1.data['course'] == course
+        event1.data['maintenance'] == maintenance
+
+        event2.data['response'].failureReason == recordCountFailure
+    }
 }
