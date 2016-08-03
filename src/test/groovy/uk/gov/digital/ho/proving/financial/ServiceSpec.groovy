@@ -1,6 +1,7 @@
 package uk.gov.digital.ho.proving.financial
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpMethod
 import org.springframework.http.client.ClientHttpRequest
 import org.springframework.http.client.ClientHttpResponse
@@ -76,6 +77,8 @@ class ServiceSpec extends Specification {
         checker.restTemplate = restTemplate
         checker.daysToCheck = DAYS_TO_CHECK
         checker.apiUrls = apiUrls
+
+        checker.auditor = Mock(ApplicationEventPublisher.class)
 
         service.financialStatusChecker = checker
 

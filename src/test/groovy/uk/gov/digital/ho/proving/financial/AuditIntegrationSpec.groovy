@@ -61,6 +61,10 @@ class AuditIntegrationSpec extends Specification {
         withMockLogAppender()
     }
 
+    def cleanup(){
+        apiServerMock.stop()
+    }
+
     def withMockLogAppender() {
         Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         root.addAppender(logAppender);

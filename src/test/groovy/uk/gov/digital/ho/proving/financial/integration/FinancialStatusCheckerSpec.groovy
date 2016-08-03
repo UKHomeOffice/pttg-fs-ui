@@ -1,5 +1,6 @@
 package uk.gov.digital.ho.proving.financial.integration
 
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
@@ -37,6 +38,8 @@ class FinancialStatusCheckerSpec extends Specification {
 
         checker.restTemplate = template
         checker.apiUrls = urls
+
+        checker.auditor = Mock(ApplicationEventPublisher.class)
     }
 
     def thresholdOf(BigDecimal minimum) {

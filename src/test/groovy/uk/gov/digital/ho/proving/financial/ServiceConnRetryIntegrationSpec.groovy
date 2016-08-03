@@ -50,6 +50,10 @@ class ServiceConnRetryIntegrationSpec extends Specification {
         apiServerMock = new WireMockTestDataLoader(8989)
     }
 
+    def cleanup(){
+        apiServerMock.stop()
+    }
+
     @Timeout(value = 4, unit = SECONDS) // ensure it doesn't accidentally run forever...
     def 'retries API calls when Connection timeout'() {
 
