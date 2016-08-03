@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.audit.AuditActions;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
 import uk.gov.digital.ho.proving.financial.model.Maintenance;
@@ -19,9 +21,16 @@ import uk.gov.digital.ho.proving.financial.model.Maintenance;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static org.springframework.http.HttpMethod.GET;
+import static uk.gov.digital.ho.proving.financial.audit.AuditActions.auditEvent;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH_RESULT;
 
 /**
  * @Author Home Office Digital
@@ -40,15 +49,25 @@ public class FinancialStatusChecker {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ApplicationEventPublisher auditor;
+
     private HttpEntity<?> entity = new HttpEntity<>(getHeaders());
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
+        UUID requestId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(SEARCH, auditData(requestId, account, toDate, course, maintenance)));
+
         ThresholdResult thresholdResult = getThreshold(course, maintenance);
         DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold());
 
-        return new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
+        FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
+
+        auditor.publishEvent(auditEvent(SEARCH_RESULT, auditData(requestId, fundingCheckResponse)));
+
+        return fundingCheckResponse;
     }
 
     private ThresholdResult getThreshold(Course course, Maintenance maintenance) {
@@ -97,4 +116,28 @@ public class FinancialStatusChecker {
         return headers;
     }
 
+    private Map<String, Object> auditData(UUID requestId, Account account, LocalDate toDate, Course course, Maintenance maintenance) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("requestId", requestId);
+        auditData.put("method", "daily-balance-status");
+        auditData.put("account", account);
+        auditData.put("toDate", toDate.format(DateTimeFormatter.ISO_DATE));
+        auditData.put("course", course);
+        auditData.put("maintenance", maintenance);
+
+        return auditData;
+    }
+
+    private Map<String, Object> auditData(UUID requestId, FundingCheckResponse response) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("requestId", requestId);
+        auditData.put("method", "daily-balance-status");
+        auditData.put("response", response);
+
+        return auditData;
+    }
 }
