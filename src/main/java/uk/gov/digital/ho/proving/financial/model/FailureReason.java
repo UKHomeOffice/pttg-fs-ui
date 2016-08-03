@@ -25,42 +25,42 @@ public final class FailureReason {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final LocalDate dateFundsNotMet; //minimumBalanceDate
+    private final LocalDate lowestBalanceDate;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final BigDecimal amount; //minimumBalanceValue
+    private final BigDecimal lowestBalanceValue;
 
     @JsonCreator
     public FailureReason(@JsonProperty("recordCount") Integer recordCount,
-                         @JsonProperty("dateFundsNotMet") LocalDate dateFundsNotMet,
-                         @JsonProperty("amount") BigDecimal amount) {
+                         @JsonProperty("lowestBalanceDate") LocalDate lowestBalanceDate,
+                         @JsonProperty("lowestBalanceValue") BigDecimal lowestBalanceValue) {
         this.recordCount = recordCount;
-        this.dateFundsNotMet = dateFundsNotMet;
-        this.amount = amount;
+        this.lowestBalanceDate = lowestBalanceDate;
+        this.lowestBalanceValue = lowestBalanceValue;
     }
 
     public FailureReason(Integer recordCount) {
         this.recordCount = recordCount;
-        this.dateFundsNotMet = null;
-        this.amount = null;
+        this.lowestBalanceDate = null;
+        this.lowestBalanceValue = null;
     }
 
-    public FailureReason(LocalDate dateFundsNotMet, BigDecimal amount) {
+    public FailureReason(LocalDate lowestBalanceDate, BigDecimal lowestBalanceValue) {
         this.recordCount = null;
-        this.dateFundsNotMet = dateFundsNotMet;
-        this.amount = amount;
+        this.lowestBalanceDate = lowestBalanceDate;
+        this.lowestBalanceValue = lowestBalanceValue;
     }
 
     public Integer getRecordCount() {
         return recordCount;
     }
 
-    public LocalDate getDateFundsNotMet() {
-        return dateFundsNotMet;
+    public LocalDate getLowestBalanceDate() {
+        return lowestBalanceDate;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getLowestBalanceValue() {
+        return lowestBalanceValue;
     }
 
     @Override
@@ -69,21 +69,21 @@ public final class FailureReason {
         if (o == null || getClass() != o.getClass()) return false;
         FailureReason that = (FailureReason) o;
         return Objects.equals(recordCount, that.recordCount) &&
-            Objects.equals(dateFundsNotMet, that.dateFundsNotMet) &&
-            Objects.equals(amount, that.amount);
+            Objects.equals(lowestBalanceDate, that.lowestBalanceDate) &&
+            Objects.equals(lowestBalanceValue, that.lowestBalanceValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recordCount, dateFundsNotMet, amount);
+        return Objects.hash(recordCount, lowestBalanceDate, lowestBalanceValue);
     }
 
     @Override
     public String toString() {
         return "FailureReason{" +
             "recordCount=" + recordCount +
-            ", dateFundsNotMet=" + dateFundsNotMet +
-            ", amount=" + amount +
+            ", lowestBalanceDate=" + lowestBalanceDate +
+            ", lowestBalanceValue=" + lowestBalanceValue +
             '}';
     }
 }

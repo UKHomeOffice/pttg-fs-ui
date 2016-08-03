@@ -3,8 +3,8 @@
     "periodCheckedFrom": "2015-10-03",
     "minimum": 100,
     "failureReason" : {
-        "dateFundsNotMet": "2015-10-03",
-        "amount": 100
+        "lowestBalanceDate": "2015-10-03",
+        "lowestBalanceValue": 100
     },
     "cappedValues" : {
         "accommodationFeesPaid": "1265.00",
