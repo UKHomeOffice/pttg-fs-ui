@@ -163,6 +163,7 @@
                         vm.model.fundingRequirementMet = data.fundingRequirementMet;
                         vm.model.minimum = data.minimum;
                         vm.model.periodCheckedFrom = data.periodCheckedFrom;
+                        vm.cappedValues = (data.cappedValues) ? data.cappedValues : null;
 
                         if (vm.model.fundingRequirementMet == true) {
                             $location.path('/financial-status-result-pass');
