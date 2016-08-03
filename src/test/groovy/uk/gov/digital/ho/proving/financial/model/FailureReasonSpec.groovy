@@ -28,7 +28,7 @@ class FailureReasonSpec extends Specification {
 
         where:
         failure              | instance           | content
-        "low balance"        | lowBalanceFailure  | "amount=$lowBalanceFailure.amount"
+        "low balance"        | lowBalanceFailure  | "lowestBalanceValue=$lowBalanceFailure.lowestBalanceValue"
         "not enough records" | recordCountFailure | "recordCount=$recordCountFailure.recordCount"
     }
 

@@ -1,8 +1,8 @@
 {
     "pass": true,
     "failureReason" : {
-        "dateFundsNotMet": "2015-10-03",
-        "amount": 100
+        "lowestBalanceDate": "2015-10-03",
+        "lowestBalanceValue": 100
     },
     "status": {
         "code": "200",
