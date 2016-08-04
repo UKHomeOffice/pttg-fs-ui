@@ -97,7 +97,7 @@ class ServiceSpec extends Specification {
     }
 
     ResponseDetails details = new ResponseDetails("200", "OK")
-    CappedValues cappedValues= new CappedValues("100", 9)
+    CappedValues cappedValues= new CappedValues(100, 9)
 
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, cappedValues, details))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, details))
