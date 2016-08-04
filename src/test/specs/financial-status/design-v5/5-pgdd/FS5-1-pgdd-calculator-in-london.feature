@@ -35,7 +35,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
             | Student type                    | Tier 4 (General) student (post-graduate doctor or dentist)|
             | In London                       | Yes                                                   |
             | Course length                   | 3 (limited to 9)                                                    |
-            | Accommodation fees already paid | £0.00 (limited to £1265.00)                                                |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00)                                                |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 11-11-12                                              |
             | Account number                  | 11111112                                              |
@@ -60,7 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
             | Student type                    | Tier 4 (General) student (post-graduate doctor or dentist)|
             | In London                       | Yes                                                   |
             | Course length                   | 2 (limited to 9)                                                    |
-            | Accommodation fees already paid | £100.00 (limited to £1265.00)                                              |
+            | Accommodation fees already paid | £100.00 (limited to £1,265.00)                                              |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 22-22-23                                              |
             | Account number                  | 22222223                                              |

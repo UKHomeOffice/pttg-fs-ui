@@ -185,7 +185,7 @@
                             $location.path('/financial-status-result-pass');
                         } else {
                             vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
-                            vm.model.minimumBalanceValue = data.failureReason.lowestBalanceValue;
+                            vm.model.minimumBalanceValue = vm.formatMoneyPoundsPence(data.failureReason.lowestBalanceValue);
                             $location.path('/financial-status-result-not-pass');
                         }
                         vm.scrollTo('content');
