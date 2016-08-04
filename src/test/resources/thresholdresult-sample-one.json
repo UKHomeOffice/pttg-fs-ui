@@ -1,7 +1,7 @@
 {
     "threshold": 100,
     "cappedValues" : {
-        "accommodationFeesPaid": "1265.00",
+        "accommodationFeesPaid": 1265.00,
         "courseLength": 9
     },
     "status": {

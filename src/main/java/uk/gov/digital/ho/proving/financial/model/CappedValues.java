@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -12,17 +13,17 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class CappedValues {
 
-    private final String accommodationFeesPaid;
+    private final BigDecimal accommodationFeesPaid;
     private final int courseLength;
 
     @JsonCreator
-    public CappedValues(@JsonProperty("accommodationFeesPaid") String accommodationFeesPaid,
+    public CappedValues(@JsonProperty("accommodationFeesPaid") BigDecimal accommodationFeesPaid,
                         @JsonProperty("courseLength") int courseLength) {
         this.accommodationFeesPaid = accommodationFeesPaid;
         this.courseLength = courseLength;
     }
 
-    public String getAccommodationFeesPaid() {
+    public BigDecimal getAccommodationFeesPaid() {
         return accommodationFeesPaid;
     }
 
@@ -47,7 +48,7 @@ public final class CappedValues {
     @Override
     public String toString() {
         return "CappedValues{" +
-            "accommodationFeesPaid='" + accommodationFeesPaid + '\'' +
+            "accommodationFeesPaid=" + accommodationFeesPaid +
             ", courseLength=" + courseLength +
             '}';
     }
