@@ -26,6 +26,7 @@
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
         var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (post-graduate doctor or dentist)";
+        var STUDENT_TYPE_SSO_DISPLAY = "Tier 4 (General) student (sabbatical officer)";
 
 
 
@@ -112,18 +113,33 @@
                     vm.model.studentType = 'nondoctorate';
                     vm.model.doctorate = false;
                     vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
+                    vm.needTuitionFees = true;
+                    vm.needCourseDates = true;
                     break;
 
                 case 'doctorate':
                     vm.model.studentType = 'doctorate';
                     vm.model.doctorate = true;
                     vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_DOCTORATE_DISPLAY;
+                    vm.needTuitionFees = false;
+                    vm.model.courseLength = 2;
+                    vm.needCourseDates = false;
                     break;
 
                 case 'pgdd':
                     vm.model.studentType = 'pgdd';
                     vm.model.doctorate = true;
                     vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_PGDD_DISPLAY;
+                    vm.needTuitionFees = false;
+                    vm.needCourseDates = true;
+                    break;
+
+                case 'sso':
+                    vm.model.studentType = 'sso';
+                    vm.model.doctorate = true;
+                    vm.model.studentTypeChecked = $scope.pageTitle = STUDENT_TYPE_SSO_DISPLAY;
+                    vm.needTuitionFees = false;
+                    vm.needCourseDates = true;
                     break;
 
                 default:
@@ -300,6 +316,10 @@
                     vm.setStudentType('pgdd');
                     break;
 
+                case '/financial-status-query-sso':
+                    vm.setStudentType('sso');
+                    break;
+
                 default:
                     console.log('UKNOWN PAGE');
             };
@@ -373,49 +393,50 @@
             }
 
 
-            // validate the course start date
-            if (vm.model.courseStartDateDay === null ||
-                vm.model.courseStartDateMonth === null ||
-                vm.model.courseStartDateYear === null) {
-                vm.queryForm.courseStartDateDay.$setValidity(false);
-                vm.queryForm.courseStartDateMonth.$setValidity(false);
-                vm.queryForm.courseStartDateYear.$setValidity(false);
-                vm.courseStartDateMissingError = true;
-                validated = false;
-            } else if (!moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
-                vm.courseStartDateInvalidError = true;
-                validated = false;
+            if (vm.needCourseDates) {
+                // validate the course start date
+                if (vm.model.courseStartDateDay === null ||
+                    vm.model.courseStartDateMonth === null ||
+                    vm.model.courseStartDateYear === null) {
+                    vm.queryForm.courseStartDateDay.$setValidity(false);
+                    vm.queryForm.courseStartDateMonth.$setValidity(false);
+                    vm.queryForm.courseStartDateYear.$setValidity(false);
+                    vm.courseStartDateMissingError = true;
+                    validated = false;
+                } else if (!moment(vm.getFullCourseStartDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                    vm.courseStartDateInvalidError = true;
+                    validated = false;
+                }
+
+
+                // validate the course end date
+                if (vm.model.courseEndDateDay === null ||
+                    vm.model.courseEndDateMonth === null ||
+                    vm.model.courseEndDateYear === null) {
+                    vm.queryForm.courseEndDateDay.$setValidity(false);
+                    vm.queryForm.courseEndDateMonth.$setValidity(false);
+                    vm.queryForm.courseEndDateYear.$setValidity(false);
+                    vm.courseEndDateMissingError = true;
+                    validated = false;
+                } else if (!moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                    vm.courseEndDateInvalidError = true;
+                    validated = false;
+                }
+
+                // set the course length based on the start and end dates
+                vm.model.courseLength = Math.ceil(vm.getCourseLength());
+                if (vm.model.courseLength <= 0) {
+                    // course length must be greater than zero
+                    // negative would indicate that the end date was before the start data
+                    vm.courseLengthInvalidError = true;
+                    validated = false;
+                }
             }
-
-
-            // validate the course end date
-            if (vm.model.courseEndDateDay === null ||
-                vm.model.courseEndDateMonth === null ||
-                vm.model.courseEndDateYear === null) {
-                vm.queryForm.courseEndDateDay.$setValidity(false);
-                vm.queryForm.courseEndDateMonth.$setValidity(false);
-                vm.queryForm.courseEndDateYear.$setValidity(false);
-                vm.courseEndDateMissingError = true;
-                validated = false;
-            } else if (!moment(vm.getFullCourseEndDate(), DATE_VALIDATE_FORMAT, true).isValid()) {
-                vm.courseEndDateInvalidError = true;
-                validated = false;
-            }
-
-            // set the course length based on the start and end dates
-            vm.model.courseLength = Math.ceil(vm.getCourseLength());
-            if (vm.model.courseLength <= 0) {
-                // course length must be greater than zero
-                // negative would indicate that the end date was before the start data
-                vm.courseLengthInvalidError = true;
-                validated = false;
-            }
-
             // make sure that the student type display string is correctly set for the results screens
             // vm.model.studentTypeChecked = (vm.model.studentType == 'doctorate') ? STUDENT_TYPE_DOCTORATE_DISPLAY : STUDENT_TYPE_NON_DOCTORATE_DISPLAY;
 
 
-            if (!vm.model.doctorate) {
+            if (vm.needTuitionFees) {
                 if (vm.model.totalTuitionFees === '' || vm.model.totalTuitionFees === null) {
                     vm.queryForm.totalTuitionFees.$setValidity(false);
                     vm.totalTuitionFeesMissingError = true;
@@ -505,6 +526,11 @@
                     case 'pgdd':
                         vm.setStudentType('pgdd');
                         $location.path('/financial-status-query-pgdd');
+                        break;
+
+                    case 'sso':
+                        vm.setStudentType('sso');
+                        $location.path('/financial-status-query-sso');
                         break;
 
                     default:

@@ -64,12 +64,14 @@ class Steps {
         'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
         'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate',
         'pgddQuery'         : uiRoot + '#/financial-status-query-pgdd',
+        'ssoQuery'         : uiRoot + '#/financial-status-query-sso'
     ]
 
     def pageLocations = [
         'studentType'       : '#/financial-status-student-type',
         'doctorateQuery'    : '#/financial-status-query-doctorate',
         'pgddQuery'         : '#/financial-status-query-pgdd',
+        'ssoQuery'         : '#/financial-status-query-sso',
         'non-doctorateQuery': '#/financial-status-query-non-doctorate',
         'accountNotFound'   : '#/financial-status-no-record'
     ]
@@ -91,6 +93,7 @@ class Steps {
         .withOption('non-doctorate', 'studentType-1')
         .withOption('doctorate', 'studentType-2')
         .withOption('pgdd', 'studentType-3')
+        .withOption('sso', 'studentType-4')
 
     def studentType
 
@@ -308,8 +311,6 @@ class Steps {
         Map<String, String> validDefaultEntries = [
             'End date'                       : '30/05/2016',
             'In London'                      : 'Yes',
-            'Course start date'              : '30/05/2016',
-            'Course end date'                : '30/06/2016',
             'Accommodation fees already paid': '0',
             'Number of dependants'           : '1',
             'Sort code'                      : '11-11-11',
@@ -319,6 +320,11 @@ class Steps {
         if (studentType.equalsIgnoreCase('non-doctorate')) {
             validDefaultEntries['Total tuition fees'] = '1';
             validDefaultEntries['Tuition fees already paid'] = '0';
+        }
+
+        if (!studentType.equalsIgnoreCase('doctorate')) {
+            validDefaultEntries['Course start date'] = '30/05/2016';
+            validDefaultEntries['Course end date'] = '30/06/2016';
         }
 
         submitEntries(validDefaultEntries)

@@ -20,7 +20,6 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
@@ -44,7 +43,6 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |

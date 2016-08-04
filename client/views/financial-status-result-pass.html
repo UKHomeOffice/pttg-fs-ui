@@ -25,7 +25,7 @@
             <th>28-day period checked</th>
             <td id="maintenancePeriodChecked" scope="col">{{vm.getPeriodChecked()}}</td>
         </tr>
-        <tr>
+        <tr ng-if="vm.needCourseDates">
             <th>Course length</th>
             <td id="courseLength" scope="col">{{vm.model.courseLength}} <span ng-if="vm.cappedValues.courseLength"> (limited to {{ vm.cappedValues.courseLength }})</span></td>
         </tr>
@@ -47,15 +47,15 @@
             <th>In London?</th>
             <td id="inLondon" scope="col">{{vm.model.inLondonChecked}}</td>
         </tr>
-        <tr>
+        <tr ng-if="vm.needCourseDates">
             <th>Course dates</th>
             <td id="courseDatesChecked" scope="col">{{vm.model.courseDatesChecked}}</td>
         </tr>
-        <tr ng-if="!vm.model.doctorate">
+        <tr ng-if="vm.needTuitionFees">
             <th>Total tuition fees for the first year</th>
             <td id="totalTuitionFees" scope="col">{{vm.formatMoneyPoundsPence(vm.model.totalTuitionFeesChecked)}}</td>
         </tr>
-        <tr ng-if="!vm.model.doctorate">
+        <tr ng-if="vm.needTuitionFees">
             <th>Tuition fees already paid</th>
             <td id="tuitionFeesAlreadyPaid" scope="col">
                 {{vm.formatMoneyPoundsPence(vm.model.tuitionFeesAlreadyPaidChecked)}}

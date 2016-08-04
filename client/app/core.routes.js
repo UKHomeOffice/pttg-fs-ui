@@ -26,6 +26,9 @@
             .when('/financial-status-query-pgdd', {
                 templateUrl : 'views/financial-status-query.html'
             })
+            .when('/financial-status-query-sso', {
+                templateUrl : 'views/financial-status-query.html'
+            })
             .when('/financial-status-result-pass', {
                 templateUrl : 'views/financial-status-result-pass.html'
             })
