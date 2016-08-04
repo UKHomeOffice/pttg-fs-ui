@@ -9,6 +9,5 @@ Feature: Route selection screen content - Tier 4 (General) student non Doctorate
             | Page sub text        | An online statement checker for a Barclays current account holder (must be in the applicant's own name). |
             | Student type-1 label | Tier 4 (General) student                                                                                 |
             | Student type-2 label | Tier 4 (General) student (doctorate extension scheme)                                                    |
-           # | Student type-3 label | Tier 4 (General) student (post-graduate doctor or dentist)                                                    |
-
-
+            | Student type-3 label | Tier 4 (General) student (post-graduate doctor or dentist)                                                    |
+            | Student type-4 label | Tier 4 (General) student (sabbatical officer)

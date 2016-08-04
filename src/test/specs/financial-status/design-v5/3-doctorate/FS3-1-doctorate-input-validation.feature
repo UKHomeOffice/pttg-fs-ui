@@ -156,69 +156,6 @@ Feature: Show clear error details when inputs are invalid
             | in-london-error                  | Select an option                 |
 
 
-######################### Validation on the Course start /end fields #########################
-    Scenario: Case Worker does NOT enter Course start
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | true       |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
-
-    Scenario: Case Worker does NOT enter Course end
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | true       |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | course-end-date-error            | Enter a valid course end date    |
-
-    Scenario: Case Worker enters invalid course start date - not numbers 0-9
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
-
-
-    Scenario: Case Worker enters invalid Course Length - same day
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | course-length-error              | Enter a valid course length      |
-
-    Scenario: Case Worker enters invalid Course Length - end date is before the start
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | course-length-error              | Enter a valid course length      |
-
-
 ######################### Validation on the Accommodation fees already paid Field #########################
     Scenario: Case Worker does NOT enter Accommodation fees already paid
         When the financial status check is performed with
