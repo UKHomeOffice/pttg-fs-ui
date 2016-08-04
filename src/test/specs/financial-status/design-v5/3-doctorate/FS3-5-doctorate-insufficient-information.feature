@@ -8,8 +8,6 @@ Feature: Insufficient Information
         When the financial status check is performed with
             | End date                        | 10/06/2016 |
             | In London                       | No         |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 99-99-99   |

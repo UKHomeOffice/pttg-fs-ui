@@ -7,7 +7,6 @@ Feature: Show clear error details when inputs are invalid
     Fields mandatory to fill in:
     End date of 28-day period
     In London - Yes or No options (mandatory)
-    Course length - 1-2 months (mandatory)
     Accommodation fees already paid - numbers only. Highest amount £1,265. Format should not contain commas or currency symbols
     Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
     Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
@@ -23,8 +22,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        |  |
             | In London                       |  |
-            | Course start date               |  |
-            | Course end date                 |  |
             | Accommodation fees already paid |  |
             | Number of dependants            |  |
             | Sort code                       |  |
@@ -35,56 +32,12 @@ Feature: Show clear error details when inputs are invalid
         And the error summary list contains the text
             | The end date is invalid                        |
             | The in London option is invalid                |
-            | The course start date is invalid               |
-            | The course end date is invalid                 |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
             | The account number is invalid                  |
             | The sort code is invalid                       |
 
-######################### Validation on the End Date Field #########################
 
-    Scenario: Case Worker does NOT enter End Date
-        When the financial status check is performed with
-            | End Date                        |            |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
-
-    Scenario: Case Worker enters invalid End Date - in the future
-        When the financial status check is performed with
-            | End Date                        | 30/05/2099 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
-
-    Scenario: Case Worker enters invalid End date - not numbers 0-9
-        When the financial status check is performed with
-            | End Date                        | 30/0d/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
 
 ######################### Validation on the Sort Code Field #########################
 
@@ -92,8 +45,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       |            |
@@ -106,8 +57,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-1    |
@@ -120,8 +69,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 00-00-00   |
@@ -134,8 +81,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-1q   |
@@ -151,8 +96,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -165,8 +108,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -180,8 +121,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -194,8 +133,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -210,8 +147,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       |            |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -226,8 +161,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | true       |
-            | Course start date               |            |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -240,8 +173,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | true       |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 |            |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -254,8 +185,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/0d/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -269,8 +198,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/05/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -283,8 +210,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/04/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -299,8 +224,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid |            |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -313,8 +236,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | A          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
@@ -328,8 +249,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            |            |
             | Sort code                       | 11-11-11   |
@@ -342,8 +261,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | A          |
             | Sort code                       | 11-11-11   |
@@ -356,8 +273,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | -1         |
             | Sort code                       | 11-11-11   |
@@ -370,8 +285,6 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 1.1        |
             | Sort code                       | 11-11-11   |

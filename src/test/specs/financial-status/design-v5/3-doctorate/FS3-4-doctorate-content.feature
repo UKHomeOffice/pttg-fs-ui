@@ -17,7 +17,6 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
-            | Course length         |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
@@ -41,7 +40,6 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following results headers in order
             | Total funds required              |
             | 28-day period checked             |
-            | Course length                     |
             | Lowest balance                    |
         And the service displays the following your search headers in order
             | Student type                    |
