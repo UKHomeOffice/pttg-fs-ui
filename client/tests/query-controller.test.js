@@ -221,7 +221,7 @@ describe('coreController', function () {
         expect(coreController.model.minimum).toBe(1);
         expect(coreController.model.periodCheckedFrom).toBe('2015-01-03');
         expect(coreController.model.minimumBalanceDate).toBe('2015-01-29');
-        expect(coreController.model.minimumBalanceValue).toBe(100);
+        expect(coreController.model.minimumBalanceValue).toBe('£100.00');
 
         expect(restService.checkFinancialStatus.calls.count()).toBe(1);
     });
