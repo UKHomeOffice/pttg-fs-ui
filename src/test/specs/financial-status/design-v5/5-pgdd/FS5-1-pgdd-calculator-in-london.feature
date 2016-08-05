@@ -1,8 +1,8 @@
-Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In London (single current account and no dependants)
+Feature: Total Funds Required Calculation - Tier 4 (General) Student post graduate doctor or dentist In London (single current account and no dependants)
 
     Acceptance criteria
 
-    Requirement to meet Tier 4 PGDD passed and not passed
+    Requirement to meet Tier 4 post graduate doctor or dentist passed and not passed
 
     In London - The applicant must show evidence of funds to cover £1,265 for each month remaining of the course up to a maximum of 2 months
 
@@ -15,7 +15,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
         And the pgdd student type is chosen
 
 
-    Scenario: Raj is a Doctorate in London student and does not have sufficient funds
+    Scenario: Raj is a postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
@@ -41,7 +41,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student PGDD In Lon
             | Account number                  | 11111112                                              |
 
 
-    Scenario: Shelly is a Doctorate in London student and has sufficient funds
+    Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
