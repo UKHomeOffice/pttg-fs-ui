@@ -16,7 +16,7 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the sso student type is chosen
 
 
 ######################### General validation message display #########################
@@ -170,19 +170,6 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | account-number-error | Enter a valid account number |
 
-    Scenario: Case Worker enters invalid Account Number - too long
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 01/03/2016 |
-            | Course end date                 | 20/04/2016 |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 111111111  |
-        Then the service displays the following message
-            | account-number-error | Enter a valid account number |
-
     Scenario: Case Worker enters invalid Account Number - all 0's
         When the financial status check is performed with
             | End Date                        | 30/05/2016 |
@@ -323,18 +310,6 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
 
-    Scenario: Case Worker enters invalid Accommodation fees already paid - above max value of 1265
-        When the financial status check is performed with
-            | End Date                        | 30/05/2016 |
-            | In London                       | yes        |
-            | Course start date               | 01/03/2016 |
-            | Course end date                 | 20/04/2016 |
-            | Accommodation fees already paid | 1266       |
-            | Number of dependants            | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-        Then the service displays the following message
-            | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
 
  ######################### Validation on the number of dependants Field #########################
     Scenario: Case Worker does NOT enter number of dependants

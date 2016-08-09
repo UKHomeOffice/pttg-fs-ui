@@ -2,7 +2,7 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
 
     Background:
         Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the sso student type is chosen
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -17,10 +17,11 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
+            | Course length                   |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course length                   |
+            | Course dates                   |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
@@ -69,6 +70,5 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
             | Page sub heading   | Tier 4 (General) student (sabbatical officer) |
-            | course-length-hint | Enter the number of months, up to 2 months    |
 
 

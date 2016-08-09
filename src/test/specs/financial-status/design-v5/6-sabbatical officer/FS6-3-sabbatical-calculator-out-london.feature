@@ -12,15 +12,16 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Background:
         Given caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the sso student type is chosen
 
 
-    Scenario: Ann is a Doctorate not in London student and does not have sufficient funds
+    Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | In London                       | No         |
-            | Course length                   | 2          |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-14   |
@@ -29,23 +30,23 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Outcome                         | Not passed                                            |
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Minimum Balance Date            | 03/10/2016                                            |
-            | Minimum Balance Value           | £100.00                                               |
-            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | Minimum Balance Value           | £100.00 on 03/10/2016                                    |
+            | Student type                    | Tier 4 (General) student (sabbatical officer) |
             | In London                       | No                                                    |
-            | Course length                   | 2                                                     |
-            | Accommodation fees already paid | £0.00                                                 |
+            | Course length                   | 7 (limited to 9)                         |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00)             |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 11-11-14                                              |
             | Account number                  | 11111114                                              |
 
 
-    Scenario: Laura is a Doctorate not in London student and has sufficient funds
+    Scenario: Laura is a sabbatical officer not in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
             | End date                        | 30/05/2016 |
             | In London                       | No         |
-            | Course length                   | 1          |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 265        |
             | Number of dependants            | 0          |
             | Sort code                       | 22-22-23   |
@@ -54,10 +55,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Outcome                         | Passed                                                |
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | Student type                    | Tier 4 (General) student (sabbatical officer) |
             | In London                       | No                                                    |
-            | Course length                   | 1                                                     |
-            | Accommodation fees already paid | £265.00                                               |
+            | Course length                   | 7 (limited to 9)                                                    |
+            | Accommodation fees already paid | £265.00 (limited to £1,265.00)           |
             | Number of dependants            | 0                                                     |
             | Sort code                       | 22-22-23                                              |
             | Account number                  | 22222223                                              |

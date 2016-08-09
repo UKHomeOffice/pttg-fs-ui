@@ -32,7 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
             | Course dates checked            | 30/05/2016 to 30/07/2016                              |
             | Minimum Balance Value           | £100.00 on 03/10/2016                                 |
-            | Student type                    | Tier 4 (General) student (post-graduate doctor or dentist)|
+            | Student type                    | Tier 4 (General) student (postgraduate doctor or dentist)|
             | In London                       | Yes                                                   |
             | Course length                   | 3 (limited to 9)                                                    |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00)                                                |
@@ -57,7 +57,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
             | Course dates checked            | 30/05/2016 to 30/06/2016                              |
-            | Student type                    | Tier 4 (General) student (post-graduate doctor or dentist)|
+            | Student type                    | Tier 4 (General) student (postgraduate doctor or dentist)|
             | In London                       | Yes                                                   |
             | Course length                   | 2 (limited to 9)                                                    |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00)                                              |
