@@ -34,7 +34,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Course length                   | 2 (limited to 9)         |
             | Total tuition fees              | £3,000.00                |
             | Tuition fees already paid       | £0.00                    |
-            | Accommodation fees already paid | £0.00 (limited to £1265.00)                   |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00)                   |
             | Number of dependants            | 0                        |
             | Sort code                       | 33-33-33                 |
             | Account number                  | 33333333                 |
@@ -63,7 +63,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Course length                   | 3 (limited to 9)         |
             | Total tuition fees              | £15,500.00               |
             | Tuition fees already paid       | £100.00                  |
-            | Accommodation fees already paid | £1,200.00 (limited to £1265.00)               |
+            | Accommodation fees already paid | £1,200.00 (limited to £1,265.00)               |
             | Number of dependants            | 0                        |
             | Sort code                       | 44-44-44                 |
             | Account number                  | 44444444                 |

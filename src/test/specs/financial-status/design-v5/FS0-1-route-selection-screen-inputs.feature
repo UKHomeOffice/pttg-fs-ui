@@ -9,5 +9,5 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
             | student-type  | page-sub-heading                                           |
             | non-doctorate | Tier 4 (General) student                                   |
             | doctorate     | Tier 4 (General) student (doctorate extension scheme)      |
-            | pgdd          | Tier 4 (General) student (post-graduate doctor or dentist) |
+            | pgdd          | Tier 4 (General) student (postgraduate doctor or dentist) |
             | sso           | Tier 4 (General) student (sabbatical officer)              |

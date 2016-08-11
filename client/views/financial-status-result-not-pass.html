@@ -1,15 +1,11 @@
 <div id="page2">
-    <h1 class="heading-xlarge" >
-        <span ng-if="!vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student</span>
-        <span ng-if="vm.model.doctorate" id="pageHeading" class="heading-secondary" id="pageTitleLabel">Tier 4 (General) student (doctorate extension scheme)</span>
-    </h1>
+    <h1 class="heading-large" id="pageTitle"><span id="pageHeading">{{ pageTitle }}</span></h1>
 
     <div class="govuk-box-highlight panel-fail">
-            <h1 class="bold-large" id="pageDynamicHeading">
-                <span id="outcome">Not passed</span>
-            </h1>
-            <p id="pageDynamicDetail"><span>This applicant does not meet the financial requirements</span></p>
-
+        <h1 class="bold-large" id="pageDynamicHeading">
+            <span id="outcome">{{ vm.failedHeader }}</span>
+        </h1>
+        <p id="pageDynamicDetail"><span>{{ vm.failedMessage }}</span></p>
     </div>
 
     <h2 class="heading-medium">
@@ -31,7 +27,7 @@
             <th>Course length</th>
             <td id="courseLength" scope="col">{{vm.model.courseLength}} <span ng-if="vm.cappedValues.courseLength"> (limited to {{ vm.cappedValues.courseLength }})</span></td>
         </tr>
-        <tr ng-if="vm.model.minimumBalanceValue != null">
+        <tr ng-if="vm.model.minimumBalanceDate != null">
             <th>Lowest balance</th>
             <td id="minimumBalanceValue" scope="col">{{vm.formatMoneyPoundsPence(vm.model.minimumBalanceValue)}} on {{vm.formatDate(vm.model.minimumBalanceDate)}}</td>
         </tr>
@@ -67,7 +63,7 @@
         </tr>
         <tr>
             <th>Accommodation fees already paid</th>
-            <td id="accommodationFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}} <span ng-if="vm.cappedValues.accommodationFeesPaid"> (limited to £{{ vm.cappedValues.accommodationFeesPaid }})</span></td>
+            <td id="accommodationFeesAlreadyPaid" scope="col">{{vm.formatMoneyPoundsPence(vm.model.accommodationFeesAlreadyPaidChecked)}} <span ng-if="vm.cappedValues.accommodationFeesPaid"> (limited to £{{ vm.cappedValues.accommodationFeesPaid | number:2 }})</span></td>
         </tr>
         <tr>
             <th>Number of dependants</th>

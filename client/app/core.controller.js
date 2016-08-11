@@ -25,7 +25,7 @@
 
         var STUDENT_TYPE_NON_DOCTORATE_DISPLAY = "Tier 4 (General) student";
         var STUDENT_TYPE_DOCTORATE_DISPLAY = "Tier 4 (General) student (doctorate extension scheme)";
-        var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (post-graduate doctor or dentist)";
+        var STUDENT_TYPE_PGDD_DISPLAY = "Tier 4 (General) student (postgraduate doctor or dentist)";
         var STUDENT_TYPE_SSO_DISPLAY = "Tier 4 (General) student (sabbatical officer)";
 
 
@@ -184,8 +184,18 @@
                         if (vm.model.fundingRequirementMet == true) {
                             $location.path('/financial-status-result-pass');
                         } else {
-                            vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
-                            vm.model.minimumBalanceValue = data.failureReason.lowestBalanceValue;
+                            if (data.failureReason.recordCount !== undefined) {
+                                vm.model.minimumBalanceDate = null;
+                                vm.model.minimumBalanceValue = null;
+                                vm.failedHeader = 'This account has been open less than 28 days';
+                                vm.failedMessage = data.failureReason.recordCount + ' records available';
+                            } else {
+                                vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
+                                vm.model.minimumBalanceValue = vm.formatMoneyPoundsPence(data.failureReason.lowestBalanceValue);
+                                vm.failedHeader = 'Not passed';
+                                vm.failedMessage = 'This applicant does not meet the financial requirements';
+                            }
+
                             $location.path('/financial-status-result-not-pass');
                         }
                         vm.scrollTo('content');
@@ -321,7 +331,7 @@
                     break;
 
                 default:
-                    console.log('UKNOWN PAGE');
+                    // console.log('!PAGE');
             };
         }
 
