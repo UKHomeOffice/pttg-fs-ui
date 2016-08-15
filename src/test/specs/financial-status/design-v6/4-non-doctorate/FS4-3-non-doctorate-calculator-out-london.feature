@@ -23,22 +23,23 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Number of dependants            | 0          |
             | Sort code                       | 33-33-33   |
             | Account number                  | 33333333   |
+            | DOB                             | 29/07/1978 |
         Then the service displays the following result
-            | Outcome                         | Not passed               |
-            | Total funds required            | £16,090.00               |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Course dates checked            | 30/05/2016 to 29/07/2016 |
-            | Minimum Balance Value           | £100.00 on 03/10/2016    |
-            | Student type                    | Tier 4 (General) student |
-            | In London                       | No                       |
-            | Course length                   | 2 (limited to 9)         |
-            | Total tuition fees              | £3,000.00                |
-            | Tuition fees already paid       | £0.00                    |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00)                   |
-            | Number of dependants            | 0                        |
-            | Sort code                       | 33-33-33                 |
-            | Account number                  | 33333333                 |
-
+            | Outcome                         | Not passed                   |
+            | Total funds required            | £16,090.00                   |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
+            | Course dates checked            | 30/05/2016 to 29/07/2016     |
+            | Minimum Balance Value           | £100.00 on 03/10/2016        |
+            | Student type                    | Tier 4 (General) student     |
+            | In London                       | No                           |
+            | Course length                   | 2 (limited to 9)             |
+            | Total tuition fees              | £3,000.00                    |
+            | Tuition fees already paid       | £0.00                        |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+            | Number of dependants            | 0                            |
+            | Sort code                       | 33-33-33                     |
+            | Account number                  | 33333333                     |
+            | DOB                             | 29/07/1978                   |
 
     Scenario: Shelly is a Non Doctorate not in London student and has sufficient funds
         Given the account has sufficient funds
@@ -53,18 +54,19 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Number of dependants            | 0          |
             | Sort code                       | 44-44-44   |
             | Account number                  | 44444444   |
+            | DOB                             | 19/01/1990 |
         Then the service displays the following result
-            | Outcome                         | Passed                   |
-            | Total funds required            | £16,090.00               |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016 |
-            | Course dates checked            | 30/05/2016 to 30/07/2016 |
-            | Student type                    | Tier 4 (General) student |
-            | In London                       | No                       |
-            | Course length                   | 3 (limited to 9)         |
-            | Total tuition fees              | £15,500.00               |
-            | Tuition fees already paid       | £100.00                  |
-            | Accommodation fees already paid | £1,200.00 (limited to £1,265.00)               |
-            | Number of dependants            | 0                        |
-            | Sort code                       | 44-44-44                 |
-            | Account number                  | 44444444                 |
-
+            | Outcome                         | Passed                           |
+            | Total funds required            | £16,090.00                       |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
+            | Course dates checked            | 30/05/2016 to 30/07/2016         |
+            | Student type                    | Tier 4 (General) student         |
+            | In London                       | No                               |
+            | Course length                   | 3 (limited to 9)                 |
+            | Total tuition fees              | £15,500.00                       |
+            | Tuition fees already paid       | £100.00                          |
+            | Accommodation fees already paid | £1,200.00 (limited to £1,265.00) |
+            | Number of dependants            | 0                                |
+            | Sort code                       | 44-44-44                         |
+            | Account number                  | 44444444                         |
+            | DOB                             | 19/01/1990                       |
