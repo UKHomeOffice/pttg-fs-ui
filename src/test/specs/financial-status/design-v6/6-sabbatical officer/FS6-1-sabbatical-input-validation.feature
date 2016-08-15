@@ -364,3 +364,48 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | number-of-dependants-error | Enter a valid number of dependants |
 
+ ######################### Validation on the Date of birth Field #########################
+
+    Scenario: Case Worker does NOT enter Date of birth
+        When the financial status check is performed with
+            | End Date                        | 18/11/2015 |
+            | In London                       | Yes        |
+            | Course start date               | 01/03/2016 |
+            | Course end date                 | 20/04/2016 |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+            | DOB                             |            |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth      |
+
+    Scenario: Case Worker enters invalid Date of birth - in the future
+        When the financial status check is performed with
+            | End Date                        | 18/11/2015  |
+            | In London                       | Yes        |
+            | Course start date               | 01/03/2016 |
+            | Course end date                 | 20/04/2016 |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+            | DOB                             | 01/09/2016 |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth      |
+
+    Scenario: Case Worker enters invalid Date og birth - not numbers 0-9
+        When the financial status check is performed with
+            | End Date             | 18/11/2015  |
+            | In London            | Yes        |
+            | Course start date    | 01/03/2016 |
+            | Course end date      | 20/04/2016 |
+            | Number of dependants | 0          |
+            | Sort code            | 11-11-11   |
+            | Account number       | 11111111   |
+            | DOB                  | @1/07/1986 |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth

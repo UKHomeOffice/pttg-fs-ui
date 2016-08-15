@@ -488,3 +488,43 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
             | number-of-dependants-error       | Enter a valid number of dependants |
+
+           ######################### Validation on the Date of birth Field #########################
+
+    Scenario: Case Worker does NOT enter Date of birth
+        When the financial status check is performed with
+            | End Date                        | 18/04/2016 |
+            | In London                       | Yes        |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+            | DOB                             |            |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth      |
+
+    Scenario: Case Worker enters invalid Date of birth - in the future
+        When the financial status check is performed with
+            | End Date                        | 18/04/2016 |
+            | In London                       | Yes        |
+            | Accommodation fees already paid | 0          |
+            | Number of dependants            | 0          |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+            | DOB                             | 25/08/2016 |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth      |
+
+    Scenario: Case Worker enters invalid Date og birth - not numbers 0-9
+        When the financial status check is performed with
+            | End Date             | 18/04/2016 |
+            | In London            | Yes        |
+            | Number of dependants | 0          |
+            | Sort code            | 11-11-11   |
+            | Account number       | 11111111   |
+            | DOB                  | 25/0@/1986 |
+        Then the service displays the following message
+            | validation-error-summary-heading | There's some invalid information |
+            | end-date-error                   | Enter a valid date of birth
