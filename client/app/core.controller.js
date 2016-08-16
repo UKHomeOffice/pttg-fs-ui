@@ -161,7 +161,7 @@
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
             vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
             vm.model.numberOfDependantsChecked = vm.model.numberOfDependants;
-            vm.model.dobChecked = vm.getFullDob();
+            vm.model.dobChecked = vm.formatDate(vm.getFullDob());
         }
 
         vm.submit = function () {

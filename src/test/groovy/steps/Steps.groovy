@@ -315,6 +315,7 @@ class Steps {
             'Number of dependants'           : '1',
             'Sort code'                      : '11-11-11',
             'Account number'                 : '11111111',
+            'dob'                            : '29/07/1978',
         ]
 
         if (studentType.equalsIgnoreCase('non-doctorate')) {
