@@ -15,6 +15,7 @@
         function checkFinancialStatus(
             accountNumber,
             sortCode,
+            dob,
             toDate,
             inLondon,
             studentType,
@@ -26,6 +27,7 @@
             var url = '/pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
             return $http.get(url, {
                 params: {
+                    dob: dob,
                     toDate: toDate,
                     inLondon: inLondon,
                     studentType: studentType,

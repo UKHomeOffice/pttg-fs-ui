@@ -184,7 +184,7 @@ class Steps {
         entries.each { k, v ->
             String key = toCamelCase(k)
 
-            if (key.endsWith("Date")) {
+            if (key.endsWith("Date") || key.equals("dob")) {
                 fillOrClearBySplitting(key, v, dateParts, dateDelimiter)
 
             } else if (key.equals("sortCode")) {

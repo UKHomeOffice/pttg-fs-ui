@@ -1,8 +1,6 @@
 package uk.gov.digital.ho.proving.financial.integration
 
-import groovy.json.JsonSlurper
 import org.springframework.boot.actuate.audit.AuditEvent
-import org.springframework.boot.actuate.audit.listener.AuditApplicationEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
@@ -25,7 +23,8 @@ class FinancialStatusCheckerSpec extends Specification {
 
     FinancialStatusChecker checker
 
-    Account account = new Account("", "")
+    LocalDate dob = LocalDate.of(1980,1,1);
+    Account account = new Account("", "", dob)
     LocalDate toDate = LocalDate.now()
     Course course = new Course(true, 1, "nondoctorate")
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)

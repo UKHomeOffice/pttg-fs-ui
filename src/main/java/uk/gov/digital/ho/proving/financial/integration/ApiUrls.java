@@ -54,6 +54,10 @@ public class ApiUrls {
     public URI dailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceEndpoint)
+            .queryParam("dob", account.getDob())
+            //TODO replace when user and consent values are captured
+            .queryParam("userId", "anonymous")
+            .queryParam("accountHolderConsent", Boolean.TRUE)
             .queryParam("minimum", totalFundsRequired.toPlainString())
             .queryParam("fromDate", from)
             .queryParam("toDate", to)

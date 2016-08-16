@@ -51,7 +51,7 @@ class ApiUrlsSpec extends Specification {
     def "generates daily balance url"() {
 
         given:
-        Account account = new Account('11-22-33', '12345678')
+        Account account = new Account('11-22-33', '12345678', LocalDate.of(1980, 1, 1))
         BigDecimal totalFundsRequired = ONE
         LocalDate from = LocalDate.of(2016, 1, 1)
         LocalDate to = LocalDate.of(2016, 1, 28)
@@ -65,6 +65,6 @@ class ApiUrlsSpec extends Specification {
 
         url.path == balanceEndpoint
 
-        url.query == 'minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
+        url.query == 'dob=1980-01-01&userId=anonymous&accountHolderConsent=true&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
     }
 }

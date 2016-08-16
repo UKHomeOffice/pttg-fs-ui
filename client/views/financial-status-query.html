@@ -95,17 +95,23 @@
                         <li ng-if="vm.numberOfDependantsMissingError">
                             <a href="" ng-click="vm.scrollTo('number-of-dependants-label')">The number of dependants is invalid</a></li>
 
+                        <li ng-if="vm.sortCodeInvalidError">
+                            <a href="" ng-click="vm.scrollTo('sort-code-label')">The sort code is invalid</a></li>
+
+                        <li ng-if="vm.sortCodeMissingError">
+                            <a href="" ng-click="vm.scrollTo('sort-code-label')">The sort code is invalid</a></li>
+
                         <li ng-if="vm.accountNumberInvalidError">
                             <a href="" ng-click="vm.scrollTo('account-number-label')">The account number is invalid</a></li>
 
                         <li ng-if="vm.accountNumberMissingError">
                             <a href="" ng-click="vm.scrollTo('account-number-label')">The account number is invalid</a></li>
 
-                        <li ng-if="vm.sortCodeInvalidError">
-                            <a href="" ng-click="vm.scrollTo('sort-code-label')">The sort code is invalid</a></li>
+                        <li ng-if="vm.dobInvalidError">
+                            <a href="" ng-click="vm.scrollTo('dob-label')">The date of birth is invalid</a></li>
 
-                        <li ng-if="vm.sortCodeMissingError">
-                            <a href="" ng-click="vm.scrollTo('sort-code-label')">The sort code is invalid</a></li>
+                        <li ng-if="vm.dobMissingError">
+                            <a href="" ng-click="vm.scrollTo('dob-label')">The date of birth is invalid</a></li>
 
                     </ul>
                 </div>
@@ -368,6 +374,45 @@
                            id="accountNumber"
                            ng-model="vm.model.accountNumber" autocomplete="off"
                            maxlength="8">
+                </div>
+
+                <div class="form-group " id="dob"
+                     ng-class="{error : vm.dobMissingError || vm.dobInvalidError}">
+
+                    <fieldset>
+                        <legend class="form-label-bold" id="dob-label">Date of birth</legend>
+                        <div class="form-date">
+                            <span id="dob-error" class="error-message"
+                                  ng-if="vm.dobMissingError || vm.dobInvalidError">
+                                Enter a valid date of birth</span>
+                            <div class="form-group form-group-day">
+                                <label for="dobDay">Day</label>
+                                <input class="form-control" name="dobDay"
+                                       id="dobDay" type="text"
+                                       ng-model="vm.model.dobDay" autocomplete="off"
+                                       maxlength="2">
+                            </div>
+
+                            <div class="form-group form-group-month">
+                                <label for="dobMonth">Month</label>
+                                <input class="form-control" name="dobMonth"
+                                       id="dobMonth"
+                                       type="text" ng-model="vm.model.dobMonth"
+                                       autocomplete="off"
+                                       maxlength="2">
+                            </div>
+
+                            <div class="form-group form-group-year">
+                                <label for="dobYear">Year</label>
+                                <input class="form-control" name="dobYear"
+                                       id="dobYear" type="text"
+                                       ng-model="vm.model.dobYear"
+                                       autocomplete="off"
+                                       maxlength="4">
+                            </div>
+                        </div>
+
+                    </fieldset>
                 </div>
 
                 <div class="form-group">

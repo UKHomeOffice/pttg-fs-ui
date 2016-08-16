@@ -244,7 +244,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             |            |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid date of birth      |
+            | dob-error                   | Enter a valid date of birth      |
 
     Scenario: Case Worker enters invalid Date of birth - in the future
         When the financial status check is performed with
@@ -257,7 +257,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 25/09/2016 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid date of birth      |
+            | dob-error                   | Enter a valid date of birth      |
 
     Scenario: Case Worker enters invalid Date of birth - not numbers 0-9
         When the financial status check is performed with
@@ -269,5 +269,5 @@ Feature: Show clear error details when inputs are invalid
             | DOB                  | 25/08/198x |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid date of birth      |
+            | dob-error                   | Enter a valid date of birth      |
 

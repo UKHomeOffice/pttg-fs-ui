@@ -148,6 +148,30 @@ describe('coreController', function () {
         expect(coreController.validateError).toBeTruthy();
     });
 
+    it('does not call service on validation failure - missing dob', function () {
+        spyOnSuccessful();
+
+        initialiseModelWithValues();
+        coreController.model.dobYear = '';
+
+        coreController.submit()
+
+        expect(coreController.validateError).toBeTruthy();
+        expect(restService.checkFinancialStatus.calls.count()).toBe(0);
+    });
+
+    it('does not call service on validation failure - invalid dob', function () {
+        spyOnSuccessful();
+
+        initialiseModelWithValues();
+        coreController.model.dobYear = 'XXX';
+
+        coreController.submit()
+
+        expect(coreController.validateError).toBeTruthy();
+        expect(restService.checkFinancialStatus.calls.count()).toBe(0);
+    });
+
     // it('sets the student type checked display text', function () {
     //     spyOnSuccessful();
 
@@ -315,6 +339,9 @@ describe('coreController', function () {
         expect(coreController.model.numberOfDependants).toBe('');
         expect(coreController.model.courseLength).toBe('');
         expect(coreController.model.inLondon).toBe('');
+        expect(coreController.model.dobDay).toBe('');
+        expect(coreController.model.dobMonth).toBe('');
+        expect(coreController.model.dobYear).toBe('');
     });
 
     describe('course length calculator', function () {
@@ -374,6 +401,10 @@ describe('coreController', function () {
         coreController.model.tuitionFeesAlreadyPaid = 1;
         coreController.model.accommodationFeesAlreadyPaid = 1;
         coreController.model.numberOfDependants = 1;
+
+        coreController.model.dobDay = '30';
+        coreController.model.dobMonth = '1';
+        coreController.model.dobYear = '1970';
     }
 
 });

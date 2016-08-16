@@ -103,6 +103,10 @@
             return vm.model.sortCodeFirst + vm.model.sortCodeSecond + vm.model.sortCodeThird;
         }
 
+        vm.getFullDob = function () {
+            return vm.getFullDate(vm.model.dobDay, vm.model.dobMonth, vm.model.dobYear);
+        };
+
         vm.scrollTo = function (anchor) {
             $anchorScroll(anchor);
         };
@@ -157,14 +161,17 @@
             vm.model.tuitionFeesAlreadyPaidChecked = vm.model.tuitionFeesAlreadyPaid;
             vm.model.accommodationFeesAlreadyPaidChecked = vm.model.accommodationFeesAlreadyPaid;
             vm.model.numberOfDependantsChecked = vm.model.numberOfDependants;
+            vm.model.dobChecked = vm.getFullDob();
         }
 
         vm.submit = function () {
+
             if (validateForm()) {
 
                 restService.checkFinancialStatus(
                     vm.model.accountNumber,
                     vm.getFullSortCodeDigits(),
+                    vm.getFullDob(),
                     vm.getFullEndDate(),
                     vm.model.inLondon,
                     vm.model.studentType,
@@ -250,12 +257,17 @@
                 sortCodeSecond: '',
                 sortCodeThird: '',
 
+                dobDay: '',
+                dobMonth: '',
+                dobYear: '',
+
                 totalFundsRequired: '',
 
                 fundingRequirementMet: '',
                 minimum: '',
                 accountNumberChecked: '',
                 sortCodeChecked: '',
+                dobChecked: '',
                 periodCheckedFrom: '',
                 periodCheckedTo: '',
                 inLondonChecked: '',
@@ -307,6 +319,9 @@
 
             vm.sortCodeInvalidError = false;
             vm.sortCodeMissingError = false;
+
+            vm.dobInvalidError = false;
+            vm.dobMissingError = false;
 
             vm.serverError = '';
             vm.serverErrorDetail = '';
@@ -371,6 +386,9 @@
             vm.sortCodeInvalidError = false;
             vm.sortCodeMissingError = false;
 
+            vm.dobInvalidError = false;
+            vm.dobMissingError = false;
+
             vm.serverError = '';
             vm.serverErrorDetail = '';
             vm.validateError = false;
@@ -379,6 +397,7 @@
         function validateForm() {
             var validated = true;
             clearErrors();
+            console.log(vm.model.dobDay);
 
             if (vm.model.endDateDay === null ||
                 vm.model.endDateMonth === null ||
@@ -393,6 +412,28 @@
                 validated = false;
             } else if (moment(vm.getFullEndDate(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
                 vm.endDateInvalidError = true;
+                validated = false;
+            }
+
+            if (vm.model.inLondon === '' || vm.model.inLondon === null) {
+                vm.queryForm.inLondon.$setValidity(false);
+                vm.inLondonMissingError = true;
+                validated = false;
+            }
+
+            if (vm.model.dobDay === null ||
+                vm.model.dobMonth === null ||
+                vm.model.dobYear === null) {
+                vm.queryForm.dobDay.$setValidity(false);
+                vm.queryForm.dobMonth.$setValidity(false);
+                vm.queryForm.dobYear.$setValidity(false);
+                vm.dobMissingError = true;
+                validated = false;
+            } else if (!moment(vm.getFullDob(), DATE_VALIDATE_FORMAT, true).isValid()) {
+                vm.dobInvalidError = true;
+                validated = false;
+            } else if (moment(vm.getFullDob(), DATE_VALIDATE_FORMAT, true).isAfter(moment(), 'day')) {
+                vm.dobInvalidError = true;
                 validated = false;
             }
 
