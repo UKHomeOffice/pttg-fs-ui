@@ -24,7 +24,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-            | DOB                             |
+            | Date of birth                             |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -47,7 +47,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-            | DOB                             |
+            | Date of birth                             |
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
