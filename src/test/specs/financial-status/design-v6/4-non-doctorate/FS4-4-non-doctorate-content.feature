@@ -29,7 +29,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-
+            | DOB                             |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -56,7 +56,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-
+            | DOB                             |
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 

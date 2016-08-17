@@ -26,7 +26,7 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-
+            | DOB                             |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -51,7 +51,7 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-
+            | DOB                             |
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 

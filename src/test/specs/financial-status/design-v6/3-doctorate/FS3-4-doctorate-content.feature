@@ -24,7 +24,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-
+            | DOB                             |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -37,9 +37,9 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Page heading         | Tier 4 (General) student (doctorate extension scheme)   |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
-            | Total funds required              |
-            | 28-day period checked             |
-            | Lowest balance                    |
+            | Total funds required  |
+            | 28-day period checked |
+            | Lowest balance        |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
@@ -47,6 +47,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
+            | DOB                             |
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
