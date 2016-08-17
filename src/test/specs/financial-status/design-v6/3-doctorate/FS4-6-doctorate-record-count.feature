@@ -11,12 +11,14 @@ Feature: Insufficient Records
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/05/1986 |
         Then the service displays the following page content
-            | Page dynamic heading | This account has been open less than 28 days                                                           |
-            | Page Dynamic detail  | 27 records available |
+            | Page dynamic heading | This account has been open less than 28 days |
+            | Page Dynamic detail  | 27 records available                         |
         And the service displays the following your search data
-            | Sort Code      | 11-11-11 |
-            | Account Number | 11111111 |
+            | Sort Code      | 11-11-11   |
+            | Account Number | 11111111   |
+            | DOB            | 27/05/1986 |
 
 
 

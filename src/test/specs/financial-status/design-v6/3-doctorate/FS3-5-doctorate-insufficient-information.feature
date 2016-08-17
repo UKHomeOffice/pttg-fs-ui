@@ -12,11 +12,12 @@ Feature: Insufficient Information
             | Number of dependants            | 0          |
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
+            | DOB                             | 27/05/1986 |
         Then the service displays the following page content
             | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                           |
             | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999 |
         And the service displays the following your search data
-            | Sort Code      | 99-99-99 |
-            | Account Number | 99999999 |
-
+            | Sort Code      | 99-99-99   |
+            | Account Number | 99999999   |
+            | DOB            | 27/05/1986 |
 
