@@ -27,6 +27,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            |  |
             | Sort code                       |  |
             | Account number                  |  |
+            | DOB                             |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
@@ -37,6 +38,7 @@ Feature: Show clear error details when inputs are invalid
             | The number of dependants is invalid            |
             | The account number is invalid                  |
             | The sort code is invalid                       |
+            | The date of birth is invalid                   |
 
 
 
@@ -50,6 +52,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       |            |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | sort-code-error                  | Enter a valid sort code          |
@@ -62,6 +65,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-1    |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | sort-code-error                  | Enter a valid sort code          |
@@ -74,6 +78,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 00-00-00   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | sort-code-error                  | Enter a valid sort code          |
@@ -86,6 +91,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-1q   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | sort-code-error                  | Enter a valid sort code          |
@@ -101,6 +107,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  |            |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | account-number-error             | Enter a valid account number     |
@@ -113,6 +120,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 1111111    |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | account-number-error             | Enter a valid account number     |
@@ -126,6 +134,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 00000000   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | account-number-error             | Enter a valid account number     |
@@ -138,6 +147,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 111a1111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | account-number-error             | Enter a valid account number     |
@@ -152,6 +162,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | in-london-error                  | Select an option                 |
@@ -166,6 +177,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
             | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
@@ -178,6 +190,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
             | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
@@ -191,6 +204,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            |            |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
             | number-of-dependants-error       | Enter a valid number of dependants |
@@ -203,6 +217,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | A          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
             | number-of-dependants-error       | Enter a valid number of dependants |
@@ -215,6 +230,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | -1         |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
             | number-of-dependants-error       | Enter a valid number of dependants |
@@ -227,6 +243,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 1.1        |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
+            | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
             | number-of-dependants-error       | Enter a valid number of dependants |
@@ -244,7 +261,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             |            |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | dob-error                   | Enter a valid date of birth      |
+            | dob-error                        | Enter a valid date of birth      |
 
     Scenario: Case Worker enters invalid Date of birth - in the future
         When the financial status check is performed with
@@ -257,7 +274,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 25/09/2016 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | dob-error                   | Enter a valid date of birth      |
+            | dob-error                        | Enter a valid date of birth      |
 
     Scenario: Case Worker enters invalid Date of birth - not numbers 0-9
         When the financial status check is performed with
@@ -269,5 +286,5 @@ Feature: Show clear error details when inputs are invalid
             | DOB                  | 25/08/198x |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | dob-error                   | Enter a valid date of birth      |
+            | dob-error                        | Enter a valid date of birth      |
 
