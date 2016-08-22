@@ -22,10 +22,46 @@ apply plugin: 'pttgSpringBootGradle'
 apply plugin: 'net.serenity-bdd.aggregator'
 apply plugin: 'com.moowork.gulp'
 
-group 'pttg-financial-status-service-ui'
+group 'com.hod'
 version '1.0-SNAPSHOT'
 
 mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by application plugin
+
+if (System.getenv('VERSION')) {
+    version = System.getenv('VERSION')
+}
+
+
+jar {
+    baseName = 'pttg-fs-ui'
+    if (System.getenv('BUILD_NUMBER')) {
+        version =  version + '-' + System.getenv('BUILD_NUMBER')
+    }
+    if (System.getenv('GIT_COMMIT')) {
+        version = version + '.' + System.getenv('GIT_COMMIT')
+    }
+    manifest {
+        attributes 'Implementation-Title': baseName,
+            'Implementation-Version': version
+    }
+}
+
+jar.into('static') {
+    from('src/main/webapp')
+}
+
+task bowerLocalInstall(type: NodeTask) {
+    script = file('node_modules/bower/bin/bower')
+    args = [
+        "--allow-root",
+        'install'
+    ]
+    inputs.files file('bower.json')
+    outputs.files file('bower_components')
+    dependsOn npmInstall
+}
+
+build.dependsOn bowerLocalInstall
 
 dependencies {
     compile libraries.groovy
@@ -51,9 +87,6 @@ springboot{
     port = 8001
 }
 
-jar.into('static') {
-    from('src/main/webapp')
-}
 
 test {
     exclude 'acceptance/**'

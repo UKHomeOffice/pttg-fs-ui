@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'pttg-financial-status-service-ui'
+rootProject.name = 'pttg-fs-ui'
