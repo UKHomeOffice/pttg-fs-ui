@@ -1,0 +1,21 @@
+FROM quay.io/ukhomeofficedigital/gradle:v2.13.6
+
+MAINTAINER Lucy Bennett "lucy.bennett@digital.homeoffice.gov.uk"
+ENV NODE_VERSION v4.4.2
+ENV PATH "${PATH}:/opt/nodejs/bin"
+
+WORKDIR /opt/nodejs
+
+RUN yum install -y curl git-all bzip2 && \
+    curl https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz | tar xz --strip-components=1
+
+COPY . /code/
+
+WORKDIR /code
+
+# RUN npm rebuild node-sass
+RUN npm install phantomjs -g
+RUN npm install && node_modules/bower/bin/bower install --allow-root
+RUN npm install gulp
+
+ENTRYPOINT ["gradle"]
