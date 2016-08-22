@@ -1,5 +1,11 @@
 .idea
 bower_components
-build
+# excluding the whole build/ dir means the jar artifacts are invisible to the docker context
+# everything in the build/ dir must be ignored apart from build/libs
+build/[^libs].*
 node_modules
 target
+.gradle
+.git
+.gitignore
+.tags.*
