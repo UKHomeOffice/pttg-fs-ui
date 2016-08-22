@@ -55,7 +55,7 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant has less than 28 days funds text write up
-        Given the account does not have 28 days available
+        Given the account does not have sufficient records
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                       |
@@ -64,10 +64,10 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
-            | Lowest balance        |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
+            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
