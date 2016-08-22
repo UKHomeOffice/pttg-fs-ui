@@ -1,5 +1,7 @@
 Feature: Insufficient Information
-    Tool identifies account number and sort code does not exist with Barclay's
+    Tool identifies account number, sort code and date of birth combination does not exist with Barclay's
+
+    # error message needs to be reviewed
 
     Scenario: No records exist within the period stated
         Given caseworker is using the financial status service ui

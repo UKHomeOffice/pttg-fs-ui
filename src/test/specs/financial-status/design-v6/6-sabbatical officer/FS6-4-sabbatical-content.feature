@@ -17,16 +17,16 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
-            | Course length                   |
+            | Course length         |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
-            | Course dates                   |
+            | Course dates                    |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-            | Date of birth                             |
+            | Date of birth                   |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -39,10 +39,10 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
             | Page heading         | Tier 4 (General) student (sabbatical officer)           |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
-            | Total funds required              |
-            | 28-day period checked             |
-            | Course length                     |
-            | Lowest balance                    |
+            | Total funds required  |
+            | 28-day period checked |
+            | Course length         |
+            | Lowest balance        |
         And the service displays the following your search headers in order
             | Student type                    |
             | In London                       |
@@ -51,7 +51,29 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
-            | Date of birth                             |
+            | Date of birth                   |
+
+    Scenario: Page checks for Not Passed text write up
+    This is a scenario to check if Applicant has less than 28 days funds text write up
+        Given the account does not have 28 days available
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Page dynamic heading | Not passed                                       |
+            | Page heading         | Tier 4 (General) student (sabbatical officer)    |
+            | Page dynamic detail  | This account has been open for less than 28 days |
+        And the service displays the following results headers in order
+            | Total funds required  |
+            | 28-day period checked |
+            | Lowest balance        |
+        And the service displays the following your search headers in order
+            | Student type                    |
+            | In London                       |
+            | Accommodation fees already paid |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
+            | Date of birth                   |
+
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
@@ -69,6 +91,6 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
 
     Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
         Then the service displays the following page content
-            | Page sub heading   | Tier 4 (General) student (sabbatical officer) |
+            | Page sub heading | Tier 4 (General) student (sabbatical officer) |
 
 
