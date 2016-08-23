@@ -46,7 +46,7 @@ publish() {
 
 docker_credentials() {
   local DOCKER_CREDS_DIR='/root/.docker'
-  local SOURCE_CREDS='/root/.secrets/dockercfg'
+  local SOURCE_CREDS='/root/.secrets/config.json'
 
   if [[ -n ${AWS_REGION} ]] && [[ -d /root/.aws ]] && [[ -n ${JENKINS_OPTS} ]] && [[ -n ${JENKINS_HOME_S3_BUCKET_NAME} ]]
   then
