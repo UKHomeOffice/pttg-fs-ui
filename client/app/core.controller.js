@@ -194,12 +194,10 @@
                             if (data.failureReason.recordCount !== undefined) {
                                 vm.model.minimumBalanceDate = null;
                                 vm.model.minimumBalanceValue = null;
-                                vm.failedHeader = 'This account has been open less than 28 days';
-                                vm.failedMessage = data.failureReason.recordCount + ' records available';
+                                vm.failedMessage = 'This account has been open for less than 28 days';
                             } else {
                                 vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
                                 vm.model.minimumBalanceValue = vm.formatMoneyPoundsPence(data.failureReason.lowestBalanceValue);
-                                vm.failedHeader = 'Not passed';
                                 vm.failedMessage = 'This applicant does not meet the financial requirements';
                             }
 
