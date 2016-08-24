@@ -44,6 +44,7 @@ jar {
         attributes 'Implementation-Title': baseName,
             'Implementation-Version': version
     }
+    rootSpec.exclude("developer/")
 }
 
 jar.into('static') {
