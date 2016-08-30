@@ -91,6 +91,8 @@ springboot{
 
 test {
     exclude 'acceptance/**'
+    exclude '**/integration/**'
+    exclude '**/*Integration*'
 }
 
 task acceptanceTest(type: Test) {
