@@ -1,8 +1,6 @@
 package uk.gov.digital.ho.proving.financial.audit;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +15,7 @@ import java.util.List;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
+import static net.logstash.logback.argument.StructuredArguments.value;
 
 /**
  * @Author Home Office Digital
@@ -45,14 +44,6 @@ public class JsonLoggingNonPersistentAuditEventRepository implements AuditEventR
 
     @Override
     public void add(AuditEvent event) {
-        LOGGER.info("{}: {}", AUDIT_EVENT_LOG_MARKER, jsonOf(event));
-    }
-
-    private String jsonOf(AuditEvent event) {
-        try {
-            return mapper.writeValueAsString(event);
-        } catch (JsonProcessingException e) {
-            return event.toString();
-        }
+        LOGGER.info("{}: {}", AUDIT_EVENT_LOG_MARKER, value("auditEvent", event));
     }
 }

@@ -1,5 +1,6 @@
 package uk.gov.digital.ho.proving.financial.exception;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.util.stream.Collectors;
 
+import static net.logstash.logback.marker.Markers.append;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static uk.gov.digital.ho.proving.financial.model.ErrorCode.*;
 
@@ -37,7 +39,7 @@ public class ServiceExceptionHandler {
     @ResponseBody
     public ResponseDetails missingParameterHandler(MissingServletRequestParameterException exception) {
         String name = exception.getParameterName();
-        LOGGER.debug("Missing parameter: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0001"), "Missing parameter: " + exception.getMessage());
         return new ResponseDetails(MISSING_PARAMETER.getCode(), MISSING_PARAMETER.getMessage() + exception.getParameterName());
     }
 
@@ -45,7 +47,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseDetails unbindableParameterHandler(MethodArgumentTypeMismatchException exception) {
-        LOGGER.debug("Unbindable parameter: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0002"), "Unbindable parameter: " + exception.getMessage());
         return new ResponseDetails(INVALID_PARAMETER_TYPE.getCode(), INVALID_PARAMETER_TYPE.getMessage() + exception.getParameter().getParameterName());
     }
 
@@ -53,7 +55,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseDetails invalidParameterFormatHandler(InvalidRequestParameterException exception) {
-        LOGGER.debug("Invalid parameter format: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0003"), "Invalid parameter format: " + exception.getMessage());
         return new ResponseDetails(INVALID_PARAMETER_FORMAT.getCode(), INVALID_PARAMETER_FORMAT.getMessage() + exception.getParameterName());
     }
 
@@ -61,7 +63,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseDetails constraintValidationHandler(ConstraintViolationException exception) {
-        LOGGER.debug("Constraint violation: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0004"), "Constraint violation: " + exception.getMessage());
         String detail = exception.getConstraintViolations()
             .stream()
             .map(ConstraintViolation::getMessage)
@@ -73,7 +75,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseDetails serverProcessingFault(ServiceProcessingException exception) {
-        LOGGER.debug("Server processing fault: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0005"), "Server processing fault: " + exception.getMessage());
         return new ResponseDetails(INTERNAL_ERROR);
     }
 
@@ -84,15 +86,15 @@ public class ServiceExceptionHandler {
         switch (exception.getStatusCode()) {
 
             case BAD_REQUEST:
-                LOGGER.error("Rest service exception - bad request, which means that there may be a mismatch between UI and API");
+                LOGGER.error(append("errorCode", "0007"), "Rest service exception - bad request, which means that there may be a mismatch between UI and API");
                 return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_CLIENT_ERROR), INTERNAL_SERVER_ERROR);
 
             case INTERNAL_SERVER_ERROR:
-                LOGGER.error("Rest service exception - internal server error");
+                LOGGER.error(append("errorCode", "0006"), "Rest service exception - internal server error");
                 return new ResponseEntity<ResponseDetails>(new ResponseDetails(API_SERVER_ERROR), INTERNAL_SERVER_ERROR);
 
             case NOT_FOUND:
-                LOGGER.warn("Rest service exception - not found");
+                LOGGER.warn(append("errorCode", "0009"), "Rest service exception - not found");
                 // Without the empty json response body, Phantom JS fails to propagate the response status through
                 // the angular restservice error handler and into the angular controller for routing to the
                 // 'no record' page. I don't know why. It works fine without the response body in at least
@@ -100,7 +102,7 @@ public class ServiceExceptionHandler {
                 return new ResponseEntity<>("{}", HttpStatus.NOT_FOUND);
 
             default:
-                LOGGER.error("Rest service exception: {}", exception.getMessage());
+                LOGGER.error(append("errorCode", "0005"), "Rest service exception: {}", exception.getMessage());
                 return new ResponseEntity<ResponseDetails>(
                     new ResponseDetails(INTERNAL_ERROR.getCode(), "API response status: " + exception.getStatusCode()), INTERNAL_SERVER_ERROR);
         }
@@ -110,7 +112,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseDetails bindException(BindException exception) {
-        LOGGER.debug("Binding exception: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0003"), "Binding exception: " + exception.getMessage());
 
         if (exception.getFieldErrors() == null || exception.getFieldErrors().size() <= 0) {
             return new ResponseDetails(INVALID_PARAMETER_VALUE);
@@ -130,10 +132,9 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseDetails resourceException(ResourceAccessException exception) {
-        LOGGER.debug("Resource access exception: " + exception.getMessage());
+        LOGGER.debug(append("errorCode", "0008"), "Resource access exception: " + exception.getMessage());
 
-        if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof InterruptedIOException
-            ) {
+        if (exception.getCause() instanceof ConnectException || exception.getCause() instanceof ConnectTimeoutException) {
             LOGGER.debug("Connection exception: " + exception.getCause().getMessage());
             return new ResponseDetails(API_CONNECTION_ERROR.getCode(), "There was a problem connecting to the service: " + exception.getCause().getMessage());
         }
@@ -146,7 +147,8 @@ public class ServiceExceptionHandler {
     @ResponseStatus(value = INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseDetails unknownException(Exception exception) {
-        LOGGER.debug("Unknown exception: {} : {}", exception.getClass(), exception.getMessage());
+        LOGGER.debug(append("errorCode", "0005"), "Unknown exception: {} : {}", exception.getClass(), exception.getMessage());
         return new ResponseDetails(INTERNAL_ERROR.getCode(), "There was an unhandled error: " + exception.getMessage());
     }
 }
+

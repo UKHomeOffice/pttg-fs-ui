@@ -18,7 +18,10 @@ import org.springframework.retry.interceptor.RetryInterceptorBuilder;
 import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import uk.gov.digital.ho.proving.financial.integration.RestServiceErrorHandler;
+import uk.gov.digital.ho.proving.financial.logging.LoggingInterceptor;
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
@@ -34,7 +37,7 @@ import java.util.HashMap;
 @PropertySource(value = "classpath:dsp-default.properties")
 @PropertySource(value = "classpath:/developer/developer-default.properties", ignoreResourceNotFound = true)
 @PropertySource(value = "classpath:/developer/${user.name}-default.properties", ignoreResourceNotFound = true)
-public class ServiceConfiguration {
+public class ServiceConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Environment environment;
@@ -91,5 +94,10 @@ public class ServiceConfiguration {
             .retryPolicy(retry)
             .backOffPolicy(backOff)
             .build();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoggingInterceptor());
     }
 }

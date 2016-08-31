@@ -19,6 +19,10 @@ import spock.lang.Specification
 import steps.WireMockTestDataLoader
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+
 import static java.time.LocalDateTime.now
 import static java.time.LocalDateTime.parse
 import static java.time.temporal.ChronoUnit.MINUTES
@@ -76,14 +80,14 @@ class AuditIntegrationSpec extends Specification {
     }
 
 
-    def "Searches are audited as INFO level log output with AUDIT prefix in json format and SEARCH type with a timestamp"() {
+    def "Searches are audited as INFO level log output with AUDIT prefix and SEARCH type with a timestamp"() {
 
         given:
-        successResponses()
 
         List<LoggingEvent> logEntries = []
 
         _ * logAppender.doAppend(_) >> { arg ->
+
             if (arg[0].formattedMessage.contains("AUDIT")) {
                 logEntries.add(arg[0])
             }
@@ -92,18 +96,21 @@ class AuditIntegrationSpec extends Specification {
         when:
         restTemplate.getForEntity(url, ResponseDetails.class)
         LoggingEvent logEntry = logEntries[0]
-        def logEntryJson = new JsonSlurper().parseText(logEntry.formattedMessage - "AUDIT:")
 
         then:
 
-        logEntries.size >= 1
         logEntry.level == Level.INFO
 
-        logEntryJson.principal == "anonymous"
-        logEntryJson.type == "SEARCH"
-        logEntryJson.data.method == "daily-balance-status"
+        // We can capture the SEARCH event log even though the search fails because there is no mongo
 
-        MINUTES.between(parse(logEntryJson.timestamp), now()) < 1;
+        logEntry.formattedMessage.contains("principal=anonymous")
+        logEntry.formattedMessage.contains("type=SEARCH")
+        logEntry.formattedMessage.contains("method=daily-balance-status")
+
+        LocalDateTime timestamp =
+            Instant.ofEpochMilli(logEntry.timeStamp).atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        MINUTES.between(timestamp, now()) < 1;
     }
 
 

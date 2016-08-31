@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
+import static net.logstash.logback.argument.StructuredArguments.value;
 import static org.springframework.http.HttpMethod.GET;
 import static uk.gov.digital.ho.proving.financial.audit.AuditActions.auditEvent;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH;
@@ -59,6 +60,7 @@ public class FinancialStatusChecker {
 
         UUID eventId = AuditActions.nextId();
         auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, course, maintenance)));
+        LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, Course: {}, Maintenance: {}", account, toDate, course, maintenance);
 
         ThresholdResult thresholdResult = getThreshold(course, maintenance);
         DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold());
@@ -74,7 +76,7 @@ public class FinancialStatusChecker {
         URI uri = apiUrls.thresholdUrlFor(course, maintenance);
         ThresholdResult thresholdResult = getForObject(uri, ThresholdResult.class);
 
-        LOGGER.debug("Threshold result: {}", thresholdResult);
+        LOGGER.debug("Threshold result: {}", value("thresholdResult", thresholdResult));
 
         return thresholdResult;
     }
@@ -89,7 +91,7 @@ public class FinancialStatusChecker {
             getForObject(uri, DailyBalanceStatusResult.class)
                 .withFromDate(fromDate);
 
-        LOGGER.debug("Daily balance status result: {}", dailyBalanceStatusResult);
+        LOGGER.debug("Daily balance status result: {}", value("dailyBalanceStatusResult", dailyBalanceStatusResult));
 
         return dailyBalanceStatusResult;
     }

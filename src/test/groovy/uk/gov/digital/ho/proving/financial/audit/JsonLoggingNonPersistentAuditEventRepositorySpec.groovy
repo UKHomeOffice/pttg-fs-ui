@@ -48,7 +48,7 @@ class JsonLoggingNonPersistentAuditEventRepositorySpec extends Specification {
         1 * logAppender.doAppend(_) >> { arg -> logEntry = arg[0] }
 
         logEntry.level == Level.INFO
-        logEntry.formattedMessage.contains("\"type\" : \"audit-type\"")
-        logEntry.formattedMessage.contains("\"audit-data\" : \"test\"")
+        logEntry.formattedMessage.contains("type=audit-type")
+        logEntry.formattedMessage.contains("audit-data=test")
     }
 }
