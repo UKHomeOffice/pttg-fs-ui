@@ -63,6 +63,8 @@ task bowerLocalInstall(type: NodeTask) {
 }
 
 build.dependsOn bowerLocalInstall
+jar.mustRunAfter(gulp_build)
+gulp_build.dependsOn bowerLocalInstall
 
 dependencies {
     compile libraries.groovy
