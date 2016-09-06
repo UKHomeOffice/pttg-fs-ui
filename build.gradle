@@ -23,7 +23,7 @@ apply plugin: 'net.serenity-bdd.aggregator'
 apply plugin: 'com.moowork.gulp'
 
 group 'com.hod'
-version '1.0-SNAPSHOT'
+version '0.1.0'
 
 mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by application plugin
 

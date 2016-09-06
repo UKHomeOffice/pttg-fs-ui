@@ -3,7 +3,7 @@ services:
   fssui:
     container_name: fssui-container
 #    build: .
-    image: quay.io/ukhomeofficedigital/pttg-financial-status-service-ui:0.1.0
+    image: quay.io/ukhomeofficedigital/pttg-fs-ui:0.1.0
     ports:
      - "8000:8000"
     #use external links for containers started outside this compose
@@ -11,7 +11,7 @@ services:
      - income
   fssapi:
     container_name: fssapi-container
-    image: quay.io/ukhomeofficedigital/pttg-financial-status-service-api:0.1.0
+    image: quay.io/ukhomeofficedigital/pttg-fs-ui:0.1.0
     ports:
      - "8081:8081"
 

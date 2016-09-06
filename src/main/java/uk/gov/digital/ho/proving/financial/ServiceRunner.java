@@ -18,7 +18,7 @@ public class ServiceRunner {
     }
 
     public static void main(String[] args) throws Exception {
-        LOGGER.debug("starting pttg-financial-status-service-ui");
+        LOGGER.debug("starting pttg-fs-ui");
 
         run(ServiceRunner.class, args);
     }
