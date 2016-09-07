@@ -178,7 +178,12 @@ gulp.task('startwatch', function() {
   gulp.watch(sourcePath + 'styles/*.scss', ['sass']);
 });
 
+gulp.task('test', function () {
+  return true;
+});
+
+gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify']);
 gulp.task('watch', ['startwatch', 'vendor']);
-gulp.task('default', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify']);
+gulp.task('default', ['build']);
 gulp.task('inline', ['default', 'inlineHTML']);
 
