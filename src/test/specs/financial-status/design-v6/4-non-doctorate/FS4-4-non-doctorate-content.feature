@@ -13,7 +13,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Passed                                          |
-            | Page heading         | Tier 4 (General) student                        |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -39,7 +38,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page heading         | Tier 4 (General) student                                |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -65,7 +63,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                       |
-            | Page heading         | Tier 4 (General) student                         |
             | Page dynamic detail  | This account has been open for less than 28 days |
         And the service displays the following results headers in order
             | Total funds required  |

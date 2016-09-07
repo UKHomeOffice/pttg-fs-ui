@@ -1,0 +1,41 @@
+<div id="page2" class="ng-scope">
+  <div ng-if="haveResult">
+    <div class="govuk-box-highlight" ng-class="{'panel-fail': !success}">
+      <h1 class="bold-large" id="pageDynamicHeading"><span id="outcome">{{ heading }}</span></h1>
+      <p id="pageDynamicDetail"><span>{{ reason }}</span></p>
+    </div>
+  </div>
+
+
+  <div ng-if="!haveResult">
+    <h1 class="form-title heading-large"><span id="pageDynamicHeading">{{ heading }}</span></h1>
+
+    <p class="lede ng-scope"><span id="pageDynamicDetail" class="ng-binding">{{ reason }}</span></p>
+  </div>
+
+  <div ng-if="showSummary">
+    <h2 class="heading-medium">Results</h2>
+    <table id="resultsTable">
+      <tr ng-repeat="detail in summary">
+        <th scope="row" width="50%">{{ detail.label }}</th>
+        <td id="{{ detail.id }}">{{ detail.value }}</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <h2 class="heading-medium">Your search</h2>
+  <table id="yourSearchTable">
+    <tr ng-repeat="criteria in searchCriteria">
+      <th scope="row" width="50%">{{ criteria.label }}</th>
+      <td id="{{ criteria.id }}">{{ criteria.value }}</td>
+    </tr>
+  </table>
+
+  <br />
+  <br />
+
+  <div class="form-group">
+      <input type="submit" class="button" value="Begin a new check" ng-click="vm.newSearch()">
+  </div>
+</div>

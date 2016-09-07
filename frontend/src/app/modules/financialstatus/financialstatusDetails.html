@@ -1,0 +1,36 @@
+<div class="column-full-width ng-scope">
+  <div id="page1">
+    <h1 class="heading-large" id="pageTitle" tabindex="-1"><span id="pageSubHeading">{{ pageTitle }}</span></h1>
+
+    <hod-form name="finStatusDetails" submit="detailsSubmit">
+
+      <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered" config="conf.endDate"></hod-date>
+
+      <hod-radio name="inLondon" label="In London?" field="finStatus.inLondon" options="yesNoOptions" config="conf.inLondon"></hod-radio>
+
+      <hod-date name="courseStartDate" label="Course start date" field="finStatus.courseStartDate" config="conf.courseStartDate"></hod-date>
+
+      <hod-date name="courseEndDate" label="Course end date" field="finStatus.courseEndDate" config="conf.courseEndDate"></hod-date>
+
+      <hod-number name="totalTuitionFees" label="Total tuition fees for the first year" field="finStatus.totalTuitionFees" hint="For example, £9000" config="conf.totalTuitionFees"></hod-number>
+
+      <hod-number name="tuitionFeesAlreadyPaid" label="Tuition fees already paid" field="finStatus.tuitionFeesAlreadyPaid" hint="For example, £3000" config="conf.tuitionFeesAlreadyPaid"></hod-number>
+
+      <hod-number name="accommodationFeesAlreadyPaid" label="Accommodation fees already paid" field="finStatus.accommodationFeesAlreadyPaid" config="conf.accommodationFeesAlreadyPaid"></hod-number>
+
+      <hod-number name="numberOfDependants" label="Number of dependants" field="finStatus.numberOfDependants" config="conf.numberOfDependants"></hod-number>
+
+      <hod-sortcode name="sortCode" label="Sort code" field="finStatus.sortCode"></hod-sortcode>
+
+      <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
+
+      <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
+
+      <hod-submit value="Check financial status"></hod-submit>
+
+    </hod-form>
+    <!-- <pre>
+      <p ng-repeat="(key, val) in finStatus">{{ key }} = {{ val }}</p>
+    </pre> -->
+  </div>
+</div>

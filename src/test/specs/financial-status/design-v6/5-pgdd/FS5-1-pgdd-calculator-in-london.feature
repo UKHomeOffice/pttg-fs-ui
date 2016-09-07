@@ -32,7 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Total funds required            | £16,090.00                                                |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                                  |
             | Course dates checked            | 30/05/2016 to 30/07/2016                                  |
-            | Minimum Balance Value           | £100.00 on 03/10/2016                                     |
+            | Lowest Balance           | £100.00 on 03/10/2016                                     |
             | Student type                    | Tier 4 (General) student (postgraduate doctor or dentist) |
             | In London                       | Yes                                                       |
             | Course length                   | 3 (limited to 9)                                          |

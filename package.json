@@ -8,6 +8,11 @@
     "test": "gulp test"
   },
   "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "angular-ui-validate": "^1.2.2",
+    "async": "^2.0.1",
     "bower": "^1.7.7",
     "chalk": "^1.1.1",
     "del": "^2.2.0",
@@ -15,9 +20,13 @@
     "govuk_frontend_toolkit": "^4.6.0",
     "govuk_template_ejs": "^0.16.2",
     "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^2.0.0",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-clean": "^0.3.2",
     "gulp-compass": "^2.1.0",
     "gulp-debug": "^2.1.2",
+    "gulp-html-minifier": "^0.1.8",
+    "gulp-htmlmin": "^2.0.0",
     "gulp-inject": "^3.0.0",
     "gulp-jasmine": "^2.3.0",
     "gulp-jscs": "^3.0.2",
@@ -28,6 +37,8 @@
     "gulp-order": "^1.1.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
     "gulp-useref": "^3.0.8",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
@@ -42,11 +53,14 @@
     "karma-ng-html2js-preprocessor": "~1.0.0",
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-spec-reporter": "0.0.26",
+    "moment": "^2.14.1",
     "node-sass": "^3.4.2",
     "phantomjs-prebuilt": "~2.1.7",
     "require-dir": "^0.3.0",
+    "run-sequence": "^1.2.2",
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
-    "yargs": "^3.15.0"
+    "yargs": "^3.15.0",
+    "pttg-angular": "git@github.com:hod-shcraigen/pttg-angular.git"
   }
 }

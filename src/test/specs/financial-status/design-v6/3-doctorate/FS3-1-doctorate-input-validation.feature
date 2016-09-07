@@ -55,7 +55,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - mising digits
         When the financial status check is performed with
@@ -68,7 +68,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - all 0's
         When the financial status check is performed with
@@ -81,7 +81,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
         When the financial status check is performed with
@@ -94,7 +94,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
 
 ######################### Validation on the Account Number Field #########################
@@ -110,7 +110,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
     Scenario: Case Worker enters invalid Account Number - too short
         When the financial status check is performed with
@@ -123,7 +123,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
 
     Scenario: Case Worker enters invalid Account Number - all 0's
@@ -137,7 +137,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
     Scenario: Case Worker enters invalid Account Number - not numbers 0-9
         When the financial status check is performed with
@@ -150,7 +150,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
 
 ######################### Validation on the In London Field #########################
@@ -165,7 +165,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | in-london-error                  | Select an option                 |
+            | In London-error                  | Select an option                 |
 
 
 ######################### Validation on the Accommodation fees already paid Field #########################
@@ -180,7 +180,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
-            | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
     Scenario: Case Worker enters invalid Accommodation fees already paid - not numbers 0-9
         When the financial status check is performed with
@@ -193,7 +193,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
-            | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
  ######################### Validation on the number of dependants Field #########################
     Scenario: Case Worker does NOT enter number of dependants
@@ -207,7 +207,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
         When the financial status check is performed with
@@ -220,7 +220,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - negative
         When the financial status check is performed with
@@ -233,7 +233,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - fractional
         When the financial status check is performed with
@@ -246,7 +246,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
         ######################### Validation on the Date of birth Field #########################
 

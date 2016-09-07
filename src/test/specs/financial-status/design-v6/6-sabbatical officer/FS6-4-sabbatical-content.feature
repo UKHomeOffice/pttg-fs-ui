@@ -12,7 +12,6 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Passed                                          |
-            | Page heading         | Tier 4 (General) student (sabbatical officer)   |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -36,7 +35,6 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page heading         | Tier 4 (General) student (sabbatical officer)           |
             | Page dynamic detail  | This applicant does not meet the financial requirements |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -59,7 +57,6 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                       |
-            | Page heading         | Tier 4 (General) student (sabbatical officer)    |
             | Page dynamic detail  | This account has been open for less than 28 days |
         And the service displays the following results headers in order
             | Total funds required  |
@@ -86,11 +83,5 @@ Feature: Tier 4 (General) student (sabbatical officer) content (single current a
         And the service displays the following your search headers in order
             | Sort code      |
             | Account number |
-
- ###################################### Section - Check for text on input page ######################################
-
-    Scenario: Input Page checks for if Applicant meets minimum financial requirement text write up
-        Then the service displays the following page content
-            | Page sub heading | Tier 4 (General) student (sabbatical officer) |
 
 

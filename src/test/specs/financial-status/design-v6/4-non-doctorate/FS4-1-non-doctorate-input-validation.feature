@@ -59,7 +59,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
+            | End Date-error                   | Enter a valid end date           |
 
     Scenario: Case Worker enters invalid End Date - in the future
         When the financial status check is performed with
@@ -76,7 +76,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
+            | End Date-error                   | Enter a valid end date           |
 
     Scenario: Case Worker enters invalid End date - not numbers 0-9
         When the financial status check is performed with
@@ -93,7 +93,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | end-date-error                   | Enter a valid end date           |
+            | End Date-error                   | Enter a valid end date           |
 
 
 
@@ -114,7 +114,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - mising digits
         When the financial status check is performed with
@@ -131,7 +131,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - all 0's
         When the financial status check is performed with
@@ -148,7 +148,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
         When the financial status check is performed with
@@ -165,7 +165,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | sort-code-error                  | Enter a valid sort code          |
+            | sort Code-error                  | Enter a valid sort code          |
 
 
 ######################### Validation on the Account Number Field #########################
@@ -185,7 +185,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
     Scenario: Case Worker enters invalid Account Number - too short
         When the financial status check is performed with
@@ -202,7 +202,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
     Scenario: Case Worker enters invalid Account Number - all 0's
         When the financial status check is performed with
@@ -219,7 +219,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
     Scenario: Case Worker enters invalid Account Number - not numbers 0-9
         When the financial status check is performed with
@@ -236,7 +236,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | account-number-error             | Enter a valid account number     |
+            | account number-error             | Enter a valid account number     |
 
 
 ######################### Validation on the In London Field #########################
@@ -255,7 +255,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | in-london-error                  | Select an option                 |
+            | In London-error                  | Select an option                 |
 
 
 ######################### Validation on the Course start / end fields #########################
@@ -274,7 +274,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
+            | Course Start Date-error          | Enter a valid course start date  |
 
     Scenario: Case Worker does NOT enter Course end date
         When the financial status check is performed with
@@ -291,7 +291,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-end-date-error            | Enter a valid course end date    |
+            | Course End Date-error            | Enter a valid course end date    |
 
     Scenario: Case Worker enters invalid Course start date - not numbers 0-9
         When the financial status check is performed with
@@ -308,7 +308,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
+            | Course Start Date-error          | Enter a valid course start date  |
 
     Scenario: Case Worker enters invalid Course Length - same day
         When the financial status check is performed with
@@ -325,7 +325,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-length-error              | Enter a valid course length      |
+            | Course End Date-error              | Enter a valid course length      |
 
     Scenario: Case Worker enters invalid Course Length - end before start
         When the financial status check is performed with
@@ -342,7 +342,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-length-error              | Enter a valid course length      |
+            | Course End Date-error              | Enter a valid course length      |
 
 ######################### Validation on the Total tuition fees Field #########################
     Scenario: Case Worker does NOT enter Total tuition fees
@@ -360,7 +360,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | total-tuition-fees-error         | Enter a valid total tuition fees |
+            | total tuition fees-error         | Enter a valid total tuition fees |
 
     Scenario: Case Worker enters invalid Total tuition fees - not numbers 0-9
         When the financial status check is performed with
@@ -377,7 +377,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | total-tuition-fees-error         | Enter a valid total tuition fees |
+            | total tuition fees-error         | Enter a valid total tuition fees |
 
 ######################### Validation on the Tuition fees already paid Field #########################
     Scenario: Case Worker does NOT enter Tuition fees already paid
@@ -395,7 +395,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information        |
-            | tuition-fees-already-paid-error  | Enter a valid tuition fees already paid |
+            | tuition fees already paid-error  | Enter a valid tuition fees already paid |
 
     Scenario: Case Worker enters invalid Tuition fees already paid - not numbers 0-9
         When the financial status check is performed with
@@ -412,7 +412,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information        |
-            | tuition-fees-already-paid-error  | Enter a valid tuition fees already paid |
+            | tuition fees already paid-error  | Enter a valid tuition fees already paid |
 
 ######################### Validation on the Accommodation fees already paid Field #########################
     Scenario: Case Worker does NOT enter Accommodation fees already paid
@@ -430,7 +430,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
-            | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
     Scenario: Case Worker enters invalid Accommodation fees already paid - not numbers 0-9
         When the financial status check is performed with
@@ -447,7 +447,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading      | There's some invalid information              |
-            | accommodation-fees-already-paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
 ######################### Validation on the number of dependants Field #########################
     Scenario: Case Worker does NOT enter number of dependants
@@ -465,7 +465,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
         When the financial status check is performed with
@@ -482,7 +482,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - negative
         When the financial status check is performed with
@@ -499,7 +499,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid number of dependants - fractional
         When the financial status check is performed with
@@ -516,7 +516,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information   |
-            | number-of-dependants-error       | Enter a valid number of dependants |
+            | number Of Dependants-error       | Enter a valid number of dependants |
 
            ######################### Validation on the Date of birth Field #########################
 
@@ -541,7 +541,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
-            | DOB                             | 25/08/2016 |
+            | DOB                             | 25/08/2099 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | dob-error                        | Enter a valid date of birth      |

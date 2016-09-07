@@ -1,0 +1,18 @@
+body, html {
+    width: 100%;
+  background-color: 'red';
+}
+
+#content {
+  margin: 0 auto;
+}
+
+.organisation-logo {
+  background-image: url("/public/images/org_crest_30px.png");
+}
+
+.ie6 .arrow-big-right,
+.ie7 .arrow-big-right,
+.ie8 .organisation-logo {
+    background-image: none;
+}

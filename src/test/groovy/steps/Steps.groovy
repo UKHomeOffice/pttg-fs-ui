@@ -71,7 +71,7 @@ class Steps {
         'studentType'       : '#/financial-status-student-type',
         'doctorateQuery'    : '#/financial-status-query-doctorate',
         'pgddQuery'         : '#/financial-status-query-pgdd',
-        'ssoQuery'         : '#/financial-status-query-sso',
+        'ssoQuery'          : '#/financial-status-query-sso',
         'non-doctorateQuery': '#/financial-status-query-non-doctorate',
         'accountNotFound'   : '#/financial-status-no-record'
     ]
@@ -79,21 +79,21 @@ class Steps {
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
     def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
 
-    def sortCodeParts = ["First", "Second", "Third"]
+    def sortCodeParts = ["Part1", "Part2", "Part3"]
     def sortCodeDelimiter = "-"
 
     def dateParts = ["Day", "Month", "Year"]
     def dateDelimiter = "/"
 
     def inLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'inLondon-1')
-        .withOption('no', 'inLondon-2')
+        .withOption('yes', 'inLondon-0')
+        .withOption('no', 'inLondon-1')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'studentType-1')
-        .withOption('doctorate', 'studentType-2')
-        .withOption('pgdd', 'studentType-3')
-        .withOption('sso', 'studentType-4')
+        .withOption('non-doctorate', 'student-type-0')
+        .withOption('doctorate', 'student-type-1')
+        .withOption('pgdd', 'student-type-2')
+        .withOption('sso', 'student-type-3')
 
     def studentType
 
