@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -34,9 +33,6 @@ import java.util.HashMap;
 @Configuration
 @EnableRetry
 @ComponentScan("uk.gov.digital.ho.proving.financial")
-@PropertySource(value = "classpath:dsp-default.properties")
-@PropertySource(value = "classpath:/developer/developer-default.properties", ignoreResourceNotFound = true)
-@PropertySource(value = "classpath:/developer/${user.name}-default.properties", ignoreResourceNotFound = true)
 public class ServiceConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
