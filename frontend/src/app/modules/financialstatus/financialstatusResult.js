@@ -136,8 +136,14 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   criteria.push({id: 'accountNumber', label: 'Account number', value: finStatus.accountNumber});
   criteria.push({id: 'dob', label: 'Date of birth', value: dateDisplay(finStatus.dob)});
 
+  $scope.newSearch = function (e) {
+    FinancialstatusService.reset();
+    $state.go('financialStatus');
+  };
 
   $scope.searchCriteria = _.filter(criteria, function (row) {
     return (sType.hiddenFields.indexOf(row.id) >= 0 ) ? false: true;
   });
+
+
 }]);
