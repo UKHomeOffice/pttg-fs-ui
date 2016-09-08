@@ -51,7 +51,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       },
       {
         value: 'doctorate',
-        label: 'Doctorate extension scheme)',
+        label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
         hiddenFields: ['courseStartDate', 'courseEndDate', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
