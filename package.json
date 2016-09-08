@@ -61,6 +61,6 @@
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0",
-    "pttg-angular": "git@github.com:hod-shcraigen/pttg-angular.git"
+    "pttg-angular": "git@github.com:UKHomeOffice/pttg-angular.git"
   }
 }
