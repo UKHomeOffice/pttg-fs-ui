@@ -8,55 +8,55 @@ Feature: System errors - specify messages shown in response to (simulated) conne
         Given the api response is delayed for 10 seconds
         When the financial status check is performed
         Then the service displays the following page content within 6 seconds
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Coping with a garbage response
         Given the api response is garbage
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Coping with an empty response
         Given the api response is empty
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Coping with an unexpected HTTP response status
         Given the api response has status 503
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Coping when the API is down
         Given the api is unreachable
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Handling API server validation errors - missing parameter
         Given the api response is a validation error - missing parameter
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     Scenario: Handling API server validation errors - invalid parameter
         Given the api response is a validation error - invalid parameter
         When the financial status check is performed
         Then the service displays the following page content
-            | Server Error        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Server Error Detail | Please try again later.                                                            |
+            | page Dynamic Heading        | You can’t use this service just now. The problem will be fixed as soon as possible |
+            | page Dynamic Detail         | Please try again later.                                                            |
 
     @Slow
     Scenario: Don't retry for error responses from the API
-    If the API responds with a valid HTTP response, whether success, client error, server error, we don't retry.
-    Note that we have to pause the scenario before verifying the number of calls, to allow for any retry attempts (that shouldn't not happen)
+    If the API responds with a valid HTTP response, whether success, client error, page Dynamic Heading, we don't retry.
+    Note that we have to pause the scenario before verifying the number of calls, to allow for any re        try attempts (that shouldn't not happen)
         Given the api response has status 503
         When the financial status check is performed
         And after at least 4 seconds

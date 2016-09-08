@@ -65,8 +65,6 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       // hidden: (sType.value === 'doctorate') ? true : false,
       validate: function (v, sc) {
         var len = FinancialstatusService.getCourseLength();
-        console.log('LEN', len);
-        console.log(sc.data);
         if (len <= 0) {
           return { summary: 'Enter a valid course length', msg: 'Enter a valid course length' };
         }
