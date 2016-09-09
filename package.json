@@ -4,7 +4,6 @@
   "description": "financial status service ui",
   "scripts": {
     "init": "npm install",
-    "install": "bower install --allow-root",
     "test": "gulp test"
   },
   "devDependencies": {
@@ -61,6 +60,7 @@
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0",
-    "pttg-angular": "https://github.com/UKHomeOffice/pttg-angular.git"
+    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git",
+    "gulp-concat": "~2.6.0"
   }
 }

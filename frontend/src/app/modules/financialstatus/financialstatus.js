@@ -51,7 +51,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       },
       {
         value: 'doctorate',
-        label: 'Doctorate extension scheme)',
+        label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
         hiddenFields: ['courseStartDate', 'courseEndDate', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
@@ -76,7 +76,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
   this.setValid = function (bool) {
     isValid = bool ? true: false;
-    console.log('isValid', isValid);
   };
 
   this.getValid = function () {
@@ -98,7 +97,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       months += 1/31;
     }
 
-    console.log(finStatus.courseStartDate, finStatus.courseEndDate, months);
     return months;
   };
 
@@ -120,17 +118,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
     var url = 'pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
 
-    console.log('detailsSubmit');
-    console.log(url);
-    console.log(details);
-
-    IOService.get(url, details).then(function (result) {
+    IOService.get(url, details, {timeout: 5000 }).then(function (result) {
       lastAPIresponse = result.data;
       $state.go('financialStatusResults', {studentType: finStatus.studentType});
     }, function (err) {
       lastAPIresponse = {
         failureReason: {
-          status: 404
+          status: err.status
         }
       };
       $state.go('financialStatusResults', {studentType: finStatus.studentType});

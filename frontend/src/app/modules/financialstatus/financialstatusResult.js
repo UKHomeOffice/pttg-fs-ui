@@ -68,36 +68,49 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     },
   ];
   $scope.showSummary = true;
+  $scope.showCriteria = true;
 
   if (sType.hiddenFields.indexOf('courseStartDate') === -1) {
     $scope.summary.push({id: 'courseLength', label: 'Course length', value: Math.ceil(FinancialstatusService.getCourseLength()) + ' (limited to 9)'});
   }
 
   $scope.haveResult = (res.fundingRequirementMet !== undefined) ? true : false;
-  if (res.fundingRequirementMet) {
-    $scope.success = true;
-    $scope.heading = 'Passed';
-    $scope.reason = 'This applicant meets the financial requirements';
-  } else if (res.failureReason && res.failureReason.status === 404) {
+  if ($scope.haveResult) {
+    // WE HAVE A RESULT
+    if (res.fundingRequirementMet) {
 
-    console.log('404', finStatus.sortCode, finStatus.accountNumber);
+      // PASSED
+      $scope.success = true;
+      $scope.heading = 'Passed';
+      $scope.reason = 'This applicant meets the financial requirements';
+    } else {
 
-    $scope.success = false;
-    $scope.heading = 'There is no record for the sort code and account number with Barclays';
-    $scope.reason = 'We couldn\'t perform the financial requirement check as no information exists for sort code ' + sortDisplay(finStatus.sortCode) + ' and account number ' + finStatus.accountNumber;
-    $scope.showSummary = false;
+      // FAILED
+      $scope.success = false;
+      $scope.heading = 'Not passed';
+      $scope.reason = (res.failureReason.recordCount) ? 'This account has been open for less than 28 days' : 'This applicant does not meet the financial requirements';
+      $scope.summary.push({
+        id: 'lowestBalance',
+        label: 'Lowest balance',
+        value: pounds(res.failureReason.lowestBalanceValue) + ' on ' + dateDisplay(res.failureReason.lowestBalanceDate)
+      });
+    }
   } else {
+    // NO RESULT SO SOME SORT OF ERROR OCCURRED
+    console.log('RES', res);
+    if (res.failureReason.status === 404) {
+      $scope.heading = 'There is no record for the sort code and account number with Barclays';
+      $scope.reason = 'We couldn\'t perform the financial requirement check as no information exists for sort code ' + sortDisplay(finStatus.sortCode) + ' and account number ' + finStatus.accountNumber;
+    } else {
+      $scope.heading = 'You can’t use this service just now. The problem will be fixed as soon as possible';
+      $scope.reason = 'Please try again later.';
+      $scope.showCriteria = false;
+    }
+
     $scope.success = false;
-    $scope.heading = 'Not passed';
-    $scope.reason = (res.failureReason.recordCount) ? 'This account has been open for less than 28 days' : 'This applicant does not meet the financial requirements';
-    $scope.summary.push({
-      id: 'lowestBalance',
-      label: 'Lowest balance',
-      value: pounds(res.failureReason.lowestBalanceValue) + ' on ' + dateDisplay(res.failureReason.lowestBalanceDate)
-    });
+    $scope.showSummary = false;
   }
 
-  console.log('$scope.success', $scope.success, res);
 
   var aFeesAlreadyPaid = pounds(finStatus.accommodationFeesAlreadyPaid);
   if (res.cappedValues && res.cappedValues.accommodationFeesPaid) {
@@ -123,8 +136,14 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   criteria.push({id: 'accountNumber', label: 'Account number', value: finStatus.accountNumber});
   criteria.push({id: 'dob', label: 'Date of birth', value: dateDisplay(finStatus.dob)});
 
+  $scope.newSearch = function (e) {
+    FinancialstatusService.reset();
+    $state.go('financialStatus');
+  };
 
   $scope.searchCriteria = _.filter(criteria, function (row) {
     return (sType.hiddenFields.indexOf(row.id) >= 0 ) ? false: true;
   });
+
+
 }]);

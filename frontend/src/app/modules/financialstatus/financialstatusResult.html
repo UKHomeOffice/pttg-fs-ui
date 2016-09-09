@@ -23,19 +23,20 @@
     </table>
   </div>
 
-
-  <h2 class="heading-medium">Your search</h2>
-  <table id="yourSearchTable">
-    <tr ng-repeat="criteria in searchCriteria">
-      <th scope="row" width="50%">{{ criteria.label }}</th>
-      <td id="{{ criteria.id }}">{{ criteria.value }}</td>
-    </tr>
-  </table>
+  <div ng-if="showCriteria">
+    <h2 class="heading-medium">Your search</h2>
+    <table id="yourSearchTable">
+      <tr ng-repeat="criteria in searchCriteria">
+        <th scope="row" width="50%">{{ criteria.label }}</th>
+        <td id="{{ criteria.id }}">{{ criteria.value }}</td>
+      </tr>
+    </table>
+  </div>
 
   <br />
   <br />
 
   <div class="form-group">
-      <input type="submit" class="button" value="Begin a new check" ng-click="vm.newSearch()">
+      <input type="submit" class="button" value="Begin a new check" ng-click="newSearch()">
   </div>
 </div>
