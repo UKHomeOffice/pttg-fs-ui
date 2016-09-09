@@ -120,6 +120,10 @@ tasks.withType(GroovyCompile) {
     options.forkOptions.setMemoryMaximumSize("256m")
 }
 
+acceptanceTest {
+    maxHeapSize = "257m"
+}
+
 test {
     maxHeapSize = "256m"
     exclude 'acceptance/**'
