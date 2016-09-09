@@ -121,7 +121,7 @@ tasks.withType(GroovyCompile) {
 }
 
 acceptanceTest {
-    maxHeapSize = "257m"
+    maxHeapSize = "256m"
 }
 
 test {
