@@ -90,11 +90,6 @@ springboot{
     port = 8001
 }
 
-
-test {
-    exclude 'acceptance/**'
-}
-
 task acceptanceTest(type: Test) {
     description 'Runs the acceptance tests.'
     group 'verification'
@@ -127,4 +122,5 @@ tasks.withType(GroovyCompile) {
 
 test {
     maxHeapSize = "256m"
+    exclude 'acceptance/**'
 }
