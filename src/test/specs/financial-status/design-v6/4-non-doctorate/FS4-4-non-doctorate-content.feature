@@ -32,13 +32,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
+    ## Changed in Jira number PT-24 - Added new 'Page dynamic detail' text
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page dynamic detail  | This applicant does not meet the financial requirements |
+            | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
@@ -56,14 +57,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Account number                  |
             | Date of birth                   |
 
-
+    ## Changed in Jira number PT-25 - Added new 'Page dynamic detail' text
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant has less than 28 days funds text write up
         Given the account does not have sufficient records
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                       |
-            | Page dynamic detail  | This account has been open for less than 28 days |
+            | Page dynamic detail  | The records for this account does not cover the whole 28 day period |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
