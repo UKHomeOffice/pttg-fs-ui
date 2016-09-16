@@ -50,7 +50,6 @@ class Steps {
     def defaultTimeout = 2000
 
     def delay = 500
-
     def uiHost = "localhost"
     def uiPort = 8001
     def uiRoot = "http://$uiHost:$uiPort/"
@@ -208,16 +207,16 @@ class Steps {
         driver.findElement(By.className("button")).click()
     }
 
-    private void chooseAndSubmitStudentType(String type) {
+    public void chooseAndSubmitStudentType(String type) {
         selectStudentType(type)
         submitStudentTypeChoice()
     }
 
-    private void selectStudentType(String type) {
+    public void selectStudentType(String type) {
         clickRadioButton(driver, studentTypeRadio, type)
     }
 
-    private void submitStudentTypeChoice() {
+    public void submitStudentTypeChoice() {
         driver.findElement(By.className("button")).click()
     }
 
