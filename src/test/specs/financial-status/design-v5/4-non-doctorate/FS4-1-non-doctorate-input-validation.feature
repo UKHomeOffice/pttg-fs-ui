@@ -259,7 +259,7 @@ Feature: Show clear error details when inputs are invalid
             | Account number                  | 11111111   |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
+            | course-start-date-error          | Enter a valid start date of course  |
 
     Scenario: Case Worker does NOT enter Course end date
         When the financial status check is performed with
@@ -291,7 +291,7 @@ Feature: Show clear error details when inputs are invalid
             | Account number                  | 11111111   |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | course-start-date-error          | Enter a valid course start date  |
+            | course-start-date-error          | Enter a valid start date of course  |
 
     Scenario: Case Worker enters invalid Course Length - same day
         When the financial status check is performed with

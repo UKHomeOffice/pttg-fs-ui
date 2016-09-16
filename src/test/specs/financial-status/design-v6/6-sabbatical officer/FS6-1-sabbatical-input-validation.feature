@@ -39,8 +39,8 @@ Feature: Show clear error details when inputs are invalid
         And the error summary list contains the text
             | The end date is invalid                        |
             | The in London option is invalid                |
-            | The course start date is invalid               |
-            | The course end date is invalid                 |
+            | The start date of course is invalid               |
+            | The end date of course is invalid                 |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
             | The account number is invalid                  |
@@ -252,7 +252,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | Course Start Date-error          | Enter a valid course start date  |
+            | Course Start Date-error          | Enter a valid start date of course  |
 
     Scenario: Case Worker does NOT enter Course end date
         When the financial status check is performed with
@@ -267,7 +267,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | Course End Date-error            | Enter a valid course end date    |
+            | Course End Date-error            | Enter a valid end date of course    |
 
     Scenario: Case Worker enters invalid Course start date - not numbers 0-9
         When the financial status check is performed with
@@ -282,7 +282,7 @@ Feature: Show clear error details when inputs are invalid
             | DOB                             | 27/07/1981 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
-            | Course Start Date-error          | Enter a valid course start date  |
+            | Course Start Date-error          | Enter a valid start date of course  |
 
     Scenario: Case Worker enters invalid Course Length - same day
         When the financial status check is performed with
