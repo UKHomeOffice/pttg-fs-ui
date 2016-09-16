@@ -35,7 +35,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                              |
-            | Page dynamic detail  | This applicant does not meet the financial requirements |
+            | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |
@@ -57,7 +57,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         When the financial status check is performed
         Then the service displays the following page content
             | Page dynamic heading | Not passed                                       |
-            | Page dynamic detail  | This account has been open for less than 28 days |
+            | Page dynamic detail  | The records for this account does not cover the whole 28 day period |
         And the service displays the following results headers in order
             | Total funds required  |
             | 28-day period checked |

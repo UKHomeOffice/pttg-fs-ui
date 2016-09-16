@@ -88,7 +88,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       // FAILED
       $scope.success = false;
       $scope.heading = 'Not passed';
-      $scope.reason = (res.failureReason.recordCount) ? 'This account has been open for less than 28 days' : 'This applicant does not meet the financial requirements';
+      $scope.reason = (res.failureReason.recordCount) ? 'The records for this account does not cover the whole 28 day period' : 'One or more daily closing balances are below the total funds required';
       $scope.summary.push({
         id: 'lowestBalance',
         label: 'Lowest balance',

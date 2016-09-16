@@ -198,7 +198,7 @@
                             } else {
                                 vm.model.minimumBalanceDate = data.failureReason.lowestBalanceDate;
                                 vm.model.minimumBalanceValue = vm.formatMoneyPoundsPence(data.failureReason.lowestBalanceValue);
-                                vm.failedMessage = 'This applicant does not meet the financial requirements';
+                                vm.failedMessage = 'One or more daily closing balances are below the total funds required';
                             }
 
                             $location.path('/financial-status-result-not-pass');
