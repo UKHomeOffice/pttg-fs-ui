@@ -1,3 +1,4 @@
+@WIP
 Feature: Capabilities required for platform integration and support eg healthchecks, logging, auditing
 
   Scenario: Health check shows DOWN when API server not reachable
