@@ -10,4 +10,4 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
             | non-doctorate | General student                  |
             | doctorate     | Doctorate extension scheme       |
             | pgdd          | Postgraduate doctor or dentist   |
-            | sso           | Student sabbatical officer |
+            | sso           | Student union sabbatical officer |

@@ -63,8 +63,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       },
       {
         value: 'sso',
-        label: 'Student sabbatical officer',
-        full: 'Tier 4 (General) student (sabbatical officer)',
+        label: 'Student union sabbatical officer',
+        full: 'Tier 4 (General) student union (sabbatical officer)',
         hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid']
       }
     ];
