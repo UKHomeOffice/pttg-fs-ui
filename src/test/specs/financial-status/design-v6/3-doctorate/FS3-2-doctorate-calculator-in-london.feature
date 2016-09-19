@@ -14,7 +14,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         Given caseworker is using the financial status service ui
         And the doctorate student type is chosen
 
-
+#Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
@@ -27,6 +27,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | DOB                             | 25/03/1987 |
         Then the service displays the following result
             | Outcome                         | Passed                                                |
+            | Account holder name             | Shelly Smith                                          |
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
             | Student type                    | Tier 4 (General) student (doctorate extension scheme) |

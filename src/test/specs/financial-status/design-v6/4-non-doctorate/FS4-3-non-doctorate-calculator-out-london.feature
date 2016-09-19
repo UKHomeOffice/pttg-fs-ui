@@ -10,6 +10,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
 
+        #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a Non Doctorate not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
@@ -27,9 +28,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Total funds required            | £16,090.00                   |
+            | Account holder name             | Shelly Smith                 |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course dates checked            | 30/05/2016 to 29/07/2016     |
-            | Lowest Balance           | £100.00 on 03/10/2016        |
+            | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | No                           |
             | Course length                   | 2 (limited to 9)             |
@@ -41,6 +43,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | Account number                  | 33333333                     |
             | DOB                             | 29/07/1978                   |
 
+#Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a Non Doctorate not in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
@@ -57,6 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | DOB                             | 19/01/1990 |
         Then the service displays the following result
             | Outcome                         | Passed                           |
+            | Account holder name             | Shelly Smith                     |
             | Total funds required            | £16,090.00                       |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
             | Course dates checked            | 30/05/2016 to 30/07/2016         |
