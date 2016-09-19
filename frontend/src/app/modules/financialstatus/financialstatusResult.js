@@ -89,11 +89,13 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       $scope.success = false;
       $scope.heading = 'Not passed';
       $scope.reason = (res.failureReason.recordCount) ? 'The records for this account does not cover the whole 28 day period' : 'One or more daily closing balances are below the total funds required';
-      $scope.summary.push({
-        id: 'lowestBalance',
-        label: 'Lowest balance',
-        value: pounds(res.failureReason.lowestBalanceValue) + ' on ' + dateDisplay(res.failureReason.lowestBalanceDate)
-      });
+      if (res.failureReason.lowestBalanceValue) {
+        $scope.summary.push({
+          id: 'lowestBalance',
+          label: 'Lowest balance',
+          value: pounds(res.failureReason.lowestBalanceValue) + ' on ' + dateDisplay(res.failureReason.lowestBalanceDate)
+        });
+      }
     }
   } else {
     // NO RESULT SO SOME SORT OF ERROR OCCURRED
