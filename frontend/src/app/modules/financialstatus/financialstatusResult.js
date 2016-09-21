@@ -77,6 +77,12 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   $scope.haveResult = (res.fundingRequirementMet !== undefined) ? true : false;
   if ($scope.haveResult) {
     // WE HAVE A RESULT
+
+    $scope.summary.unshift({
+      id: 'accountHolderName',
+      label: 'Account holder name',
+      value: 'Shelly Smith'
+    });
     if (res.fundingRequirementMet) {
 
       // PASSED
