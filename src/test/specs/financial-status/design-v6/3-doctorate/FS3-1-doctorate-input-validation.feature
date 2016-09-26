@@ -271,7 +271,7 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
-            | DOB                             | 25/09/2016 |
+            | DOB                             | 25/09/2099 |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information |
             | dob-error                        | Enter a valid date of birth      |
