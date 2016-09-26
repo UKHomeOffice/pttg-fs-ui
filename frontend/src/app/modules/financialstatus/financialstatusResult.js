@@ -54,7 +54,6 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
   var sType = FinancialstatusService.getStudentTypeByID(finStatus.studentType);
 
-
   $scope.summary = [
     {
       id: 'totalFundsRequired',
@@ -77,6 +76,12 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   $scope.haveResult = (res.fundingRequirementMet !== undefined) ? true : false;
   if ($scope.haveResult) {
     // WE HAVE A RESULT
+
+    $scope.summary.unshift({
+      id: 'accountHolderName',
+      label: 'Account holder name',
+      value: res.accountHolderName
+    });
     if (res.fundingRequirementMet) {
 
       // PASSED
@@ -99,7 +104,6 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     }
   } else {
     // NO RESULT SO SOME SORT OF ERROR OCCURRED
-    console.log('RES', res);
     if (res.failureReason.status === 404) {
       $scope.heading = 'There is no record for the sort code and account number with Barclays';
       $scope.reason = 'We couldn\'t perform the financial requirement check as no information exists for sort code ' + sortDisplay(finStatus.sortCode) + ' and account number ' + finStatus.accountNumber;

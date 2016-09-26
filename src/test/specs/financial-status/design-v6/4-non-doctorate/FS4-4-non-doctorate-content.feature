@@ -15,6 +15,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Passed                                          |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
+            | Account holder name |
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
@@ -41,6 +42,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Not passed                                              |
             | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
+            | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
@@ -66,6 +68,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Not passed                                       |
             | Page dynamic detail  | The records for this account does not cover the whole 28 day period |
         And the service displays the following results headers in order
+            | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order

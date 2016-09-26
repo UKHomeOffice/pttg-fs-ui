@@ -15,6 +15,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Page dynamic heading | Not passed                                              |
             | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
+            | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
             | Lowest balance        |
