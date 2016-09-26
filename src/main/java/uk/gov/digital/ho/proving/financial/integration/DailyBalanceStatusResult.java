@@ -14,7 +14,6 @@ import uk.gov.digital.ho.proving.financial.model.ResponseDetails;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * @Author Home Office Digital
@@ -25,6 +24,8 @@ public final class DailyBalanceStatusResult implements Serializable {
     private boolean pass;
 
     private BigDecimal minimum;
+
+    private String accountHolderName;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -37,9 +38,11 @@ public final class DailyBalanceStatusResult implements Serializable {
     private final ResponseDetails status;
 
     @JsonCreator
-    public DailyBalanceStatusResult(@JsonProperty("pass") boolean pass,
+    public DailyBalanceStatusResult(@JsonProperty("accountHolderName") String name,
+                                    @JsonProperty("pass") boolean pass,
                                     @JsonProperty("failureReason") FailureReason failureReason,
                                     @JsonProperty("status") ResponseDetails status) {
+        this.accountHolderName=name;
         this.pass = pass;
         this.failureReason = failureReason;
         this.status = status;
@@ -75,21 +78,8 @@ public final class DailyBalanceStatusResult implements Serializable {
         return failureReason;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DailyBalanceStatusResult that = (DailyBalanceStatusResult) o;
-        return pass == that.pass &&
-            Objects.equals(minimum, that.minimum) &&
-            Objects.equals(fromDate, that.fromDate) &&
-            Objects.equals(failureReason, that.failureReason) &&
-            Objects.equals(status, that.status);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pass, minimum, fromDate, failureReason, status);
+    public String getAccountHolderName() {
+        return accountHolderName;
     }
 
     @Override
@@ -97,9 +87,39 @@ public final class DailyBalanceStatusResult implements Serializable {
         return "DailyBalanceStatusResult{" +
             "pass=" + pass +
             ", minimum=" + minimum +
+            ", accountHolderName='" + accountHolderName + '\'' +
             ", fromDate=" + fromDate +
             ", failureReason=" + failureReason +
             ", status=" + status +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DailyBalanceStatusResult)) return false;
+
+        DailyBalanceStatusResult that = (DailyBalanceStatusResult) o;
+
+        if (pass != that.pass) return false;
+        if (minimum != null ? !minimum.equals(that.minimum) : that.minimum != null) return false;
+        if (accountHolderName != null ? !accountHolderName.equals(that.accountHolderName) : that.accountHolderName != null)
+            return false;
+        if (fromDate != null ? !fromDate.equals(that.fromDate) : that.fromDate != null) return false;
+        if (failureReason != null ? !failureReason.equals(that.failureReason) : that.failureReason != null)
+            return false;
+        return status != null ? status.equals(that.status) : that.status == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (pass ? 1 : 0);
+        result = 31 * result + (minimum != null ? minimum.hashCode() : 0);
+        result = 31 * result + (accountHolderName != null ? accountHolderName.hashCode() : 0);
+        result = 31 * result + (fromDate != null ? fromDate.hashCode() : 0);
+        result = 31 * result + (failureReason != null ? failureReason.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 }

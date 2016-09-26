@@ -19,6 +19,7 @@ class DailyBalanceStatusResultSpec extends Specification {
     static final String sampleOneFile = "dailybalancestatusresult-sample-one.json"
     static final String sampleTwoFile = "dailybalancestatusresult-sample-two.json"
     static final String sampleThreeFile = "dailybalancestatusresult-sample-three.json"
+    public static final String ACCOUNT_HOLDER_NAME = "Ray Purchase"
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
@@ -27,7 +28,7 @@ class DailyBalanceStatusResultSpec extends Specification {
     def "Instance should serialize to json in #fileName"() {
 
         when:
-        def actual = withoutSpaces(mapper.writeValueAsString(instance))
+        def actual = removeLeadingOrTrailingSpaces(mapper.writeValueAsString(instance))
 
         then:
         actual == stringFromFile(fileName)
@@ -88,25 +89,25 @@ class DailyBalanceStatusResultSpec extends Specification {
     def static FailureReason notEnoughRecordsFailure = new FailureReason(27)
 
     def static sampleOne =
-        new DailyBalanceStatusResult(true, null, new ResponseDetails("200", "OK"))
+        new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, null, new ResponseDetails("200", "OK"))
             .withFromDate(LocalDate.of(2015, 10, 3))
             .withMinimum(BigDecimal.valueOf(100))
 
     def static sampleTwo =
-        new DailyBalanceStatusResult(true, lowBalanceFailure, new ResponseDetails("200", "OK"))
+        new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME,true, lowBalanceFailure, new ResponseDetails("200", "OK"))
             .withFromDate(LocalDate.of(2015, 10, 3))
             .withMinimum(BigDecimal.valueOf(100))
 
     def static sampleThree =
-        new DailyBalanceStatusResult(true, notEnoughRecordsFailure, new ResponseDetails("200", "OK"))
+        new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, notEnoughRecordsFailure, new ResponseDetails("200", "OK"))
             .withFromDate(LocalDate.of(2015, 10, 3))
             .withMinimum(BigDecimal.valueOf(100))
 
     def stringFromFile(String fileName) {
-        withoutSpaces(new File("src/test/resources/" + fileName).text)
+        removeLeadingOrTrailingSpaces(new File("src/test/resources/" + fileName).text)
     }
 
-    def withoutSpaces(String input) {
-        input.replaceAll('\\s+', '')
+    def removeLeadingOrTrailingSpaces(String input) {
+        input.trim();
     }
 }

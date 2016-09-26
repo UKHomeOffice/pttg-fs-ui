@@ -27,6 +27,8 @@ public final class FundingCheckResponse implements Serializable {
 
     private final boolean fundingRequirementMet;
 
+    private final String accountHolderName;
+
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private final LocalDate periodCheckedFrom;
@@ -42,11 +44,13 @@ public final class FundingCheckResponse implements Serializable {
 
     @JsonCreator
     public FundingCheckResponse(@JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
+                                @JsonProperty("accountHolderName") String accountHolderName,
                                 @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
                                 @JsonProperty("minimum") BigDecimal minimum,
                                 @JsonProperty("failureReason") FailureReason failureReason,
                                 @JsonProperty("cappedValues") CappedValues cappedValues
     ) {
+        this.accountHolderName = accountHolderName;
         this.fundingRequirementMet = fundingRequirementMet;
         this.periodCheckedFrom = periodCheckedFrom;
         this.minimum = minimum;
@@ -56,6 +60,7 @@ public final class FundingCheckResponse implements Serializable {
 
     public FundingCheckResponse(DailyBalanceStatusResult balanceStatus, ThresholdResult threshold) {
 
+        this.accountHolderName = balanceStatus.getAccountHolderName();
         this.fundingRequirementMet = balanceStatus.isPass();
         this.periodCheckedFrom = balanceStatus.getFromDate();
         this.failureReason = balanceStatus.getFailureReason();
@@ -88,6 +93,10 @@ public final class FundingCheckResponse implements Serializable {
         return failureReason;
     }
 
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,13 +105,14 @@ public final class FundingCheckResponse implements Serializable {
         return fundingRequirementMet == that.fundingRequirementMet &&
             Objects.equals(periodCheckedFrom, that.periodCheckedFrom) &&
             Objects.equals(minimum, that.minimum) &&
+            Objects.equals(accountHolderName, that.accountHolderName) &&
             Objects.equals(failureReason, that.failureReason) &&
             Objects.equals(cappedValues, that.cappedValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, failureReason, cappedValues);
+        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, failureReason, cappedValues, accountHolderName);
     }
 
     @Override
@@ -111,6 +121,7 @@ public final class FundingCheckResponse implements Serializable {
             "fundingRequirementMet=" + fundingRequirementMet +
             ", periodCheckedFrom=" + periodCheckedFrom +
             ", minimum=" + minimum +
+            ", accountHolderName=" + accountHolderName +
             ", failureReason=" + failureReason +
             ", cappedValues=" + cappedValues +
             '}';

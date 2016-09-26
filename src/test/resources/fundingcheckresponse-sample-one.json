@@ -1,5 +1,6 @@
 {
-    "fundingRequirementMet": true,
-    "periodCheckedFrom": "2015-10-03",
-    "minimum": 100
+  "fundingRequirementMet" : true,
+  "accountHolderName" : "Ray Purchase",
+  "periodCheckedFrom" : "2015-10-03",
+  "minimum" : 100
 }

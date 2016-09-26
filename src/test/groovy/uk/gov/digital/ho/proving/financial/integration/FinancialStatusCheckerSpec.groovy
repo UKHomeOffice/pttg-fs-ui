@@ -21,6 +21,7 @@ import static org.springframework.http.HttpStatus.OK
  */
 class FinancialStatusCheckerSpec extends Specification {
 
+    public static final String ACCOUNT_HOLDER_NAME = "Ray Purchase"
     FinancialStatusChecker checker
 
     LocalDate dob = LocalDate.of(1980,1,1);
@@ -32,7 +33,7 @@ class FinancialStatusCheckerSpec extends Specification {
     def recordCountFailure = new FailureReason(27)
 
     def thresholdResponse = thresholdOf(ONE)
-    def dailyBalanceResponse = new ResponseEntity(new DailyBalanceStatusResult(true, recordCountFailure, new ResponseDetails("", "")), OK)
+    def dailyBalanceResponse = new ResponseEntity(new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, recordCountFailure, new ResponseDetails("", "")), OK)
 
     ApiUrls urls = Mock()
     RestTemplate template = Mock()

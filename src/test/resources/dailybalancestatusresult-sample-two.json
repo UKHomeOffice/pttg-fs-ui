@@ -1,13 +1,14 @@
 {
-    "pass": true,
-    "failureReason" : {
-        "lowestBalanceDate": "2015-10-03",
-        "lowestBalanceValue": 100
-    },
-    "status": {
-        "code": "200",
-        "message": "OK"
-    },
-    "minimum": 100,
-    "fromDate": "2015-10-03"
+  "accountHolderName" : "Ray Purchase",
+  "pass" : true,
+  "failureReason" : {
+    "lowestBalanceDate" : "2015-10-03",
+    "lowestBalanceValue" : 100
+  },
+  "status" : {
+    "code" : "200",
+    "message" : "OK"
+  },
+  "minimum" : 100,
+  "fromDate" : "2015-10-03"
 }

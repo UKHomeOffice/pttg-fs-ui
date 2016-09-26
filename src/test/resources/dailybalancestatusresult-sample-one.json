@@ -1,9 +1,10 @@
 {
-    "pass": true,
-    "status": {
-        "code": "200",
-        "message": "OK"
-    },
-    "minimum": 100,
-    "fromDate": "2015-10-03"
+  "accountHolderName" : "Ray Purchase",
+  "pass" : true,
+  "status" : {
+    "code" : "200",
+    "message" : "OK"
+  },
+  "minimum" : 100,
+  "fromDate" : "2015-10-03"
 }

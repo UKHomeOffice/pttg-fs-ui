@@ -1,13 +1,14 @@
 {
-    "fundingRequirementMet": true,
-    "periodCheckedFrom": "2015-10-03",
-    "minimum": 100,
-    "failureReason" : {
-        "lowestBalanceDate": "2015-10-03",
-        "lowestBalanceValue": 100
-    },
-    "cappedValues" : {
-        "accommodationFeesPaid": 1265.00,
-        "courseLength": 9
-    }
+  "fundingRequirementMet" : true,
+  "accountHolderName" : "Ray Purchase",
+  "periodCheckedFrom" : "2015-10-03",
+  "minimum" : 100,
+  "failureReason" : {
+    "lowestBalanceDate" : "2015-10-03",
+    "lowestBalanceValue" : 100
+  },
+  "cappedValues" : {
+    "accommodationFeesPaid" : 1265.00,
+    "courseLength" : 9
+  }
 }

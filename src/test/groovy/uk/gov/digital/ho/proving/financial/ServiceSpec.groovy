@@ -35,6 +35,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 class ServiceSpec extends Specification {
 
     public static final int DAYS_TO_CHECK = 28
+    public static final String ACCOUNT_HOLDER_NAME = "Ray Purchase"
 
     final def UI_ENDPOINT = "/pttg/financialstatusservice/v1/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
 
@@ -89,7 +90,7 @@ class ServiceSpec extends Specification {
     CappedValues cappedValues= new CappedValues(100, 9)
 
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, cappedValues, details))
-    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(true, null, details))
+    String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, null, details))
 
     def apiRespondsWith(threshold, balance) {
         mockServer.expect(requestTo(containsString("threshold")))
