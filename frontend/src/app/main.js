@@ -26,14 +26,25 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 }]);
 
 
-app.run(['$location', '$rootScope', '$window', '$timeout', function($location, $rootScope, $window, $timeout) {
+app.run(['$location', '$rootScope', '$window', '$timeout', '$state', function($location, $rootScope, $window, $timeout, $state) {
   // see http://simplyaccessible.com/article/spangular-accessibility/
+  // $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+  //   console.log(toState, toParams);
+  //   // console.log($location);
+  //   // console.log($state.href(toState.name, toParams));
+  //   var u = $state.href(toState.name, toParams);
 
-  $rootScope.$on('$viewContentLoaded', function () {
+  //   ga('set', 'page', u);
+  //   ga('send', 'pageview');
+
+  // });
+
+
+  $rootScope.$on('$viewContentLoaded', function (e) {
     // http://stackoverflow.com/questions/25596399/set-element-focus-in-angular-way
 
     // http://www.accessiq.org/news/features/2013/03/aria-and-accessibility-adding-focus-to-any-html-element
-
+    // ga('send', 'pageview',
     $timeout(function() {
       var e = angular.element(document.querySelector('#pageTitle'));
       if (e[0]) {
