@@ -431,6 +431,6 @@ class Steps {
     }
 
     private int getHealthCheckStatus() {
-        responseStatusFor(uiRoot + "health")
+        responseStatusFor(uiRoot + "healthz")
     }
 }
