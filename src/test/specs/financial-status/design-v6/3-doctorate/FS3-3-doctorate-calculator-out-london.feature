@@ -27,7 +27,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | DOB                             | 02/12/1985 |
         Then the service displays the following result
             | Outcome                         | Passed                                                |
-           # | Account holder name             | Laura Taylor                                          |
+            | Account holder name             | Laura Taylor                                          |
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
             | Student type                    | Tier 4 (General) student (doctorate extension scheme) |
