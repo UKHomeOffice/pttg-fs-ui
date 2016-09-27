@@ -33,6 +33,10 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     return;
   }
 
+
+  ga('set', 'page', $state.href($state.current.name, $stateParams));
+  ga('send', 'pageview');
+
   $scope.conf = {
     endDate: {
       max: moment().format('YYYY-MM-DD'),

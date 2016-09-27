@@ -31,8 +31,8 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($
 // http://127.0.0.1:8001/pttg/financialstatusservice/v1/accounts/222222/12345678/dailybalancestatus?accommodationFeesAlreadyPaid=2&courseLength=2&innerLondonBorough=true&numberOfDependants=2&studentType=&endDate=2016-07-21&totalTuitionFees=2&tuitionFeesAlreadyPaid=2
 
 // display results
-financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$filter', 'FinancialstatusService', function ($scope, $state, $filter, FinancialstatusService) {
-
+financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', function ($scope, $state, $stateParams, $filter, FinancialstatusService) {
+  var trackURL = $state.href($state.current.name, $stateParams);
   var pounds = function (num) {
     return $filter('currency')(num, '£', 2);
   };
@@ -82,19 +82,33 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       label: 'Account holder name',
       value: res.accountHolderName
     });
+
+
     if (res.fundingRequirementMet) {
 
       // PASSED
       $scope.success = true;
       $scope.heading = 'Passed';
       $scope.reason = 'This applicant meets the financial requirements';
+
+      trackURL += '/passed';
     } else {
+      trackURL += '/notpassed';
 
       // FAILED
       $scope.success = false;
       $scope.heading = 'Not passed';
-      $scope.reason = (res.failureReason.recordCount) ? 'The records for this account does not cover the whole 28 day period' : 'One or more daily closing balances are below the total funds required';
+
+      if (res.failureReason.recordCount) {
+        $scope.reason = 'The records for this account does not cover the whole 28 day period';
+        trackURL += '/28days';
+      } else {
+        $scope.reason = 'One or more daily closing balances are below the total funds required';
+        trackURL += '/funds';
+      }
+
       if (res.failureReason.lowestBalanceValue) {
+
         $scope.summary.push({
           id: 'lowestBalance',
           label: 'Lowest balance',
@@ -103,11 +117,15 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       }
     }
   } else {
+    trackURL += '/failure';
+
     // NO RESULT SO SOME SORT OF ERROR OCCURRED
     if (res.failureReason.status === 404) {
+      trackURL += '/norecord';
       $scope.heading = 'There is no record for the sort code and account number with Barclays';
       $scope.reason = 'We couldn\'t perform the financial requirement check as no information exists for sort code ' + sortDisplay(finStatus.sortCode) + ' and account number ' + finStatus.accountNumber;
     } else {
+      trackURL += '/' + res.failureReason.status;
       $scope.heading = 'You can’t use this service just now. The problem will be fixed as soon as possible';
       $scope.reason = 'Please try again later.';
       $scope.showCriteria = false;
@@ -151,5 +169,9 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     return (sType.hiddenFields.indexOf(row.id) >= 0 ) ? false: true;
   });
 
+
+
+  ga('set', 'page', trackURL);
+  ga('send', 'pageview');
 
 }]);
