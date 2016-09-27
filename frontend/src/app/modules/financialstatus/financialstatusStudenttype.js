@@ -26,6 +26,10 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($
 financialstatusModule.controller(
 'FinancialstatusCtrl', ['$scope', '$state', 'FinancialstatusService',
 function ($scope, $state, FinancialstatusService) {
+
+  ga('set', 'page', $state.href($state.current.name, {}));
+  ga('send', 'pageview');
+
   $scope.studentTypeOptions = FinancialstatusService.getStudentTypes();
   $scope.finStatus = FinancialstatusService.getDetails();
 
