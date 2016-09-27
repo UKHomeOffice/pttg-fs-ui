@@ -34,7 +34,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
     ## Changed in Jira number PT-24 - Added new 'Page dynamic detail' text
-    Scenario: Page checks for Not Passed text write up
+    Scenario: Page checks for Not Passed text write up 1
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the account does not have sufficient funds
         When the financial status check is performed

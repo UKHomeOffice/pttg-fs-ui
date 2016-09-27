@@ -28,7 +28,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Total funds required            | £16,090.00                   |
-            | Account holder name             | Shelly Smith                 |
+           # | Account holder name             | Shelly Smith                 |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course dates checked            | 30/05/2016 to 29/07/2016     |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
@@ -60,7 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Non Doctora
             | DOB                             | 19/01/1990 |
         Then the service displays the following result
             | Outcome                         | Passed                           |
-            | Account holder name             | Laura Taylor                     |
+           # | Account holder name             | Shelly Smith                     |
             | Total funds required            | £16,090.00                       |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
             | Course dates checked            | 30/05/2016 to 30/07/2016         |
