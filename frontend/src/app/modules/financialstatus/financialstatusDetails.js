@@ -33,10 +33,12 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     return;
   }
 
-
+  // track that we're now on the main form details page
   ga('set', 'page', $state.href($state.current.name, $stateParams));
   ga('send', 'pageview');
 
+
+  // set the configuration for the form fields
   $scope.conf = {
     endDate: {
       max: moment().format('YYYY-MM-DD'),
@@ -176,6 +178,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
   $scope.yesNoOptions = [{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}];
   $scope.pageTitle = sType.label;
 
+  // submit button code
   $scope.detailsSubmit = function (isValid, formScope, formCtrl) {
     FinancialstatusService.setValid(isValid);
     FinancialstatusService.sendDetails();

@@ -70,18 +70,22 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     ];
   };
 
+  // get the config detail of the student given the typ code eg sso fo Student union sabbatical officer
   this.getStudentTypeByID = function (typ) {
     return _.findWhere(me.getStudentTypes(), {value: typ });
   };
 
+  // set form the validation status
   this.setValid = function (bool) {
     isValid = bool ? true: false;
   };
 
+  // get the form validation state
   this.getValid = function () {
     return isValid;
   };
 
+  // determine the course length given start and end dates
   this.getCourseLength = function () {
     if (finStatus.studentType === 'doctorate') {
       return 2;
@@ -100,11 +104,15 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     return months;
   };
 
+  // send the API request
   this.sendDetails = function () {
     if (!isValid) {
       // we only want to send details when the form is valid
       return;
     }
+
+    finStatus.courseLength = Math.ceil(me.getCourseLength());
+
     // make a copy of the finStatus object and delete fields we don't want to send
     var details = angular.copy(finStatus);
     var sortCode = details.sortCode;
@@ -113,8 +121,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
     delete details.sortCode;
     delete details.accountNumber;
-
-    details.courseLength = Math.ceil(me.getCourseLength());
 
     var url = 'pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
 

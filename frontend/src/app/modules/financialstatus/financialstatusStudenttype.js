@@ -24,8 +24,8 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($
 
 // make a selection as to which type of student we're interested in
 financialstatusModule.controller(
-'FinancialstatusCtrl', ['$scope', '$state', 'FinancialstatusService',
-function ($scope, $state, FinancialstatusService) {
+'FinancialstatusCtrl', ['$scope', '$state', 'FinancialstatusService', 'FinancialstatusResultService',
+function ($scope, $state, FinancialstatusService, FinancialstatusResultService) {
 
   ga('set', 'page', $state.href($state.current.name, {}));
   ga('send', 'pageview');
@@ -37,6 +37,7 @@ function ($scope, $state, FinancialstatusService) {
     if ($scope.finStatus.studentType) {
       // simply go to the appropriate page for this student type
       FinancialstatusService.reset();
+      FinancialstatusResultService.reset();
       $state.go('financialStatusDetails', {studentType: $scope.finStatus.studentType});
     }
   };
