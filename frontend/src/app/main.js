@@ -8,7 +8,7 @@ var app = angular.module('hod.proving', [
 
 
 app.constant('CONFIG', {
-  api: '/'//'http://127.0.0.1:3001/'//$('html').data('api')
+  api: '/'
 });
 
 
@@ -28,23 +28,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 app.run(['$location', '$rootScope', '$window', '$timeout', '$state', function($location, $rootScope, $window, $timeout, $state) {
   // see http://simplyaccessible.com/article/spangular-accessibility/
-  // $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-  //   console.log(toState, toParams);
-  //   // console.log($location);
-  //   // console.log($state.href(toState.name, toParams));
-  //   var u = $state.href(toState.name, toParams);
-
-  //   ga('set', 'page', u);
-  //   ga('send', 'pageview');
-
-  // });
-
 
   $rootScope.$on('$viewContentLoaded', function (e) {
     // http://stackoverflow.com/questions/25596399/set-element-focus-in-angular-way
 
     // http://www.accessiq.org/news/features/2013/03/aria-and-accessibility-adding-focus-to-any-html-element
-    // ga('send', 'pageview',
     $timeout(function() {
       var e = angular.element(document.querySelector('#pageTitle'));
       if (e[0]) {
@@ -56,3 +44,22 @@ app.run(['$location', '$rootScope', '$window', '$timeout', '$state', function($l
 }]);
 
 
+app.filter('pounds', ['$filter', function ($filter) {
+  return function (num) {
+    return $filter('currency')(num, '£', 2);
+  }
+}]);
+
+
+app.filter('dateDisplay', function () {
+  return function (date) {
+    return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
+  };
+});
+
+
+app.filter('sortDisplay', function () {
+  return function (sortCode) {
+    return sortCode.substr(0, 2) + '-' + sortCode.substr(2, 2) + '-' + sortCode.substr(4, 2);
+  };
+});
