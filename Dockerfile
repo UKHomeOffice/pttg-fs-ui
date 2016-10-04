@@ -16,7 +16,6 @@ RUN groupadd -r ${GROUP} && \
     chown -R ${USER}:${GROUP} /app
 
 COPY package.json /app/package.json
-COPY bower.json /app/bower.json
 
 COPY ${JAR_PATH}/${NAME}-${VERSION}.jar /app
 COPY run.sh /app
