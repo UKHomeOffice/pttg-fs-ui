@@ -15,7 +15,6 @@ WORKDIR /code
 
 # RUN npm rebuild node-sass
 RUN npm install phantomjs -g
-RUN npm install && node_modules/bower/bin/bower install --allow-root
 RUN npm install gulp
 
 ENTRYPOINT ["gradle"]
