@@ -180,6 +180,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
 
   // submit button code
   $scope.detailsSubmit = function (isValid, formScope, formCtrl) {
+    FinancialstatusService.trackFormSubmission(formScope);
     FinancialstatusService.setValid(isValid);
     FinancialstatusService.sendDetails();
   };
