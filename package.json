@@ -16,7 +16,6 @@
     "del": "^2.2.0",
     "govuk-elements-sass": "^1.1.2",
     "govuk_frontend_toolkit": "^4.6.0",
-    "govuk_template_ejs": "^0.16.2",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-autoprefixer": "^3.1.1",
@@ -59,7 +58,7 @@
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0",
-    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git#6b49659",
+    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git#3dcfd6d",
     "gulp-concat": "~2.6.0"
   }
 }

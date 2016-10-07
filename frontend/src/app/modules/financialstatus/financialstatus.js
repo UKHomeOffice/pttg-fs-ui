@@ -143,15 +143,18 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
   this.trackFormSubmission = function (frm) {
     var errcount = 0;
+    var errcountstring = '';
     _.each(frm.objs, function (o) {
-      // console.log(o);
-      if (o.error.msg) {
+      if (o.error && o.error.msg) {
         errcount++;
         ga('send', 'event', frm.name, 'validation', o.config.id);
       }
     });
-
-    ga('send', 'event', frm.name, 'isvalid', (errcount) ? 'false': 'true', errcount);
+    errcountstring = '' + errcount;
+    while(errcountstring.length < 3) {
+      errcountstring = '0' + errcountstring;
+    }
+    ga('send', 'event', frm.name, 'errorcount', errcountstring);
   };
 
   // on first run set status to blank
