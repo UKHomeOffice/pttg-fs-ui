@@ -34,9 +34,6 @@ if (System.getenv('VERSION')) {
 
 jar {
     baseName = 'pttg-fs-ui'
-    if (System.getenv('BUILD_NUMBER')) {
-        version =  version + '-' + System.getenv('BUILD_NUMBER')
-    }
     if (System.getenv('GIT_COMMIT')) {
         version = version + '.' + System.getenv('GIT_COMMIT')
     }
@@ -108,7 +105,7 @@ tasks.withType(GroovyCompile) {
 }
 
 acceptanceTest {
-    maxHeapSize = "512m"
+    maxHeapSize = "768m"
 }
 
 test {
