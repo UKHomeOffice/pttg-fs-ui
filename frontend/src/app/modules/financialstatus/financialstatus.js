@@ -141,6 +141,22 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     return lastAPIresponse;
   };
 
+  this.trackFormSubmission = function (frm) {
+    var errcount = 0;
+    var errcountstring = '';
+    _.each(frm.objs, function (o) {
+      if (o.error && o.error.msg) {
+        errcount++;
+        ga('send', 'event', frm.name, 'validation', o.config.id);
+      }
+    });
+    errcountstring = '' + errcount;
+    while(errcountstring.length < 3) {
+      errcountstring = '0' + errcountstring;
+    }
+    ga('send', 'event', frm.name, 'errorcount', errcountstring);
+  };
+
   // on first run set status to blank
   finStatus = this.getBlank();
 

@@ -396,6 +396,13 @@ class Steps {
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
+    @Then("^the Tier four student type page is displayed\$")
+    public void the_Tier_four_student_type_page_is_displayed(DataTable expectedResult) throws Throwable {
+        driver.sleep(delay)
+        driver.findElement(By.className("button")).click()
+        assertTextFieldEqualityForTable(expectedResult)
+    }
+
     @Then("^the error summary list contains the text\$")
     public void the_error_summary_list_contains_the_text(DataTable expectedText) {
 

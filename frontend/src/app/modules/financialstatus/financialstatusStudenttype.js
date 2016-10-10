@@ -33,7 +33,9 @@ function ($scope, $state, FinancialstatusService, FinancialstatusResultService) 
   $scope.studentTypeOptions = FinancialstatusService.getStudentTypes();
   $scope.finStatus = FinancialstatusService.getDetails();
 
-  $scope.typeSubmit = function () {
+  $scope.typeSubmit = function (isValid, formScope, formCtrl) {
+    FinancialstatusService.trackFormSubmission(formScope);
+
     if ($scope.finStatus.studentType) {
       // simply go to the appropriate page for this student type
       FinancialstatusService.reset();

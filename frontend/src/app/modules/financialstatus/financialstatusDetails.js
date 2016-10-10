@@ -65,10 +65,9 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       }
     },
     courseStartDate: {
-      // hidden: (sType.value === 'doctorate') ? true : false,
+      //
     },
     courseEndDate: {
-      // hidden: (sType.value === 'doctorate') ? true : false,
       validate: function (v, sc) {
         var len = FinancialstatusService.getCourseLength();
         if (len <= 0) {
@@ -78,7 +77,6 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       }
     },
     totalTuitionFees: {
-      // hidden: (sType.value !== 'nondoctorate') ? true : false,
       prefix: '£ ',
       errors: {
         required: {
@@ -92,7 +90,6 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       }
     },
     tuitionFeesAlreadyPaid: {
-      // hidden: (sType.value !== 'nondoctorate') ? true : false,
       prefix: '£ ',
       errors: {
         required: {
@@ -180,6 +177,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
 
   // submit button code
   $scope.detailsSubmit = function (isValid, formScope, formCtrl) {
+    FinancialstatusService.trackFormSubmission(formScope);
     FinancialstatusService.setValid(isValid);
     FinancialstatusService.sendDetails();
   };

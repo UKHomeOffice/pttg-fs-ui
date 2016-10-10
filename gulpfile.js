@@ -1,10 +1,6 @@
 var target = 'src/main/webapp/';
 var sourcePath = 'frontend/src/';
 
-
-
-
-
 var gulp = require('gulp');
 var async = require('async');
 var run = require('run-sequence');
@@ -61,24 +57,10 @@ var config = {
   }
 };
 
+
 gulp.task('assets', function () {
   gulp.src([sourcePath + 'assets/**/*']).pipe(gulp.dest(target +'assets'));
 });
-
-// gulp.task('clean', function () {
-//   return del([
-//     target + 'main.js',
-//     '_temp/main.js',
-//     '_temp/templates.js'
-//   ]);
-// });
-
-
-// gulp.task('fonts', function() {
-//   return gulp.src(['app/fonts/*/*'])
-//     .pipe(inlineFonts({ name: 'fonts' }))
-//     .pipe(gulp.dest(target));
-// });
 
 
 gulp.task('sass', function(){
@@ -90,17 +72,6 @@ gulp.task('sass', function(){
 });
 
 
-// gulp.task('images', function () {
-//   return gulp.src('app/images/*')
-//     .pipe(imagemin({
-//       progressive: true,
-//       svgoPlugins: [{cleanupIDs:{remove: false}}],
-//       use: [imageminJpegRecompress({loops: 3, min:50, max:80})]
-//     }))
-//     .pipe(gulp.dest(target + 'images'));
-// });
-
-
 gulp.task('minifyHtml', function() {
   return gulp.src(sourcePath + '*.html')
     .pipe(plumber({ errorHandler: onError }))
@@ -109,7 +80,6 @@ gulp.task('minifyHtml', function() {
 });
 
 
-//
 gulp.task('uglify', function () {
   return gulp.src([
     sourcePath + 'app/main.js',
@@ -146,6 +116,7 @@ gulp.task('vendor', function () {
     'node_modules/angular-ui-validate/dist/validate.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/moment/min/moment.min.js',
+    // 'node_modules/govuk_frontend_toolkit/javascripts/govuk/selection-buttons.js'
   ])
   .pipe(plumber())
   .pipe(concat('vendor.js'))
