@@ -50,20 +50,7 @@ jar.into('static') {
     from('src/main/webapp')
 }
 
-task bowerLocalInstall(type: NodeTask) {
-    script = file('node_modules/bower/bin/bower')
-    args = [
-        "--allow-root",
-        'install'
-    ]
-    inputs.files file('bower.json')
-    outputs.files file('bower_components')
-    dependsOn npmInstall
-}
-
-build.dependsOn bowerLocalInstall
 jar.mustRunAfter(gulp_build)
-gulp_build.dependsOn bowerLocalInstall
 
 dependencies {
     compile libraries.groovy

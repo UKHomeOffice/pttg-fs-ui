@@ -12,7 +12,6 @@
     "angular-ui-router": "^0.3.1",
     "angular-ui-validate": "^1.2.2",
     "async": "^2.0.1",
-    "bower": "^1.7.7",
     "chalk": "^1.1.1",
     "del": "^2.2.0",
     "govuk-elements-sass": "^1.1.2",
