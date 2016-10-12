@@ -34,7 +34,6 @@ class UtilitySteps {
         if (radioConfig.options.containsKey(choice)) {
 
             String id = radioConfig.options.get(choice)
-
             By byCss = By.cssSelector("[id='$id'][type='radio']")
             driver.findElement(byCss).click()
         }

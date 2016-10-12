@@ -96,6 +96,8 @@ class Steps {
 
     def studentType
 
+    def defaultFields
+
     @Before
     def setUp(Scenario scenario) {
         if (wiremock) {
@@ -179,7 +181,7 @@ class Steps {
         }
     }
 
-    private void submitEntries(Map<String, String> entries) {
+    private void makeEntries(Map<String, String> entries) {
         entries.each { k, v ->
             String key = toCamelCase(k)
 
@@ -194,7 +196,6 @@ class Steps {
 
                 if (key == "inLondon") {
                     clickRadioButton(driver, inLondonRadio, v)
-
                 } else if (key == "studentType") {
                     clickRadioButton(driver, studentTypeRadio, v)
                 } else {
@@ -202,6 +203,10 @@ class Steps {
                 }
             }
         }
+    }
+
+    private void submitEntries(Map<String, String> entries) {
+        makeEntries(entries)
 
         driver.sleep(delay)
         driver.findElement(By.className("button")).click()
@@ -238,6 +243,14 @@ class Steps {
     public void the_student_type_is_chosen(String type) {
         studentType = type
         chooseAndSubmitStudentType(type)
+    }
+
+    @Given("^the default details are\$")
+    public void the_default_details_are(DataTable arg1) throws Throwable {
+        // println 'BACKGROUND the default details are';
+        defaultFields = arg1
+       // Map<String, String> entries = arg1.asMap(String.class, String.class)
+       // submitEntries(entries)
     }
 
     @Given("^the account has sufficient funds\$")
@@ -306,34 +319,43 @@ class Steps {
 
     @When("^the financial status check is performed\$")
     public void the_financial_status_check_is_performed() throws Throwable {
+        Map<String, String> validDefaultEntries
+        if (defaultFields) {
+            validDefaultEntries = defaultFields.asMap(String.class, String.class)
+        } else {
+            validDefaultEntries = [
+                'End date'                       : '30/05/2016',
+                'In London'                      : 'Yes',
+                'Accommodation fees already paid': '0',
+                'Number of dependants'           : '1',
+                'Sort code'                      : '11-11-11',
+                'Account number'                 : '11111111',
+                'dob'                            : '29/07/1978',
+            ]
 
-        Map<String, String> validDefaultEntries = [
-            'End date'                       : '30/05/2016',
-            'In London'                      : 'Yes',
-            'Accommodation fees already paid': '0',
-            'Number of dependants'           : '1',
-            'Sort code'                      : '11-11-11',
-            'Account number'                 : '11111111',
-            'dob'                            : '29/07/1978',
-        ]
+            if (studentType.equalsIgnoreCase('non-doctorate')) {
+                validDefaultEntries['Total tuition fees'] = '1';
+                validDefaultEntries['Tuition fees already paid'] = '0';
+            }
 
-        if (studentType.equalsIgnoreCase('non-doctorate')) {
-            validDefaultEntries['Total tuition fees'] = '1';
-            validDefaultEntries['Tuition fees already paid'] = '0';
+            if (!studentType.equalsIgnoreCase('doctorate')) {
+                validDefaultEntries['Course start date'] = '30/05/2016';
+                validDefaultEntries['Course end date'] = '30/06/2016';
+            }
         }
-
-        if (!studentType.equalsIgnoreCase('doctorate')) {
-            validDefaultEntries['Course start date'] = '30/05/2016';
-            validDefaultEntries['Course end date'] = '30/06/2016';
-        }
-
         submitEntries(validDefaultEntries)
     }
 
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-        submitEntries(entries)
+
+        if (defaultFields) {
+            Map<String, String> defaultEntries = defaultFields.asMap(String.class, String.class)
+            submitEntries(defaultEntries + entries)
+        } else {
+            submitEntries(entries)
+        }
     }
 
     @When("^the caseworker views the (.*) page\$")
@@ -352,9 +374,23 @@ class Steps {
         }
     }
 
+    @When("^the new search button is clicked\$")
+    public void the_new_search_button_is_clicked() throws Throwable {
+        driver.sleep(delay)
+        driver.findElement(By.className("button")).click()
+        //assertTextFieldEqualityForTable(expectedResult)
+    }
+
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
+        assertTextFieldEqualityForMap(entries)
+    }
+
+    @Then("^the service displays the following error message\$")
+    public void the_service_displays_the_following_error_message(DataTable arg1) throws Throwable {
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
+        assertTextFieldEqualityForMap(['validation-error-summary-heading': 'There\'s some invalid information']);
         assertTextFieldEqualityForMap(entries)
     }
 
@@ -396,12 +432,7 @@ class Steps {
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
-    @Then("^the Tier four student type page is displayed\$")
-    public void the_Tier_four_student_type_page_is_displayed(DataTable expectedResult) throws Throwable {
-        driver.sleep(delay)
-        driver.findElement(By.className("button")).click()
-        assertTextFieldEqualityForTable(expectedResult)
-    }
+
 
     @Then("^the error summary list contains the text\$")
     public void the_error_summary_list_contains_the_text(DataTable expectedText) {
