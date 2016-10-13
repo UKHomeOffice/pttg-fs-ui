@@ -6,6 +6,7 @@ Feature: Show clear error details when inputs are invalid
     Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
     Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
     Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    Dependants - should always be 0 for courses of six months or less ####
 
     Background:
         Given caseworker is using the financial status service ui
@@ -235,6 +236,15 @@ Feature: Show clear error details when inputs are invalid
             | Number of dependants            | 1.1        |
         Then the service displays the following error message
             | number Of Dependants-error       | Enter a valid number of dependants |
+
+    Scenario: Case Worker enters invalid number of dependants - course length 6 months or less ######### RM
+        When the financial status check is performed with
+             | Course start date               | 30/05/2016 |
+             | Course end date                 | 30/10/2016 |
+             | Number of dependants            | 1          |
+         Then the service displays the following error message
+             | number Of Dependants-error      | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
+
 
            ######################### Validation on the Date of birth Field #########################
 
