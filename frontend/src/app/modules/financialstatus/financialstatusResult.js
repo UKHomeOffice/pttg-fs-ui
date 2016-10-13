@@ -345,4 +345,9 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     FinancialstatusService.reset();
     $state.go('financialStatus');
   };
+
+  // edit search button
+  $scope.editSearch = function (e) {
+    $state.go('financialStatusDetails', {studentType: sType.value});
+  };
 }]);

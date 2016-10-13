@@ -118,6 +118,15 @@ class Steps {
         }
     }
 
+    private def assertRadioSelection(radioConfig, String v) {
+        String choice = v.toLowerCase()
+        if (radioConfig.options.containsKey(choice)) {
+            String id = radioConfig.options.get(choice)
+            WebElement element = driver.findElement(By.cssSelector("[id='$id'][type='radio']"))
+            assert element.isSelected() == true
+        }
+    }
+
     private def fillOrClearBySplitting(String key, String input, List<String> partNames, String delimiter) {
 
         if (input != null && input.length() != 0) {
@@ -153,6 +162,22 @@ class Steps {
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
     }
 
+    private def assertDate(String fieldName, String v) {
+        String fieldval = ''
+        dateParts.each { part ->
+            fieldval += '/' + driver.findElement(By.id(fieldName + part)).getAttribute("value").padLeft(2, '0')
+        }
+        assert fieldval.substring(1) == v
+    }
+
+    private assertSortcode(String fieldName, String v) {
+        String fieldval = '';
+        sortCodeParts.each { part ->
+            fieldval += '-' + driver.findElement(By.id(fieldName + part)).getAttribute("value").padLeft(2, '0')
+        }
+        assert fieldval.substring(1) == v
+    }
+
     private void verifyTableRowHeadersInOrder(DataTable expectedResult, tableId) {
 
         WebElement tableElement = driver.findElement(By.id(tableId))
@@ -178,6 +203,33 @@ class Steps {
             WebElement element = driver.findElement(By.id(fieldName))
 
             assert element.getText() == v
+        }
+    }
+
+    private void assertInputValueEqualityForTable(DataTable expectedResult) {
+        Map<String, String> entries = expectedResult.asMap(String.class, String.class)
+        assertInputValueEqualityForMap(entries)
+    }
+
+    private Map<String, String> assertInputValueEqualityForMap(Map<String, String> entries) {
+
+        entries.each { k, v ->
+            String fieldName = toCamelCase(k);
+            if (fieldName.endsWith("Date") || fieldName.equals("dob")) {
+                assertDate(fieldName, v)
+
+            } else if (fieldName.equals("sortCode")) {
+                assertSortcode(fieldName, v)
+
+            } else if (fieldName == "inLondon") {
+                assertRadioSelection(inLondonRadio, v)
+
+            } else if (fieldName == "studentType") {
+                assertRadioSelection(studentTypeRadio, v)
+
+            } else {
+                assert driver.findElement(By.id(fieldName)).getAttribute("value") == v
+            }
         }
     }
 
@@ -377,8 +429,14 @@ class Steps {
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button")).click()
+        driver.findElement(By.className("button--newSearch")).click()
         //assertTextFieldEqualityForTable(expectedResult)
+    }
+
+    @When("^the edit search button is clicked\$")
+    public void the_edit_search_button_is_clicked() throws Throwable {
+        driver.sleep(delay)
+        driver.findElement(By.className("button--editSearch")).click()
     }
 
     @Then("^the service displays the following message\$")
@@ -432,8 +490,6 @@ class Steps {
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 
-
-
     @Then("^the error summary list contains the text\$")
     public void the_error_summary_list_contains_the_text(DataTable expectedText) {
 
@@ -445,6 +501,11 @@ class Steps {
         errorSummaryTextItems.each {
             assert errorText.contains(it): "Error text did not contain: $it"
         }
+    }
+
+    @Then("^the inputs will be populated with\$")
+    public void the_inputs_will_be_populated_with(DataTable expectedResult) {
+        assertInputValueEqualityForTable(expectedResult)
     }
 
     @Then("^the connection attempt count should be (\\d+)\$")

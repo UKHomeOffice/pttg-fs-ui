@@ -1,51 +1,67 @@
-  h2 {
-    font-size: 18px;
-  }
+h2 {
+  font-size: 18px;
+}
 
-  .heading-xlarge {
-    margin-bottom: 20px;
-  }
+.heading-xlarge {
+  margin-bottom: 20px;
+}
 
-  .top-align {
-    vertical-align: top;
-  }
+.top-align {
+  vertical-align: top;
+}
 
-  .page-title {
-    margin-top: 20px;
-  }
+.page-title {
+  margin-top: 20px;
+}
 
-  .no-bottom-margin {
-  	margin-bottom: 0;
-  }
+.no-bottom-margin {
+	margin-bottom: 0;
+}
 
-  .add-top-margin {
-    margin-top: 50px;
-  }
+.add-top-margin {
+  margin-top: 50px;
+}
 
-  .full-width {
-  	width: 100%;
-  }
+.full-width {
+	width: 100%;
+}
 
-  .panel.panel-no-border {
-  	border-left: none;
-  	padding: 0;
-  }
+.panel.panel-no-border {
+	border-left: none;
+	padding: 0;
+}
 
-  .no-padding {
-    padding: 0;
-  }
+.no-padding {
+  padding: 0;
+}
 
-  .wide-cell {
-    width: 70%;
-  }
+.wide-cell {
+  width: 70%;
+}
 
-  .form-group.small-bottom-margin {
-    margin-bottom: 5px;
-  }
+.form-group.small-bottom-margin {
+  margin-bottom: 5px;
+}
 
-  table td.no-bottom-border {
-    border-bottom: none;
+table td.no-bottom-border {
+  border-bottom: none;
+}
+
+.form-group--topspace {
+  padding-top: 30px;
+}
+
+.button-info {
+  background-color: #dee0e2;
+  box-shadow: 0 2px 0 #b5babe;
+  color: #0b0c0c;
+
+  &:hover {
+    background-color: darken(#dee0e2, 5%);
+    box-shadow: 0 2px 0 darken(#b5babe, 5%);
+    color: #0b0c0c;
   }
+}
 
 @media (min-width: 641px){
 	table th, table td {
@@ -53,3 +69,4 @@
 	    line-height: 1.25;
 	}
 }
+
