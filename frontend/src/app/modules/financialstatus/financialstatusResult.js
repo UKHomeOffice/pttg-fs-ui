@@ -14,6 +14,28 @@ financialstatusModule.constant('RESULT_STATES', {
 });
 
 
+financialstatusModule.constant('RESULT_TEXT', {
+  passed:         'Passed',
+  notpassed:      'Not passed',
+  meetsreq:       'This applicant meets the financial requirements',
+  day28cover:     'The records for this account does not cover the whole 28 day period',
+  balancesbelow:  'One or more daily closing balances are below the total funds required',
+  datamismatch:   'the account number, sort code and date of birth do not match a Barclays account',
+  accesscond:     'One or more of the following conditions prevented us from accessing the account:',
+  invalid:        'Invalid or inaccessible account',
+  notbarclays:    'it is not a Barclays account',
+  frozen:         'it is frozen',
+  businessacc:    'it is a business account',
+  accountclosed:  'the account is closed',
+  outoforder:     'You can’t use this service just now. The problem will be fixed as soon as possible',
+  trylater:       'Please try again later.',
+  checkname:      'check that the name matches applicant\'s details',
+  checkinfo:      'check you have entered the correct information,',
+  checkpaper:     'check paper evidence to see if applicant can meet criteria in some other way,',
+  checkbank:      'check it is a Barclays current account',
+
+});
+
 // #### ROUTES #### //
 financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
@@ -33,7 +55,7 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($
 }]);
 
 
-financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusService', '$filter', 'RESULT_STATES', function (FinancialstatusService, $filter, RESULT_STATES) {
+financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusService', '$filter', 'RESULT_STATES', 'RESULT_TEXT', function (FinancialstatusService, $filter, RESULT_STATES, RESULT_TEXT) {
   var me = this;
   var data;
   var reqdata;
@@ -148,43 +170,43 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     switch (state) {
       case RESULT_STATES.passed:
         return {
-          heading: 'Passed',
-          reason:  'This applicant meets the financial requirements'
+          heading: RESULT_TEXT.passed,
+          reason:  RESULT_TEXT.meetsreq
         };
         break;
 
       case RESULT_STATES.notpassed_28days:
         return {
-          heading: 'Not passed',
-          reason:  'The records for this account does not cover the whole 28 day period'
+          heading: RESULT_TEXT.notpassed,
+          reason:  RESULT_TEXT.day28cover
         };
         break;
 
       case RESULT_STATES.notpassed_funds:
         return {
-          heading: 'Not passed',
-          reason:  'One or more daily closing balances are below the total funds required'
+          heading: RESULT_TEXT.notpassed,
+          reason:  RESULT_TEXT.balancesbelow
         };
         break;
 
       case RESULT_STATES.failure_norecord:
         return {
-          heading: 'Invalid or inaccessible account',
-          reason:  'One or more of the following conditions prevented us from accessing the account:',
+          heading: RESULT_TEXT.invalid,
+          reason:  RESULT_TEXT.accesscond,
           reasonInfo: [
-            'the account number, sort code and date of birth do not match a Barclays account',
-            'it is not a Barclays account',
-            'it is frozen',
-            'it is a business account',
-            'the account is closed'
+            RESULT_TEXT.datamismatch,
+            RESULT_TEXT.notbarclays,
+            RESULT_TEXT.frozen,
+            RESULT_TEXT.businessacc,
+            RESULT_TEXT.accountclosed
           ]
         };
         break;
     }
 
     return {
-      heading: 'You can’t use this service just now. The problem will be fixed as soon as possible',
-      reason:  'Please try again later.'
+      heading: RESULT_TEXT.outoforder,
+      reason:  RESULT_TEXT.trylater
     };
   };
 
@@ -305,21 +327,19 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
   this.getWhatNext = function (state) {
     switch (state) {
       case RESULT_STATES.passed:
-        return [
-          'check that the name matches applicant\'s details'
-        ];
+        return [ RESULT_TEXT.checkname ];
 
       case RESULT_STATES.failure_norecord:
         return [
-          'check you have entered the correct information',
-          'check paper evidence to see if applicant can meet criteria in some other way',
-          'check it is a Barclays current account'
+          RESULT_TEXT.checkinfo,
+          RESULT_TEXT.checkpaper,
+          RESULT_TEXT.checkbank
         ];
 
       default:
         return [
-          'check you have entered the correct information',
-          'check paper evidence to see if applicant can meet criteria in some other way'
+          RESULT_TEXT.checkinfo,
+          RESULT_TEXT.checkpaper,
         ];
     }
   }
@@ -329,7 +349,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
 
 // display results
-financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES) {
+financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT',
+  function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT) {
 
 
   // check for result data
