@@ -169,8 +169,15 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
       case RESULT_STATES.failure_norecord:
         return {
-          heading: 'There is no record for the sort code and account number with Barclays',
-          reason:  'We couldn\'t perform the financial requirement check as no information exists for sort code ' + $filter('sortDisplay')(reqdata.sortCode) + ' and account number ' + reqdata.accountNumber
+          heading: 'Invalid or inaccessible account',
+          reason:  'One or more of the following conditions prevented us from accessing the account:',
+          reasonInfo: [
+            'the account number, sort code and date of birth do not match a Barclays account',
+            'it is not a Barclays account',
+            'it is frozen',
+            'it is a business account',
+            'the account is closed'
+          ]
         };
         break;
     }
@@ -295,6 +302,28 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     return criteria;
   };
 
+  this.getWhatNext = function (state) {
+    switch (state) {
+      case RESULT_STATES.passed:
+        return [
+          'check that the name matches applicant\'s details'
+        ];
+
+      case RESULT_STATES.failure_norecord:
+        return [
+          'check you have entered the correct information',
+          'check paper evidence to see if applicant can meet criteria in some other way',
+          'check it is a Barclays current account'
+        ];
+
+      default:
+        return [
+          'check you have entered the correct information',
+          'check paper evidence to see if applicant can meet criteria in some other way'
+        ];
+    }
+  }
+
   return this;
 }]);
 
@@ -332,6 +361,9 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   var text = resServ.getText(state);
   $scope.heading = text.heading;
   $scope.reason = text.reason;
+  $scope.reasonInfo = text.reasonInfo;
+
+  $scope.whatNext = resServ.getWhatNext(state);
 
   $scope.searchCriteria = resServ.getCriteria(state);
   $scope.showCriteria = (state !== RESULT_STATES.failure) ? true : false;
