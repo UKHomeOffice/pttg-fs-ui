@@ -133,7 +133,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
         if (Math.ceil(n) !== Math.floor(n)) {
           ok = false;
         }
-        // console.log(sType.value, len, sType.noDependantsOnCourseLength, n);
+
         if (sType.noDependantsOnCourseLength && len <= sType.noDependantsOnCourseLength && n) {
           var msg = 'Main applicants cannot be accompanied by dependants on courses of ';
           msg += sType.noDependantsOnCourseLength;
