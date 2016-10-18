@@ -16,8 +16,8 @@ Feature: Insufficient Information
             | Account number                  | 99999999   |
             | DOB                             | 27/05/1986 |
         Then the service displays the following page content
-            | Page dynamic heading | There is no record for the sort code and account number with Barclays                                                           |
-            | Page Dynamic detail  | We couldn't perform the financial requirement check as no information exists for sort code 99-99-99 and account number 99999999 |
+            | Page dynamic heading | Invalid or inaccessible account                                                  |
+            | Page Dynamic detail  | One or more of the following conditions prevented us from accessing the account: |
         And the service displays the following your search data
             | Sort Code      | 99-99-99   |
             | Account Number | 99999999   |

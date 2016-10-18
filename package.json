@@ -58,7 +58,7 @@
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0",
-    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git#3dcfd6d",
+    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git",
     "gulp-concat": "~2.6.0"
   }
 }

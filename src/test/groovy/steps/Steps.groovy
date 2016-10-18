@@ -257,6 +257,8 @@ class Steps {
         }
     }
 
+
+
     private void submitEntries(Map<String, String> entries) {
         makeEntries(entries)
 
@@ -398,6 +400,12 @@ class Steps {
         submitEntries(validDefaultEntries)
     }
 
+    @When("^these fields are updated with\$")
+    public void these_field_are_updated_with(DataTable arg1) throws Throwable {
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
+        makeEntries(entries)
+    }
+
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
@@ -425,6 +433,13 @@ class Steps {
             assert false: 'Sleep interrupted'
         }
     }
+
+    @When("^the submit button is clicked\$")
+    public void the_submit_button_is_clicked() throws Throwable {
+        driver.sleep(delay)
+        driver.findElement(By.className("button")).click()
+    }
+
 
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() throws Throwable {

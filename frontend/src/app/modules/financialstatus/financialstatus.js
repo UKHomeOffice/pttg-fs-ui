@@ -47,25 +47,29 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         value: 'nondoctorate',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        hiddenFields: []
+        hiddenFields: [],
+        noDependantsOnCourseLength: 6
       },
       {
         value: 'doctorate',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
-        hiddenFields: ['courseStartDate', 'courseEndDate', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        hiddenFields: ['courseStartDate', 'courseEndDate', 'totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        noDependantsOnCourseLength: null
       },
       {
         value: 'pgdd',
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
-        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        noDependantsOnCourseLength: null
       },
       {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        noDependantsOnCourseLength: null
       }
     ];
   };
