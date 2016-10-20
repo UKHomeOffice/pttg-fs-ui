@@ -145,7 +145,7 @@ public class FinancialStatusChecker {
     private HttpEntity addTokenToHeaders(HttpEntity<?> entity, String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.putAll(entity.getHeaders());
-        headers.add("kc-access", accessToken);
+        headers.add("Cookie", "kc-access="+accessToken);
         HttpEntity<?> newEntity = new HttpEntity<>(headers);
 
         LOGGER.debug("Request headers: " + newEntity.toString());
