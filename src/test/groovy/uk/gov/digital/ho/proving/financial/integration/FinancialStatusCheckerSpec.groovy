@@ -60,7 +60,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
 
         then:
         1 * urls.thresholdUrlFor(*_)
@@ -75,7 +75,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, 123.45, _, _)
@@ -90,7 +90,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
@@ -110,7 +110,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        def response = checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+        def response = checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
 
         then:
         response.minimum == 123.45
@@ -129,7 +129,7 @@ class FinancialStatusCheckerSpec extends Specification {
         1 * auditor.publishEvent(_) >> {args -> event2 = args[0].auditEvent}
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance)
+        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
 
         then:
 
