@@ -56,14 +56,14 @@ public class FinancialStatusChecker {
     private HttpEntity<?> entity = new HttpEntity<>(getHeaders());
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
-    public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
+    public FundingCheckResponse checkDailyBalanceStatus(Account account, LocalDate toDate, Course course, Maintenance maintenance, String accessToken) {
 
         UUID eventId = AuditActions.nextId();
         auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, course, maintenance)));
         LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, Course: {}, Maintenance: {}", account, toDate, course, maintenance);
 
-        ThresholdResult thresholdResult = getThreshold(course, maintenance);
-        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold());
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
+        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(account, toDate, thresholdResult.getThreshold(), accessToken);
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
 
@@ -72,23 +72,23 @@ public class FinancialStatusChecker {
         return fundingCheckResponse;
     }
 
-    private ThresholdResult getThreshold(Course course, Maintenance maintenance) {
+    private ThresholdResult getThreshold(Course course, Maintenance maintenance, String accessToken) {
         URI uri = apiUrls.thresholdUrlFor(course, maintenance);
-        ThresholdResult thresholdResult = getForObject(uri, ThresholdResult.class);
+        ThresholdResult thresholdResult = getForObject(uri, ThresholdResult.class, accessToken);
 
         LOGGER.debug("Threshold result: {}", value("thresholdResult", thresholdResult));
 
         return thresholdResult;
     }
 
-    private DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired) {
+    private DailyBalanceStatusResult getDailyBalanceStatus(Account account, LocalDate toDate, BigDecimal totalFundsRequired, String accessToken) {
 
         LocalDate fromDate = daysBefore(toDate);
 
         URI uri = apiUrls.dailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
 
         DailyBalanceStatusResult dailyBalanceStatusResult =
-            getForObject(uri, DailyBalanceStatusResult.class)
+            getForObject(uri, DailyBalanceStatusResult.class, accessToken)
                 .withFromDate(fromDate);
 
         LOGGER.debug("Daily balance status result: {}", value("dailyBalanceStatusResult", dailyBalanceStatusResult));
@@ -101,9 +101,9 @@ public class FinancialStatusChecker {
     }
 
 
-    private <T> T getForObject(URI uri, Class<T> type) {
+    private <T> T getForObject(URI uri, Class<T> type, String accessToken) {
         LOGGER.debug("Calling API with URI: {} for type: {}", uri, type);
-        ResponseEntity<T> responseEntity = restTemplate.exchange(uri, GET, entity, type);
+        ResponseEntity<T> responseEntity = restTemplate.exchange(uri, GET, addTokenToHeaders(entity, accessToken), type);
         return responseEntity.getBody();
     }
 
@@ -139,5 +139,14 @@ public class FinancialStatusChecker {
         auditData.put("response", response);
 
         return auditData;
+    }
+
+    // TODO Tidy up, just quick POC code
+    private HttpEntity addTokenToHeaders(HttpEntity<?> entity, String accessToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.putAll(entity.getHeaders());
+        headers.add("kc-access", accessToken);
+        HttpEntity<?> newEntity = new HttpEntity<>(headers);
+        return newEntity;
     }
 }

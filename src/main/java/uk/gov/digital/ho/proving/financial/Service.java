@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
@@ -14,6 +15,7 @@ import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @Author Home Office Digital
@@ -33,13 +35,16 @@ public class Service {
         @Valid Account account,
         @Valid Course course,
         @Valid Maintenance maintenance,
-        @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate
+        @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+        @RequestHeader HttpHeaders headers
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
 
-        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance);
+        List<String> authHeader = headers.get("kc-access");
+        String accessToken  = (authHeader != null && authHeader.size()> 0) ? authHeader.get(0) : "";
+
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
     }
-
 
 }
