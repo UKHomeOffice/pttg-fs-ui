@@ -147,6 +147,10 @@ public class FinancialStatusChecker {
         headers.putAll(entity.getHeaders());
         headers.add("kc-access", accessToken);
         HttpEntity<?> newEntity = new HttpEntity<>(headers);
+
+        LOGGER.debug("Request headers: " + newEntity.toString());
+        LOGGER.debug("      kc-access: " + accessToken.toString());
+
         return newEntity;
     }
 }
