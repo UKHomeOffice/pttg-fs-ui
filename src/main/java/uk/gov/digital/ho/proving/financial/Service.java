@@ -36,12 +36,9 @@ public class Service {
         @Valid Course course,
         @Valid Maintenance maintenance,
         @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
-        @RequestHeader HttpHeaders headers
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
-
-        List<String> authHeader = headers.get("kc-access");
-        String accessToken  = (authHeader != null && authHeader.size()> 0) ? authHeader.get(0) : "";
 
         FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
