@@ -41,6 +41,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
 
   // set the configuration for the form fields
   $scope.conf = {
+
     endDate: {
       max: moment().format('YYYY-MM-DD'),
       errors: {
@@ -75,6 +76,27 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
           return { summary: 'Enter a valid course length', msg: 'Enter a valid course length' };
         }
         return true;
+      }
+    },
+
+    continuationEndDate: {
+      required: false,
+      validate: function (v, sc) {
+        console.log('continuationEndDate', v, typeof v);
+        if (v === '') {
+          // not a required field
+          return true;
+        }
+
+        var finStatus = FinancialstatusService.getDetails();
+        var end = moment(finStatus.courseEndDate, 'YYYY-MM-DD', true);
+        var contEndDateMom = moment(v, 'YYYY-MM-DD', true);
+
+        if (end.isBefore(contEndDateMom)) {
+          return true;
+        } else {
+          return { summary: 'The continuation end date is invalid', msg: 'Enter a valid continuation end date' };
+        }
       }
     },
     totalTuitionFees: {
@@ -120,6 +142,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       classes: { 'form-control-1-8': true },
       validate: function (v, s) {
         var len = FinancialstatusService.getCourseLength();
+        var finStatus = FinancialstatusService.getDetails();
         var ok = true;
         var n = Number(v);
         if (n < 0 || n > 99) {
@@ -133,8 +156,14 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
         if (Math.ceil(n) !== Math.floor(n)) {
           ok = false;
         }
-        // console.log(sType.value, len, sType.noDependantsOnCourseLength, n);
-        if (sType.noDependantsOnCourseLength && len <= sType.noDependantsOnCourseLength && n) {
+
+        if (
+          sType.noDependantsOnCourseLength
+          && len <= sType.noDependantsOnCourseLength
+          && n
+          && finStatus.continuationEndDate === ''
+        ) {
+
           var msg = 'Main applicants cannot be accompanied by dependants on courses of ';
           msg += sType.noDependantsOnCourseLength;
           msg += ' months or less';

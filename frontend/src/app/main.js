@@ -34,7 +34,7 @@ app.run(['$location', '$rootScope', '$window', '$timeout', '$state', function($l
 
     // http://www.accessiq.org/news/features/2013/03/aria-and-accessibility-adding-focus-to-any-html-element
     $timeout(function() {
-      var e = angular.element(document.querySelector('#pageTitle'));
+      var e = angular.element(document.querySelector('h1'));
       if (e[0]) {
         e[0].focus();
       }
