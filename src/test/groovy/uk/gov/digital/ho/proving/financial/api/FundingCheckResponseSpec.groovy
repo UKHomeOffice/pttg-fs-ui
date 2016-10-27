@@ -99,7 +99,7 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         lowBalanceFailure,
-        new CappedValues(1265.00, 9)
+        new CappedValues(1265.00, 9, 3)
     )
 
     def static sampleThree = new FundingCheckResponse(
@@ -108,7 +108,7 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         recordCountFailure,
-        new CappedValues(1265.00, 9)
+        new CappedValues(1265.00, 9, 3)
     )
 
     def stringFromFile(String fileName) {

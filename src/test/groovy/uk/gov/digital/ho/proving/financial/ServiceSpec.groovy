@@ -44,6 +44,9 @@ class ServiceSpec extends Specification {
 
     final String TO_DATE = '2015-10-30'
     final String DOB = '1990-10-04'
+    final String COURSE_START_DATE = '2016-06-01'
+    final String COURSE_END_DATE = '2016-07-01'
+    final String CONTINUATION_END_DATE = '2016-08-01'
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
@@ -87,7 +90,7 @@ class ServiceSpec extends Specification {
     }
 
     ResponseDetails details = new ResponseDetails("200", "OK")
-    CappedValues cappedValues= new CappedValues(100, 9)
+    CappedValues cappedValues= new CappedValues(100, 9, 3)
 
     String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, cappedValues, details))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, null, details))
@@ -102,7 +105,7 @@ class ServiceSpec extends Specification {
             .andRespond(balance);
     }
 
-    def "processes valid request and response"() {
+    def "processes valid request and response - continuation course"() {
 
         given:
         apiRespondsWith(
@@ -117,7 +120,41 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(jsonPath("fundingRequirementMet", is(true)))
+        }
+    }
+
+    def "processes valid request and response - new course"() {
+
+        given:
+        apiRespondsWith(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withSuccess(passResponseJson, APPLICATION_JSON)
+        )
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('dob', DOB)
+                .param('toDate', TO_DATE)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+            // no continuationEndDate
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -133,7 +170,11 @@ class ServiceSpec extends Specification {
     }
 
 
-    def "reports errors for missing mandatory parameter - course length"() {
+    // todo factor out common routine for checking missing mandatory parameters
+    // todo factor out common routine for checking invalid dates
+
+
+    def "reports errors for missing mandatory parameter - course start date"() {
 
         when:
         def response = mockMvc.perform(
@@ -142,6 +183,9 @@ class ServiceSpec extends Specification {
                 .param('dob', DOB)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
+            ///missing courseStartDate
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -154,7 +198,35 @@ class ServiceSpec extends Specification {
             andExpect(jsonPath("code", is("0001")))
             andExpect(jsonPath("message", allOf(
                 containsString("Missing parameter"),
-                containsString("courseLength"))))
+                containsString("courseStartDate"))))
+        }
+    }
+
+    def "reports errors for missing mandatory parameter - course end date"() {
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('dob', DOB)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', COURSE_START_DATE)
+            ///missing courseEndDate
+                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isBadRequest())
+            andExpect(jsonPath("code", is("0001")))
+            andExpect(jsonPath("message", allOf(
+                containsString("Missing parameter"),
+                containsString("courseEndDate"))))
         }
     }
 
@@ -167,7 +239,9 @@ class ServiceSpec extends Specification {
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
                 .param('totalTuitionFees', '1')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('numberOfDependants', '1')
@@ -183,7 +257,7 @@ class ServiceSpec extends Specification {
         }
     }
 
-    def "invalid to date is rejected"() {
+    def "invalid toDate is rejected"() {
 
         when:
         def response = mockMvc.perform(
@@ -192,7 +266,9 @@ class ServiceSpec extends Specification {
                 .param('dob', DOB)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -209,6 +285,90 @@ class ServiceSpec extends Specification {
         }
     }
 
+    def "invalid courseStartDate is rejected"() {
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('dob', DOB)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', '99-01-1901')
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isBadRequest())
+            andExpect(jsonPath("code", is("0003")))
+            andExpect(jsonPath("message", allOf(
+                containsString("DateTimeParseException"),
+                containsString("courseStartDate"))))
+        }
+    }
+
+    def "invalid courseEndDate is rejected"() {
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('dob', DOB)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', '99-01-1901')
+                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isBadRequest())
+            andExpect(jsonPath("code", is("0003")))
+            andExpect(jsonPath("message", allOf(
+                containsString("DateTimeParseException"),
+                containsString("courseEndDate"))))
+        }
+    }
+
+    def "invalid continuationEndDate is rejected"() {
+
+        when:
+        def response = mockMvc.perform(
+            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
+                .param('toDate', TO_DATE)
+                .param('dob', DOB)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', '99-01-1901')
+                .param('totalTuitionFees', '1')
+                .param('tuitionFeesAlreadyPaid', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+                .param('numberOfDependants', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isBadRequest())
+            andExpect(jsonPath("code", is("0003")))
+            andExpect(jsonPath("message", allOf(
+                containsString("DateTimeParseException"),
+                containsString("continuationEndDate"))))
+        }
+    }
+
     @Unroll
     def "invalid sort code of #sortCode is rejected"() {
 
@@ -219,7 +379,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -249,7 +411,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -285,7 +449,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -315,7 +481,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -345,7 +513,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -375,7 +545,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -403,7 +575,9 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('inLondon', 'true')
                 .param('studentType', 'non-doctorate')
-                .param('courseLength', '1')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('continuationEndDate', CONTINUATION_END_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
