@@ -169,12 +169,13 @@ class ServiceSpec extends Specification {
         }
     }
 
+    def "course start date is optional"() {
 
-    // todo factor out common routine for checking missing mandatory parameters
-    // todo factor out common routine for checking invalid dates
-
-
-    def "reports errors for missing mandatory parameter - course start date"() {
+        given:
+        apiRespondsWith(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withSuccess(passResponseJson, APPLICATION_JSON)
+        )
 
         when:
         def response = mockMvc.perform(
@@ -194,15 +195,19 @@ class ServiceSpec extends Specification {
 
         then:
         response.with {
-            andExpect(status().isBadRequest())
-            andExpect(jsonPath("code", is("0001")))
-            andExpect(jsonPath("message", allOf(
-                containsString("Missing parameter"),
-                containsString("courseStartDate"))))
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
 
-    def "reports errors for missing mandatory parameter - course end date"() {
+    def "course end date is optional"() {
+
+        given:
+        apiRespondsWith(
+            withSuccess(thresholdResponseJson, APPLICATION_JSON),
+            withSuccess(passResponseJson, APPLICATION_JSON)
+        )
 
         when:
         def response = mockMvc.perform(
@@ -222,11 +227,9 @@ class ServiceSpec extends Specification {
 
         then:
         response.with {
-            andExpect(status().isBadRequest())
-            andExpect(jsonPath("code", is("0001")))
-            andExpect(jsonPath("message", allOf(
-                containsString("Missing parameter"),
-                containsString("courseEndDate"))))
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
 
