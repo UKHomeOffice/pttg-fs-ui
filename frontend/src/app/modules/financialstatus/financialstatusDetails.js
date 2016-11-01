@@ -82,12 +82,11 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     continuationEndDate: {
       required: false,
       validate: function (v, sc) {
-        console.log('continuationEndDate', v, typeof v);
         if (v === '') {
           // not a required field
           return true;
         }
-
+        console.log('continuationEndDate', v);
         var finStatus = FinancialstatusService.getDetails();
         var end = moment(finStatus.courseEndDate, 'YYYY-MM-DD', true);
         var contEndDateMom = moment(v, 'YYYY-MM-DD', true);

@@ -124,10 +124,25 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
+      var str = Math.ceil(FinancialstatusService.getCourseLength());
+      if (data.cappedValues && data.cappedValues.courseLength) {
+        str += ' (limited to ' + data.cappedValues.courseLength + ')';
+      } else if (data.cappedValues && data.cappedValues.continuationLength) {
+        str += ' (limited to ' + data.cappedValues.continuationLength + ')';
+      }
       summary.push({
         id: 'courseLength',
         label: 'Course length',
-        value: reqdata.courseLength + ' (limited to 9)'
+        value: str
+      });
+    }
+
+    // if course continuation date is available supplied then show the calculated course length
+    if (reqdata.continuationEndDate) {
+      summary.push({
+        id: 'entireCourseLength',
+        label: 'Entire course length',
+        value: Math.ceil(FinancialstatusService.getMonths(reqdata.courseStartDate, reqdata.continuationEndDate))
       });
     }
 
@@ -185,6 +200,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
   // get the summary of the search criteria used to arrive at this result
   this.getCriteria = function (state) {
     var criteria = [];
+    var from;
+    var to;
 
     // no summary required if the api failed
     if (state === RESULT_STATES.failure) {
@@ -229,10 +246,18 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     if (criteriaList.courseDatesChecked) {
+      if (reqdata.continuationEndDate) {
+        from = moment(reqdata.courseEndDate, 'YYYY-MM-DD').add(1, 'day').format('YYYY-MM-DD');
+        to = reqdata.continuationEndDate;
+      } else {
+        from = reqdata.courseStartDate;
+        to = reqdata.courseEndDate;
+      }
+
       criteria.push({
         id: 'courseDatesChecked',
         label: 'Course dates',
-        value: $filter('dateDisplay')(reqdata.courseStartDate) + ' to ' + $filter('dateDisplay')(reqdata.courseEndDate)
+        value: $filter('dateDisplay')(from) + ' to ' + $filter('dateDisplay')(to)
       });
     }
 
@@ -310,6 +335,8 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     $state.go('financialStatusDetails');
     return;
   }
+
+
 
   // setup the results service object with what we already know
   var resServ = FinancialstatusResultService;
