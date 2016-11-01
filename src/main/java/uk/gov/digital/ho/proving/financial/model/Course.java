@@ -8,13 +8,12 @@ import java.time.LocalDate;
 /**
  * @Author Home Office Digital
  */
-@CourseSpec
+@CourseDetails
 public final class Course {
 
     @NotNull(message = "Missing parameter")
     private Boolean inLondon;
 
-    //@NotNull(message = "Missing parameter")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate courseStartDate;
 

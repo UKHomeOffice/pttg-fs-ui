@@ -8,10 +8,13 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Constraint(validatedBy = CourseSpecValidator.class)
+/**
+ * @Author Home Office Digital
+ */
+@Constraint(validatedBy = CourseDetailsValidator.class)
 @Target(TYPE)
 @Retention(RUNTIME)
-public @interface CourseSpec {
+public @interface CourseDetails {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     String message() default "Invalid Course Specification";
