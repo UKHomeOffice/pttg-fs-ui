@@ -17,26 +17,26 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 #   Dependants Required Maintenance threshold: In London - £845, Out London - £680
 #
 #   Entire course <12 months ((£1265 x 4) + (845 x (4+2) x 1) + (£10,000 - 0 - 0)) ##
-    Entire course 12+ months ((£1265 x 4) + (845 x (4+4) x 1) + (£10,000 - 0 - 0)) ##
+#   Entire course 12+ months ((£1265 x 4) + (845 x (4+4) x 1) + (£10,000 - 0 - 0)) ##
 
-    Entire course <12 months
+#   Entire course <12 months
 #   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+2) x 1) + (£10,000 - £0 - £0) = £18,020
 #   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+2) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
 #
-    Entire course 12+ months
-    Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+4) x 1) + (£10,000 - £0 - £0) = £19,710.00
-    Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+4) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
+#   Entire course 12+ months
+#   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+4) x 1) + (£10,000 - £0 - £0) = £19,710.00
+#   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+4) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
 
 
     Background:
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
-            | End date                        | 30/03/2017 |
+            | End date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | Continuation course end date    | 30/03/2017 |
+            | continuation end date           | 30/03/2017 |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
@@ -53,10 +53,10 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Account holder name             | Shelly Smith                 |
-            | Total funds required            | £18,630.00                   |
-            | Maintenance period checked      | 03/03/2017 to 30/03/2017     |
+            | Total funds required            | £16,090.00                   |
+            | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
             | Course length                   | 4 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 08/03/2016        |
+            | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 01/12/2016 to 30/03/2017     |
@@ -81,34 +81,34 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £17,025.00                     |
-            | Maintenance period checked      | 03/03/2016 to 30/03/2017       |
-            | Course length                   | 3 (limited to 9)               |
+            | Total funds required            | £16,090.00                     |
+            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Course length                   | 2 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Course dates checked            | 31/01/2017 to 30/03/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependents            | 1                              |
+            | Number of dependants            | 1                              |
             | Entire course length            | 11                             |
-            | Sort code                       | 01-06-16                       |
-            | Account number                  | 00030000                       |
+            | Sort code                       | 11-11-11                       |
+            | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
 
  ###### overall course length 12+ months In London #######
 
     Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        When the financial status check is performed
-            | Continuation course end date | 30/05/2017 |
+        When the financial status check is performed with
+            | continuation end date | 30/05/2017 |
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Account holder name             | Shelly Smith                 |
-            | Total funds required            | £23,695.00                   |
-            | Maintenance period checked      | 28/04/2017 to 25/05/2017     |
+            | Total funds required            | £16,090.00                   |
+            | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
             | Course length                   | 6 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 03/05/2017        |
+            | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 01/12/2016 to 30/05/2017     |
@@ -116,7 +116,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
-            | Entire course length            | 12                           |
+            | Entire course length            | 13                           |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
@@ -125,7 +125,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 25/09/2017 |
-            | Contiuation course end date     | 30/11/2017 |
+            | Continuation end date           | 30/11/2017 |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
@@ -133,17 +133,17 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £21,670.00                     |
-            | Maintenance period checked      | 28/10/2017 to 24/11/2017       |
-            | Course length                   | 4 (limited to 9)               |
+            | Total funds required            | £16,090.00                     |
+            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Course length                   | 3 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Course dates checked            | 26/09/2017 to 30/11/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependents            | 1                              |
+            | Number of dependants            | 1                              |
             | Entire course length            | 19                             |
-            | Sort code                       | 01-06-16                       |
-            | Account number                  | 00030000                       |
+            | Sort code                       | 11-11-11                       |
+            | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
