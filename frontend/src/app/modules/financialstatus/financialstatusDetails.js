@@ -71,9 +71,14 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     },
     courseEndDate: {
       validate: function (v, sc) {
-        var len = FinancialstatusService.getCourseLength();
-        if (len <= 0) {
-          return { summary: 'Enter a valid course length', msg: 'Enter a valid course length' };
+        var finStatus = FinancialstatusService.getDetails();
+        var start = moment(finStatus.courseStartDate, 'YYYY-MM-DD', true);
+        var endDateMom = moment(v, 'YYYY-MM-DD', true);
+        if (!endDateMom.isValid()) {
+          return { summary: 'The end date of course is invalid', msg: 'Enter a valid end date of course' };
+        }
+        if (!start.isBefore(endDateMom)) {
+          return { summary: 'The end date of course is invalid', msg: 'Enter a valid course length' };
         }
         return true;
       }
@@ -93,9 +98,8 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
 
         if (end.isBefore(contEndDateMom)) {
           return true;
-        } else {
-          return { summary: 'The continuation end date is invalid', msg: 'Enter a valid continuation end date' };
         }
+        return { summary: 'The continuation end date is invalid', msg: 'Enter a valid continuation end date' };
       }
     },
     totalTuitionFees: {
