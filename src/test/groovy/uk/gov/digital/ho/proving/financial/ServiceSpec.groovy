@@ -123,7 +123,7 @@ class ServiceSpec extends Specification {
             .andRespond(balance);
     }
 
-    def "processes valid request and response - continuation course"() {
+    def "processes valid request and response - non-doctorate continuation course"() {
 
         given:
         apiRespondsWith(
@@ -155,7 +155,7 @@ class ServiceSpec extends Specification {
         }
     }
 
-    def "processes valid request and response - new course"() {
+    def "processes valid request and response - non-doctorate new course"() {
 
         given:
         apiRespondsWith(
@@ -187,7 +187,7 @@ class ServiceSpec extends Specification {
         }
     }
 
-    def "course start date is optional - doctorate"() {
+    def "course dates not required - doctorate"() {
 
         given:
         apiRespondsWith(
@@ -201,42 +201,8 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('dob', DOB)
                 .param('inLondon', 'true')
-                .param('studentType', 'non-doctorate')
-            ///missing courseStartDate
-                .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
-                .param('totalTuitionFees', '1')
-                .param('tuitionFeesAlreadyPaid', '1')
-                .param('accommodationFeesAlreadyPaid', '1')
-                .param('numberOfDependants', '1')
-        )
-
-        then:
-        response.with {
-            andExpect(status().isOk())
-            andExpect(content().contentType(APPLICATION_JSON_VALUE))
-            andExpect(jsonPath("fundingRequirementMet", is(true)))
-        }
-    }
-
-    def "course end date is optional - doctorate"() {
-
-        given:
-        apiRespondsWith(
-            withSuccess(thresholdResponseJson, APPLICATION_JSON),
-            withSuccess(passResponseJson, APPLICATION_JSON)
-        )
-
-        when:
-        def response = mockMvc.perform(
-            get(UI_ENDPOINT, SORT_CODE, ACCOUNT_NUMBER)
-                .param('toDate', TO_DATE)
-                .param('dob', DOB)
-                .param('inLondon', 'true')
-                .param('studentType', 'non-doctorate')
-                .param('courseStartDate', COURSE_START_DATE)
-            ///missing courseEndDate
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('studentType', 'doctorate')
+            //no dates dates
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
