@@ -187,6 +187,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       lastAPIresponse = result.data;
       $state.go('financialStatusResults', {studentType: finStatus.studentType});
     }, function (err) {
+      console.log('ERROR:', err);
       lastAPIresponse = {
         failureReason: {
           status: err.status

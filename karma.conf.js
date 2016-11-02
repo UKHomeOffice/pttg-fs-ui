@@ -15,20 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'bower_components/angular/angular.js',
-        'bower_components/angular-route/angular-route.js',
-        'bower_components/angular-mocks/angular-mocks.js',
-        'bower_components/moment/moment.js',
-        'bower_components/accounting/accounting.js',
-        'node_modules/underscore/underscore-min.js',
-        'client/tests/*.test.js',
-        'client/app/core.module.js',
-        'client/app/app.module.js',
-        'client/app/core.controller.js',
-        'client/app/core.routes.js',
-        'client/app/core.service.js',
-        'client/app/govuk-template.js',
-        'client/views/*.html'
+        'src/main/webapp/app/vendor.js',
+        'node_modules/angular-mocks/angular-mocks.js',
+        'src/main/webapp/app/main.js',
+        'frontend/tests/*.test.js'
     ],
 
 
@@ -40,7 +30,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
      preprocessors: {
-      '**/*.html': ['ng-html2js']
+      // '**/*.html': ['ng-html2js']
     },
 
 
@@ -75,18 +65,18 @@ module.exports = function(config) {
 
     plugins: [
         'karma-jasmine',
-        'karma-ng-html2js-preprocessor',
+        // 'karma-ng-html2js-preprocessor',
         'karma-phantomjs-launcher',
         'karma-spec-reporter'
      ],
 
-     ngHtml2JsPreprocessor: {
-        stripPrefix: '',
-        stripSuffix: '',
-        // prepend this to the
-        prependPrefix: '',
-        moduleName: 'templates'
-     },
+     // ngHtml2JsPreprocessor: {
+     //    stripPrefix: '',
+     //    stripSuffix: '',
+     //    // prepend this to the
+     //    prependPrefix: '',
+     //    moduleName: 'templates'
+     // },
 
 
 

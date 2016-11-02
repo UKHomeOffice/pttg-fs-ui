@@ -19,18 +19,12 @@ ioModule.factory('IOService', ['$http', '$state', 'CONFIG', function ($http, $st
     }
 
     var req = $http.get(CONFIG.api + url, conf);
-    // req.catch(function (res) {
-    //   if (res.status === 403) {
-    //     $state.go('login');
-    //   }
-    // });
     return req;
   };
 
 
   this.put = function (url, data, conf) {
     conf = me.getConf(conf);
-    // conf = angular.extend(conf, data);
     return $http.put(CONFIG.api + url, data, conf);
   };
 
