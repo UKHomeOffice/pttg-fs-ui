@@ -220,11 +220,20 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
   $scope.finStatus.studentType = sType.value;
   $scope.yesNoOptions = [{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}];
   $scope.pageTitle = sType.label;
+  $scope.submitButton = {
+    text: 'Check financial status',
+    disabled: false
+  };
 
   // submit button code
   $scope.detailsSubmit = function (isValid, formScope, formCtrl) {
     FinancialstatusService.trackFormSubmission(formScope);
     FinancialstatusService.setValid(isValid);
-    FinancialstatusService.sendDetails();
+    if (isValid) {
+      $scope.submitButton.text = 'Sending';
+      $scope.submitButton.disabled = true;
+      FinancialstatusService.sendDetails();
+      $scope.$applyAsync();
+    }
   };
 }]);

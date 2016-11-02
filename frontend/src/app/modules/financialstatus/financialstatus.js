@@ -5,7 +5,7 @@
 var financialstatusModule = angular.module('hod.financialstatus', ['ui.router']);
 
 
-financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', function (IOService, $state) {
+financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', function (IOService, $state, $timeout) {
   var me = this;
   var finStatus;
   var isValid = false;
@@ -164,8 +164,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength());
 
 
-    console.log('courseLength', finStatus.courseLength);
-    console.log('entireCourseLength', finStatus.entireCourseLength);
+    // console.log('courseLength', finStatus.courseLength);
+    // console.log('entireCourseLength', finStatus.entireCourseLength);
 
     // make a copy of the finStatus object and delete fields we don't want to send
     var details = angular.copy(finStatus);
@@ -182,19 +182,41 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     });
 
     var url = 'pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
+    var attemptNum = 0;
+    var maxAttempts = 5;
+    var timeoutDuration = 5000;
 
-    IOService.get(url, details, {timeout: 5000 }).then(function (result) {
-      lastAPIresponse = result.data;
-      $state.go('financialStatusResults', {studentType: finStatus.studentType});
-    }, function (err) {
-      console.log('ERROR:', err);
-      lastAPIresponse = {
-        failureReason: {
-          status: err.status
+    var trySendDetails = function () {
+      attemptNum++;
+      // console.log(attemptNum + ' Starting request');
+
+      IOService.get(url, details, {timeout: timeoutDuration }).then(function (result) {
+        // console.log(attemptNum, 'SUCCESS');
+        lastAPIresponse = result.data;
+        $state.go('financialStatusResults', {studentType: finStatus.studentType});
+      }, function (err) {
+        // console.log(attemptNum, 'ERROR', err);
+        if (err.status === -1 && attemptNum < maxAttempts) {
+          // console.log(attemptNum, 'RETRY');
+          trySendDetails();
+          return;
         }
-      };
-      $state.go('financialStatusResults', {studentType: finStatus.studentType});
-    });
+
+        // console.log(attemptNum, 'FINAIL FAILED', err);
+        lastAPIresponse = {
+          failureReason: {
+            status: err.status
+          }
+        };
+        $state.go('financialStatusResults', {studentType: finStatus.studentType});
+      });
+    };
+    // start attempting to make the request
+    // $timeout(function () {
+      trySendDetails();
+    // }, 10000);
+
+
   };
 
   this.getResponse = function () {

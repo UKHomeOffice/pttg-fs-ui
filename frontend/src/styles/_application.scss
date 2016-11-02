@@ -1,6 +1,28 @@
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+
+$green: #00823b;
+
 h2 {
   font-size: 18px;
 }
+
 
 .heading-xlarge {
   margin-bottom: 20px;
@@ -62,6 +84,14 @@ table td.no-bottom-border {
     color: #0b0c0c;
   }
 }
+
+  .button--disabled {
+    background-color: tint($green, 50%);
+    &:hover {
+      background-color: tint($green, 50%);
+    }
+  }
+
 
 @media (min-width: 641px){
 	table th, table td {
