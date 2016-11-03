@@ -1,9 +1,12 @@
 package uk.gov.digital.ho.proving.financial.health;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
+import uk.gov.digital.ho.proving.financial.Service;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,6 +16,8 @@ import java.net.URL;
  */
 @Component
 public class ApiConnectionHealth implements HealthIndicator {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(ApiConnectionHealth.class);
 
     @Value("${api.root}")
     private String apiRoot;
@@ -27,6 +32,8 @@ public class ApiConnectionHealth implements HealthIndicator {
 
         int responseCode = tester.getResponseCodeFor(apiRoot + apiEndpoint);
 
+        LOGGER.debug("API healthcheck response code: {}", responseCode);
+
         if (responseCode != 200) {
             return Health.down().withDetail("While trying to read financial status service, received:", responseCode).build();
         }
@@ -40,6 +47,8 @@ public class ApiConnectionHealth implements HealthIndicator {
         public int getResponseCodeFor(String uri){
 
             try {
+
+                LOGGER.debug("Checking API health using uri: {}", uri);
                 URL url = new URL(uri);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -49,6 +58,8 @@ public class ApiConnectionHealth implements HealthIndicator {
                 return connection.getResponseCode();
 
             } catch (Exception e) {
+                LOGGER.warn("Exception while checking API health: {}", e.getMessage());
+                LOGGER.warn("Exception", e);
                 return 0;
             }
         }
