@@ -9,6 +9,7 @@
   },
   "cappedValues" : {
     "accommodationFeesPaid" : 1265.00,
-    "courseLength" : 9
+    "courseLength" : 9,
+    "continuationLength" : 3
   }
 }

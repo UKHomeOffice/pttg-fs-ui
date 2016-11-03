@@ -30,6 +30,7 @@ public class Service {
     @Autowired
     private FinancialStatusChecker financialStatusChecker;
 
+
     @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(
         @Valid Account account,

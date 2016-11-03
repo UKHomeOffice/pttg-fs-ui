@@ -71,7 +71,7 @@ class ThresholdResultSpec extends Specification {
 
     def sampleOne = new ThresholdResult(
         BigDecimal.valueOf(100),
-        new CappedValues(1265.00, 9),
+        new CappedValues(1265.00, 9, 3),
         new ResponseDetails("200", "OK"))
 
     def stringFromFile(String fileName) {

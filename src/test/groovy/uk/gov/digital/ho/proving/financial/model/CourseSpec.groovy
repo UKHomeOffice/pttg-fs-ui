@@ -4,6 +4,8 @@ import nl.jqno.equalsverifier.EqualsVerifier
 import nl.jqno.equalsverifier.Warning
 import spock.lang.Specification
 
+import java.time.LocalDate
+
 /**
  * @Author Home Office Digital
  */
@@ -12,13 +14,14 @@ class CourseSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new Course(true, 1, "doctorate")
+        def aDate = LocalDate.of(2019, 1, 1)
+        def instance = new Course(true, aDate, aDate, "doctorate")
 
         when:
         def output = instance.toString()
 
         then:
-        output.contains("courseLength=$instance.courseLength")
+        output.contains("courseStartDate=$instance.courseStartDate")
 
         and:
         !output.contains('Course@')

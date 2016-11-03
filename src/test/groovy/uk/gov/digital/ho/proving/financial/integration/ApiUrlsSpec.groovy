@@ -20,6 +20,8 @@ class ApiUrlsSpec extends Specification {
 
     ApiUrls apiUrls
 
+    def aDate = LocalDate.of(2016, 1, 1)
+
     def setup() {
 
         apiUrls = new ApiUrls()
@@ -33,7 +35,7 @@ class ApiUrlsSpec extends Specification {
     def "generates threshold url"() {
 
         given:
-        def course = new Course(true, 1, "doctorate")
+        def course = new Course(true, aDate, aDate, "doctorate")
         def maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
         when:
@@ -45,7 +47,7 @@ class ApiUrlsSpec extends Specification {
 
         url.path == thresholdEndpoint
 
-        url.query == 'inLondon=true&studentType=doctorate&courseLength=1&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
+        url.query == 'inLondon=true&studentType=doctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&continuationEndDate&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
     }
 
     def "generates daily balance url"() {

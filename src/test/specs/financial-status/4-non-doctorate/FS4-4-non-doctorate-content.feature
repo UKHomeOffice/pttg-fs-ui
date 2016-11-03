@@ -4,17 +4,18 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         Given caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
-            | End Date                        | 30/05/2016 |
+            | End date                        | 30/05/2016 |
             | In London                       | Yes        |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/11/2016 |
+            | continuation end date           |            |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 1          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
-            | DOB                             | 27/07/1981 |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/06/2017 |
-            | Total tuition fees              | 1          |
-            | Tuition fees already paid       | 0          |
+            | DOB                             | 21/09/1981 |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 

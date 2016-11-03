@@ -28,6 +28,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       studentType: '',
       toDate: '',
       inLondon: null,
+      continuationEndDate: '',
       courseStartDate: '',
       courseEndDate: '',
       totalTuitionFees: '',
@@ -54,21 +55,35 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         value: 'doctorate',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
-        hiddenFields: ['courseStartDate', 'courseEndDate', 'totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        hiddenFields: [
+          'courseStartDate',
+          'courseEndDate',
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationEndDate'
+        ],
         noDependantsOnCourseLength: null
       },
       {
         value: 'pgdd',
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
-        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        hiddenFields: [
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationEndDate'
+        ],
         noDependantsOnCourseLength: null
       },
       {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        hiddenFields: ['totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        hiddenFields: [
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationEndDate'
+        ],
         noDependantsOnCourseLength: null
       }
     ];
@@ -94,8 +109,38 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     if (finStatus.studentType === 'doctorate') {
       return 2;
     }
-    var start = moment(finStatus.courseStartDate, 'YYYY-MM-DD', true);
-    var end = moment(finStatus.courseEndDate, 'YYYY-MM-DD', true);
+
+    var from, to;
+    if (finStatus.continuationEndDate) {
+      from = moment(finStatus.courseEndDate, 'YYYY-MM-DD').add(1, 'day');
+      to = finStatus.continuationEndDate;
+    } else {
+      from = finStatus.courseStartDate;
+      to = finStatus.courseEndDate;
+    }
+
+    return me.getMonths(from, to);
+  };
+
+  this.getEntireCourseLength = function () {
+    if (finStatus.studentType === 'doctorate') {
+      return 2;
+    }
+
+    var to;
+    var from = finStatus.courseStartDate;
+    if (finStatus.continuationEndDate) {
+      to = finStatus.continuationEndDate;
+    } else {
+      to = finStatus.courseEndDate;
+    }
+
+    return me.getMonths(from, to);
+  };
+
+  this.getMonths = function (start, end) {
+    var start = moment(start, 'YYYY-MM-DD', true);
+    var end = moment(end, 'YYYY-MM-DD', true);
     var months = end.diff(start, 'months', true);
     if (start.date() === end.date() && !start.isSame(end)) {
       // when using moment diff months, the same day in months being compared
@@ -116,6 +161,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     }
 
     finStatus.courseLength = Math.ceil(me.getCourseLength());
+    finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength());
+
+
+    console.log('courseLength', finStatus.courseLength);
+    console.log('entireCourseLength', finStatus.entireCourseLength);
 
     // make a copy of the finStatus object and delete fields we don't want to send
     var details = angular.copy(finStatus);
@@ -125,6 +175,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
     delete details.sortCode;
     delete details.accountNumber;
+
+    var stud = this.getStudentTypeByID(finStatus.studentType);
+    _.each(stud.hiddenFields, function (f) {
+      delete details[f];
+    });
 
     var url = 'pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
 

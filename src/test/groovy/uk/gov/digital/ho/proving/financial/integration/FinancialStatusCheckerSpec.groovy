@@ -27,7 +27,8 @@ class FinancialStatusCheckerSpec extends Specification {
     LocalDate dob = LocalDate.of(1980,1,1);
     Account account = new Account("", "", dob)
     LocalDate toDate = LocalDate.now()
-    Course course = new Course(true, 1, "nondoctorate")
+    LocalDate aDate = LocalDate.of(2016, 1, 1)
+    Course course = new Course(true, aDate, aDate, "nondoctorate")
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
     def recordCountFailure = new FailureReason(27)
@@ -49,7 +50,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def thresholdOf(BigDecimal minimum) {
         def threshold = BigDecimal.valueOf(minimum)
-        def thresholdResult = new ThresholdResult(threshold, new CappedValues(100, 9), new ResponseDetails("200", "OK"))
+        def thresholdResult = new ThresholdResult(threshold, new CappedValues(100, 9, 3), new ResponseDetails("200", "OK"))
         thresholdResponse = new ResponseEntity(thresholdResult, OK);
     }
 

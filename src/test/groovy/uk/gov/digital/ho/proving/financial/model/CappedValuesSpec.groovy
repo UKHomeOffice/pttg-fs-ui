@@ -11,7 +11,7 @@ class CappedValuesSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new CappedValues(200.00, 9)
+        def instance = new CappedValues(200.00, 9, 3)
 
         when:
         def output = instance.toString()

@@ -1,19 +1,27 @@
 package uk.gov.digital.ho.proving.financial.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * @Author Home Office Digital
  */
+@CourseDetails
 public final class Course {
-
-
 
     @NotNull(message = "Missing parameter")
     private Boolean inLondon;
 
-    @NotNull(message = "Missing parameter")
-    private Integer courseLength;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate courseStartDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate courseEndDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate  continuationEndDate;
 
     @NotNull(message = "Missing parameter")
     private String studentType;
@@ -22,9 +30,15 @@ public final class Course {
 
     }
 
-    public Course(Boolean inLondon, Integer courseLength, String studentType) {
+    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, String studentType) {
+        this(inLondon, courseStartDate, courseEndDate, null, studentType);
+    }
+
+    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate continuationEndDate, String studentType) {
         this.inLondon = inLondon;
-        this.courseLength = courseLength;
+        this.courseStartDate = courseStartDate;
+        this.courseEndDate = courseEndDate;
+        this.continuationEndDate = continuationEndDate;
         this.studentType = studentType;
     }
 
@@ -36,12 +50,28 @@ public final class Course {
         this.inLondon = inLondon;
     }
 
-    public Integer getCourseLength() {
-        return courseLength;
+    public LocalDate getCourseStartDate() {
+        return courseStartDate;
     }
 
-    public void setCourseLength(Integer courseLength) {
-        this.courseLength = courseLength;
+    public void setCourseStartDate(LocalDate courseStartDate) {
+        this.courseStartDate = courseStartDate;
+    }
+
+    public LocalDate getCourseEndDate() {
+        return courseEndDate;
+    }
+
+    public void setCourseEndDate(LocalDate courseEndDate) {
+        this.courseEndDate = courseEndDate;
+    }
+
+    public LocalDate getContinuationEndDate() {
+        return continuationEndDate;
+    }
+
+    public void setContinuationEndDate(LocalDate continuationEndDate) {
+        this.continuationEndDate = continuationEndDate;
     }
 
     public String getStudentType() {
@@ -56,20 +86,26 @@ public final class Course {
     public String toString() {
         return "Course{" +
             "inLondon=" + inLondon +
-            ", courseLength=" + courseLength +
+            ", courseStartDate=" + courseStartDate +
+            ", courseEndDate=" + courseEndDate +
+            ", continuationEndDate=" + continuationEndDate +
+            ", studentType='" + studentType + '\'' +
             '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Course)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Course course = (Course) o;
 
-        if (inLondon != null ? !inLondon.equals(course.inLondon) : course.inLondon != null)
+        if (inLondon != null ? !inLondon.equals(course.inLondon) : course.inLondon != null) return false;
+        if (courseStartDate != null ? !courseStartDate.equals(course.courseStartDate) : course.courseStartDate != null)
             return false;
-        if (courseLength != null ? !courseLength.equals(course.courseLength) : course.courseLength != null)
+        if (courseEndDate != null ? !courseEndDate.equals(course.courseEndDate) : course.courseEndDate != null)
+            return false;
+        if (continuationEndDate != null ? !continuationEndDate.equals(course.continuationEndDate) : course.continuationEndDate != null)
             return false;
         return studentType != null ? studentType.equals(course.studentType) : course.studentType == null;
 
@@ -78,7 +114,9 @@ public final class Course {
     @Override
     public int hashCode() {
         int result = inLondon != null ? inLondon.hashCode() : 0;
-        result = 31 * result + (courseLength != null ? courseLength.hashCode() : 0);
+        result = 31 * result + (courseStartDate != null ? courseStartDate.hashCode() : 0);
+        result = 31 * result + (courseEndDate != null ? courseEndDate.hashCode() : 0);
+        result = 31 * result + (continuationEndDate != null ? continuationEndDate.hashCode() : 0);
         result = 31 * result + (studentType != null ? studentType.hashCode() : 0);
         return result;
     }

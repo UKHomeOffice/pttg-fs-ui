@@ -41,6 +41,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
 
   // set the configuration for the form fields
   $scope.conf = {
+
     endDate: {
       max: moment().format('YYYY-MM-DD'),
       errors: {
@@ -70,11 +71,35 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     },
     courseEndDate: {
       validate: function (v, sc) {
-        var len = FinancialstatusService.getCourseLength();
-        if (len <= 0) {
-          return { summary: 'Enter a valid course length', msg: 'Enter a valid course length' };
+        var finStatus = FinancialstatusService.getDetails();
+        var start = moment(finStatus.courseStartDate, 'YYYY-MM-DD', true);
+        var endDateMom = moment(v, 'YYYY-MM-DD', true);
+        if (!endDateMom.isValid()) {
+          return { summary: 'The end date of course is invalid', msg: 'Enter a valid end date of course' };
+        }
+        if (!start.isBefore(endDateMom)) {
+          return { summary: 'The end date of course is invalid', msg: 'Enter a valid course length' };
         }
         return true;
+      }
+    },
+
+    continuationEndDate: {
+      required: false,
+      validate: function (v, sc) {
+        if (v === '') {
+          // not a required field
+          return true;
+        }
+        console.log('continuationEndDate', v);
+        var finStatus = FinancialstatusService.getDetails();
+        var end = moment(finStatus.courseEndDate, 'YYYY-MM-DD', true);
+        var contEndDateMom = moment(v, 'YYYY-MM-DD', true);
+
+        if (end.isBefore(contEndDateMom)) {
+          return true;
+        }
+        return { summary: 'The continuation end date is invalid', msg: 'Enter a valid continuation end date' };
       }
     },
     totalTuitionFees: {
@@ -120,6 +145,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
       classes: { 'form-control-1-8': true },
       validate: function (v, s) {
         var len = FinancialstatusService.getCourseLength();
+        var finStatus = FinancialstatusService.getDetails();
         var ok = true;
         var n = Number(v);
         if (n < 0 || n > 99) {
@@ -134,7 +160,13 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
           ok = false;
         }
 
-        if (sType.noDependantsOnCourseLength && len <= sType.noDependantsOnCourseLength && n) {
+        if (
+          sType.noDependantsOnCourseLength
+          && len <= sType.noDependantsOnCourseLength
+          && n
+          && finStatus.continuationEndDate === ''
+        ) {
+
           var msg = 'Main applicants cannot be accompanied by dependants on courses of ';
           msg += sType.noDependantsOnCourseLength;
           msg += ' months or less';
