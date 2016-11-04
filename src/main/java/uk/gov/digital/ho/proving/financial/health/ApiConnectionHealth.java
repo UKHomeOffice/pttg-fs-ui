@@ -27,10 +27,12 @@ public class ApiConnectionHealth implements HealthIndicator {
 
     private UrlConnectionTester tester = new UrlConnectionTester();
 
+    private int timeout = 1000;
+
     @Override
     public Health health() {
 
-        int responseCode = tester.getResponseCodeFor(apiRoot + apiEndpoint);
+        int responseCode = tester.getResponseCodeFor(apiRoot + apiEndpoint, timeout);
 
         LOGGER.debug("API healthcheck response code: {}", responseCode);
 
@@ -41,10 +43,13 @@ public class ApiConnectionHealth implements HealthIndicator {
         return Health.up().withDetail("The financial status service API is responding with:", "UP").build();
     }
 
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
 
     public static class UrlConnectionTester {
 
-        public int getResponseCodeFor(String uri){
+        public int getResponseCodeFor(String uri, int timeout) {
 
             try {
 
@@ -52,6 +57,8 @@ public class ApiConnectionHealth implements HealthIndicator {
                 URL url = new URL(uri);
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(timeout);
+                connection.setReadTimeout(timeout);
                 connection.setRequestMethod("GET");
                 connection.connect();
 
