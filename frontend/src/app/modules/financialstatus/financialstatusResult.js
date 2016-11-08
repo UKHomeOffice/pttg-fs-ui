@@ -352,7 +352,10 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
   this.getWhatNext = function (state) {
     switch (state) {
       case RESULT_STATES.passed:
-        return [ RESULT_TEXT.checkname ];
+        return [
+          RESULT_TEXT.checkinfo,
+          RESULT_TEXT.checkname
+        ];
 
       case RESULT_STATES.failure_norecord:
         return [
