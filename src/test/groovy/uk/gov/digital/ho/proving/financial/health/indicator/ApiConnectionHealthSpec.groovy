@@ -1,10 +1,11 @@
-package uk.gov.digital.ho.proving.financial.health
+package uk.gov.digital.ho.proving.financial.health.indicator
 
-import org.junit.rules.Stopwatch
 import org.springframework.boot.actuate.health.Health
 import org.springframework.boot.actuate.health.Status
 import spock.lang.Specification
 import spock.lang.Timeout
+import uk.gov.digital.ho.proving.financial.health.UrlConnectionTester
+import uk.gov.digital.ho.proving.financial.health.indicator.ApiConnectionHealth
 
 import static java.util.concurrent.TimeUnit.SECONDS
 
@@ -30,7 +31,7 @@ class ApiConnectionHealthSpec extends Specification {
     def "should report UP when server is reachable"() {
 
         given:
-        def connectionTester = Mock(ApiConnectionHealth.UrlConnectionTester)
+        def connectionTester = Mock(UrlConnectionTester)
 
         ApiConnectionHealth healthCheck = new ApiConnectionHealth()
         healthCheck.tester = connectionTester

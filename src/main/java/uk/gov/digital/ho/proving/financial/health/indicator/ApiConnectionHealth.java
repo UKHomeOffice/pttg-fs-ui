@@ -1,20 +1,21 @@
-package uk.gov.digital.ho.proving.financial.health;
+package uk.gov.digital.ho.proving.financial.health.indicator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.stereotype.Component;
-import uk.gov.digital.ho.proving.financial.Service;
+import uk.gov.digital.ho.proving.financial.health.UrlConnectionTester;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @Author Home Office Digital
+ * Gets the HTTP status of the API. Annotate this class with @Component to add this indicator to the health check
+ * which is used for the kubernetes readiness probe.
+ *
+ *   @Author Home Office Digital
  */
-@Component
 public class ApiConnectionHealth implements HealthIndicator {
 
     private static Logger LOGGER = LoggerFactory.getLogger(ApiConnectionHealth.class);
@@ -47,28 +48,5 @@ public class ApiConnectionHealth implements HealthIndicator {
         this.timeout = timeout;
     }
 
-    public static class UrlConnectionTester {
 
-        public int getResponseCodeFor(String uri, int timeout) {
-
-            try {
-
-                LOGGER.debug("Checking API health using uri: {}", uri);
-                URL url = new URL(uri);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setConnectTimeout(timeout);
-                connection.setReadTimeout(timeout);
-                connection.setRequestMethod("GET");
-                connection.connect();
-
-                return connection.getResponseCode();
-
-            } catch (Exception e) {
-                LOGGER.warn("Exception while checking API health: {}", e.getMessage());
-                LOGGER.warn("Exception", e);
-                return 0;
-            }
-        }
-    }
 }

@@ -1,14 +1,14 @@
 package uk.gov.digital.ho.proving.financial.health;
 
-/**
- * Created by Home Office Digital.
- */
-
 import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
- * Endpoint that can be used for liveness checks, but not for Readiness.
+ * SpringBoot Endpoint that answers a liveness probe with success as long as the app has started and can serve this
+ * response. Specify /ping as the livenessProbe:httpGet:path in the deployment yaml.
+ *
+ * Note that the readiness probe is answered by the Spring Boot healthcheck - implement a HealthIndicator to modify
+ * the health check response.
  */
 @Component
 public class LivenessEndpoint extends AbstractEndpoint<String> {

@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.health.ApiAvailabilityChecker;
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
@@ -15,7 +15,6 @@ import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * @Author Home Office Digital
@@ -29,6 +28,9 @@ public class Service {
 
     @Autowired
     private FinancialStatusChecker financialStatusChecker;
+
+    @Autowired
+    private ApiAvailabilityChecker apiAvailabilityChecker;
 
 
     @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
@@ -44,5 +46,15 @@ public class Service {
         FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
     }
+
+
+    @RequestMapping(path = "availability", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity availability(){
+        return apiAvailabilityChecker.check();
+    }
+
+
+
+
 
 }
