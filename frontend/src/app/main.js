@@ -8,7 +8,13 @@ var app = angular.module('hod.proving', [
 
 
 app.constant('CONFIG', {
-  api: '/'
+  api: '/',
+  timeout: 20000,
+  retries: 0,
+  polling: {
+    enabled: true,
+    interval: 1000,
+  }
 });
 
 
