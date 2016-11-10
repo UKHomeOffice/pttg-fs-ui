@@ -154,6 +154,10 @@ class WireMockTestDataLoader {
         stop()
     }
 
+    def withServiceUp() {
+        wireMockServer.start();
+    }
+
     def stop() {
         wireMockServer.stop()
     }
