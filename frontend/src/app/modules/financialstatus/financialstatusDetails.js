@@ -34,7 +34,7 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     return;
   }
 
-  FinancialstatusService.setAvailability(false, false);
+  // FinancialstatusService.setAvailability(false, false);
   FinancialstatusService.testAvailability();
 
   // track that we're now on the main form details page

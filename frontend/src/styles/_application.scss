@@ -101,12 +101,28 @@ table td.no-bottom-border {
 }
 
 .system-status {
-  font-size: 12px;
-  margin: 10px 0;
+  display: block;
+  font-size: 14px;
+  margin: 10px 0 40px 0;
   padding: 2px;
+  position: relative;
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  @media (min-width: 641px) {
+    margin-bottom: 0;
+  }
 }
 
 .system-status-offline {
-  background-color: #ffff00;
+  span {
+    display: inline-block;
+    background-color: #ffff00;
+    padding: 4px;
+  }
 }
+
 
