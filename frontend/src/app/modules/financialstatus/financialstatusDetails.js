@@ -34,9 +34,6 @@ function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOSe
     return;
   }
 
-  // FinancialstatusService.setAvailability(false, false);
-  FinancialstatusService.testAvailability();
-
   // track that we're now on the main form details page
   ga('set', 'page', $state.href($state.current.name, $stateParams));
   ga('send', 'pageview');

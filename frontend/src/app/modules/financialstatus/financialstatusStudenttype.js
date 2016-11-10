@@ -34,9 +34,6 @@ function ($scope, $state, FinancialstatusService, FinancialstatusResultService) 
   $scope.finStatus = FinancialstatusService.getDetails();
 
 
-  FinancialstatusService.setAvailability(false, false);
-  FinancialstatusService.testAvailability();
-
   $scope.typeSubmit = function (isValid, formScope, formCtrl) {
     FinancialstatusService.trackFormSubmission(formScope);
 

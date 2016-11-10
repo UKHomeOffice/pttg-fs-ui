@@ -3,16 +3,13 @@
 'use strict';
 
 var financialstatusModule = angular.module('hod.financialstatus', ['ui.router']);
-var baseUrl = 'pttg/financialstatusservice/v1/accounts/';
 
 
-financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', '$rootScope', 'CONFIG', function (IOService, $state, $timeout, $rootScope, CONFIG) {
+financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', 'CONFIG', function (IOService, $state, $timeout, CONFIG) {
   var me = this;
   var finStatus;
   var isValid = false;
   var lastAPIresponse;
-  var isAvailable = true;
-  $rootScope.isAvailable = true;
 
   this.reset = function () {
     isValid = false;
@@ -184,7 +181,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       delete details[f];
     });
 
-    var url = baseUrl + sortCode + '/' + accountNumber + '/dailybalancestatus';
+    var url = sortCode + '/' + accountNumber + '/dailybalancestatus';
     var attemptNum = 0;
 
     var trySendDetails = function () {
@@ -238,35 +235,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     ga('send', 'event', frm.name, 'errorcount', errcountstring);
   };
 
-  this.setAvailability = function (available, poll) {
-    var currentlyAvailble = me.isAvailable;
-    me.isAvailable = available;
-    $rootScope.isAvailable = available;
-    if (currentlyAvailble !== me.isAvailable) {
-      // CHANGED
-      // console.log('availability CHANGED');
-      $rootScope.$applyAsync();
-    }
-
-    if (!me.isAvailable && poll && CONFIG.polling.enabled) {
-      // poll to check if system comes back online
-      $timeout(function() {
-        me.testAvailability();
-      }, CONFIG.polling.interval);
-    }
-  };
-
-  this.testAvailability = function () {
-    IOService.get(baseUrl + 'availability').then(function (res) {
-      var ok = (res.status === 200) ? true: false;
-      me.setAvailability(ok, !ok);
-    }, function (err) {
-      me.setAvailability(false, true);
-    });
-  };
-
-  // on first run start testing the availability
-  me.testAvailability();
 
   // on first run set status to blank
   finStatus = this.getBlank();
@@ -274,17 +242,4 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   return this;
 }]);
 
-financialstatusModule.directive('hodStatus', [function () {
-  return {
-    restrict: 'E',
-    compile: function (element, attrs) {
-      return function(scope, element, attrs, formCtrl) {
 
-      };
-    },
-    scope: {
-      status: '=',
-    },
-    templateUrl: 'modules/financialstatus/financialstatusStatus.html'
-  }
-}]);
