@@ -9,6 +9,7 @@ financialstatusModule.constant('RESULT_STATES', {
   'passed'           : 'passed',
   'notpassed_28days' : 'notpassed/28days',
   'notpassed_funds'  : 'notpassed/funds',
+  'failure_kc'       : 'failure/kc',
   'failure_norecord' : 'failure/norecord',
   'failure'          : 'failure'
 });
@@ -28,7 +29,9 @@ financialstatusModule.constant('RESULT_TEXT', {
   businessacc:    'it is a business account',
   accountclosed:  'the account is closed',
   outoforder:     'You can’t use this service just now. The problem will be fixed as soon as possible',
+  kctoblame:      'An error occurred.',
   trylater:       'Please try again later.',
+  refresh:        'Please try reloading the page',
   checkname:      'check that the name matches applicant\'s details',
   checkinfo:      'check you have entered the correct information,',
   checkpaper:     'check paper evidence to see if applicant can meet criteria in some other way,',
@@ -80,12 +83,14 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     // service failures
-    if (data.failureReason.status === 404) {
-      return RESULT_STATES.failure_norecord;
+    switch(data.failureReason.status) {
+      case 404:
+        return RESULT_STATES.failure_norecord;
+      case -1:
+        return RESULT_STATES.failure_kc;
+      default:
+        return RESULT_STATES.failure;
     }
-
-    // failure code
-    return RESULT_STATES.failure;
   };
 
   // tell the result service what student type we're using
@@ -215,6 +220,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
             RESULT_TEXT.businessacc,
             RESULT_TEXT.accountclosed
           ]
+        };
+        break;
+
+      case RESULT_STATES.failure_kc:
+        return {
+          heading: RESULT_TEXT.kctoblame,
+          reason:  RESULT_TEXT.refresh
         };
         break;
     }
