@@ -195,7 +195,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         lastAPIresponse = result.data;
         $state.go('financialStatusResults', {studentType: finStatus.studentType});
       }, function (err) {
-        // console.log(attemptNum, 'ERROR', err);
+        console.log(attemptNum, 'ERROR', err);
         if (err.status === -1 && attemptNum < maxAttempts) {
           // console.log(attemptNum, 'RETRY');
           trySendDetails();
