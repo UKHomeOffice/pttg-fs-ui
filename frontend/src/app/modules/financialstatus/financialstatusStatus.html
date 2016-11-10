@@ -1,1 +1,4 @@
-<span class="system-status" ng-class="{'system-status-offline': !status}">System status: <span ng-if="status">Available</span><span ng-if="!status">Offline</span></span>
+<div class="error-summary" aria-label="System status warning" ng-if="!status">
+  <h1 class="heading-medium error-summary-heading">You can’t use this service just now</h1>
+  <p>The problem will be fixed as soon as possible</p>
+</div>

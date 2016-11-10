@@ -11,7 +11,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   var finStatus;
   var isValid = false;
   var lastAPIresponse;
-  var isAvailable = false;
+  var isAvailable = true;
+  $rootScope.isAvailable = true;
 
   this.reset = function () {
     isValid = false;
