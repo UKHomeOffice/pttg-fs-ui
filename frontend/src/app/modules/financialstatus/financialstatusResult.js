@@ -365,8 +365,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     switch (state) {
       case RESULT_STATES.passed:
         return [
-          RESULT_TEXT.checkinfo,
-          RESULT_TEXT.checkname
+          RESULT_TEXT.checkname,
+          RESULT_TEXT.checkinfo
         ];
 
       case RESULT_STATES.failure_norecord:
