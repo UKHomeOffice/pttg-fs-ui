@@ -33,6 +33,7 @@ function ($scope, $state, FinancialstatusService, FinancialstatusResultService) 
   $scope.studentTypeOptions = FinancialstatusService.getStudentTypes();
   $scope.finStatus = FinancialstatusService.getDetails();
 
+
   $scope.typeSubmit = function (isValid, formScope, formCtrl) {
     FinancialstatusService.trackFormSubmission(formScope);
 

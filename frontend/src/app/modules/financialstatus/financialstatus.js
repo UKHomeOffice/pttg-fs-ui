@@ -5,7 +5,7 @@
 var financialstatusModule = angular.module('hod.financialstatus', ['ui.router']);
 
 
-financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', function (IOService, $state, $timeout) {
+financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', 'CONFIG', function (IOService, $state, $timeout, CONFIG) {
   var me = this;
   var finStatus;
   var isValid = false;
@@ -181,22 +181,20 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       delete details[f];
     });
 
-    var url = 'pttg/financialstatusservice/v1/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus';
+    var url = sortCode + '/' + accountNumber + '/dailybalancestatus';
     var attemptNum = 0;
-    var maxAttempts = 5;
-    var timeoutDuration = 5000;
 
     var trySendDetails = function () {
       attemptNum++;
       // console.log(attemptNum + ' Starting request');
 
-      IOService.get(url, details, {timeout: timeoutDuration }).then(function (result) {
+      IOService.get(url, details, {timeout: CONFIG.timeout }).then(function (result) {
         // console.log(attemptNum, 'SUCCESS');
         lastAPIresponse = result.data;
         $state.go('financialStatusResults', {studentType: finStatus.studentType});
       }, function (err) {
-        console.log(attemptNum, 'ERROR', err);
-        if (err.status === -1 && attemptNum < maxAttempts) {
+        // console.log(attemptNum, 'ERROR', err);
+        if (err.status === -1 && attemptNum < CONFIG.retries) {
           // console.log(attemptNum, 'RETRY');
           trySendDetails();
           return;
@@ -215,8 +213,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     // $timeout(function () {
       trySendDetails();
     // }, 10000);
-
-
   };
 
   this.getResponse = function () {
@@ -239,14 +235,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     ga('send', 'event', frm.name, 'errorcount', errcountstring);
   };
 
+
   // on first run set status to blank
   finStatus = this.getBlank();
 
   return this;
 }]);
-
-
-
-
 
 

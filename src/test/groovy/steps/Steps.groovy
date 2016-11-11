@@ -54,7 +54,7 @@ class Steps {
     def uiPort = 8001
     def uiRoot = "http://$uiHost:$uiPort/"
 
-    def healthUriRegex = "/health"
+    def healthUriRegex = "/healthz"
 
     def wiremockPort = 8080
 
@@ -355,6 +355,12 @@ class Steps {
         testDataLoader.withServiceDown()
     }
 
+    @Given("^the api is back online\$")
+    public void the_api_is_back_online() throws Throwable {
+        testDataLoader.withServiceUp();
+        driver.sleep(3000)
+    }
+
     @Given("^the api response is a validation error - (.*) parameter\$")
     public void the_api_response_is_a_validation_error(String type) throws Throwable {
         testDataLoader.stubErrorData("validation-error-$type", thresholdUrlRegex, 400)
@@ -516,6 +522,13 @@ class Steps {
         errorSummaryTextItems.each {
             assert errorText.contains(it): "Error text did not contain: $it"
         }
+    }
+
+    @Then("^the availability warning box should not be shown\$")
+    public void the_availability_warning_box_should_not_be_shown() throws Throwable {
+        driver.manage().timeouts().implicitlyWait(1, SECONDS)
+        assert(driver.findElements(By.cssSelector(".availability")).isEmpty())
+        driver.manage().timeouts().implicitlyWait(defaultTimeout, SECONDS)
     }
 
     @Then("^the inputs will be populated with\$")

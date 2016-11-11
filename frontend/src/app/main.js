@@ -3,12 +3,15 @@ var app = angular.module('hod.proving', [
   'ngAria',
   'hod.financialstatus',
   'hod.forms',
-  'hod.io'
+  'hod.io',
+  'hod.availability'
 ]);
 
 
 app.constant('CONFIG', {
-  api: '/'
+  api: '/pttg/financialstatusservice/v1/accounts/',
+  timeout: 20000,
+  retries: 0,
 });
 
 
@@ -19,15 +22,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     name: 'default',
     title: 'HOD',
     views: {
-      'content': {
-      },
+      'content': {},
     },
   });
+
+  //
 }]);
 
 
-app.run(['$location', '$rootScope', '$window', '$timeout', '$state', function($location, $rootScope, $window, $timeout, $state) {
+app.run(['$location', '$rootScope', '$window', '$timeout', '$state', 'AvailabilityService', function($location, $rootScope, $window, $timeout, $state, AvailabilityService) {
   // see http://simplyaccessible.com/article/spangular-accessibility/
+
+
+  AvailabilityService.setURL('availability');
 
   $rootScope.$on('$viewContentLoaded', function (e) {
     // http://stackoverflow.com/questions/25596399/set-element-focus-in-angular-way
