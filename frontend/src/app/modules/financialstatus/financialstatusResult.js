@@ -361,6 +361,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     return criteria;
   };
 
+
   this.getWhatNext = function (state) {
     switch (state) {
       case RESULT_STATES.passed:
@@ -389,8 +390,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
 
 // display results
-financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT',
-  function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT) {
+financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT', '$timeout',
+  function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT, $timeout) {
 
 
   // check for result data
@@ -445,4 +446,46 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   $scope.editSearch = function (e) {
     $state.go('financialStatusDetails', {studentType: sType.value});
   };
+
+
+  // #### COPY AND PASTE ####
+  $scope.copyToClipboardBtnText = 'Copy';
+  var lineLength = function (str, len) {
+    while (str.length < len) {
+      str += ' ';
+    }
+    return str;
+  };
+
+  // compile the copy text
+  var copyText = text.heading.toUpperCase() + "\n" + text.reason + "\n\nRESULTS\n";
+  _.each($scope.summary, function (obj) {
+    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
+  });
+
+  // add the your search to it
+  copyText += "\n\nSEARCH CRITERIA\n";
+  _.each($scope.searchCriteria, function (obj) {
+    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
+  });
+  $scope.copyText = copyText;
+
+  // init the clipboard object
+  var clipboard = new Clipboard('.button--copy', {
+    text: function () {
+      return copyText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    $scope.copyToClipboardBtnText = 'Copied';
+    $scope.$applyAsync();
+    $timeout(function () {
+      $scope.copyToClipboardBtnText = 'Copy';
+      $scope.$applyAsync();
+    }, 2000);
+    e.clearSelection();
+  });
+  clipboard.on('error', function(e) {
+    console.log('ClipBoard error', e);
+  });
 }]);

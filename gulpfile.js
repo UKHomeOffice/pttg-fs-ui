@@ -117,6 +117,7 @@ gulp.task('vendor', function () {
     'node_modules/angular-ui-validate/dist/validate.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/moment/min/moment.min.js',
+    'node_modules/clipboard/dist/clipboard.min.js',
     // 'node_modules/govuk_frontend_toolkit/javascripts/govuk/selection-buttons.js'
   ])
   .pipe(plumber())

@@ -25,6 +25,7 @@
     </ul>
   </div>
 
+
   <div ng-if="showSummary">
     <h2 class="heading-medium">Results</h2>
     <table id="resultsTable">
@@ -33,6 +34,12 @@
         <td id="{{ detail.id }}">{{ detail.value }}</td>
       </tr>
     </table>
+  </div>
+
+  <div ng-if="haveResult">
+    <div class="form-group form-group--topspace">
+      <input type="submit" class="button button--copy button-info" value="{{ copyToClipboardBtnText }}" data-Xclipboard-target="#copyText" />
+    </div>
   </div>
 
   <div ng-if="showCriteria">
@@ -45,11 +52,13 @@
     </table>
   </div>
 
+
+
   <div class="form-group form-group--topspace">
-      <input type="submit" class="button button--editSearch button-info" value="Edit" ng-click="editSearch()">
+    <input type="submit" class="button button--editSearch button-info" value="Edit" ng-click="editSearch()" />
   </div>
 
   <div class="form-group form-group--topspace">
-      <input type="submit" class="button button--newSearch" value="Begin a new check" ng-click="newSearch()">
+    <input type="submit" class="button button--newSearch" value="Begin a new check" ng-click="newSearch()" />
   </div>
 </div>
