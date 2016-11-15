@@ -7,9 +7,6 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import uk.gov.digital.ho.proving.financial.health.UrlConnectionTester;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 /**
  * Gets the HTTP status of the API. Annotate this class with @Component to add this indicator to the health check
  * which is used for the kubernetes readiness probe.
