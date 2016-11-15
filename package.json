@@ -4,7 +4,7 @@
   "description": "financial status service ui",
   "scripts": {
     "init": "npm install",
-    "test": "gulp test"
+    "test": "snyk test && gulp test"
   },
   "devDependencies": {
     "angular": "^1.5.8",
@@ -52,6 +52,7 @@
     "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
+    "snyk": "^1.19.1",
     "underscore": "^1.8.3",
     "wiredep": "^2.2.2",
     "yargs": "^3.15.0"
