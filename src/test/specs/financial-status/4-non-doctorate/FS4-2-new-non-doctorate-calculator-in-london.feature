@@ -26,7 +26,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 #    Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+4) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
             | End date                        | 30/05/2016 |

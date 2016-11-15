@@ -8,7 +8,8 @@ Feature: Show clear error details when inputs are invalid - Tier 4 (General) stu
 ######################### Validation on the Student type Field #########################
 
     Scenario: Case Worker does NOT select student type
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         When the student type choice is submitted
         Then the service displays the following error message
             | student-type-error | Select an option |

@@ -2,7 +2,8 @@ Feature: Route selection screen inputs - Tier 4 (General) student non Doctorate 
     This screen allows caseworker to select Tier 4 Application route (student type), which will direct to the right Financial status check form
 
     Scenario Outline: Caseworker selects the student type - Tier 4 (General) student (non-doctorate)
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         When the <student-type> student type is chosen
         Then the service displays the <page-title> page sub heading
         Examples:

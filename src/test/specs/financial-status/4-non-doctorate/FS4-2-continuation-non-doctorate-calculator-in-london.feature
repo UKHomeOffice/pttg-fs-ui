@@ -29,7 +29,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
             | End date                        | 01/06/2016 |

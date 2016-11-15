@@ -1,7 +1,8 @@
 Feature: Tier 4 (General) doctorate extension scheme content (single current account with dependants)
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the doctorate student type is chosen
 
 

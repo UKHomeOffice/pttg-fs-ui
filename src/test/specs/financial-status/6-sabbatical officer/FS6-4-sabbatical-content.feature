@@ -1,7 +1,8 @@
 Feature: Tier 4 (General) student union (sabbatical officer) content (single current account with dependants)
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the sso student type is chosen
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
