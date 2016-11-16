@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.actuate.audit.AuditEventRepository
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 import steps.WireMockTestDataLoader
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
@@ -25,7 +24,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 /**
  * @Author Home Office Digital
  */
-@ContextConfiguration
 @SpringBootTest(
     webEnvironment = RANDOM_PORT,
     classes = [ServiceRunner.class],
