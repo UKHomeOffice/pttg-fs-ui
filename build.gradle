@@ -7,8 +7,8 @@ buildscript {
     }
     dependencies {
 
-        classpath 'pttg-gradle-common:pttgCommonGradle:1.4.RELEASE'
-        classpath 'pttg-gradle-common:pttgSpringBootGradle:1.2.RELEASE'
+        classpath 'pttg-gradle-common:pttgCommonGradle:1.7.RELEASE'
+        classpath 'pttg-gradle-common:pttgSpringBootGradle:1.3.RELEASE'
 
         classpath 'net.serenity-bdd:serenity-gradle-plugin:1.1.31'
 

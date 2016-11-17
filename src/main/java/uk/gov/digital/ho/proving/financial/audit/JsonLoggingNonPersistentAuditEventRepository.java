@@ -38,12 +38,22 @@ public class JsonLoggingNonPersistentAuditEventRepository implements AuditEventR
     }
 
     @Override
+    public void add(AuditEvent event) {
+        LOGGER.info("{}: {}", AUDIT_EVENT_LOG_MARKER, value("auditEvent", event));
+    }
+
+    @Override
+    public List<AuditEvent> find(Date after) {
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
     public List<AuditEvent> find(String principal, Date after) {
         return Collections.EMPTY_LIST;
     }
 
     @Override
-    public void add(AuditEvent event) {
-        LOGGER.info("{}: {}", AUDIT_EVENT_LOG_MARKER, value("auditEvent", event));
+    public List<AuditEvent> find(String principal, Date after, String type) {
+        return Collections.EMPTY_LIST;
     }
 }

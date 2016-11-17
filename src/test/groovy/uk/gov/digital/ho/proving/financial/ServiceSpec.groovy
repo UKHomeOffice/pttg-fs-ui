@@ -1,24 +1,14 @@
 package uk.gov.digital.ho.proving.financial
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.boot.test.WebIntegrationTest
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.http.HttpMethod
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.WebApplicationContext
-import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -33,7 +23,7 @@ import static org.hamcrest.core.StringContains.containsString
 import static org.springframework.http.HttpStatus.BAD_GATEWAY
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.MediaType.APPLICATION_JSON
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*
@@ -41,7 +31,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 
 /**
  * @Author Home Office Digital
@@ -96,7 +85,7 @@ class ServiceSpec extends Specification {
             .setMessageConverters(createMessageConverter())
             .setControllerAdvice(new ServiceExceptionHandler())
             .alwaysDo(print())
-            .alwaysExpect(content().contentType(APPLICATION_JSON_VALUE))
+            .alwaysExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             .build()
 
     }
@@ -150,7 +139,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isOk())
-            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
@@ -182,7 +171,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isOk())
-            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
@@ -212,7 +201,7 @@ class ServiceSpec extends Specification {
         then:
         response.with {
             andExpect(status().isOk())
-            andExpect(content().contentType(APPLICATION_JSON_VALUE))
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
             andExpect(jsonPath("fundingRequirementMet", is(true)))
         }
     }
@@ -324,7 +313,7 @@ class ServiceSpec extends Specification {
             andExpect(status().isBadRequest())
             andExpect(jsonPath("code", is("0003")))
             andExpect(jsonPath("message", allOf(
-                containsString("DateTimeParseException"),
+                containsString("ConversionFailedException"),
                 containsString("courseStartDate"))))
         }
     }
@@ -352,7 +341,7 @@ class ServiceSpec extends Specification {
             andExpect(status().isBadRequest())
             andExpect(jsonPath("code", is("0003")))
             andExpect(jsonPath("message", allOf(
-                containsString("DateTimeParseException"),
+                containsString("ConversionFailedException"),
                 containsString("courseEndDate"))))
         }
     }
@@ -380,7 +369,7 @@ class ServiceSpec extends Specification {
             andExpect(status().isBadRequest())
             andExpect(jsonPath("code", is("0003")))
             andExpect(jsonPath("message", allOf(
-                containsString("DateTimeParseException"),
+                containsString("ConversionFailedException"),
                 containsString("continuationEndDate"))))
         }
     }
