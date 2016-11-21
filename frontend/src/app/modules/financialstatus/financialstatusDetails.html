@@ -10,9 +10,9 @@
 
         <hod-form name="finStatusDetails" submit="detailsSubmit">
 
-            <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered, for example 20 01 2016" config="conf.endDate"></hod-date>
+            <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered" config="conf.endDate"></hod-date>
 
-            <hod-date name="dob" label="Date of birth" field="finStatus.dob" hint="For example, 20 01 1990" config="conf.dob"></hod-date>
+            <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
 
             <hod-number name="numberOfDependants" label="Number of dependants" field="finStatus.numberOfDependants" config="conf.numberOfDependants"></hod-number>
 
@@ -22,11 +22,11 @@
 
             <hod-radio name="inLondon" label="In London?" field="finStatus.inLondon" options="yesNoOptions" config="conf.inLondon"></hod-radio>
 
-            <hod-date name="courseStartDate" label="Start date of course" field="finStatus.courseStartDate" hint="For example, 20 01 2016" config="conf.courseStartDate"></hod-date>
+            <hod-date name="courseStartDate" label="Start date of course" field="finStatus.courseStartDate" config="conf.courseStartDate"></hod-date>
 
             <hod-date name="courseEndDate" label="End date of course" field="finStatus.courseEndDate" config="conf.courseEndDate"></hod-date>
 
-            <hod-date name="continuationEndDate" label="Continuation end date" field="finStatus.continuationEndDate" config="conf.continuationEndDate" hint="Optional: if the course is a continuation then enter end date of the continuation here"></hod-date>
+            <hod-date name="continuationEndDate" label="Continuation end date" field="finStatus.continuationEndDate" config="conf.continuationEndDate" hint="Optional"></hod-date>
 
             <hod-number name="totalTuitionFees" label="Total tuition fees for the first year" field="finStatus.totalTuitionFees" config="conf.totalTuitionFees"></hod-number>
 
