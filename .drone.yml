@@ -1,0 +1,79 @@
+pipeline:
+
+  my-build:
+    privileged: true
+    image: quay.io/ukhomeofficedigital/openjdk8:v1.1.0
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - PTTG_GH_TOKEN=${PTTG_GH_TOKEN}
+    commands:
+      - ./gradlew build
+    when:
+      event: push
+
+  my-docker-build:
+    privileged: true
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA} .
+    when:
+      event: push
+
+  image_to_quay:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+    when:
+      event: push
+
+  predeploy:
+    image: plugins/git
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - git clone https://github.com/UKHomeOffice/kube-pttg-fs-ui.git
+    when:
+      event: [push, deployment]
+
+  deploy_to_dev:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - KUBE_NAMESPACE=pt-i-dev
+      - ENVIRONMENT=dev
+      - VERSION=${DRONE_COMMIT_SHA}
+      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+    commands:
+      - cd kube-pttg-fs-ui
+      - ./deploy.sh
+    when:
+      event: push
+
+  deploy_to_test:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - KUBE_NAMESPACE=pt-i-test
+      - ENVIRONMENT=test
+      - VERSION=${DRONE_COMMIT_SHA}
+      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+    commands:
+      - cd kube-pttg-fs-ui
+      - ./deploy.sh
+    when:
+      event: deployment
+      environment: test
+
+
+services:
+  dind:
+    image: docker:1.11-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"
