@@ -4,7 +4,8 @@ Feature: Edit search button to return UI populated with current values (for all 
 ########################################################################################################################
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
 
     Scenario: Caseworker needs to edit the information input into the UI after the API has been called and results displayed.

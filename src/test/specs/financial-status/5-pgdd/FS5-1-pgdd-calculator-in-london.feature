@@ -11,7 +11,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
     (£1265) * remaining course length) -  Accommodation fees already paid
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the pgdd student type is chosen
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI

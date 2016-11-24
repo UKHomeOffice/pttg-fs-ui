@@ -9,7 +9,8 @@ Feature: Show clear error details when inputs are invalid
     Dependants - should always be 0 for courses of six months or less ####
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
             | End Date                        | 30/05/2016 |

@@ -16,7 +16,8 @@ Feature: Show clear error details when inputs are invalid
     Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
 
     Background:
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the sso student type is chosen
         And the default details are
             | End Date                        | 30/05/2016 |

@@ -5,7 +5,7 @@
 var financialstatusModule = angular.module('hod.financialstatus', ['ui.router']);
 
 
-financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', 'CONFIG', function (IOService, $state, $timeout, CONFIG) {
+financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', 'CONFIG', '$window', function (IOService, $state, $timeout, CONFIG, $window) {
   var me = this;
   var finStatus;
   var isValid = false;
@@ -197,6 +197,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         if (err.status === -1 && attemptNum < CONFIG.retries) {
           // console.log(attemptNum, 'RETRY');
           trySendDetails();
+          return;
+        }
+
+        if (err.status === -1) {
+          $window.location.reload();
           return;
         }
 

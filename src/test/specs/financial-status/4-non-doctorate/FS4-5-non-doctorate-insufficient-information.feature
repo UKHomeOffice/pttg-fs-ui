@@ -4,7 +4,8 @@ Feature: Insufficient Information
     # error message needs to be reviewed
 
     Scenario: No records exist within the period stated
-        Given caseworker is using the financial status service ui
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         Given no record for the account
         When the financial status check is performed with
