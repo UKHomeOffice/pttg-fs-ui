@@ -1,13 +1,24 @@
 pipeline:
 
-  my-build:
+  pre-build:
     privileged: true
-    image: quay.io/ukhomeofficedigital/openjdk8:v1.1.0
+    image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
-      - PTTG_GH_TOKEN=${PTTG_GH_TOKEN}
     commands:
-      - ./gradlew build
+      - docker build -f Dockerfile.build -t gradle-node .
+    when:
+      event: push
+
+  my-build:
+    privileged: true
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker run --name pttg-fs-ui-build gradle-node build
+      - mkdir -p build/libs
+      - docker cp pttg-fs-ui-build:/work/build/libs/ build
     when:
       event: push
 

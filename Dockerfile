@@ -1,11 +1,11 @@
-FROM quay.io/ukhomeofficedigital/openjdk8:v1.0.0
+FROM quay.io/ukhomeofficedigital/openjdk8:v1.1.0
 
 ENV PTTG_API_ENDPOINT localhost
 ENV USER pttg
 ENV GROUP pttg
 ENV NAME pttg-fs-ui
 
-ARG JAR_PATH
+ENV JAR_PATH build/libs
 ARG VERSION
 
 WORKDIR /app
@@ -17,7 +17,7 @@ RUN groupadd -r ${GROUP} && \
 
 COPY package.json /app/package.json
 
-COPY ${JAR_PATH}/${NAME}-${VERSION}.jar /app
+COPY ${JAR_PATH}/${NAME}*.jar /app
 COPY run.sh /app
 
 RUN chmod a+x /app/run.sh
