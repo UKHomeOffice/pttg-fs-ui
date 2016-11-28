@@ -36,6 +36,9 @@ financialstatusModule.constant('RESULT_TEXT', {
   checkinfo:      'check you have entered the correct information,',
   checkpaper:     'check paper evidence to see if applicant can meet criteria in some other way,',
   checkbank:      'check it is a Barclays current account',
+  copybtn:        'Copy to clipboard',
+  copiedbtn:      'Copied',
+  copysummary:    'The check financial status service confirmed that {{name}} {{passed}} the requirements as the daily closing balance was {{above}} the total funds required.'
 
 });
 
@@ -183,6 +186,19 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     return summary;
+  };
+
+  this.getCopySummary = function () {
+    var str = RESULT_TEXT.copysummary;
+    str = str.replace('{{name}}', data.accountHolderName);
+    if (me.getSuccess()) {
+      str = str.replace('{{passed}}', 'passed');
+      str = str.replace('{{above}}', 'above');
+    } else {
+      str = str.replace('{{passed}}', 'did not pass');
+      str = str.replace('{{above}}', 'below');
+    }
+    return str;
   };
 
   // get the headings text to display on the results page for each state
@@ -417,6 +433,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
   $scope.haveResult = resServ.haveResult();
   $scope.summary = resServ.getSummary();
+  $scope.copysummary = resServ.getCopySummary();
   $scope.showSummary = $scope.haveResult;
   $scope.success = resServ.getSuccess();
 
@@ -449,7 +466,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
 
   // #### COPY AND PASTE ####
-  $scope.copyToClipboardBtnText = 'Copy';
+  $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
   var lineLength = function (str, len) {
     while (str.length < len) {
       str += ' ';
@@ -476,16 +493,23 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       return copyText;
     }
   });
-  clipboard.on('success', function(e) {
-    $scope.copyToClipboardBtnText = 'Copied';
-    $scope.$applyAsync();
+
+  var timeoutResetButtonText = function () {
     $timeout(function () {
-      $scope.copyToClipboardBtnText = 'Copy';
+      $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
       $scope.$applyAsync();
     }, 2000);
+  };
+
+  clipboard.on('success', function(e) {
+    $scope.copyToClipboardBtnText = RESULT_TEXT.copiedbtn;
+    $scope.$applyAsync();
     e.clearSelection();
+    timeoutResetButtonText();
   });
   clipboard.on('error', function(e) {
     console.log('ClipBoard error', e);
+    $scope.copysummary = e.action + ' ' + e.trigger;
+    $scope.$applyAsync();
   });
 }]);

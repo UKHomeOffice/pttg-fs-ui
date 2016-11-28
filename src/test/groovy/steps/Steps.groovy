@@ -10,8 +10,10 @@ import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import net.thucydides.core.annotations.Managed
 import org.openqa.selenium.By
+import org.openqa.selenium.Keys
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.Capabilities
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -460,6 +462,12 @@ class Steps {
         driver.findElement(By.className("button--editSearch")).click()
     }
 
+    @When("^the copy button is clicked\$")
+    public void the_copy_button_is_clicked() throws Throwable {
+        driver.sleep(delay)
+        driver.findElement(By.className("button--copy")).click()
+    }
+
     @Then("^the service displays the following message\$")
     public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
@@ -564,5 +572,44 @@ class Steps {
         }
 
         assert result == expected
+    }
+
+    @Then("^the copy button text is '([^']*)'\$")
+    public void the_copy_button_text_is(String expectedText) {
+        def Capabilities cap = driver.getCapabilities()
+        if (cap.browserName != 'phantomjs') {
+            driver.sleep(delay)
+            assert (driver.findElement(By.cssSelector('.button--copy')).getAttribute('value') == expectedText)
+        } else {
+            println("\n\nSKIPPED: WARNING COPY FUNCTION DOES NOT WORK IN PHANTOM JS\nTest step: 'the copy button text is'\n\n")
+        }
+    }
+
+    @Then("^the copied text includes\$")
+    public void the_copied_text_includes(DataTable expectedText) {
+        def Capabilities cap = driver.getCapabilities()
+        if (cap.browserName == 'firefox') {
+
+            driver.executeScript("document.getElementById('content').appendChild(document.createElement('textarea'))")
+            driver.executeScript("document.getElementsByTagName('textarea')[0].focus()")
+            def e = driver.findElement(By.cssSelector('textarea'))
+            e.sendKeys(Keys.chord(Keys.COMMAND, "v"))
+
+            if (System.getProperty("os.name").toString() == 'Mac OS X') {
+                e.sendKeys(Keys.chord(Keys.COMMAND, "v"))
+            } else {
+                e.sendKeys(Keys.chord(Keys.CONTROL, "v"))
+            }
+
+            def String pasted = e.getAttribute('value')
+            def Map<String, String> entries = expectedText.asMap(String.class, String.class)
+            entries.each { k, v ->
+                assert (pasted.contains(k))
+                assert (pasted.contains(v))
+            }
+
+        } else {
+            println("\n\nSKIPPED: TESTING THE CONTENTS OF THE PASTE BUFFER\nONLY WORKS RELIABLY IN FIREFOX\nTest step: 'the copied text includes'\n\n")
+        }
     }
 }

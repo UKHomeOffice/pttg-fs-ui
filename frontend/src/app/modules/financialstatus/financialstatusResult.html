@@ -33,13 +33,13 @@
         <th scope="row" width="50%">{{ detail.label }}</th>
         <td id="{{ detail.id }}">{{ detail.value }}</td>
       </tr>
+      <tr>
+        <th scope="row">Summary</th>
+        <td><span id="copySummary">{{ copysummary }}</span><br />
+          <input id="copyBtn" type="submit" class="button button--copy button-info" value="{{ copyToClipboardBtnText }}" />
+        </td>
+      </tr>
     </table>
-  </div>
-
-  <div ng-if="haveResult">
-    <div class="form-group form-group--topspace">
-      <input type="submit" class="button button--copy button-info" value="{{ copyToClipboardBtnText }}" data-Xclipboard-target="#copyText" />
-    </div>
   </div>
 
   <div ng-if="showCriteria">
