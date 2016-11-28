@@ -2,7 +2,7 @@ FROM quay.io/ukhomeofficedigital/gradle:v2.13.6
 
 MAINTAINER Lucy Bennett "lucy.bennett@digital.homeoffice.gov.uk"
 ENV NODE_VERSION v4.4.2
-ENV PATH "${PATH}:/opt/nodejs/bin"
+ENV PATH "${PATH}:/opt/nodejs/bin:/work"
 
 WORKDIR /opt/nodejs
 
@@ -11,9 +11,7 @@ RUN yum install -y curl git-all bzip2 && \
 
 WORKDIR /work
 
-RUN  git clone https://github.com/UKHomeOffice/pttg-fs-ui.git . && \
-    ls -l && \
-    npm install phantomjs -g  && \
+RUN  git clone https://github.com/UKHomeOffice/pttg-fs-ui.git . && ls -l && npm install phantomjs -g  && \
     npm install && ls -l
 
 ENTRYPOINT ["gradle"]
