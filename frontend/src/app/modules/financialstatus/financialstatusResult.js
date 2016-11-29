@@ -36,6 +36,9 @@ financialstatusModule.constant('RESULT_TEXT', {
   checkinfo:      'check you have entered the correct information,',
   checkpaper:     'check paper evidence to see if applicant can meet criteria in some other way,',
   checkbank:      'check it is a Barclays current account',
+  copybtn:        'Copy to clipboard',
+  copiedbtn:      'Copied',
+  copysummary:    'The check financial status service confirmed that {{name}} {{passed}} the requirements as the daily closing balance was {{above}} the total funds required.'
 
 });
 
@@ -183,6 +186,19 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     return summary;
+  };
+
+  this.getCopySummary = function () {
+    var str = RESULT_TEXT.copysummary;
+    str = str.replace('{{name}}', data.accountHolderName);
+    if (me.getSuccess()) {
+      str = str.replace('{{passed}}', 'passed');
+      str = str.replace('{{above}}', 'above');
+    } else {
+      str = str.replace('{{passed}}', 'did not pass');
+      str = str.replace('{{above}}', 'below');
+    }
+    return str;
   };
 
   // get the headings text to display on the results page for each state
@@ -361,6 +377,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     return criteria;
   };
 
+
   this.getWhatNext = function (state) {
     switch (state) {
       case RESULT_STATES.passed:
@@ -389,8 +406,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
 
 // display results
-financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT',
-  function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT) {
+financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT', '$timeout',
+  function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT, $timeout) {
 
 
   // check for result data
@@ -416,6 +433,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
   $scope.haveResult = resServ.haveResult();
   $scope.summary = resServ.getSummary();
+  $scope.copysummary = resServ.getCopySummary();
   $scope.showSummary = $scope.haveResult;
   $scope.success = resServ.getSuccess();
 
@@ -445,4 +463,53 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   $scope.editSearch = function (e) {
     $state.go('financialStatusDetails', {studentType: sType.value});
   };
+
+
+  // #### COPY AND PASTE ####
+  $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
+  var lineLength = function (str, len) {
+    while (str.length < len) {
+      str += ' ';
+    }
+    return str;
+  };
+
+  // compile the copy text
+  var copyText = text.heading.toUpperCase() + "\n" + text.reason + "\n\nRESULTS\n";
+  _.each($scope.summary, function (obj) {
+    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
+  });
+
+  // add the your search to it
+  copyText += "\n\nSEARCH CRITERIA\n";
+  _.each($scope.searchCriteria, function (obj) {
+    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
+  });
+  $scope.copyText = copyText;
+
+  // init the clipboard object
+  var clipboard = new Clipboard('.button--copy', {
+    text: function () {
+      return copyText;
+    }
+  });
+
+  var timeoutResetButtonText = function () {
+    $timeout(function () {
+      $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
+      $scope.$applyAsync();
+    }, 2000);
+  };
+
+  clipboard.on('success', function(e) {
+    $scope.copyToClipboardBtnText = RESULT_TEXT.copiedbtn;
+    $scope.$applyAsync();
+    e.clearSelection();
+    timeoutResetButtonText();
+  });
+  clipboard.on('error', function(e) {
+    console.log('ClipBoard error', e);
+    $scope.copysummary = e.action + ' ' + e.trigger;
+    $scope.$applyAsync();
+  });
 }]);
