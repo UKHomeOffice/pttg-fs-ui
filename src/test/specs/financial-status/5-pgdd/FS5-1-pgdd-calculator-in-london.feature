@@ -19,6 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
     Scenario: Raj is a postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
@@ -48,6 +49,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |

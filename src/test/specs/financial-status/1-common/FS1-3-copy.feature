@@ -7,6 +7,7 @@ Feature: Copy results to paste buffer
         And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
+            | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
@@ -27,7 +28,7 @@ Feature: Copy results to paste buffer
         Then the service displays the following result
             | Copy summary | The check financial status service confirmed that Laura Taylor passed the requirements as the daily closing balance was above the total funds required. |
 
-        
+
     ## test the content that appears above the 'copy' button when the test failed
     Scenario: summary copy text
         Given the account does not have sufficient funds

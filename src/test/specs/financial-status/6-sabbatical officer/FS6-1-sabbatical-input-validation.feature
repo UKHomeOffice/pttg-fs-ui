@@ -20,6 +20,7 @@ Feature: Show clear error details when inputs are invalid
         And caseworker is using the financial status service ui
         And the sso student type is chosen
         And the default details are
+            | Application raised date         | 01/06/2016 |
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 01/03/2016 |

@@ -19,6 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Raj is a sabbatical officer in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 01/03/2016 |
@@ -45,6 +46,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Shelly is a sabbatical officer in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 10/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 01/03/2016 |

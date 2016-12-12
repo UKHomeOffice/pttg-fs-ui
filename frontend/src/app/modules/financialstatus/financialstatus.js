@@ -1,30 +1,30 @@
 /* jshint node: true */
 
-'use strict';
+'use strict'
 
-var financialstatusModule = angular.module('hod.financialstatus', ['ui.router']);
-
+var financialstatusModule = angular.module('hod.financialstatus', ['ui.router'])
 
 financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', '$timeout', 'CONFIG', '$window', function (IOService, $state, $timeout, CONFIG, $window) {
-  var me = this;
-  var finStatus;
-  var isValid = false;
-  var lastAPIresponse;
+  var me = this
+  var finStatus
+  var isValid = false
+  var lastAPIresponse
 
   this.reset = function () {
-    isValid = false;
-    lastAPIresponse = null;
-    finStatus = this.getBlank();
-  };
+    isValid = false
+    lastAPIresponse = null
+    finStatus = this.getBlank()
+  }
 
   // get the form details
   this.getDetails = function () {
-    return finStatus;
-  };
+    return finStatus
+  }
 
   // get the defaults
   this.getBlank = function () {
     return {
+      applicationRaisedDate: '',
       studentType: '',
       toDate: '',
       inLondon: null,
@@ -38,8 +38,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       sortCode: '',
       accountNumber: '',
       dob: ''
-    };
-  };
+    }
+  }
 
   // get the available types
   this.getStudentTypes = function () {
@@ -86,123 +86,121 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         ],
         noDependantsOnCourseLength: null
       }
-    ];
-  };
+    ]
+  }
 
   // get the config detail of the student given the typ code eg sso fo Student union sabbatical officer
   this.getStudentTypeByID = function (typ) {
-    return _.findWhere(me.getStudentTypes(), {value: typ });
-  };
+    return _.findWhere(me.getStudentTypes(), {value: typ })
+  }
 
   // set form the validation status
   this.setValid = function (bool) {
-    isValid = bool ? true: false;
-  };
+    isValid = bool ? true : false
+  }
 
   // get the form validation state
   this.getValid = function () {
-    return isValid;
-  };
+    return isValid
+  }
 
   // determine the course length given start and end dates
   this.getCourseLength = function () {
     if (finStatus.studentType === 'doctorate') {
-      return 2;
+      return 2
     }
 
-    var from, to;
+    var from, to
     if (finStatus.continuationEndDate) {
-      from = moment(finStatus.courseEndDate, 'YYYY-MM-DD').add(1, 'day');
-      to = finStatus.continuationEndDate;
+      from = moment(finStatus.courseEndDate, 'YYYY-MM-DD').add(1, 'day')
+      to = finStatus.continuationEndDate
     } else {
-      from = finStatus.courseStartDate;
-      to = finStatus.courseEndDate;
+      from = finStatus.courseStartDate
+      to = finStatus.courseEndDate
     }
 
-    return me.getMonths(from, to);
-  };
+    return me.getMonths(from, to)
+  }
 
   this.getEntireCourseLength = function () {
     if (finStatus.studentType === 'doctorate') {
-      return 2;
+      return 2
     }
 
-    var to;
-    var from = finStatus.courseStartDate;
+    var to
+    var from = finStatus.courseStartDate
     if (finStatus.continuationEndDate) {
-      to = finStatus.continuationEndDate;
+      to = finStatus.continuationEndDate
     } else {
-      to = finStatus.courseEndDate;
+      to = finStatus.courseEndDate
     }
 
-    return me.getMonths(from, to);
-  };
+    return me.getMonths(from, to)
+  }
 
   this.getMonths = function (start, end) {
-    var start = moment(start, 'YYYY-MM-DD', true);
-    var end = moment(end, 'YYYY-MM-DD', true);
-    var months = end.diff(start, 'months', true);
+    var start = moment(start, 'YYYY-MM-DD', true)
+    var end = moment(end, 'YYYY-MM-DD', true)
+    var months = end.diff(start, 'months', true)
     if (start.date() === end.date() && !start.isSame(end)) {
       // when using moment diff months, the same day in months being compared
       // rounds down the months
       // eg 1st June to 1st July equals 1 month, NOT 1 month and 1 day which is the result we want
       // therefore if the start and end days are equal add a day onto the month.
-      months += 1/31;
+      months += 1 / 31
     }
 
-    return months;
-  };
+    return months
+  }
 
   // send the API request
   this.sendDetails = function () {
     if (!isValid) {
       // we only want to send details when the form is valid
-      return;
+      return
     }
 
-    finStatus.courseLength = Math.ceil(me.getCourseLength());
-    finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength());
-
+    finStatus.courseLength = Math.ceil(me.getCourseLength())
+    finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength())
 
     // console.log('courseLength', finStatus.courseLength);
     // console.log('entireCourseLength', finStatus.entireCourseLength);
 
     // make a copy of the finStatus object and delete fields we don't want to send
-    var details = angular.copy(finStatus);
-    var sortCode = details.sortCode;
-    var accountNumber = details.accountNumber;
+    var details = angular.copy(finStatus)
+    var sortCode = details.sortCode
+    var accountNumber = details.accountNumber
 
+    delete details.sortCode
+    delete details.accountNumber
 
-    delete details.sortCode;
-    delete details.accountNumber;
-
-    var stud = this.getStudentTypeByID(finStatus.studentType);
+    var stud = this.getStudentTypeByID(finStatus.studentType)
     _.each(stud.hiddenFields, function (f) {
-      delete details[f];
-    });
+      delete details[f]
+    })
 
-    var url = sortCode + '/' + accountNumber + '/dailybalancestatus';
-    var attemptNum = 0;
+    var url = sortCode + '/' + accountNumber + '/dailybalancestatus'
+    var attemptNum = 0
 
     var trySendDetails = function () {
-      attemptNum++;
+      attemptNum++
       // console.log(attemptNum + ' Starting request');
 
       IOService.get(url, details, {timeout: CONFIG.timeout }).then(function (result) {
         // console.log(attemptNum, 'SUCCESS');
-        lastAPIresponse = result.data;
-        $state.go('financialStatusResults', {studentType: finStatus.studentType});
+        lastAPIresponse = result.data
+        $state.go('financialStatusResults', {studentType: finStatus.studentType})
       }, function (err) {
         // console.log(attemptNum, 'ERROR', err);
         if (err.status === -1 && attemptNum < CONFIG.retries) {
           // console.log(attemptNum, 'RETRY');
-          trySendDetails();
-          return;
+          trySendDetails()
+          return
         }
 
         if (err.status === -1) {
-          $window.location.reload();
-          return;
+          $window.location.reload()
+          return
         }
 
         // console.log(attemptNum, 'FINAIL FAILED', err);
@@ -210,41 +208,39 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           failureReason: {
             status: err.status
           }
-        };
-        $state.go('financialStatusResults', {studentType: finStatus.studentType});
-      });
-    };
+        }
+        $state.go('financialStatusResults', {studentType: finStatus.studentType})
+      })
+    }
     // start attempting to make the request
     // $timeout(function () {
-      trySendDetails();
+    trySendDetails()
     // }, 10000);
-  };
+  }
 
   this.getResponse = function () {
-    return lastAPIresponse;
-  };
+    return lastAPIresponse
+  }
 
   this.trackFormSubmission = function (frm) {
-    var errcount = 0;
-    var errcountstring = '';
+    var errcount = 0
+    var errcountstring = ''
     _.each(frm.objs, function (o) {
       if (o.error && o.error.msg) {
-        errcount++;
-        ga('send', 'event', frm.name, 'validation', o.config.id);
+        errcount++
+        ga('send', 'event', frm.name, 'validation', o.config.id)
       }
-    });
-    errcountstring = '' + errcount;
-    while(errcountstring.length < 3) {
-      errcountstring = '0' + errcountstring;
+    })
+    errcountstring = '' + errcount
+    while (errcountstring.length < 3) {
+      errcountstring = '0' + errcountstring
     }
-    ga('send', 'event', frm.name, 'errorcount', errcountstring);
-  };
-
+    ga('send', 'event', frm.name, 'errorcount', errcountstring)
+  }
 
   // on first run set status to blank
-  finStatus = this.getBlank();
+  finStatus = this.getBlank()
 
-  return this;
-}]);
-
+  return this
+}])
 

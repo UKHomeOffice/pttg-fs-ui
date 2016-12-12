@@ -386,6 +386,7 @@ class Steps {
             validDefaultEntries = defaultFields.asMap(String.class, String.class)
         } else {
             validDefaultEntries = [
+                'Application raised date'        : '29/06/2016',
                 'End date'                       : '30/05/2016',
                 'In London'                      : 'Yes',
                 'Accommodation fees already paid': '0',

@@ -15,6 +15,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         And caseworker is using the financial status service ui
         And the doctorate student type is chosen
         And the default details are
+            | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |

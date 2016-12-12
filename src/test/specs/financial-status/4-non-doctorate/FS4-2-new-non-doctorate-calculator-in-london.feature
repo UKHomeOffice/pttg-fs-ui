@@ -30,6 +30,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
+            | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |

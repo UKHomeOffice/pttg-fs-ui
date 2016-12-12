@@ -17,6 +17,7 @@ Feature: Show clear error details when inputs are invalid
         And caseworker is using the financial status service ui
         And the doctorate student type is chosen
         And the default details are
+            | Application raised date         | 30/05/2016 |
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 0          |
