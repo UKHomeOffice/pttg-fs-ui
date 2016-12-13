@@ -26,11 +26,12 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   // get the defaults
   this.getBlank = function () {
     return {
+      isContinuation: null,
       applicationRaisedDate: '',
       studentType: '',
       toDate: '',
       inLondon: null,
-      continuationEndDate: '',
+      originalCourseStartDate: '',
       courseStartDate: '',
       courseEndDate: '',
       totalTuitionFees: '',
@@ -41,6 +42,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       accountNumber: '',
       dob: ''
     }
+  }
+
+  this.getCourseTypeOptions = function () {
+    return [
+      { label: 'Pre-sessional', value: 'pre-sessional' },
+      { label: 'Main', value: 'main' }
+    ]
   }
 
   // get the available types
@@ -58,11 +66,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
         hiddenFields: [
+          'courseType',
           'courseStartDate',
           'courseEndDate',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'continuationEndDate'
+          'isContinuation',
+          'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
       },
@@ -71,9 +81,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
         hiddenFields: [
+          'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'continuationEndDate'
+          'isContinuation',
+          'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
       },
@@ -82,9 +94,11 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
         hiddenFields: [
+          'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'continuationEndDate'
+          'isContinuation',
+          'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
       }
@@ -113,13 +127,10 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     }
 
     var from, to
-    if (finStatus.continuationEndDate) {
-      from = moment(finStatus.courseEndDate, 'YYYY-MM-DD').add(1, 'day')
-      to = finStatus.continuationEndDate
-    } else {
-      from = finStatus.courseStartDate
-      to = finStatus.courseEndDate
-    }
+    from = finStatus.courseStartDate
+    to = finStatus.courseEndDate
+
+    // console.log('getCourseLength', from, to)
 
     return me.getMonths(from, to)
   }
@@ -129,14 +140,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       return 2
     }
 
-    var to
+    var to = finStatus.courseEndDate
     var from = finStatus.courseStartDate
-    if (finStatus.continuationEndDate) {
-      to = finStatus.continuationEndDate
-    } else {
-      to = finStatus.courseEndDate
+    if (finStatus.originalCourseStartDate) {
+      from = finStatus.originalCourseStartDate
     }
 
+    console.log('getEntireCourseLength', from, to)
     return me.getMonths(from, to)
   }
 
@@ -151,7 +161,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       // therefore if the start and end days are equal add a day onto the month.
       months += 1 / 31
     }
-
     return months
   }
 
@@ -165,9 +174,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     finStatus.courseLength = Math.ceil(me.getCourseLength())
     finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength())
 
-    // console.log('courseLength', finStatus.courseLength);
-    // console.log('entireCourseLength', finStatus.entireCourseLength);
-
     // make a copy of the finStatus object and delete fields we don't want to send
     var details = angular.copy(finStatus)
     var sortCode = details.sortCode
@@ -177,10 +183,17 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     delete details.sortCode
     delete details.accountNumber
 
+    if (details.isContinuation !== 'yes') {
+      // delete details.originalCourseStartDate
+    }
+    delete details.isContinuation
+
     var stud = this.getStudentTypeByID(finStatus.studentType)
     _.each(stud.hiddenFields, function (f) {
       delete details[f]
     })
+
+    console.log(details)
 
     var url = sortCode + '/' + accountNumber + '/dailybalancestatus'
     var attemptNum = 0

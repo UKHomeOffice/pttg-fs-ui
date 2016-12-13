@@ -167,11 +167,11 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     // if course continuation date is available supplied then show the calculated course length
-    if (reqdata.continuationEndDate) {
+    if (reqdata.originalCourseStartDate) {
       summary.push({
         id: 'entireCourseLength',
         label: 'Entire course length',
-        value: Math.ceil(FinancialstatusService.getMonths(reqdata.courseStartDate, reqdata.continuationEndDate))
+        value: Math.ceil(FinancialstatusService.getMonths(reqdata.originalCourseStartDate, reqdata.courseEndDate))
       })
     }
 
@@ -310,9 +310,9 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     if (criteriaList.courseDatesChecked) {
-      if (reqdata.continuationEndDate) {
+      if (reqdata.originalCourseStartDate) {
         from = moment(reqdata.courseEndDate, 'YYYY-MM-DD').add(1, 'day').format('YYYY-MM-DD')
-        to = reqdata.continuationEndDate
+        to = reqdata.originalCourseStartDate
       } else {
         from = reqdata.courseStartDate
         to = reqdata.courseEndDate
