@@ -9,5 +9,6 @@
   "cappedValues" : {
     "accommodationFeesPaid" : 1265.00,
     "courseLength" : 9
-  }
+  },
+  "leaveEndDate" : "2016-01-01"
 }

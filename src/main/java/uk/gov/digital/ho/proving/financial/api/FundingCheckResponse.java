@@ -42,13 +42,17 @@ public final class FundingCheckResponse implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final CappedValues cappedValues;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private final LocalDate leaveEndDate;
+
     @JsonCreator
     public FundingCheckResponse(@JsonProperty("fundingRequirementMet") boolean fundingRequirementMet,
                                 @JsonProperty("accountHolderName") String accountHolderName,
                                 @JsonProperty("periodCheckedFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodCheckedFrom,
                                 @JsonProperty("minimum") BigDecimal minimum,
                                 @JsonProperty("failureReason") FailureReason failureReason,
-                                @JsonProperty("cappedValues") CappedValues cappedValues
+                                @JsonProperty("cappedValues") CappedValues cappedValues,
+                                @JsonProperty("leaveEndDate") LocalDate leaveEndDate
     ) {
         this.accountHolderName = accountHolderName;
         this.fundingRequirementMet = fundingRequirementMet;
@@ -56,6 +60,8 @@ public final class FundingCheckResponse implements Serializable {
         this.minimum = minimum;
         this.failureReason = failureReason;
         this.cappedValues = cappedValues;
+        this.leaveEndDate = leaveEndDate;
+
     }
 
     public FundingCheckResponse(DailyBalanceStatusResult balanceStatus, ThresholdResult threshold) {
@@ -67,6 +73,7 @@ public final class FundingCheckResponse implements Serializable {
 
         this.cappedValues = threshold.getCappedValues();
         this.minimum = threshold.getThreshold();
+        this.leaveEndDate = threshold.getLeaveEndDate();
     }
 
     public boolean getFundingRequirementMet() {
@@ -97,33 +104,51 @@ public final class FundingCheckResponse implements Serializable {
         return accountHolderName;
     }
 
+    public LocalDate getLeaveEndDate() {
+        return leaveEndDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         FundingCheckResponse that = (FundingCheckResponse) o;
-        return fundingRequirementMet == that.fundingRequirementMet &&
-            Objects.equals(periodCheckedFrom, that.periodCheckedFrom) &&
-            Objects.equals(minimum, that.minimum) &&
-            Objects.equals(accountHolderName, that.accountHolderName) &&
-            Objects.equals(failureReason, that.failureReason) &&
-            Objects.equals(cappedValues, that.cappedValues);
+
+        if (fundingRequirementMet != that.fundingRequirementMet) return false;
+        if (accountHolderName != null ? !accountHolderName.equals(that.accountHolderName) : that.accountHolderName != null)
+            return false;
+        if (periodCheckedFrom != null ? !periodCheckedFrom.equals(that.periodCheckedFrom) : that.periodCheckedFrom != null)
+            return false;
+        if (minimum != null ? !minimum.equals(that.minimum) : that.minimum != null) return false;
+        if (failureReason != null ? !failureReason.equals(that.failureReason) : that.failureReason != null)
+            return false;
+        if (cappedValues != null ? !cappedValues.equals(that.cappedValues) : that.cappedValues != null) return false;
+        return leaveEndDate != null ? leaveEndDate.equals(that.leaveEndDate) : that.leaveEndDate == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fundingRequirementMet, periodCheckedFrom, minimum, failureReason, cappedValues, accountHolderName);
+        int result = (fundingRequirementMet ? 1 : 0);
+        result = 31 * result + (accountHolderName != null ? accountHolderName.hashCode() : 0);
+        result = 31 * result + (periodCheckedFrom != null ? periodCheckedFrom.hashCode() : 0);
+        result = 31 * result + (minimum != null ? minimum.hashCode() : 0);
+        result = 31 * result + (failureReason != null ? failureReason.hashCode() : 0);
+        result = 31 * result + (cappedValues != null ? cappedValues.hashCode() : 0);
+        result = 31 * result + (leaveEndDate != null ? leaveEndDate.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "FundingCheckResponse{" +
             "fundingRequirementMet=" + fundingRequirementMet +
+            ", accountHolderName='" + accountHolderName + '\'' +
             ", periodCheckedFrom=" + periodCheckedFrom +
             ", minimum=" + minimum +
-            ", accountHolderName=" + accountHolderName +
             ", failureReason=" + failureReason +
             ", cappedValues=" + cappedValues +
+            ", leaveEndDate=" + leaveEndDate +
             '}';
     }
 }
