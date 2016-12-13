@@ -1,50 +1,50 @@
+/* global angular _ moment Clipboard */
+
 /* jshint node: true */
 
-'use strict';
+'use strict'
 
-var financialstatusModule = angular.module('hod.financialstatus');
+var financialstatusModule = angular.module('hod.financialstatus')
 
 // possible result state codes
 financialstatusModule.constant('RESULT_STATES', {
-  'passed'           : 'passed',
-  'notpassed_28days' : 'notpassed/28days',
-  'notpassed_funds'  : 'notpassed/funds',
-  'failure_kc'       : 'failure/kc',
-  'failure_norecord' : 'failure/norecord',
-  'failure'          : 'failure'
-});
-
+  'passed': 'passed',
+  'notpassed_28days': 'notpassed/28days',
+  'notpassed_funds': 'notpassed/funds',
+  'failure_kc': 'failure/kc',
+  'failure_norecord': 'failure/norecord',
+  'failure': 'failure'
+})
 
 financialstatusModule.constant('RESULT_TEXT', {
-  passed:         'Passed',
-  notpassed:      'Not passed',
-  meetsreq:       'This applicant meets the financial requirements',
-  day28cover:     'The records for this account does not cover the whole 28 day period',
-  balancesbelow:  'One or more daily closing balances are below the total funds required',
-  datamismatch:   'the account number, sort code and date of birth do not match a Barclays account',
-  accesscond:     'One or more of the following conditions prevented us from accessing the account:',
-  invalid:        'Invalid or inaccessible account',
-  notbarclays:    'it is not a Barclays account',
-  frozen:         'it is frozen',
-  businessacc:    'it is a business account',
-  accountclosed:  'the account is closed',
-  outoforder:     'You can’t use this service just now. The problem will be fixed as soon as possible',
-  kctoblame:      'An error occurred.',
-  trylater:       'Please try again later.',
-  refresh:        'Please try reloading the page',
-  checkname:      'check that the name matches applicant\'s details',
-  checkinfo:      'check you have entered the correct information,',
-  checkpaper:     'check paper evidence to see if applicant can meet criteria in some other way,',
-  checkbank:      'check it is a Barclays current account',
-  copybtn:        'Copy to clipboard',
-  copiedbtn:      'Copied',
-  copysummary:    'The check financial status service confirmed that {{name}} {{passed}} the requirements as the daily closing balance was {{above}} the total funds required.'
+  passed: 'Passed',
+  notpassed: 'Not passed',
+  meetsreq: 'This applicant meets the financial requirements',
+  day28cover: 'The records for this account does not cover the whole 28 day period',
+  balancesbelow: 'One or more daily closing balances are below the total funds required',
+  datamismatch: 'the account number, sort code and date of birth do not match a Barclays account',
+  accesscond: 'One or more of the following conditions prevented us from accessing the account:',
+  invalid: 'Invalid or inaccessible account',
+  notbarclays: 'it is not a Barclays account',
+  frozen: 'it is frozen',
+  businessacc: 'it is a business account',
+  accountclosed: 'the account is closed',
+  outoforder: 'You can’t use this service just now. The problem will be fixed as soon as possible',
+  kctoblame: 'An error occurred.',
+  trylater: 'Please try again later.',
+  refresh: 'Please try reloading the page',
+  checkname: 'check that the name matches applicant\'s details',
+  checkinfo: 'check you have entered the correct information,',
+  checkpaper: 'check paper evidence to see if applicant can meet criteria in some other way,',
+  checkbank: 'check it is a Barclays current account',
+  copybtn: 'Copy to clipboard',
+  copiedbtn: 'Copied',
+  copysummary: 'The check financial status service confirmed that {{name}} {{passed}} the requirements as the daily closing balance was {{above}} the total funds required.'
 
-});
+})
 
 // #### ROUTES #### //
-financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-
+financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   // define a route for the results operation
   $stateProvider.state({
     name: 'financialStatusResults',
@@ -55,17 +55,16 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function($
       'content@': {
         templateUrl: 'modules/financialstatus/financialstatusResult.html',
         controller: 'FinancialstatusResultCtrl'
-      },
-    },
-  });
-}]);
-
+      }
+    }
+  })
+}])
 
 financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusService', '$filter', 'RESULT_STATES', 'RESULT_TEXT', function (FinancialstatusService, $filter, RESULT_STATES, RESULT_TEXT) {
-  var me = this;
-  var data;
-  var reqdata;
-  var student;
+  var me = this
+  var data
+  var reqdata
+  var student
 
   // what state was the result, eg passed, notpassed/funds, failure etc
   this.getState = function () {
@@ -73,64 +72,64 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       // valid result
       if (me.getSuccess()) {
         // OK
-        return RESULT_STATES.passed;
+        return RESULT_STATES.passed
       } else {
         // Denied
         if (data.failureReason && data.failureReason.recordCount) {
           // Not enough records
-          return RESULT_STATES.notpassed_28days;
+          return RESULT_STATES.notpassed_28days
         }
         // funds too low
-        return RESULT_STATES.notpassed_funds;
+        return RESULT_STATES.notpassed_funds
       }
     }
 
     // service failures
-    switch(data.failureReason.status) {
+    switch (data.failureReason.status) {
       case 404:
-        return RESULT_STATES.failure_norecord;
+        return RESULT_STATES.failure_norecord
       case -1:
-        return RESULT_STATES.failure_kc;
+        return RESULT_STATES.failure_kc
       default:
-        return RESULT_STATES.failure;
+        return RESULT_STATES.failure
     }
-  };
+  }
 
   // tell the result service what student type we're using
   this.setStudent = function (studentdata) {
-    student = studentdata;
-  };
+    student = studentdata
+  }
 
   // tell the result service what the response data was
   this.setResponse = function (responsedata) {
-    data = responsedata;
-  };
+    data = responsedata
+  }
 
   // tell the result service what data we sent to get this result
   this.setRequest = function (details) {
-    reqdata = details;
-  };
+    reqdata = details
+  }
 
   // wipe the data
   this.reset = function () {
-    data = null;
-    reqdata = null;
-  };
+    data = null
+    reqdata = null
+  }
 
   // return the data
   this.getData = function () {
-    return data;
-  };
+    return data
+  }
 
   // did the api return a non failure result - eg passed or notpassed
   this.haveResult = function () {
-    return (data.fundingRequirementMet !== undefined) ? true : false;
-  };
+    return (data.fundingRequirementMet !== undefined) ? true : false
+  }
 
   // did the api return a PASSED status
   this.getSuccess = function () {
-    return (data.fundingRequirementMet) ? true : false;
-  };
+    return (data.fundingRequirementMet) ? true : false
+  }
 
   // what results are we summerising
   this.getSummary = function () {
@@ -149,22 +148,22 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'maintenancePeriodChecked',
         label: '28-day period checked',
         value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
-      },
-    ];
+      }
+    ]
 
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
-      var str = Math.ceil(FinancialstatusService.getCourseLength());
+      var str = Math.ceil(FinancialstatusService.getCourseLength())
       if (data.cappedValues && data.cappedValues.courseLength) {
-        str += ' (limited to ' + data.cappedValues.courseLength + ')';
+        str += ' (limited to ' + data.cappedValues.courseLength + ')'
       } else if (data.cappedValues && data.cappedValues.continuationLength) {
-        str += ' (limited to ' + data.cappedValues.continuationLength + ')';
+        str += ' (limited to ' + data.cappedValues.continuationLength + ')'
       }
       summary.push({
         id: 'courseLength',
         label: 'Course length',
         value: str
-      });
+      })
     }
 
     // if course continuation date is available supplied then show the calculated course length
@@ -173,7 +172,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'entireCourseLength',
         label: 'Entire course length',
         value: Math.ceil(FinancialstatusService.getMonths(reqdata.courseStartDate, reqdata.continuationEndDate))
-      });
+      })
     }
 
     // if failed due to lowest balance value then display that
@@ -182,24 +181,24 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'lowestBalance',
         label: 'Lowest balance',
         value: $filter('pounds')(data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(data.failureReason.lowestBalanceDate)
-      });
+      })
     }
 
-    return summary;
-  };
+    return summary
+  }
 
   this.getCopySummary = function () {
-    var str = RESULT_TEXT.copysummary;
-    str = str.replace('{{name}}', data.accountHolderName);
+    var str = RESULT_TEXT.copysummary
+    str = str.replace('{{name}}', data.accountHolderName)
     if (me.getSuccess()) {
-      str = str.replace('{{passed}}', 'passed');
-      str = str.replace('{{above}}', 'above');
+      str = str.replace('{{passed}}', 'passed')
+      str = str.replace('{{above}}', 'above')
     } else {
-      str = str.replace('{{passed}}', 'did not pass');
-      str = str.replace('{{above}}', 'below');
+      str = str.replace('{{passed}}', 'did not pass')
+      str = str.replace('{{above}}', 'below')
     }
-    return str;
-  };
+    return str
+  }
 
   // get the headings text to display on the results page for each state
   this.getText = function (state) {
@@ -207,28 +206,28 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       case RESULT_STATES.passed:
         return {
           heading: RESULT_TEXT.passed,
-          reason:  RESULT_TEXT.meetsreq
-        };
-        break;
+          reason: RESULT_TEXT.meetsreq
+        }
+        break
 
       case RESULT_STATES.notpassed_28days:
         return {
           heading: RESULT_TEXT.notpassed,
-          reason:  RESULT_TEXT.day28cover
-        };
-        break;
+          reason: RESULT_TEXT.day28cover
+        }
+        break
 
       case RESULT_STATES.notpassed_funds:
         return {
           heading: RESULT_TEXT.notpassed,
-          reason:  RESULT_TEXT.balancesbelow
-        };
-        break;
+          reason: RESULT_TEXT.balancesbelow
+        }
+        break
 
       case RESULT_STATES.failure_norecord:
         return {
           heading: RESULT_TEXT.invalid,
-          reason:  RESULT_TEXT.accesscond,
+          reason: RESULT_TEXT.accesscond,
           reasonInfo: [
             RESULT_TEXT.datamismatch,
             RESULT_TEXT.notbarclays,
@@ -236,37 +235,37 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
             RESULT_TEXT.businessacc,
             RESULT_TEXT.accountclosed
           ]
-        };
-        break;
+        }
+        break
 
       case RESULT_STATES.failure_kc:
         return {
           heading: RESULT_TEXT.kctoblame,
-          reason:  RESULT_TEXT.refresh
-        };
-        break;
+          reason: RESULT_TEXT.refresh
+        }
+        break
     }
 
     return {
       heading: RESULT_TEXT.outoforder,
-      reason:  RESULT_TEXT.trylater
-    };
-  };
-
+      reason: RESULT_TEXT.trylater
+    }
+  }
 
   // get the summary of the search criteria used to arrive at this result
   this.getCriteria = function (state) {
-    var criteria = [];
-    var from;
-    var to;
+    var criteria = []
+    var from
+    var to
 
     // no summary required if the api failed
     if (state === RESULT_STATES.failure) {
-      return criteria;
+      return criteria
     }
 
     // default criteria list we're going to show
     var criteriaList = {
+      applicationRaisedDate: true,
       studentType: true,
       inLondon: true,
       courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1) ? true : false,
@@ -282,7 +281,15 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       criteriaList = {
         bankAccount: true,
         dob: true
-      };
+      }
+    }
+
+    if (criteriaList.applicationRaisedDate) {
+      criteria.push({
+        id: 'applicationRaisedDate',
+        label: 'Application raised date',
+        value: moment(reqdata.applicationRaisedDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
+      })
     }
 
     // add the criteria
@@ -291,7 +298,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'studentType',
         label: 'Student type',
         value: student.full
-      });
+      })
     }
 
     if (criteriaList.inLondon) {
@@ -299,23 +306,23 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'inLondon',
         label: 'In London',
         value: (reqdata.inLondon.toLowerCase() === 'yes') ? 'Yes' : 'No'
-      });
+      })
     }
 
     if (criteriaList.courseDatesChecked) {
       if (reqdata.continuationEndDate) {
-        from = moment(reqdata.courseEndDate, 'YYYY-MM-DD').add(1, 'day').format('YYYY-MM-DD');
-        to = reqdata.continuationEndDate;
+        from = moment(reqdata.courseEndDate, 'YYYY-MM-DD').add(1, 'day').format('YYYY-MM-DD')
+        to = reqdata.continuationEndDate
       } else {
-        from = reqdata.courseStartDate;
-        to = reqdata.courseEndDate;
+        from = reqdata.courseStartDate
+        to = reqdata.courseEndDate
       }
 
       criteria.push({
         id: 'courseDatesChecked',
         label: 'Course dates',
         value: $filter('dateDisplay')(from) + ' to ' + $filter('dateDisplay')(to)
-      });
+      })
     }
 
     if (criteriaList.tuitionFees) {
@@ -323,25 +330,25 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'totalTuitionFees',
         label: 'Total tuition fees',
         value: $filter('pounds')(reqdata.totalTuitionFees)
-      });
+      })
 
       criteria.push({
         id: 'tuitionFeesAlreadyPaid',
         label: 'Tuition fees already paid',
         value: $filter('pounds')(reqdata.tuitionFeesAlreadyPaid)
-      });
+      })
     }
 
     if (criteriaList.accommodationFeesAlreadyPaid) {
-      var aFeesAlreadyPaid = $filter('pounds')(reqdata.accommodationFeesAlreadyPaid);
+      var aFeesAlreadyPaid = $filter('pounds')(reqdata.accommodationFeesAlreadyPaid)
       if (data.cappedValues && data.cappedValues.accommodationFeesPaid) {
-        aFeesAlreadyPaid += ' (limited to ' + $filter('pounds')(data.cappedValues.accommodationFeesPaid) + ')';
+        aFeesAlreadyPaid += ' (limited to ' + $filter('pounds')(data.cappedValues.accommodationFeesPaid) + ')'
       }
       criteria.push({
         id: 'accommodationFeesAlreadyPaid',
         label: 'Accommodation fees already paid',
         value: aFeesAlreadyPaid
-      });
+      })
     }
 
     if (criteriaList.numberOfDependants) {
@@ -349,7 +356,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'numberOfDependants',
         label: 'Number of dependants',
         value: reqdata.numberOfDependants
-      });
+      })
     }
 
     if (criteriaList.bankAccount) {
@@ -357,13 +364,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'sortCode',
         label: 'Sort code',
         value: $filter('sortDisplay')(reqdata.sortCode)
-      });
+      })
 
       criteria.push({
         id: 'accountNumber',
         label: 'Account number',
         value: reqdata.accountNumber
-      });
+      })
     }
 
     if (criteriaList.dob) {
@@ -371,12 +378,11 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'dob',
         label: 'Date of birth',
         value: $filter('dateDisplay')(reqdata.dob)
-      });
+      })
     }
 
-    return criteria;
-  };
-
+    return criteria
+  }
 
   this.getWhatNext = function (state) {
     switch (state) {
@@ -384,132 +390,129 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         return [
           RESULT_TEXT.checkname,
           RESULT_TEXT.checkinfo
-        ];
+        ]
 
       case RESULT_STATES.failure_norecord:
         return [
           RESULT_TEXT.checkinfo,
           RESULT_TEXT.checkpaper,
           RESULT_TEXT.checkbank
-        ];
+        ]
 
       default:
         return [
           RESULT_TEXT.checkinfo,
-          RESULT_TEXT.checkpaper,
-        ];
+          RESULT_TEXT.checkpaper
+        ]
     }
   }
 
-  return this;
-}]);
-
+  return this
+}])
 
 // display results
 financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT', '$timeout',
   function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT, $timeout) {
-
-
   // check for result data
-  var resdata = FinancialstatusService.getResponse();
-  if (!resdata) {
+    var resdata = FinancialstatusService.getResponse()
+    if (!resdata) {
     // no result data so no we cannot display a result page - go back to the details page
-    $state.go('financialStatusDetails');
-    return;
-  }
-
-
+      $state.go('financialStatusDetails')
+      return
+    }
 
   // setup the results service object with what we already know
-  var resServ = FinancialstatusResultService;
-  var finStatus = FinancialstatusService.getDetails();
-  var sType = FinancialstatusService.getStudentTypeByID(finStatus.studentType);
+    var resServ = FinancialstatusResultService
+    var finStatus = FinancialstatusService.getDetails()
+    var sType = FinancialstatusService.getStudentTypeByID(finStatus.studentType)
 
-  resServ.setStudent(sType);
-  resServ.setResponse(resdata);
-  resServ.setRequest(finStatus);
+    resServ.setStudent(sType)
+    resServ.setResponse(resdata)
+    resServ.setRequest(finStatus)
 
-  var state = resServ.getState();
+    var state = resServ.getState()
 
-  $scope.haveResult = resServ.haveResult();
-  $scope.summary = resServ.getSummary();
-  $scope.copysummary = resServ.getCopySummary();
-  $scope.showSummary = $scope.haveResult;
-  $scope.success = resServ.getSuccess();
-
+    $scope.haveResult = resServ.haveResult()
+    $scope.summary = resServ.getSummary()
+    $scope.copysummary = resServ.getCopySummary()
+    $scope.showSummary = $scope.haveResult
+    $scope.success = resServ.getSuccess()
 
   // set the text
-  var text = resServ.getText(state);
-  $scope.heading = text.heading;
-  $scope.reason = text.reason;
-  $scope.reasonInfo = text.reasonInfo;
+    var text = resServ.getText(state)
+    $scope.heading = text.heading
+    $scope.reason = text.reason
+    $scope.reasonInfo = text.reasonInfo
 
-  $scope.whatNext = resServ.getWhatNext(state);
+    $scope.whatNext = resServ.getWhatNext(state)
 
-  $scope.searchCriteria = resServ.getCriteria(state);
-  $scope.showCriteria = (state !== RESULT_STATES.failure) ? true : false;
+    $scope.searchCriteria = resServ.getCriteria(state)
+    $scope.showCriteria = (state !== RESULT_STATES.failure) ? true : false
 
   // track
-  ga('set', 'page', $state.href($state.current.name, $stateParams) + '/' + state);
-  ga('send', 'pageview');
+    ga('set', 'page', $state.href($state.current.name, $stateParams) + '/' + state)
+    ga('send', 'pageview')
 
   // new search button
-  $scope.newSearch = function (e) {
-    FinancialstatusService.reset();
-    $state.go('financialStatus');
-  };
+    $scope.newSearch = function (e) {
+      FinancialstatusService.reset()
+      $state.go('financialStatus')
+    }
 
   // edit search button
-  $scope.editSearch = function (e) {
-    $state.go('financialStatusDetails', {studentType: sType.value});
-  };
-
+    $scope.editSearch = function (e) {
+      $state.go('financialStatusDetails', {studentType: sType.value})
+    }
 
   // #### COPY AND PASTE ####
-  $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
-  var lineLength = function (str, len) {
-    while (str.length < len) {
-      str += ' ';
+    $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn
+    var lineLength = function (str, len) {
+      while (str.length < len) {
+        str += ' '
+      }
+      return str
     }
-    return str;
-  };
 
   // compile the copy text
-  var copyText = text.heading.toUpperCase() + "\n" + text.reason + "\n\nRESULTS\n";
-  _.each($scope.summary, function (obj) {
-    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
-  });
+    var copyText = text.heading.toUpperCase() + '\n' + text.reason + '\n\nRESULTS\n'
+    _.each($scope.summary, function (obj) {
+      copyText += lineLength(obj.label + ': ', 36) + obj.value + '\n'
+    })
 
   // add the your search to it
-  copyText += "\n\nSEARCH CRITERIA\n";
-  _.each($scope.searchCriteria, function (obj) {
-    copyText += lineLength(obj.label + ': ', 36) + obj.value + "\n";
-  });
-  $scope.copyText = copyText;
+    copyText += '\n\nSEARCH CRITERIA\n'
+    _.each($scope.searchCriteria, function (obj) {
+      var val = (obj.id === 'accountNumber') ? 'XXXX' + obj.value.substr(4) : obj.value
+      copyText += lineLength(obj.label + ': ', 36) + val + '\n'
+    })
+
+    copyText += '\n\n' + lineLength('Enquiry time: ', 36) + moment(resdata.responseTimeStamp).format('DD/MM/YYYY HH:mm:ss')
+
+    $scope.copyText = copyText
 
   // init the clipboard object
-  var clipboard = new Clipboard('.button--copy', {
-    text: function () {
-      return copyText;
+    var clipboard = new Clipboard('.button--copy', {
+      text: function () {
+        return copyText
+      }
+    })
+
+    var timeoutResetButtonText = function () {
+      $timeout(function () {
+        $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn
+        $scope.$applyAsync()
+      }, 2000)
     }
-  });
 
-  var timeoutResetButtonText = function () {
-    $timeout(function () {
-      $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn;
-      $scope.$applyAsync();
-    }, 2000);
-  };
-
-  clipboard.on('success', function(e) {
-    $scope.copyToClipboardBtnText = RESULT_TEXT.copiedbtn;
-    $scope.$applyAsync();
-    e.clearSelection();
-    timeoutResetButtonText();
-  });
-  clipboard.on('error', function(e) {
-    console.log('ClipBoard error', e);
-    $scope.copysummary = e.action + ' ' + e.trigger;
-    $scope.$applyAsync();
-  });
-}]);
+    clipboard.on('success', function (e) {
+      $scope.copyToClipboardBtnText = RESULT_TEXT.copiedbtn
+      $scope.$applyAsync()
+      e.clearSelection()
+      timeoutResetButtonText()
+    })
+    clipboard.on('error', function (e) {
+      console.log('ClipBoard error', e)
+      $scope.copysummary = e.action + ' ' + e.trigger
+      $scope.$applyAsync()
+    })
+  }])

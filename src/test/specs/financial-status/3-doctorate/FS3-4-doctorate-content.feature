@@ -21,6 +21,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | 28-day period checked |
             | Lowest balance        |
         And the service displays the following your search headers in order
+            | Application raised date         |
             | Student type                    |
             | In London                       |
             | Accommodation fees already paid |

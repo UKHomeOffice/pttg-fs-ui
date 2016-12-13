@@ -1,3 +1,5 @@
+/* global angular _ moment ga */
+
 /* jshint node: true */
 
 'use strict'
@@ -91,12 +93,12 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
   // get the config detail of the student given the typ code eg sso fo Student union sabbatical officer
   this.getStudentTypeByID = function (typ) {
-    return _.findWhere(me.getStudentTypes(), {value: typ })
+    return _.findWhere(me.getStudentTypes(), { value: typ })
   }
 
   // set form the validation status
   this.setValid = function (bool) {
-    isValid = bool ? true : false
+    isValid = (bool) ? true : false
   }
 
   // get the form validation state
@@ -139,8 +141,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   }
 
   this.getMonths = function (start, end) {
-    var start = moment(start, 'YYYY-MM-DD', true)
-    var end = moment(end, 'YYYY-MM-DD', true)
+    start = moment(start, 'YYYY-MM-DD', true)
+    end = moment(end, 'YYYY-MM-DD', true)
     var months = end.diff(start, 'months', true)
     if (start.date() === end.date() && !start.isSame(end)) {
       // when using moment diff months, the same day in months being compared
@@ -171,6 +173,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     var sortCode = details.sortCode
     var accountNumber = details.accountNumber
 
+    delete details.applicationRaisedDate
     delete details.sortCode
     delete details.accountNumber
 
@@ -184,16 +187,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
     var trySendDetails = function () {
       attemptNum++
-      // console.log(attemptNum + ' Starting request');
 
-      IOService.get(url, details, {timeout: CONFIG.timeout }).then(function (result) {
-        // console.log(attemptNum, 'SUCCESS');
+      IOService.get(url, details, { timeout: CONFIG.timeout }).then(function (result) {
         lastAPIresponse = result.data
+        lastAPIresponse.responseTimeStamp = new Date()
         $state.go('financialStatusResults', {studentType: finStatus.studentType})
       }, function (err) {
-        // console.log(attemptNum, 'ERROR', err);
         if (err.status === -1 && attemptNum < CONFIG.retries) {
-          // console.log(attemptNum, 'RETRY');
           trySendDetails()
           return
         }
@@ -203,7 +203,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           return
         }
 
-        // console.log(attemptNum, 'FINAIL FAILED', err);
         lastAPIresponse = {
           failureReason: {
             status: err.status
@@ -213,9 +212,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       })
     }
     // start attempting to make the request
-    // $timeout(function () {
     trySendDetails()
-    // }, 10000);
   }
 
   this.getResponse = function () {
