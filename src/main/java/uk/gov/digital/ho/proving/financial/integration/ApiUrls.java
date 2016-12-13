@@ -40,7 +40,7 @@ public class ApiUrls {
             .queryParam("studentType", course.getStudentType())
             .queryParam("courseStartDate", course.getCourseStartDate())
             .queryParam("courseEndDate", course.getCourseEndDate())
-            .queryParam("continuationEndDate", course.getContinuationEndDate())
+            .queryParam("originalCourseStartDate", course.getOriginalCourseStartDate())
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
             .queryParam("tuitionFeesPaid", maintenance.getTuitionFeesAlreadyPaid())
             .queryParam("accommodationFeesPaid", maintenance.getAccommodationFeesAlreadyPaid())

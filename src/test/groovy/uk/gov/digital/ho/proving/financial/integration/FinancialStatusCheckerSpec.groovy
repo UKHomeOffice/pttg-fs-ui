@@ -50,7 +50,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def thresholdOf(BigDecimal minimum) {
         def threshold = BigDecimal.valueOf(minimum)
-        def thresholdResult = new ThresholdResult(threshold, new CappedValues(100, 9, 3), new ResponseDetails("200", "OK"))
+        def thresholdResult = new ThresholdResult(threshold, LocalDate.of(2000,1,1), new CappedValues(100, 9), new ResponseDetails("200", "OK"))
         thresholdResponse = new ResponseEntity(thresholdResult, OK);
     }
 

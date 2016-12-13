@@ -21,10 +21,13 @@ public final class Course {
     private LocalDate courseEndDate;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate  continuationEndDate;
+    private LocalDate originalCourseStartDate;
 
     @NotNull(message = "Missing parameter")
     private String studentType;
+
+    private String courseType;
+
 
     public Course(){
 
@@ -34,12 +37,21 @@ public final class Course {
         this(inLondon, courseStartDate, courseEndDate, null, studentType);
     }
 
-    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate continuationEndDate, String studentType) {
+    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate originalCourseStartDate, String studentType) {
         this.inLondon = inLondon;
         this.courseStartDate = courseStartDate;
         this.courseEndDate = courseEndDate;
-        this.continuationEndDate = continuationEndDate;
+        this.originalCourseStartDate = originalCourseStartDate;
         this.studentType = studentType;
+    }
+
+    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate originalCourseStartDate, String studentType, String courseType) {
+        this.inLondon = inLondon;
+        this.courseStartDate = courseStartDate;
+        this.courseEndDate = courseEndDate;
+        this.originalCourseStartDate = originalCourseStartDate;
+        this.studentType = studentType;
+        this.courseType = courseType;
     }
 
     public Boolean getInLondon() {
@@ -66,12 +78,12 @@ public final class Course {
         this.courseEndDate = courseEndDate;
     }
 
-    public LocalDate getContinuationEndDate() {
-        return continuationEndDate;
+    public LocalDate getOriginalCourseStartDate() {
+        return originalCourseStartDate;
     }
 
-    public void setContinuationEndDate(LocalDate continuationEndDate) {
-        this.continuationEndDate = continuationEndDate;
+    public void setOriginalCourseStartDate(LocalDate originalCourseStartDate) {
+        this.originalCourseStartDate = originalCourseStartDate;
     }
 
     public String getStudentType() {
@@ -82,42 +94,23 @@ public final class Course {
         this.studentType = studentType;
     }
 
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
             "inLondon=" + inLondon +
             ", courseStartDate=" + courseStartDate +
             ", courseEndDate=" + courseEndDate +
-            ", continuationEndDate=" + continuationEndDate +
+            ", originalCourseStartDate=" + originalCourseStartDate +
             ", studentType='" + studentType + '\'' +
+            ", courseType='" + courseType + '\'' +
             '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Course course = (Course) o;
-
-        if (inLondon != null ? !inLondon.equals(course.inLondon) : course.inLondon != null) return false;
-        if (courseStartDate != null ? !courseStartDate.equals(course.courseStartDate) : course.courseStartDate != null)
-            return false;
-        if (courseEndDate != null ? !courseEndDate.equals(course.courseEndDate) : course.courseEndDate != null)
-            return false;
-        if (continuationEndDate != null ? !continuationEndDate.equals(course.continuationEndDate) : course.continuationEndDate != null)
-            return false;
-        return studentType != null ? studentType.equals(course.studentType) : course.studentType == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = inLondon != null ? inLondon.hashCode() : 0;
-        result = 31 * result + (courseStartDate != null ? courseStartDate.hashCode() : 0);
-        result = 31 * result + (courseEndDate != null ? courseEndDate.hashCode() : 0);
-        result = 31 * result + (continuationEndDate != null ? continuationEndDate.hashCode() : 0);
-        result = 31 * result + (studentType != null ? studentType.hashCode() : 0);
-        return result;
     }
 }
