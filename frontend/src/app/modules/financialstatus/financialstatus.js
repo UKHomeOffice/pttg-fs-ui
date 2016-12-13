@@ -130,8 +130,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     from = finStatus.courseStartDate
     to = finStatus.courseEndDate
 
-    // console.log('getCourseLength', from, to)
-
     return me.getMonths(from, to)
   }
 
@@ -145,8 +143,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     if (finStatus.originalCourseStartDate) {
       from = finStatus.originalCourseStartDate
     }
-
-    console.log('getEntireCourseLength', from, to)
     return me.getMonths(from, to)
   }
 
@@ -184,7 +180,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     delete details.accountNumber
 
     if (details.isContinuation !== 'yes') {
-      // delete details.originalCourseStartDate
+      delete details.originalCourseStartDate
     }
     delete details.isContinuation
 
@@ -192,8 +188,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     _.each(stud.hiddenFields, function (f) {
       delete details[f]
     })
-
-    console.log(details)
 
     var url = sortCode + '/' + accountNumber + '/dailybalancestatus'
     var attemptNum = 0

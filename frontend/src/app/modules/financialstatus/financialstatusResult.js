@@ -151,6 +151,14 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       }
     ]
 
+    if (data.leaveEndDate) {
+      summary.push({
+        id: 'leaveEndDate',
+        label: 'Leave End Date',
+        value: $filter('dateDisplay')(data.leaveEndDate)
+      })
+    }
+
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
       var str = Math.ceil(FinancialstatusService.getCourseLength())
@@ -267,10 +275,11 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     var criteriaList = {
       applicationRaisedDate: true,
       studentType: true,
+      courseType: (student.hiddenFields.indexOf('courseType') === -1),
       inLondon: true,
-      courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1) ? true : false,
-      tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1) ? true : false,
-      accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1) ? true : false,
+      courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1),
+      tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1),
+      accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1),
       numberOfDependants: true,
       bankAccount: true,
       dob: true
@@ -301,6 +310,15 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       })
     }
 
+    if (criteriaList.courseType) {
+      var course = _.findWhere(FinancialstatusService.getCourseTypeOptions(), {value: reqdata.courseType})
+      criteria.push({
+        id: 'courseType',
+        label: 'Course type',
+        value: course.label
+      })
+    }
+
     if (criteriaList.inLondon) {
       criteria.push({
         id: 'inLondon',
@@ -310,18 +328,33 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     if (criteriaList.courseDatesChecked) {
-      if (reqdata.originalCourseStartDate) {
-        from = moment(reqdata.courseEndDate, 'YYYY-MM-DD').add(1, 'day').format('YYYY-MM-DD')
-        to = reqdata.originalCourseStartDate
-      } else {
-        from = reqdata.courseStartDate
-        to = reqdata.courseEndDate
-      }
+      from = reqdata.courseStartDate
+      to = reqdata.courseEndDate
 
       criteria.push({
         id: 'courseDatesChecked',
         label: 'Course dates',
         value: $filter('dateDisplay')(from) + ' to ' + $filter('dateDisplay')(to)
+      })
+
+      if (reqdata.isContinuation === 'yes') {
+        criteria.push({
+          id: 'isContinuation',
+          label: 'Is the course a continuation',
+          value: 'Yes'
+        })
+
+        criteria.push({
+          id: 'originalCourseStartDate',
+          label: 'Original course start date',
+          value: $filter('dateDisplay')(reqdata.originalCourseStartDate)
+        })
+      }
+    } else {
+      criteria.push({
+        id: 'isContinuation',
+        label: 'Is the course a continuation',
+        value: 'No'
       })
     }
 
