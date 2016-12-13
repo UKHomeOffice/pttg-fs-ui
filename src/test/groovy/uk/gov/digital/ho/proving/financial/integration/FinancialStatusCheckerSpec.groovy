@@ -28,7 +28,7 @@ class FinancialStatusCheckerSpec extends Specification {
     Account account = new Account("", "", dob)
     LocalDate toDate = LocalDate.now()
     LocalDate aDate = LocalDate.of(2016, 1, 1)
-    Course course = new Course(true, aDate, aDate, "nondoctorate")
+    Course course = new Course(true, aDate, aDate, "nondoctorate", "main")
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
     def recordCountFailure = new FailureReason(27)

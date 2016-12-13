@@ -33,17 +33,18 @@ public final class Course {
 
     }
 
-    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, String studentType) {
-        this(inLondon, courseStartDate, courseEndDate, null, studentType);
+    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, String studentType, String courseType) {
+        this(inLondon, courseStartDate, courseEndDate, null, studentType, courseType);
     }
 
-    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate originalCourseStartDate, String studentType) {
-        this.inLondon = inLondon;
-        this.courseStartDate = courseStartDate;
-        this.courseEndDate = courseEndDate;
-        this.originalCourseStartDate = originalCourseStartDate;
-        this.studentType = studentType;
-    }
+//    public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate originalCourseStartDate, String studentType, String courseType) {
+//        this.inLondon = inLondon;
+//        this.courseStartDate = courseStartDate;
+//        this.courseEndDate = courseEndDate;
+//        this.originalCourseStartDate = originalCourseStartDate;
+//        this.studentType = studentType;
+//        this.courseType = courseType;
+//    }
 
     public Course(Boolean inLondon, LocalDate courseStartDate, LocalDate courseEndDate, LocalDate originalCourseStartDate, String studentType, String courseType) {
         this.inLondon = inLondon;
