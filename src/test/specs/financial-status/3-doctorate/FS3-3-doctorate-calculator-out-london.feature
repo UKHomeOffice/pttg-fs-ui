@@ -39,3 +39,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Sort code                       | 22-22-23                                              |
             | Account number                  | 22222223                                              |
             | DOB                             | 02/12/1985                                            |
+            | Application raised date         | 20/06/2016                                            |
+
+

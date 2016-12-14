@@ -14,6 +14,7 @@ Feature: Show clear error details when inputs are invalid
     Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
     Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
     Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    Application Raised Date - numbers only
 
     Background:
         Given the api health check response has status 200
@@ -30,6 +31,7 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
+
 
 ######################### General validation message display #########################
 

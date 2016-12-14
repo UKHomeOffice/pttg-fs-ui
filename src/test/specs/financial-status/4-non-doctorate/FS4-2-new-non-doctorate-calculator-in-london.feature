@@ -35,7 +35,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | continuation end date    |            |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
@@ -43,6 +42,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
+            | Continuation Course             | No         |
 
  ######### Overall course <12 months In London #############
 
@@ -50,6 +50,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following result
+            | Application Raised Date         | 31/05/2016                   |
             | Outcome                         | Not passed                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
@@ -66,6 +67,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
+            | Continuation Course             | No                           |
 
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
@@ -77,6 +79,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
+            | Application Raised Date         | 31/05/2016                     |
             | Outcome                         | Passed                         |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
@@ -92,6 +95,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
+            | Continuation Course             | No                             |
 
  ###### overall course length 12+ months In London #######
 
@@ -100,6 +104,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         When the financial status check is performed with
             | Course end date | 30/01/2017 |
         Then the service displays the following result
+            | Application Raised Date         | 31/05/2016                   |
             | Outcome                         | Not passed                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
@@ -116,6 +121,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
+            | Continuation Course             | No                           |
 
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
@@ -127,6 +133,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
+            | Application Raised Date         | 31/05/2016                     |
             | Outcome                         | Passed                         |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
@@ -142,3 +149,4 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
+            | Continuation Course             | No                             |

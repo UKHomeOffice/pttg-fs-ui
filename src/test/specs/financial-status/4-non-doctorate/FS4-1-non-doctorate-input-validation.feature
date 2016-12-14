@@ -1,12 +1,18 @@
 Feature: Show clear error details when inputs are invalid
 
     Fields mandatory to fill in:
-    End Date - Format should be dd/mm/yyyy
-    Total Funds Required - Format should be
-    Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
-    Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    Application Raised Date - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    End Date - Format should be dd/mm/yyyy and the End date has to be less than 32 days before the application raised date
     Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
     Dependants - should always be 0 for courses of six months or less ####
+    Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
+    Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    Start Date of course
+    End Date of course
+    In London - Yes or No options (mandatory)
+    Application Raised Date - numbers only
+    Continuation Course - 'Yes, continuation' or 'No' options (mandatory)
+    Original Course Start Date - numbers only (if Continuation Course is selected as Yes)
 
     Background:
         Given the api health check response has status 200
@@ -25,6 +31,7 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
+            | Continuation Course             | No         |
 
 
 ######################### General validation message display #########################
@@ -43,6 +50,7 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       |  |
             | Account number                  |  |
             | DOB                             |  |
+            | Continuation Course             |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
@@ -59,6 +67,7 @@ Feature: Show clear error details when inputs are invalid
             | The account number is invalid                  |
             | The sort code is invalid                       |
             | The date of birth is invalid                   |
+            | The continuation Course in invalid             |
 
 
 ######################### Validation on the Application Raised Date Field #########################
@@ -113,6 +122,19 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | End Date-error | Enter a valid end date |
 
+    Scenario: Caseworker enters end date GREATER than 31 days of the Application Raised Date
+        When the financial status check is performed with
+            | End Date                | 01/02/2016
+            | Application raised date | 31/01/2016
+        Then The service displays the following error message
+            | End Date Error | Enter a valid end date
+
+    Scenario: Caseworker enters end date LESS THAN than 31 days of the Application Raised Date
+        When the financial status check is performed with
+            | End Date                | 31/12/2015
+            | Application raised date | 31/01/2016
+        Then The service displays the following error message
+            | End Date Error | Enter a valid end date
 
 
 ######################### Validation on the Sort Code Field #########################
@@ -312,3 +334,54 @@ Feature: Show clear error details when inputs are invalid
             | DOB | 25/0@/1986 |
         Then the service displays the following error message
             | dob-error | Enter a valid date of birth |
+
+        ######################### Validation on the Application Raised Date Field #########################
+
+    Scenario: Case Worker does NOT enter Application Raised date
+        When the financial status check is performed with
+            | Application Raised Date |  |
+        Then the service displays the following error message
+            | Application Raised Date-error | Enter a valid application raised date |
+
+    Scenario: Case Worker enters invalid Course start date - not numbers 0-9
+        When the financial status check is performed with
+            | Application Raised Date | 30/1d/2016 |
+        Then the service displays the following error message
+            | Application Raised Date-error | Enter a valid application raised date |
+
+    Scenario: Case Worker enters Original Course Start Date - in the future
+        When the financial status check is performed with
+            | Application Raised Date | 30/05/2099 |
+        Then the service displays the following error message
+            | Application Raised Date-error | Enter a valid end date |
+
+    ######################### Validation on the Continuation Course Field #########################
+
+    Scenario: Case Worker does NOT enter Continuation Course
+        When the financial status check is performed with
+            | Continuation Course
+        Then the service displays the following error message
+            | Continuation Course-error | Enter a valid Continuation Course
+
+    ######################### Validation on the Original Course Start Date Field #########################
+
+    Scenario: Case Worker does NOT enter Original Course Start Date
+        When the financial status check is performed with
+            | Continuation Course        | Yes |
+            | Original Course Start Date |     |
+        Then the service displays the following error message
+            | Original Course Start Date-error | Enter a valid original course start date
+
+    Scenario: Case Worker enters invalid Original Course Start Date - not numbers 0-9
+        When the financial status check is performed with
+            | Original Course Start Date            | 30/1d/2016 |
+            | Continuation Course is equal to 'Yes' |
+        Then the service displays the following error message
+            | Original Course Start Date-error | Enter a valid original course start date |
+
+    Scenario: Case Worker enters Original Course Start Date - in the future
+        When the financial status check is performed with
+            | Original Course Start Date | 30/05/2099 |
+        Then the service displays the following error message
+            | Original Course Start Date-error | Enter a valid original course start date |
+
