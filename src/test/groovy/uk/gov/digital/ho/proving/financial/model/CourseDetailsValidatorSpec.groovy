@@ -32,7 +32,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course dates not allowed for doctorate - no dates = valid'() {
 
         given:
-        Course course = aCourseWith(null, null, null, "DOCTORATE")
+        Course course = aCourseWith(null, null, null, "DOCTORATE","main")
 
         expect:
         validator.isValid(course, context)
@@ -41,7 +41,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course dates not allowed for doctorate - date supplied = invalid'() {
 
         given:
-        Course course = aCourseWith(aDate, null, null, "DOCTORATE")
+        Course course = aCourseWith(aDate, null, null, "DOCTORATE","main")
 
         expect:
         !validator.isValid(course, context)
@@ -51,7 +51,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course start date mandatory for non-doctorate'() {
 
         given:
-        Course course = aCourseWith(null, aDate, aDate, "NON-DOCTORATE")
+        Course course = aCourseWith(null, aDate, aDate, "NON-DOCTORATE","main")
 
         expect:
         !validator.isValid(course, context)
@@ -60,7 +60,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course end date mandatory for non-doctorate'() {
 
         given:
-        Course course = aCourseWith(aDate, null, aDate, "NON-DOCTORATE")
+        Course course = aCourseWith(aDate, null, aDate, "NON-DOCTORATE","main")
 
         expect:
         !validator.isValid(course, context)
@@ -69,13 +69,13 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'continuation end date optional for non-doctorate'() {
 
         given:
-        Course course = aCourseWith(aDate, aDate, null, "NON-DOCTORATE")
+        Course course = aCourseWith(aDate, aDate, null, "NON-DOCTORATE","main")
 
         expect:
         validator.isValid(course, context)
     }
 
-    Course aCourseWith(LocalDate courseStartDate, LocalDate courseEndDate, LocalDate continuationEndDate, String studentType) {
-        return new Course(IN_LONDON, courseStartDate, courseEndDate, continuationEndDate, studentType)
+    Course aCourseWith(LocalDate courseStartDate, LocalDate courseEndDate, LocalDate continuationEndDate, String studentType, String courseType) {
+        return new Course(IN_LONDON, courseStartDate, courseEndDate, continuationEndDate, studentType, courseType)
     }
 }

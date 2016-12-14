@@ -22,13 +22,19 @@
 
             <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
 
+            <hod-radio name="courseType" label="Course type" field="finStatus.courseType" options="courseTypeOptions" config="conf.courseType"></hod-radio>
+
             <hod-radio name="inLondon" label="In London?" field="finStatus.inLondon" options="yesNoOptions" config="conf.inLondon"></hod-radio>
 
             <hod-date name="courseStartDate" label="Start date of course" field="finStatus.courseStartDate" config="conf.courseStartDate"></hod-date>
 
             <hod-date name="courseEndDate" label="End date of course" field="finStatus.courseEndDate" config="conf.courseEndDate"></hod-date>
 
-            <hod-date name="continuationEndDate" label="Continuation end date" field="finStatus.continuationEndDate" config="conf.continuationEndDate" hint="Optional"></hod-date>
+            <hod-radio name="isContinuation" label="Is the course a continuation?" field="finStatus.isContinuation" options="yesNoOptions" config="conf.isContinuation"></hod-radio>
+
+            <div class="panel panel-border-wide text" ng-show="finStatus.isContinuation=='yes'">
+                <hod-date name="originalCourseStartDate" label="Original course start date" field="finStatus.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>
+            </div>
 
             <hod-number name="totalTuitionFees" label="Total tuition fees for the first year" field="finStatus.totalTuitionFees" config="conf.totalTuitionFees"></hod-number>
 

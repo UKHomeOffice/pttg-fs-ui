@@ -100,6 +100,22 @@ financialstatusModule.controller(
           }
         }
       },
+      courseType: {
+        inline: true,
+        errors: {
+          required: {
+            summary: 'The course type option is invalid'
+          }
+        }
+      },
+      isContinuation: {
+        inline: true,
+        errors: {
+          required: {
+            summary: 'The course continuation option is invalid'
+          }
+        }
+      },
       courseStartDate: {
       //
       },
@@ -117,23 +133,22 @@ financialstatusModule.controller(
           return true
         }
       },
-
-      continuationEndDate: {
+      originalCourseStartDate: {
         required: false,
         validate: function (v, sc) {
-          if (v === '') {
-          // not a required field
-            return true
-          }
-          console.log('continuationEndDate', v)
           var finStatus = FinancialstatusService.getDetails()
-          var end = moment(finStatus.courseEndDate, 'YYYY-MM-DD', true)
-          var contEndDateMom = moment(v, 'YYYY-MM-DD', true)
-
-          if (end.isBefore(contEndDateMom)) {
+          var start = moment(finStatus.courseStartDate, 'YYYY-MM-DD', true)
+          var contOriginalDateMom = moment(v, 'YYYY-MM-DD', true)
+          if (finStatus.isContinuation !== 'yes') {
+            // not relevant as the course is not a continuation
             return true
           }
-          return { summary: 'The continuation end date is invalid', msg: 'Enter a valid continuation end date' }
+
+          if (contOriginalDateMom.isBefore(start)) {
+            return true
+          }
+
+          return { summary: 'The original course start date is invalid', msg: 'Enter a valid original course start date' }
         }
       },
       totalTuitionFees: {
@@ -198,7 +213,7 @@ financialstatusModule.controller(
           sType.noDependantsOnCourseLength &&
           len <= sType.noDependantsOnCourseLength &&
           n &&
-          finStatus.continuationEndDate === ''
+          finStatus.originalCourseStartDate === ''
         ) {
             var msg = 'Main applicants cannot be accompanied by dependants on courses of '
             msg += sType.noDependantsOnCourseLength
@@ -252,6 +267,7 @@ financialstatusModule.controller(
     $scope.finStatus = FinancialstatusService.getDetails()
     $scope.finStatus.studentType = sType.value
     $scope.yesNoOptions = [{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}]
+    $scope.courseTypeOptions = FinancialstatusService.getCourseTypeOptions()
     $scope.pageTitle = sType.label
     $scope.submitButton = {
       text: 'Check financial status',
