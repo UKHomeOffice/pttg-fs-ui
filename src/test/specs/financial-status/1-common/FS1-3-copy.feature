@@ -106,18 +106,4 @@ Feature: Copy results to paste buffer
             | Continuation Course             | Yes                                             |
             | Original Course Start Date      |                                                 |
             | Leave End Date                  |                                                 |
-            | Date Received                   |                                                 |
-
-    ## Scenario - redact the first four digits of account number on copy function ##
-#    Scenario: redact first four digits of account number
-#        Given the account has sufficient funds
-#        And the financial status check is performed
-#        When the copy button is clicked
-#        Then the copy button text is 'Copied'
-#        And the first four digits of the account number are redacted and replaced with stars (e.g. ****1111) in the copied text
-
-     ## Scenario - Create and display timestamp for results ##
-#    Scenario:
-#        Given the account has sufficient funds
-#        When the financial status check is performed
-#        Then the service creates a date received timestamp to display in the copied text
+            | Result timestamp                |                                                 |

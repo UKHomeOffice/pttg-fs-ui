@@ -151,14 +151,6 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       }
     ]
 
-    if (data.leaveEndDate) {
-      summary.push({
-        id: 'estimatedLeaveEndDate',
-        label: 'Estimated leave end date',
-        value: $filter('dateDisplay')(data.leaveEndDate)
-      })
-    }
-
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
       var str = Math.ceil(FinancialstatusService.getCourseLength())
@@ -189,6 +181,14 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         id: 'lowestBalance',
         label: 'Lowest balance',
         value: $filter('pounds')(data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(data.failureReason.lowestBalanceDate)
+      })
+    }
+
+    if (data.leaveEndDate) {
+      summary.push({
+        id: 'estimatedLeaveEndDate',
+        label: 'Estimated leave end date',
+        value: $filter('dateDisplay')(data.leaveEndDate)
       })
     }
 

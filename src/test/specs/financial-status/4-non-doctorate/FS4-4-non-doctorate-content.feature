@@ -30,12 +30,13 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Passed                                          |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
-            | Account holder name   |
-            | Total funds required  |
-            | 28-day period checked |
-            | Course length         |
-            | Result timestamp      |
-            | Summary               |
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Course length            |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -62,13 +63,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Page dynamic heading | Not passed                                                            |
             | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
-            | Account holder name   |
-            | Total funds required  |
-            | 28-day period checked |
-            | Course length         |
-            | Lowest balance        |
-            | Result timestamp      |
-            | Summary               |
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Course length            |
+            | Lowest balance           |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -97,6 +99,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
+            | Estimated leave end date |
             | Result timestamp      |
             | Summary               |
         And the service displays the following your search headers in order

@@ -104,6 +104,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
+            | Estimated Leave End Date        | 22/10/2017                     |
 
  ###### overall course length 12+ months In London #######
 

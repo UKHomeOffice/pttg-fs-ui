@@ -97,6 +97,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
             | Continuation Course             | No                             |
+            | Estimated Leave End Date        | 22/10/2017                     |
 
  ###### overall course length 12+ months In London #######
 
@@ -151,3 +152,4 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
             | Continuation Course             | No                             |
+            | Estimated Leave End Date        | 22/10/2017                     |

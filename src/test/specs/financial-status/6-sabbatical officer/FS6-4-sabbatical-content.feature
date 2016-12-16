@@ -19,6 +19,8 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
+            | Estimated leave end date |
+            | Result timestamp      |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
