@@ -43,6 +43,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
             | Continuation Course             | No         |
+            | Course type                     | Main       |
 
  ######### Overall course <12 months In London #############
 
@@ -50,8 +51,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following result
-            | Application Raised Date         | 31/05/2016                   |
             | Outcome                         | Not passed                   |
+            | Application Raised Date         | 31/05/2016                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
@@ -79,8 +80,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
-            | Application Raised Date         | 31/05/2016                     |
             | Outcome                         | Passed                         |
+            | Application Raised Date         | 31/05/2016                     |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
@@ -104,8 +105,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         When the financial status check is performed with
             | Course end date | 30/01/2017 |
         Then the service displays the following result
-            | Application Raised Date         | 31/05/2016                   |
             | Outcome                         | Not passed                   |
+            | Application Raised Date         | 31/05/2016                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
@@ -133,8 +134,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
-            | Application Raised Date         | 31/05/2016                     |
             | Outcome                         | Passed                         |
+            | Application Raised Date         | 31/05/2016                     |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |

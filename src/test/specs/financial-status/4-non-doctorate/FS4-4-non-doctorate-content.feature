@@ -18,6 +18,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
             | Continuation Course             | No         |
+            | Course type                     | Main       |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -33,12 +34,15 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
-            | Results Received      |
+            | Result timestamp      |
+            | Summary               |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
+            | Course type                     |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Total tuition fees              |
             | Tuition fees already paid       |
             | Accommodation fees already paid |
@@ -46,9 +50,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
-            | Continuation Course             |
-            | Original Course Start Date      |
-            | Leave End Date                  |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -66,12 +67,15 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | 28-day period checked |
             | Course length         |
             | Lowest balance        |
-            | Results Received      |
+            | Result timestamp      |
+            | Summary               |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
+            | Course type                     |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Total tuition fees              |
             | Tuition fees already paid       |
             | Accommodation fees already paid |
@@ -79,7 +83,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
-            | Leave End Date                  |
 
     ## Changed in Jira number PT-25 - Added new 'Page dynamic detail' text
     Scenario: Page checks for Not Passed text write up
@@ -93,11 +96,16 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
+            | Course length         |
+            | Result timestamp      |
+            | Summary               |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
+            | Course type                     |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Total tuition fees              |
             | Tuition fees already paid       |
             | Accommodation fees already paid |

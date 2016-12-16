@@ -26,7 +26,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   // get the defaults
   this.getBlank = function () {
     return {
-      isContinuation: null,
+      continuationCourse: null,
       applicationRaisedDate: '',
       studentType: '',
       toDate: '',
@@ -71,7 +71,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseEndDate',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'isContinuation',
+          'continuationCourse',
           'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
@@ -84,7 +84,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'isContinuation',
+          'continuationCourse',
           'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
@@ -97,7 +97,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          'isContinuation',
+          'continuationCourse',
           'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
@@ -179,10 +179,10 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     delete details.sortCode
     delete details.accountNumber
 
-    if (details.isContinuation !== 'yes') {
+    if (details.continuationCourse !== 'yes') {
       delete details.originalCourseStartDate
     }
-    delete details.isContinuation
+    delete details.continuationCourse
 
     var stud = this.getStudentTypeByID(finStatus.studentType)
     _.each(stud.hiddenFields, function (f) {

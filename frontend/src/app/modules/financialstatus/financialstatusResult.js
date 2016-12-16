@@ -153,8 +153,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
     if (data.leaveEndDate) {
       summary.push({
-        id: 'leaveEndDate',
-        label: 'Leave End Date',
+        id: 'estimatedLeaveEndDate',
+        label: 'Estimated leave end date',
         value: $filter('dateDisplay')(data.leaveEndDate)
       })
     }
@@ -191,6 +191,12 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         value: $filter('pounds')(data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(data.failureReason.lowestBalanceDate)
       })
     }
+
+    summary.push({
+      id: 'resultTimestamp',
+      label: 'Result timestamp',
+      value: moment(reqdata.responseTimeStamp).format('DD/MM/YYYY HH:mm:ss')
+    })
 
     return summary
   }
@@ -278,6 +284,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       courseType: (student.hiddenFields.indexOf('courseType') === -1),
       inLondon: true,
       courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1),
+      continuationCourse: (student.hiddenFields.indexOf('continuationCourse') === -1),
       tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1),
       accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1),
       numberOfDependants: true,
@@ -297,7 +304,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       criteria.push({
         id: 'applicationRaisedDate',
         label: 'Application raised date',
-        value: moment(reqdata.applicationRaisedDate, 'YYYY-MM-DD').format('DD-MM-YYYY')
+        value: moment(reqdata.applicationRaisedDate, 'YYYY-MM-DD').format('DD/MM/YYYY')
       })
     }
 
@@ -336,11 +343,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         label: 'Course dates',
         value: $filter('dateDisplay')(from) + ' to ' + $filter('dateDisplay')(to)
       })
+    }
 
-      if (reqdata.isContinuation === 'yes') {
+    if (criteriaList.continuationCourse) {
+      if (reqdata.continuationCourse === 'yes') {
         criteria.push({
-          id: 'isContinuation',
-          label: 'Is the course a continuation',
+          id: 'continuationCourse',
+          label: 'Continuation course',
           value: 'Yes'
         })
 
@@ -349,13 +358,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
           label: 'Original course start date',
           value: $filter('dateDisplay')(reqdata.originalCourseStartDate)
         })
+      } else {
+        criteria.push({
+          id: 'continuationCourse',
+          label: 'Continuation course',
+          value: 'No'
+        })
       }
-    } else {
-      criteria.push({
-        id: 'isContinuation',
-        label: 'Is the course a continuation',
-        value: 'No'
-      })
     }
 
     if (criteriaList.tuitionFees) {
@@ -519,7 +528,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       copyText += lineLength(obj.label + ': ', 36) + val + '\n'
     })
 
-    copyText += '\n\n' + lineLength('Enquiry time: ', 36) + moment(resdata.responseTimeStamp).format('DD/MM/YYYY HH:mm:ss')
+    // copyText += '\n\n' + lineLength('Enquiry time: ', 36) + moment(resdata.responseTimeStamp).format('DD/MM/YYYY HH:mm:ss')
 
     $scope.copyText = copyText
 

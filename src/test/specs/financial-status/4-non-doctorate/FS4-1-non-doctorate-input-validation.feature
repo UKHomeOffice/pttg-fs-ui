@@ -32,6 +32,7 @@ Feature: Show clear error details when inputs are invalid
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
             | Continuation Course             | No         |
+            | Course type                     | Main       |
 
 
 ######################### General validation message display #########################
@@ -51,6 +52,7 @@ Feature: Show clear error details when inputs are invalid
             | Account number                  |  |
             | DOB                             |  |
             | Continuation Course             |  |
+            | Course type                     |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
@@ -67,7 +69,8 @@ Feature: Show clear error details when inputs are invalid
             | The account number is invalid                  |
             | The sort code is invalid                       |
             | The date of birth is invalid                   |
-            | The continuation Course in invalid             |
+            | The course continuation option is invalid      |
+            | The course type option is invalid              |
 
 
 ######################### Validation on the Application Raised Date Field #########################
@@ -124,17 +127,17 @@ Feature: Show clear error details when inputs are invalid
 
     Scenario: Caseworker enters end date GREATER than 31 days of the Application Raised Date
         When the financial status check is performed with
-            | End Date                | 01/02/2016
-            | Application raised date | 31/01/2016
-        Then The service displays the following error message
-            | End Date Error | Enter a valid end date
+            | End Date                | 01/02/2016 |
+            | Application raised date | 31/01/2016 |
+        Then the service displays the following error message
+            | End Date-error | Enter a valid end date |
 
     Scenario: Caseworker enters end date LESS THAN than 31 days of the Application Raised Date
         When the financial status check is performed with
-            | End Date                | 31/12/2015
-            | Application raised date | 31/01/2016
-        Then The service displays the following error message
-            | End Date Error | Enter a valid end date
+            | End Date                | 31/12/2015 |
+            | Application raised date | 31/01/2016 |
+        Then the service displays the following error message
+            | End Date-error | Enter a valid end date |
 
 
 ######################### Validation on the Sort Code Field #########################
@@ -353,15 +356,15 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Application Raised Date | 30/05/2099 |
         Then the service displays the following error message
-            | Application Raised Date-error | Enter a valid end date |
+            | Application Raised Date-error | Enter a valid application raised date |
 
     ######################### Validation on the Continuation Course Field #########################
 
     Scenario: Case Worker does NOT enter Continuation Course
         When the financial status check is performed with
-            | Continuation Course
+            | Continuation Course |  |
         Then the service displays the following error message
-            | Continuation Course-error | Enter a valid Continuation Course
+            | Continuation Course-error | Select an option |
 
     ######################### Validation on the Original Course Start Date Field #########################
 
@@ -370,17 +373,18 @@ Feature: Show clear error details when inputs are invalid
             | Continuation Course        | Yes |
             | Original Course Start Date |     |
         Then the service displays the following error message
-            | Original Course Start Date-error | Enter a valid original course start date
+            | Original Course Start Date-error | Enter a valid original course start date |
 
     Scenario: Case Worker enters invalid Original Course Start Date - not numbers 0-9
         When the financial status check is performed with
-            | Original Course Start Date            | 30/1d/2016 |
-            | Continuation Course is equal to 'Yes' |
+            | Original Course Start Date | 30/1d/2016 |
+            | Continuation Course        | Yes        |
         Then the service displays the following error message
             | Original Course Start Date-error | Enter a valid original course start date |
 
     Scenario: Case Worker enters Original Course Start Date - in the future
         When the financial status check is performed with
+            | Continuation Course        | Yes        |
             | Original Course Start Date | 30/05/2099 |
         Then the service displays the following error message
             | Original Course Start Date-error | Enter a valid original course start date |

@@ -20,6 +20,7 @@ Feature: Copy results to paste buffer
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
             | Continuation Course             | No         |
+            | Course type                     | Main       |
 
 
     ## test the content that appears above the 'copy' button when the test passed
@@ -74,48 +75,49 @@ Feature: Copy results to paste buffer
             | Sort code                       | 11-11-11                                        |
             | Account number                  | ****1111                                        |
             | Date of birth                   | 27/07/1981                                      |
-            | Application raised date         |                                                 |
-            | Continuation Course             |                                                 |
+            | Application raised date         | 31/05/2015                                      |
+            | Continuation Course             | No                                              |
             | Leave End Date                  |                                                 |
             | Date Received                   |                                                 |
 
-     Scenario: copy results when continuation course is selected as yes
-         Given the account has sufficient funds
-         And Continuation Course is equal to 'Yes'
-         And the financial status check is performed
-         When the copy button is clicked
-         Then the copied text includes
-             | PASSED                          | This applicant meets the financial requirements |
-             | Account holder name             | Laura Taylor                                    |
-             | Total funds required            | £16,090.00                                      |
-             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
-             | Course length                   | 7 (limited to 9)                                |
-             | Student type                    | Tier 4 (General) student                        |
-             | In London                       | Yes                                             |
-             | Course dates                    | 30/05/2016 to 30/11/2016                        |
-             | Total tuition fees              | £8,500.00                                       |
-             | Tuition fees already paid       | £10.00                                          |
-             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
-             | Number of dependants            | 0                                               |
-             | Sort code                       | 11-11-11                                        |
-             | Account number                  | ****1111                                        |
-             | Date of birth                   | 27/07/1981                                      |
-             | Application raised date         |                                                 |
-             | Continuation Course             |                                                 |
-             | Original Course Start Date      |                                                 |
-             | Leave End Date                  |                                                 |
-             | Date Received                   |                                                 |
+    Scenario: copy results when continuation course is selected as yes
+        Given the account has sufficient funds
+        And the financial status check is performed with
+            | Continuation course        | Yes      |
+            | Original course start date | 1/1/2014 |
+        When the copy button is clicked
+        Then the copied text includes
+            | PASSED                          | This applicant meets the financial requirements |
+            | Account holder name             | Laura Taylor                                    |
+            | Total funds required            | £16,090.00                                      |
+            | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
+            | Course length                   | 7 (limited to 9)                                |
+            | Student type                    | Tier 4 (General) student                        |
+            | In London                       | Yes                                             |
+            | Course dates                    | 30/05/2016 to 30/11/2016                        |
+            | Total tuition fees              | £8,500.00                                       |
+            | Tuition fees already paid       | £10.00                                          |
+            | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+            | Number of dependants            | 0                                               |
+            | Sort code                       | 11-11-11                                        |
+            | Account number                  | ****111X                                        |
+            | Date of birth                   | 27/07/1981                                      |
+            | Application raised date         |                                                 |
+            | Continuation Course             | Yes                                             |
+            | Original Course Start Date      |                                                 |
+            | Leave End Date                  |                                                 |
+            | Date Received                   |                                                 |
 
     ## Scenario - redact the first four digits of account number on copy function ##
-    Scenario redact first four digits of account number
-        Given the account has sufficient funds
-        And the financial status check is performed
-        When the copy button is clicked
-        Then the copy button text is 'Copied'
-        And the first four digits of the account number are redacted and replaced with stars (e.g. ****1111) in the copied text
+#    Scenario: redact first four digits of account number
+#        Given the account has sufficient funds
+#        And the financial status check is performed
+#        When the copy button is clicked
+#        Then the copy button text is 'Copied'
+#        And the first four digits of the account number are redacted and replaced with stars (e.g. ****1111) in the copied text
 
      ## Scenario - Create and display timestamp for results ##
-    Scenario:
-        Given the account has sufficient funds
-        When the financial status check is performed
-        Then the service creates a date received timestamp to display in the copied text
+#    Scenario:
+#        Given the account has sufficient funds
+#        When the financial status check is performed
+#        Then the service creates a date received timestamp to display in the copied text

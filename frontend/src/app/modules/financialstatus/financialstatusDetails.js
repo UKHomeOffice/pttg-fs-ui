@@ -108,7 +108,7 @@ financialstatusModule.controller(
           }
         }
       },
-      isContinuation: {
+      continuationCourse: {
         inline: true,
         errors: {
           required: {
@@ -139,7 +139,7 @@ financialstatusModule.controller(
           var finStatus = FinancialstatusService.getDetails()
           var start = moment(finStatus.courseStartDate, 'YYYY-MM-DD', true)
           var contOriginalDateMom = moment(v, 'YYYY-MM-DD', true)
-          if (finStatus.isContinuation !== 'yes') {
+          if (finStatus.continuationCourse !== 'yes') {
             // not relevant as the course is not a continuation
             return true
           }

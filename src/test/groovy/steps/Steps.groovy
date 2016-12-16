@@ -62,19 +62,19 @@ class Steps {
 
     def pageUrls = [
         'studentType'       : uiRoot,
-        'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
-        'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate',
-        'pgddQuery'         : uiRoot + '#/financial-status-query-pgdd',
-        'ssoQuery'         : uiRoot + '#/financial-status-query-sso'
+        'doctorateQuery'    : uiRoot + '#!/financial-status-query-doctorate',
+        'non-doctorateQuery': uiRoot + '#!/financial-status-query-non-doctorate',
+        'pgddQuery'         : uiRoot + '#!/financial-status-query-pgdd',
+        'ssoQuery'         : uiRoot + '#!/financial-status-query-sso'
     ]
 
     def pageLocations = [
-        'studentType'       : '#/financial-status-student-type',
-        'doctorateQuery'    : '#/financial-status-query-doctorate',
-        'pgddQuery'         : '#/financial-status-query-pgdd',
-        'ssoQuery'          : '#/financial-status-query-sso',
-        'non-doctorateQuery': '#/financial-status-query-non-doctorate',
-        'accountNotFound'   : '#/financial-status-no-record'
+        'studentType'       : '#!/financial-status-student-type',
+        'doctorateQuery'    : '#!/financial-status-query-doctorate',
+        'pgddQuery'         : '#!/financial-status-query-pgdd',
+        'ssoQuery'          : '#!/financial-status-query-sso',
+        'non-doctorateQuery': '#!/financial-status-query-non-doctorate',
+        'accountNotFound'   : '#!/financial-status-no-record'
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -95,6 +95,14 @@ class Steps {
         .withOption('doctorate', 'student-type-1')
         .withOption('pgdd', 'student-type-2')
         .withOption('sso', 'student-type-3')
+
+    def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('pre-sessional', 'courseType-0')
+        .withOption('main', 'courseType-1')
+
+    def continuationCourseRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('yes', 'continuationCourse-0')
+        .withOption('no', 'continuationCourse-1')
 
     def studentType
 
@@ -229,6 +237,12 @@ class Steps {
             } else if (fieldName == "studentType") {
                 assertRadioSelection(studentTypeRadio, v)
 
+            } else if (fieldName == "continuationCourse") {
+                assertRadioSelection(continuationCourseRadio, v)
+
+            } else if (fieldName == "courseType") {
+                assertRadioSelection(courseTypeRadio, v)
+
             } else {
                 assert driver.findElement(By.id(fieldName)).getAttribute("value") == v
             }
@@ -246,13 +260,22 @@ class Steps {
                 fillOrClearBySplitting(key, v, sortCodeParts, sortCodeDelimiter)
 
             } else {
-                def element = driver.findElement(By.id(key))
+
 
                 if (key == "inLondon") {
                     clickRadioButton(driver, inLondonRadio, v)
+
                 } else if (key == "studentType") {
                     clickRadioButton(driver, studentTypeRadio, v)
+
+                } else if (key == "continuationCourse") {
+                    clickRadioButton(driver, continuationCourseRadio, v)
+
+                } else if (key == "courseType") {
+                    clickRadioButton(driver, courseTypeRadio, v)
+
                 } else {
+                    def element = driver.findElement(By.id(key))
                     sendKeys(element, v)
                 }
             }

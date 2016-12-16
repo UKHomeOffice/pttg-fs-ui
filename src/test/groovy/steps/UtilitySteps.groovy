@@ -33,10 +33,17 @@ class UtilitySteps {
 
         if (radioConfig.options.containsKey(choice)) {
 
-            String id = radioConfig.options.get(choice)
-            By byCss = By.cssSelector("[id='$id'][type='radio']")
+            String id = radioConfig.options.get(choice) + '-label'
+//            println (choice)
+//            println (id)
+
+            By byCss = By.cssSelector("[id='$id']")
             driver.findElement(byCss).click()
+        } else {
+            println ('CANNOT FIND')
+            println (choice)
         }
+
     }
 
     def static class RadioButtonConfig {

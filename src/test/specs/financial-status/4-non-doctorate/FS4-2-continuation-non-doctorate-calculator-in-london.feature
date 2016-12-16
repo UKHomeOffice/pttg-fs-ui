@@ -36,7 +36,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application raised date         | 30/06/2016 |
             | End date                        | 01/06/2016 |
             | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
+            | Course start date               | 01/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
@@ -47,6 +47,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | DOB                             | 21/09/1981 |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
+            | Course type                     | Main       |
 
  ######### Overall course <12 months In London #############
 
@@ -54,27 +55,26 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following result
-            | Application Raised Date         | 30/06/2016                   |
             | Outcome                         | Not passed                   |
+            | Application Raised Date         | 30/06/2016                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
-            | Course length                   | 4 (limited to 9)             |
+            | Course length                   | 7 (limited to 9)             |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
-            | Course dates checked            | 01/12/2016 to 30/03/2017     |
+            | Course dates checked            | 01/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
-            | Entire course length            | 11                           |
+            | Entire course length            | 14                           |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
-            | Leave End Date                  |                              |
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
@@ -85,26 +85,25 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
-            | Application Raised Date         | 30/06/2016                     |
             | Outcome                         | Passed                         |
+            | Application Raised Date         | 30/06/2016                     |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
-            | Course length                   | 2 (limited to 9)               |
+            | Course length                   | 9 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
-            | Course dates checked            | 31/01/2017 to 30/03/2017       |
+            | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Number of dependants            | 1                              |
-            | Entire course length            | 11                             |
+            | Entire course length            | 16                             |
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
-            | Leave End Date                  |                                |
 
  ###### overall course length 12+ months In London #######
 
@@ -112,56 +111,55 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following result
-            | Application Raised Date         | 30/06/2016                   |
             | Outcome                         | Not passed                   |
+            | Application Raised Date         | 30/06/2016                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
-            | Course length                   | 6 (limited to 9)             |
+            | Course length                   | 7 (limited to 9)             |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
-            | Course dates checked            | 01/12/2016 to 30/05/2017     |
+            | Course dates checked            | 01/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
-            | Entire course length            | 13                           |
+            | Entire course length            | 14                           |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
-            | Leave End Date                  |                              |
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 25/09/2017 |
-            | Continuation end date           | 30/11/2017 |
+            | Original Course Start Date      | 30/10/2015 |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
-            | Application Raised Date         | 30/06/2016                     |
             | Outcome                         | Passed                         |
+            | Application Raised Date         | 30/06/2016                     |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
-            | Course length                   | 3 (limited to 9)               |
+            | Course length                   | 17 (limited to 9)              |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
-            | Course dates checked            | 26/09/2017 to 30/11/2017       |
+            | Course dates checked            | 01/05/2016 to 25/09/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Number of dependants            | 1                              |
-            | Entire course length            | 19                             |
+            | Entire course length            | 23                             |
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
-            | Leave End Date                  |                                |
+
 
