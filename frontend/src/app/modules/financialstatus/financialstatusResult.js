@@ -37,7 +37,7 @@ financialstatusModule.constant('RESULT_TEXT', {
   checkinfo: 'check you have entered the correct information,',
   checkpaper: 'check paper evidence to see if applicant can meet criteria in some other way,',
   checkbank: 'check it is a Barclays current account',
-  copybtn: 'Copy to clipboard',
+  copybtn: 'Copy results to clipboard',
   copiedbtn: 'Copied',
   copysummary: 'The check financial status service confirmed that {{name}} {{passed}} the requirements as the daily closing balance was {{above}} the total funds required.'
 
@@ -541,13 +541,14 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
     var timeoutResetButtonText = function () {
       $timeout(function () {
-        $scope.copyToClipboardBtnText = RESULT_TEXT.copybtn
+        $scope.showCopied = false
         $scope.$applyAsync()
       }, 2000)
     }
 
+    // $scope.showCopied = true
     clipboard.on('success', function (e) {
-      $scope.copyToClipboardBtnText = RESULT_TEXT.copiedbtn
+      $scope.showCopied = true
       $scope.$applyAsync()
       e.clearSelection()
       timeoutResetButtonText()

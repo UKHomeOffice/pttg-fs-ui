@@ -36,7 +36,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Course length            |
             | Estimated leave end date |
             | Result timestamp         |
-            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -70,7 +69,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |
-            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -101,7 +99,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Course length         |
             | Estimated leave end date |
             | Result timestamp      |
-            | Summary               |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |

@@ -33,17 +33,11 @@
         <th scope="row" width="50%">{{ detail.label }}</th>
         <td id="{{ detail.id }}">{{ detail.value }}</td>
       </tr>
-      <tr>
-        <th scope="row">Summary</th>
-        <td><span id="copySummary">{{ copysummary }}</span><br />
-          <input id="copyBtn" type="submit" class="button button--copy button-info" value="{{ copyToClipboardBtnText }}" />
-        </td>
-      </tr>
     </table>
   </div>
 
-  <div ng-if="showCriteria">
-    <h2 class="heading-medium">Your search</h2>
+  <div ng-if="showCriteria" class="yoursearch">
+    <h2 class="heading-medium">Your search</h2><a ng-click="editSearch()" class="yoursearch--edit">Edit</a>
     <table id="yourSearchTable">
       <tr ng-repeat="criteria in searchCriteria">
         <th scope="row" width="50%">{{ criteria.label }}</th>
@@ -52,13 +46,10 @@
     </table>
   </div>
 
-
-
   <div class="form-group form-group--topspace">
-    <input type="submit" class="button button--editSearch button-info" value="Edit" ng-click="editSearch()" />
+    <input id="copyBtn" type="submit" class="button button--copy" value="{{ copyToClipboardBtnText }}" /> <span class="copied" ng-if="showCopied">Copied!</span>
   </div>
-
-  <div class="form-group form-group--topspace">
-    <input type="submit" class="button button--newSearch" value="Begin a new check" ng-click="newSearch()" />
-  </div>
+  
+  <a ng-click="newSearch()">Start new check</a>
+  
 </div>

@@ -483,7 +483,7 @@ class Steps {
     @When("^the edit search button is clicked\$")
     public void the_edit_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--editSearch")).click()
+        driver.findElement(By.className("yoursearch--edit")).click()
     }
 
     @When("^the copy button is clicked\$")
