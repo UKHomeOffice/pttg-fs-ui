@@ -476,7 +476,7 @@ class Steps {
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--newSearch")).click()
+        driver.findElement(By.className("newsearch")).click()
         //assertTextFieldEqualityForTable(expectedResult)
     }
 

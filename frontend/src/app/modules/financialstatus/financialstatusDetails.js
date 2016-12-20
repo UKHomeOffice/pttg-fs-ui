@@ -114,6 +114,13 @@ financialstatusModule.controller(
           required: {
             summary: 'The course continuation option is invalid'
           }
+        },
+        onClick: function (opt, scope) {
+          // console.log('onClick', opt, scope)
+          if (opt.value !== 'yes') {
+            var finStatus = FinancialstatusService.getDetails()
+            finStatus.originalCourseStartDate = ''
+          }
         }
       },
       courseStartDate: {
@@ -210,11 +217,11 @@ financialstatusModule.controller(
           }
 
           if (
-          sType.noDependantsOnCourseLength &&
-          len <= sType.noDependantsOnCourseLength &&
-          n &&
-          finStatus.originalCourseStartDate === ''
-        ) {
+            sType.noDependantsOnCourseLength &&
+            len <= sType.noDependantsOnCourseLength &&
+            n &&
+            finStatus.originalCourseStartDate === ''
+          ) {
             var msg = 'Main applicants cannot be accompanied by dependants on courses of '
             msg += sType.noDependantsOnCourseLength
             msg += ' months or less'
