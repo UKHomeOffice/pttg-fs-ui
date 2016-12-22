@@ -69,7 +69,7 @@ class Steps {
     ]
 
     def pageLocations = [
-        'studentType'       : '#!/financial-status-student-type',
+        'studentType'       : '#!/financial-status-calc-student-type',
         'doctorateQuery'    : '#!/financial-status-query-doctorate',
         'pgddQuery'         : '#!/financial-status-query-pgdd',
         'ssoQuery'          : '#!/financial-status-query-sso',

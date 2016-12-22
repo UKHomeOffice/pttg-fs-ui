@@ -66,7 +66,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
 
-    Scenario: Shelly is a Non Doctorate in London
+    Scenario: Shelly is a Non Doctorate in London 1
         When the financial status check is performed with
             | Course end date                 | 30/01/2017 |
             | Total tuition fees              | 9755.50    |
@@ -91,7 +91,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
  ###### overall course length 12+ months In London #######
 
-    Scenario: Shelly is a Non Doctorate in London student
+    Scenario: Shelly is a Non Doctorate in London student 2
         When the financial status check is performed
         Then the service displays the following result
             | Application Raised Date         | 30/06/2016                   |
@@ -109,7 +109,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
 
-    Scenario: Shelly is a Non Doctorate in London student
+    Scenario: Shelly is a Non Doctorate in London student 3
         Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 25/09/2017 |

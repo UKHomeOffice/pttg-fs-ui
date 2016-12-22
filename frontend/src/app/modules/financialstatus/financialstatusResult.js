@@ -145,12 +145,15 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
   // what results are we summerising
   this.getSummary = function () {
-    var summary = [
+    var summary = []
+    if (data.accountHolderName !== '') {[
       {
         id: 'accountHolderName',
         label: 'Account holder name',
         value: data.accountHolderName
-      },
+      }]}
+
+      summary.concat([
       {
         id: 'totalFundsRequired',
         label: 'Total funds required',
@@ -161,7 +164,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         label: '28-day period checked',
         value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
       }
-    ]
+    ])
 
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
@@ -306,8 +309,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         dob: true
       }
     }
-
-    if (criteriaList.applicationRaisedDate) {
+    console.log(reqdata.applicationRaisedDate)
+    if (criteriaList.applicationRaisedDate && reqdata.applicationRaisedDate !== 'Invalid date') {
       criteria.push({
         id: 'applicationRaisedDate',
         label: 'Application raised date',
@@ -408,7 +411,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       })
     }
 
-    if (criteriaList.bankAccount) {
+    if (criteriaList.bankAccount && reqdata.accountNumber !== '') {
       criteria.push({
         id: 'sortCode',
         label: 'Sort code',
@@ -422,7 +425,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       })
     }
 
-    if (criteriaList.dob) {
+    if (criteriaList.dob && reqdata.dob !== '') {
       criteria.push({
         id: 'dob',
         label: 'Date of birth',

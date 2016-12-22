@@ -12,7 +12,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   var isValid = false
   var lastAPIresponse
 
-  this.isCalc = false
+  this.isCalc = true
 
   this.reset = function () {
     isValid = false

@@ -16,7 +16,7 @@ app.constant('CONFIG', {
 
 
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/financial-status-student-type');
+  $urlRouterProvider.otherwise('/financial-status-calc-student-type');
 
   $stateProvider.state({
     name: 'default',
