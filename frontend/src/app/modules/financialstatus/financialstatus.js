@@ -12,6 +12,8 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   var isValid = false
   var lastAPIresponse
 
+  this.isCalc = false
+
   this.reset = function () {
     isValid = false
     lastAPIresponse = null
@@ -174,6 +176,14 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     var details = angular.copy(finStatus)
     var sortCode = details.sortCode
     var accountNumber = details.accountNumber
+    var resultUrl = 'financialStatusResults'
+
+    if (this.isCalc) {
+      sortCode = '010616'
+      accountNumber = '00030000'
+      details.dob = '1974-05-13'
+      resultUrl = 'financialStatusCalcResults'
+    }
 
     delete details.applicationRaisedDate
     delete details.sortCode
@@ -198,7 +208,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       IOService.get(url, details, { timeout: CONFIG.timeout }).then(function (result) {
         lastAPIresponse = result.data
         lastAPIresponse.responseTimeStamp = new Date()
-        $state.go('financialStatusResults', {studentType: finStatus.studentType})
+        $state.go(resultUrl, {studentType: finStatus.studentType})
       }, function (err) {
         if (err.status === -1 && attemptNum < CONFIG.retries) {
           trySendDetails()
@@ -215,7 +225,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
             status: err.status
           }
         }
-        $state.go('financialStatusResults', {studentType: finStatus.studentType})
+        $state.go(resultUrl, {studentType: finStatus.studentType})
       })
     }
     // start attempting to make the request

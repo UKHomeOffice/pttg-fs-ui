@@ -14,13 +14,17 @@
 
             <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
 
-            <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
-
+            <div ng-if="!isCalc">
+                <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
+            </div>
+            
             <hod-number name="numberOfDependants" label="Number of dependants" field="finStatus.numberOfDependants" config="conf.numberOfDependants"></hod-number>
 
-            <hod-sortcode name="sortCode" label="Sort code" field="finStatus.sortCode"></hod-sortcode>
+            <div ng-if="!isCalc">
+                <hod-sortcode name="sortCode" label="Sort code" field="finStatus.sortCode" conf="conf.sortCode"></hod-sortcode>
 
-            <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
+                <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
+            </div>
 
             <hod-radio name="courseType" label="Course type" field="finStatus.courseType" options="courseTypeOptions" config="conf.courseType"></hod-radio>
 

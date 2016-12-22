@@ -1,4 +1,4 @@
-/* global angular _ moment Clipboard */
+/* global angular _ moment Clipboard ga */
 
 /* jshint node: true */
 
@@ -51,6 +51,18 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
     url: '/result',
     title: 'Financial Status : Result',
     parent: 'financialStatusDetails',
+    views: {
+      'content@': {
+        templateUrl: 'modules/financialstatus/financialstatusResult.html',
+        controller: 'FinancialstatusResultCtrl'
+      }
+    }
+  })
+  $stateProvider.state({
+    name: 'financialStatusCalcResults',
+    url: '/result',
+    title: 'Financial Status : Result',
+    parent: 'financialStatusCalcDetails',
     views: {
       'content@': {
         templateUrl: 'modules/financialstatus/financialstatusResult.html',
@@ -222,21 +234,18 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
           heading: RESULT_TEXT.passed,
           reason: RESULT_TEXT.meetsreq
         }
-        break
 
       case RESULT_STATES.notpassed_28days:
         return {
           heading: RESULT_TEXT.notpassed,
           reason: RESULT_TEXT.day28cover
         }
-        break
 
       case RESULT_STATES.notpassed_funds:
         return {
           heading: RESULT_TEXT.notpassed,
           reason: RESULT_TEXT.balancesbelow
         }
-        break
 
       case RESULT_STATES.failure_norecord:
         return {
@@ -250,14 +259,12 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
             RESULT_TEXT.accountclosed
           ]
         }
-        break
 
       case RESULT_STATES.failure_kc:
         return {
           heading: RESULT_TEXT.kctoblame,
           reason: RESULT_TEXT.refresh
         }
-        break
     }
 
     return {
@@ -455,7 +462,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 // display results
 financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state', '$stateParams', '$filter', 'FinancialstatusService', 'FinancialstatusResultService', 'RESULT_STATES', 'RESULT_TEXT', '$timeout',
   function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT, $timeout) {
-  // check for result data
+    // check for result data
     var resdata = FinancialstatusService.getResponse()
     if (!resdata) {
     // no result data so no we cannot display a result page - go back to the details page
@@ -463,7 +470,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       return
     }
 
-  // setup the results service object with what we already know
+    // setup the results service object with what we already know
     var resServ = FinancialstatusResultService
     var finStatus = FinancialstatusService.getDetails()
     var sType = FinancialstatusService.getStudentTypeByID(finStatus.studentType)
@@ -480,7 +487,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     $scope.showSummary = $scope.haveResult
     $scope.success = resServ.getSuccess()
 
-  // set the text
+    // set the text
     var text = resServ.getText(state)
     $scope.heading = text.heading
     $scope.reason = text.reason
@@ -491,17 +498,17 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     $scope.searchCriteria = resServ.getCriteria(state)
     $scope.showCriteria = (state !== RESULT_STATES.failure) ? true : false
 
-  // track
+    // track
     ga('set', 'page', $state.href($state.current.name, $stateParams) + '/' + state)
     ga('send', 'pageview')
 
-  // new search button
+    // new search button
     $scope.newSearch = function (e) {
       FinancialstatusService.reset()
       $state.go('financialStatus')
     }
 
-  // edit search button
+    // edit search button
     $scope.editSearch = function (e) {
       $state.go('financialStatusDetails', {studentType: sType.value})
     }
@@ -515,13 +522,13 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
       return str
     }
 
-  // compile the copy text
+    // compile the copy text
     var copyText = text.heading.toUpperCase() + '\n' + text.reason + '\n\nRESULTS\n'
     _.each($scope.summary, function (obj) {
       copyText += lineLength(obj.label + ': ', 36) + obj.value + '\n'
     })
 
-  // add the your search to it
+    // add the your search to it
     copyText += '\n\nSEARCH CRITERIA\n'
     _.each($scope.searchCriteria, function (obj) {
       var val = (obj.id === 'accountNumber') ? 'XXXX' + obj.value.substr(4) : obj.value
@@ -532,7 +539,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
     $scope.copyText = copyText
 
-  // init the clipboard object
+    // init the clipboard object
     var clipboard = new Clipboard('.button--copy', {
       text: function () {
         return copyText
