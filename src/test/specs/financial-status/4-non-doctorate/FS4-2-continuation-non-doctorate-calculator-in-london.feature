@@ -76,7 +76,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
 
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
+    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds1
         Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 30/01/2017 |
