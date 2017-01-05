@@ -49,7 +49,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course length                   | 7 (limited to 9)             |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
@@ -66,7 +65,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course length                   | 7 (limited to 9)             |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
@@ -88,7 +86,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Application Raised Date         | 31/05/2016                     |
             | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
             | Course length                   | 9 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
@@ -109,7 +106,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course length                   | 9 (limited to 9)             |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
@@ -131,7 +127,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Application Raised Date         | 31/05/2016                     |
             | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
             | Course length                   | 13 (limited to 9)              |
             | Student Type                    | Tier 4 (General) student       |

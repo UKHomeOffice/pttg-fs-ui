@@ -1,11 +1,14 @@
 <div id="page2" class="ng-scope">
   <div ng-if="haveResult">
-    <div ng-class="{'govuk-box-highlight': success}">
+    <div ng-if="isCalc" class="govuk-box-highlight">
+      <h1 class="heading-large" id="pageDynamicHeading" tabindex="-1">{{ totalFundsRequired.value }}</h1>
+      <p id="pageDynamicDetail"><span>Total daily funds required</span></p>
+    </div>
+    <div ng-if="!isCalc" ng-class="{'govuk-box-highlight': success}">
       <h1 class="heading-large" id="pageDynamicHeading" tabindex="-1"><span id="outcome">{{ heading }}</span></h1>
       <p id="pageDynamicDetail"><span>{{ reason }}</span></p>
     </div>
   </div>
-
 
   <div ng-if="!haveResult">
     <h1 class="form-title heading-large" tabindex="-1"><span id="pageDynamicHeading">{{ heading }}</span></h1>
@@ -35,7 +38,7 @@
       </tr>
       <tr>
         <th scope="row">Summary</th>
-        <td><span id="copySummary">{{ copysummary }}</span><br />
+        <td>
           <input id="copyBtn" type="submit" class="button button--copy button-info" value="{{ copyToClipboardBtnText }}" />
         </td>
       </tr>

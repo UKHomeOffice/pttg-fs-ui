@@ -220,7 +220,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         }
 
         if (err.status === -1) {
-          // $window.location.reload()
+          $window.location.reload()
           return
         }
 

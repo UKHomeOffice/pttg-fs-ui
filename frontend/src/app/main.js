@@ -1,3 +1,5 @@
+// git update-index --skip-worktree serenity.properties
+
 var app = angular.module('hod.proving', [
   'ui.router',
   'ngAria',

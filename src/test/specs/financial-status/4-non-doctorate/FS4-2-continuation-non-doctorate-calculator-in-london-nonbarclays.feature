@@ -57,9 +57,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | 250.50     |
         Then the service displays the following result
             | Application Raised Date         | 30/06/2016                     |
-            | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
             | Course length                   | 9 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
@@ -82,8 +80,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | 250.50     |
         Then the service displays the following result
             | Application Raised Date         | 30/06/2016                     |
-            | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
@@ -105,7 +102,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Application Raised Date         | 30/06/2016                   |
             | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
             | Course length                   | 7 (limited to 9)             |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
@@ -128,8 +124,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | 250.50     |
         Then the service displays the following result
             | Application Raised Date         | 30/06/2016                     |
-            | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Total funds required            | £16,090.00                     |
             | Course length                   | 17 (limited to 9)              |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |

@@ -145,8 +145,9 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
 
   // what results are we summerising
   this.getSummary = function () {
+    var isCalc = FinancialstatusService.isCalc()
     var summary = []
-    if (data.accountHolderName !== '') {
+    if (data.accountHolderName !== '' && !isCalc) {
       summary.push({
         id: 'accountHolderName',
         label: 'Account holder name',
@@ -160,11 +161,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       value: $filter('pounds')(data.minimum)
     })
 
-    summary.push({
-      id: 'maintenancePeriodChecked',
-      label: '28-day period checked',
-      value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
-    })
+    if (!isCalc) {
+      summary.push({
+        id: 'maintenancePeriodChecked',
+        label: '28-day period checked',
+        value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
+      })
+    }
 
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
@@ -214,19 +217,6 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     })
 
     return summary
-  }
-
-  this.getCopySummary = function () {
-    var str = RESULT_TEXT.copysummary
-    str = str.replace('{{name}}', data.accountHolderName)
-    if (me.getSuccess()) {
-      str = str.replace('{{passed}}', 'passed')
-      str = str.replace('{{above}}', 'above')
-    } else {
-      str = str.replace('{{passed}}', 'did not pass')
-      str = str.replace('{{above}}', 'below')
-    }
-    return str
   }
 
   // get the headings text to display on the results page for each state
@@ -281,7 +271,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     var criteria = []
     var from
     var to
-
+    var isCalc = FinancialstatusService.isCalc()
     // no summary required if the api failed
     if (state === RESULT_STATES.failure) {
       return criteria
@@ -298,8 +288,8 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1),
       accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1),
       numberOfDependants: true,
-      bankAccount: true,
-      dob: true
+      bankAccount: !isCalc,
+      dob: !isCalc
     }
 
     // if no record was found we only show the bank account and DOB
@@ -467,9 +457,10 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
   function ($scope, $state, $stateParams, $filter, FinancialstatusService, FinancialstatusResultService, RESULT_STATES, RESULT_TEXT, $timeout) {
     // check for result data
     var resdata = FinancialstatusService.getResponse()
+    $scope.isCalc = FinancialstatusService.isCalc()
     if (!resdata) {
-    // no result data so no we cannot display a result page - go back to the details page
-      $state.go('financialStatusDetails')
+      // no result data so no we cannot display a result page - go back to the details page
+      $state.go(($scope.isCalc) ? 'financialStatusCalcDetails' : 'financialStatusDetails')
       return
     }
 
@@ -486,7 +477,6 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
     $scope.haveResult = resServ.haveResult()
     $scope.summary = resServ.getSummary()
-    $scope.copysummary = resServ.getCopySummary()
     $scope.showSummary = $scope.haveResult
     $scope.success = resServ.getSuccess()
 
@@ -496,11 +486,12 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     $scope.reason = text.reason
     $scope.reasonInfo = text.reasonInfo
 
-    $scope.whatNext = resServ.getWhatNext(state)
-
+    if (!$scope.isCalc) {
+      $scope.whatNext = resServ.getWhatNext(state)
+    }
     $scope.searchCriteria = resServ.getCriteria(state)
-    $scope.showCriteria = (state !== RESULT_STATES.failure) ? true : false
-
+    $scope.showCriteria = (state !== RESULT_STATES.failure)
+    $scope.totalFundsRequired = _.findWhere($scope.summary, {id: 'totalFundsRequired'})
     // track
     ga('set', 'page', $state.href($state.current.name, $stateParams) + '/' + state)
     ga('send', 'pageview')
@@ -530,7 +521,11 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     }
 
     // compile the copy text
-    var copyText = text.heading.toUpperCase() + '\n' + text.reason + '\n\nRESULTS\n'
+
+    var copyText = ''
+    if (!$scope.isCalc) {
+      copyText += text.heading.toUpperCase() + '\n' + text.reason + '\n\nRESULTS\n'
+    }
     _.each($scope.summary, function (obj) {
       copyText += lineLength(obj.label + ': ', 36) + obj.value + '\n'
     })
