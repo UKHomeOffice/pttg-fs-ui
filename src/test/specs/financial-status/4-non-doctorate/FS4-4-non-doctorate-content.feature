@@ -16,6 +16,9 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Number of dependants            | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
+            | DOB                             | 21/09/1981 |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -27,6 +30,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Page dynamic heading | Passed                                          |
             | Page dynamic detail  | This applicant meets the financial requirements |
         And the service displays the following results headers in order
+            | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
             | Course length            |

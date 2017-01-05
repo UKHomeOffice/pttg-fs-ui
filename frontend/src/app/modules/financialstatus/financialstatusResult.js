@@ -146,25 +146,25 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
   // what results are we summerising
   this.getSummary = function () {
     var summary = []
-    if (data.accountHolderName !== '') {[
-      {
+    if (data.accountHolderName !== '') {
+      summary.push({
         id: 'accountHolderName',
         label: 'Account holder name',
         value: data.accountHolderName
-      }]}
+      })
+    }
 
-      summary.concat([
-      {
-        id: 'totalFundsRequired',
-        label: 'Total funds required',
-        value: $filter('pounds')(data.minimum)
-      },
-      {
-        id: 'maintenancePeriodChecked',
-        label: '28-day period checked',
-        value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
-      }
-    ])
+    summary.push({
+      id: 'totalFundsRequired',
+      label: 'Total funds required',
+      value: $filter('pounds')(data.minimum)
+    })
+
+    summary.push({
+      id: 'maintenancePeriodChecked',
+      label: '28-day period checked',
+      value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
+    })
 
     // if course dates were supplied then show the calculated course length
     if (student.hiddenFields.indexOf('courseStartDate') === -1) {
@@ -309,7 +309,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
         dob: true
       }
     }
-    console.log(reqdata.applicationRaisedDate)
+
     if (criteriaList.applicationRaisedDate && reqdata.applicationRaisedDate !== 'Invalid date') {
       criteria.push({
         id: 'applicationRaisedDate',
@@ -513,7 +513,11 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
 
     // edit search button
     $scope.editSearch = function (e) {
-      $state.go('financialStatusDetails', {studentType: sType.value})
+      if (FinancialstatusService.isCalc()) {
+        $state.go('financialStatusCalcDetails', {studentType: sType.value})
+      } else {
+        $state.go('financialStatusDetails', {studentType: sType.value})
+      }
     }
 
   // #### COPY AND PASTE ####

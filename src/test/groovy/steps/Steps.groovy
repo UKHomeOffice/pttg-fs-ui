@@ -65,16 +65,18 @@ class Steps {
         'doctorateQuery'    : uiRoot + '#!/financial-status-query-doctorate',
         'non-doctorateQuery': uiRoot + '#!/financial-status-query-non-doctorate',
         'pgddQuery'         : uiRoot + '#!/financial-status-query-pgdd',
-        'ssoQuery'         : uiRoot + '#!/financial-status-query-sso'
+        'ssoQuery'          : uiRoot + '#!/financial-status-query-sso'
     ]
 
     def pageLocations = [
-        'studentType'       : '#!/financial-status-calc-student-type',
+        'studentType'       : '#!/financial-status-student-type',
         'doctorateQuery'    : '#!/financial-status-query-doctorate',
         'pgddQuery'         : '#!/financial-status-query-pgdd',
         'ssoQuery'          : '#!/financial-status-query-sso',
         'non-doctorateQuery': '#!/financial-status-query-non-doctorate',
-        'accountNotFound'   : '#!/financial-status-no-record'
+        'accountNotFound'   : '#!/financial-status-no-record',
+
+        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -312,10 +314,17 @@ class Steps {
         return response.getStatusCode();
     }
 
-    @Given("^(?:caseworker|user) is using the financial status service ui\$")
-    public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiRoot)
-        assertCurrentPage('studentType')
+    @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
+    public void user_is_using_the_ui(String service) throws Throwable {
+        if (service.trim() == 'financial status calculator service') {
+            driver.get(uiRoot + pageLocations['studentTypeCalc'])
+            assertCurrentPage('studentTypeCalc')
+        } else if (service.trim() == 'financial status service') {
+            driver.get(uiRoot + pageLocations['studentType'])
+            assertCurrentPage('studentType')
+        } else {
+            assert false
+        }
     }
 
     @Given("^the (.*) student type is chosen\$")
@@ -326,10 +335,7 @@ class Steps {
 
     @Given("^the default details are\$")
     public void the_default_details_are(DataTable arg1) throws Throwable {
-        // println 'BACKGROUND the default details are';
         defaultFields = arg1
-       // Map<String, String> entries = arg1.asMap(String.class, String.class)
-       // submitEntries(entries)
     }
 
     @Given("^the account has sufficient funds\$")
@@ -441,7 +447,6 @@ class Steps {
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-
         if (defaultFields) {
             Map<String, String> defaultEntries = defaultFields.asMap(String.class, String.class)
             submitEntries(defaultEntries + entries)
@@ -522,6 +527,9 @@ class Steps {
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+        driver.sleep(200)
+        def actual = driver.currentUrl
+        assert actual.contains('result'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
         assertTextFieldEqualityForTable(expectedResult)
     }
 

@@ -12,7 +12,9 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   var isValid = false
   var lastAPIresponse
 
-  this.isCalc = true
+  this.isCalc = function () {
+    return ($state.current.name.indexOf('Calc') > 0)
+  }
 
   this.reset = function () {
     isValid = false
@@ -178,7 +180,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     var accountNumber = details.accountNumber
     var resultUrl = 'financialStatusResults'
 
-    if (this.isCalc) {
+    if (this.isCalc()) {
       sortCode = '010616'
       accountNumber = '00030000'
       details.dob = '1974-05-13'
@@ -206,17 +208,19 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       attemptNum++
 
       IOService.get(url, details, { timeout: CONFIG.timeout }).then(function (result) {
+        console.log('trySendDetails', attemptNum, url, details)
         lastAPIresponse = result.data
         lastAPIresponse.responseTimeStamp = new Date()
         $state.go(resultUrl, {studentType: finStatus.studentType})
       }, function (err) {
+        console.log('trySendDetails', attemptNum, err)
         if (err.status === -1 && attemptNum < CONFIG.retries) {
           trySendDetails()
           return
         }
 
         if (err.status === -1) {
-          $window.location.reload()
+          // $window.location.reload()
           return
         }
 

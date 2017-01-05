@@ -40,15 +40,12 @@ financialstatusModule.controller(
 'FinancialstatusDetailsCtrl', ['$rootScope', '$scope', '$state', '$stateParams', 'FinancialstatusService', 'IOService', '$window', '$timeout',
   function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOService, $window, $timeout) {
     var sType = _.findWhere(FinancialstatusService.getStudentTypes(), {value: $stateParams.studentType})
-    $scope.isCalc = ($state.current.name.indexOf('Calc') > 0)
-    FinancialstatusService.isCalc = $scope.isCalc
+    $scope.isCalc = FinancialstatusService.isCalc()
     if (!sType) {
     // this is not a valid student type option - abort!
-      $state.go('financialStatus')
+      $state.go(($scope.isCalc) ? 'financialStatusCalc' : 'financialStatus')
       return
     }
-
-    // console.log($state.current.name)
 
     // track that we're now on the main form details page
     ga('set', 'page', $state.href($state.current.name, $stateParams))

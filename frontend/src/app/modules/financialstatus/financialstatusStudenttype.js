@@ -45,7 +45,6 @@ financialstatusModule.controller(
     $scope.studentTypeOptions = FinancialstatusService.getStudentTypes()
     $scope.finStatus = FinancialstatusService.getDetails()
 
-    console.log($state.current.name)
     var isCalc = ($state.current.name.indexOf('Calc') > 0)
 
     $scope.typeSubmit = function (isValid, formScope, formCtrl) {
