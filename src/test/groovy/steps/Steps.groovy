@@ -318,9 +318,11 @@ class Steps {
     public void user_is_using_the_ui(String service) throws Throwable {
         if (service.trim() == 'financial status calculator service') {
             driver.get(uiRoot + pageLocations['studentTypeCalc'])
+            driver.navigate().refresh()
             assertCurrentPage('studentTypeCalc')
         } else if (service.trim() == 'financial status service') {
             driver.get(uiRoot + pageLocations['studentType'])
+            driver.navigate().refresh()
             assertCurrentPage('studentType')
         } else {
             assert false
