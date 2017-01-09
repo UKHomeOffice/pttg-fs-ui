@@ -6,13 +6,10 @@ Feature: Insufficient Information
     Scenario: No records exist within the period stated
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the application type is chosen
         Given no record for the account
         When the financial status check is performed with
             | End date                        | 10/06/2016 |
-            | In London                       | No         |
-            | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
             | DOB                             | 27/05/1986 |

@@ -1,9 +1,9 @@
-Feature: Tier 4 (General) doctorate extension scheme content (single current account with dependants)
+Feature: Tier 2 & Tier 5
 
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the Tier 2 ot Tier 5 application route is chosen
 
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
@@ -18,16 +18,15 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following results headers in order
             | Account holder name   |
             | Total funds required  |
-            | 28-day period checked |
+            | 90-day period checked |
             | Lowest balance        |
+            | Result timestamp      |
         And the service displays the following your search headers in order
-            | Student type                    |
-            | In London                       |
-            | Accommodation fees already paid |
-            | Number of dependants            |
-            | Sort code                       |
-            | Account number                  |
-            | Date of birth                   |
+            | Application type     |
+            | Number of dependants |
+            | Sort code            |
+            | Account number       |
+            | Date of birth        |
 
 
 
