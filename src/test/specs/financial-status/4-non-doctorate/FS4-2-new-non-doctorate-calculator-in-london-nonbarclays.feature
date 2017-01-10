@@ -58,6 +58,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
+        And the result table contains the following
+            | Total funds required       | £16,090.00               |
+            | Course length              | 7 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+          #  | Entire course length       | 14                       |
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -74,7 +79,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
             | Continuation Course             | No                           |
-
+        And the result table contains the following
+            | Total funds required       | £16,090.00               |
+            | Course length              | 7 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            #| Entire course length       | 14                       |
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -96,6 +105,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Number of dependants            | 1                              |
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
+        And the result table contains the following
+            | Total funds required       | £16,090.00               |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            #| Entire course length       | 14                       |
 
  ###### overall course length 12+ months In London #######
 
@@ -115,7 +129,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
             | Continuation Course             | No                           |
-
+        And the result table contains the following
+            | Total funds required       | £16,090.00               |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            #| Entire course length       | 14                       |
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -137,3 +155,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Number of dependants            | 1                              |
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
+        And the result table contains the following
+            | Total funds required       | £16,090.00               |
+            | Course length              | 13 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            #| Entire course length       | 14                       |

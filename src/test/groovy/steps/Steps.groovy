@@ -210,11 +210,14 @@ class Steps {
 
     private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
 
+
+
         entries.each { k, v ->
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
-
             assert element.getText() == v
+
+
         }
     }
 
@@ -533,6 +536,36 @@ class Steps {
         def actual = driver.currentUrl
         assert actual.contains('result'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
         assertTextFieldEqualityForTable(expectedResult)
+    }
+
+
+
+    @Then("^the result table contains the following\$")
+    public void the_result_table_contains_the_following(DataTable arg1) throws Throwable {
+        Map<String,String> entries = arg1.asMap(String.class,String.class)
+
+        ArrayList<String> scenarioTable = new ArrayList<>()
+        String[] resultTable = entries.keySet()
+
+        for(String s:resultTable){
+            scenarioTable.add(entries.get(s))
+        }
+
+            for (int j = 0; j < resultTable.size(); j++) {
+                assert scenarioTable.contains(driver.findElement(By.id(toCamelCase(resultTable[j]))).getText())
+            }
+        for(int i=1; i <= 20; i++) {
+            if (driver.findElement(By.id("resultTimestamp")).getText() != driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()) {
+
+                if(driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()==""){
+                    break;
+                }
+                   assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText())
+
+            }
+        }
+
+
     }
 
     @Then("^the service displays the following page content\$")
