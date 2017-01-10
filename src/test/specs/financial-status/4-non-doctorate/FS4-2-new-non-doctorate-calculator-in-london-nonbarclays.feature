@@ -50,7 +50,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |

@@ -194,7 +194,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     // if failed due to lowest balance value then display that
-    if (data.failureReason && data.failureReason.lowestBalanceValue) {
+    if (!isCalc && data.failureReason && data.failureReason.lowestBalanceValue) {
       summary.push({
         id: 'lowestBalance',
         label: 'Lowest balance',
