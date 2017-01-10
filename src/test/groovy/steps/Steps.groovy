@@ -556,9 +556,9 @@ class Steps {
         }
 
 
-        int[] numRows = driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr')).size()
+        int numRows = driver.findElements(By.xpath('//*[@id="resultsTable"]/tbody/tr')).size()
 
-        for(int i=1; i <= numRows.size(); i++) {
+        for(int i=1; i <= numRows; i++) {
 
 //            if (tr) {
                 if (driver.findElement(By.id("resultTimestamp")).getText() != driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()) {
