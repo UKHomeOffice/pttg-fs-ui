@@ -32,16 +32,11 @@ class UtilitySteps {
         def choice = value.toLowerCase()
 
         if (radioConfig.options.containsKey(choice)) {
-
             String id = radioConfig.options.get(choice) + '-label'
-//            println (choice)
-//            println (id)
-
             By byCss = By.cssSelector("[id='$id']")
             driver.findElement(byCss).click()
         } else {
-            println ('CANNOT FIND')
-            println (choice)
+            println ('\n\nclickRadioButton CANNOT FIND ' + choice)
         }
 
     }

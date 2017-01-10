@@ -42,6 +42,14 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Sort code                       | 11-11-12                                      |
             | Account number                  | 11111112                                      |
             | DOB                             | 01/12/1975                                    |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 2 (limited to 9)         |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
+
 
     Scenario: Shelly is a sabbatical officer in London student and has sufficient funds
         Given the account has sufficient funds
@@ -68,3 +76,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Sort code                       | 22-22-23                                      |
             | Account number                  | 22222223                                      |
             | DOB                             | 05/12/1986                                    |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 1 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+

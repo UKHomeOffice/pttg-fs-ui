@@ -20,6 +20,19 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
       }
     }
   })
+
+  $stateProvider.state({
+    name: 'financialStatusCalcDetails',
+    url: '/:studentType',
+    title: 'Financial Status : Query',
+    parent: 'financialStatusCalc',
+    views: {
+      'content@': {
+        templateUrl: 'modules/financialstatus/financialstatusDetails.html',
+        controller: 'FinancialstatusDetailsCtrl'
+      }
+    }
+  })
 }])
 
 // fill in the details of the form
@@ -27,10 +40,10 @@ financialstatusModule.controller(
 'FinancialstatusDetailsCtrl', ['$rootScope', '$scope', '$state', '$stateParams', 'FinancialstatusService', 'IOService', '$window', '$timeout',
   function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOService, $window, $timeout) {
     var sType = _.findWhere(FinancialstatusService.getStudentTypes(), {value: $stateParams.studentType})
-
+    $scope.isCalc = FinancialstatusService.isCalc()
     if (!sType) {
     // this is not a valid student type option - abort!
-      $state.go('financialStatus')
+      $state.go(($scope.isCalc) ? 'financialStatusCalc' : 'financialStatus')
       return
     }
 
@@ -240,6 +253,8 @@ financialstatusModule.controller(
             msg: 'Enter a valid number of dependants'
           }
         }
+      },
+      sortCode: {
       },
       accountNumber: {
         length: 8,
