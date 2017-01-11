@@ -65,7 +65,7 @@ class Steps {
         'doctorateQuery'    : uiRoot + '#!/financial-status-query-doctorate',
         'non-doctorateQuery': uiRoot + '#!/financial-status-query-non-doctorate',
         'pgddQuery'         : uiRoot + '#!/financial-status-query-pgdd',
-        'ssoQuery'         : uiRoot + '#!/financial-status-query-sso'
+        'ssoQuery'          : uiRoot + '#!/financial-status-query-sso'
     ]
 
     def pageLocations = [
@@ -74,7 +74,9 @@ class Steps {
         'pgddQuery'         : '#!/financial-status-query-pgdd',
         'ssoQuery'          : '#!/financial-status-query-sso',
         'non-doctorateQuery': '#!/financial-status-query-non-doctorate',
-        'accountNotFound'   : '#!/financial-status-no-record'
+        'accountNotFound'   : '#!/financial-status-no-record',
+
+        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
     ]
 
     def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
@@ -208,11 +210,14 @@ class Steps {
 
     private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
 
+
+
         entries.each { k, v ->
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
-
             assert element.getText() == v
+
+
         }
     }
 
@@ -312,10 +317,19 @@ class Steps {
         return response.getStatusCode();
     }
 
-    @Given("^(?:caseworker|user) is using the financial status service ui\$")
-    public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiRoot)
-        assertCurrentPage('studentType')
+    @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
+    public void user_is_using_the_ui(String service) throws Throwable {
+        if (service.trim() == 'financial status calculator service') {
+            driver.get(uiRoot + pageLocations['studentTypeCalc'])
+            driver.navigate().refresh()
+            assertCurrentPage('studentTypeCalc')
+        } else if (service.trim() == 'financial status service') {
+            driver.get(uiRoot + pageLocations['studentType'])
+            driver.navigate().refresh()
+            assertCurrentPage('studentType')
+        } else {
+            assert false
+        }
     }
 
     @Given("^the (.*) student type is chosen\$")
@@ -326,10 +340,7 @@ class Steps {
 
     @Given("^the default details are\$")
     public void the_default_details_are(DataTable arg1) throws Throwable {
-        // println 'BACKGROUND the default details are';
         defaultFields = arg1
-       // Map<String, String> entries = arg1.asMap(String.class, String.class)
-       // submitEntries(entries)
     }
 
     @Given("^the account has sufficient funds\$")
@@ -441,7 +452,6 @@ class Steps {
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-
         if (defaultFields) {
             Map<String, String> defaultEntries = defaultFields.asMap(String.class, String.class)
             submitEntries(defaultEntries + entries)
@@ -476,14 +486,14 @@ class Steps {
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--newSearch")).click()
+        driver.findElement(By.className("newsearch")).click()
         //assertTextFieldEqualityForTable(expectedResult)
     }
 
     @When("^the edit search button is clicked\$")
     public void the_edit_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--editSearch")).click()
+        driver.findElement(By.className("yoursearch--edit")).click()
     }
 
     @When("^the copy button is clicked\$")
@@ -522,7 +532,43 @@ class Steps {
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+        driver.sleep(200)
+        def actual = driver.currentUrl
+        assert actual.contains('result'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
         assertTextFieldEqualityForTable(expectedResult)
+    }
+
+
+
+    @Then("^the result table contains the following\$")
+    public void the_result_table_contains_the_following(DataTable arg1) throws Throwable {
+        Map<String,String> entries = arg1.asMap(String.class,String.class)
+
+        ArrayList<String> scenarioTable = new ArrayList<>()
+        String[] resultTable = entries.keySet()
+
+        for(String s:resultTable){
+            scenarioTable.add(entries.get(s))
+        }
+
+        for (int j = 0; j < resultTable.size(); j++) {
+            assert scenarioTable.contains(driver.findElement(By.id(toCamelCase(resultTable[j]))).getText())
+        }
+
+
+        int numRows = driver.findElements(By.xpath('//*[@id="resultsTable"]/tbody/tr')).size()
+
+        for(int i=1; i <= numRows; i++) {
+
+//            if (tr) {
+                if (driver.findElement(By.id("resultTimestamp")).getText() != driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()) {
+                    if (driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText() == null) {
+                        break;
+                    }
+                    assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText())
+                }
+//            }
+        }
     }
 
     @Then("^the service displays the following page content\$")

@@ -1,4 +1,4 @@
-Feature: Non Doctorate Content - Tier 4 (General) student (single current account with dependants)
+Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
 
     Background:
         Given the api health check response has status 200
@@ -14,11 +14,11 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Number of dependants            | 1          |
+            | Continuation Course             | No         |
+            | Course type                     | Main       |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -36,7 +36,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Course length            |
             | Estimated leave end date |
             | Result timestamp         |
-            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -70,7 +69,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |
-            | Summary                  |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -101,7 +99,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
             | Course length         |
             | Estimated leave end date |
             | Result timestamp      |
-            | Summary               |
         And the service displays the following your search headers in order
             | Application raised date         |
             | Student type                    |
@@ -129,4 +126,5 @@ Feature: Non Doctorate Content - Tier 4 (General) student (single current accoun
         And the service displays the following your search headers in order
             | Sort code      |
             | Account number |
+
 

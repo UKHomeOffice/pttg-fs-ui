@@ -20,6 +20,19 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
       }
     }
   })
+
+  $stateProvider.state({
+    name: 'financialStatusCalcDetails',
+    url: '/:studentType',
+    title: 'Financial Status : Query',
+    parent: 'financialStatusCalc',
+    views: {
+      'content@': {
+        templateUrl: 'modules/financialstatus/financialstatusDetails.html',
+        controller: 'FinancialstatusDetailsCtrl'
+      }
+    }
+  })
 }])
 
 // fill in the details of the form
@@ -27,10 +40,10 @@ financialstatusModule.controller(
 'FinancialstatusDetailsCtrl', ['$rootScope', '$scope', '$state', '$stateParams', 'FinancialstatusService', 'IOService', '$window', '$timeout',
   function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOService, $window, $timeout) {
     var sType = _.findWhere(FinancialstatusService.getStudentTypes(), {value: $stateParams.studentType})
-
+    $scope.isCalc = FinancialstatusService.isCalc()
     if (!sType) {
     // this is not a valid student type option - abort!
-      $state.go('financialStatus')
+      $state.go(($scope.isCalc) ? 'financialStatusCalc' : 'financialStatus')
       return
     }
 
@@ -113,6 +126,13 @@ financialstatusModule.controller(
         errors: {
           required: {
             summary: 'The course continuation option is invalid'
+          }
+        },
+        onClick: function (opt, scope) {
+          // console.log('onClick', opt, scope)
+          if (opt.value !== 'yes') {
+            var finStatus = FinancialstatusService.getDetails()
+            finStatus.originalCourseStartDate = ''
           }
         }
       },
@@ -210,11 +230,11 @@ financialstatusModule.controller(
           }
 
           if (
-          sType.noDependantsOnCourseLength &&
-          len <= sType.noDependantsOnCourseLength &&
-          n &&
-          finStatus.originalCourseStartDate === ''
-        ) {
+            sType.noDependantsOnCourseLength &&
+            len <= sType.noDependantsOnCourseLength &&
+            n &&
+            finStatus.originalCourseStartDate === ''
+          ) {
             var msg = 'Main applicants cannot be accompanied by dependants on courses of '
             msg += sType.noDependantsOnCourseLength
             msg += ' months or less'
@@ -233,6 +253,8 @@ financialstatusModule.controller(
             msg: 'Enter a valid number of dependants'
           }
         }
+      },
+      sortCode: {
       },
       accountNumber: {
         length: 8,

@@ -23,21 +23,6 @@ Feature: Copy results to paste buffer
             | Course type                     | Main       |
 
 
-    ## test the content that appears above the 'copy' button when the test passed
-    Scenario: summary copy text
-        Given the account has sufficient funds
-        And the financial status check is performed
-        Then the service displays the following result
-            | Copy summary | The check financial status service confirmed that Laura Taylor passed the requirements as the daily closing balance was above the total funds required. |
-
-
-    ## test the content that appears above the 'copy' button when the test failed
-    Scenario: summary copy text
-        Given the account does not have sufficient funds
-        And the financial status check is performed
-        Then the service displays the following result
-            | Copy summary | The check financial status service confirmed that Shelly Smith did not pass the requirements as the daily closing balance was below the total funds required. |
-
 
     ## WARNING this test will only be exectuted in Firefox as PhantomJS and Chrome have proven unreliable
     ## although the actual functionality in the end product is expected to work in all modern browsers

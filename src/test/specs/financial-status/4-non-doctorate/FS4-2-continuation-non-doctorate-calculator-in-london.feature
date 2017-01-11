@@ -51,31 +51,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
  ######### Overall course <12 months In London #############
 
-    Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
-        Given the account does not have sufficient funds
-        When the financial status check is performed
-        Then the service displays the following result
-            | Outcome                         | Not passed                   |
-            | Application Raised Date         | 30/06/2016                   |
-            | Account holder name             | Shelly Smith                 |
-            | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
-            | Course length                   | 7 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 03/10/2016        |
-            | Student type                    | Tier 4 (General) student     |
-            | In London                       | Yes                          |
-            | Course dates checked            | 01/05/2016 to 30/11/2016     |
-            | Total tuition fees              | £8,500.00                    |
-            | Tuition fees already paid       | £0.00                        |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
-            | Entire course length            | 14                           |
-            | Sort code                       | 11-11-11                     |
-            | Account number                  | 11111111                     |
-            | DOB                             | 21/09/1981                   |
-            | Continuation Course             | Yes                          |
-            | Original Course Start Date      | 30/10/2015                   |
-
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
@@ -99,13 +74,16 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Number of dependants            | 1                              |
             | Entire course length            | 16                             |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
-
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Entire course length       | 16                       |
  ###### overall course length 12+ months In London #######
 
     Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
@@ -114,7 +92,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Application Raised Date         | 30/06/2016                   |
-            | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
             | Course length                   | 7 (limited to 9)             |
@@ -127,11 +104,16 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Number of dependants            | 1                            |
             | Entire course length            | 14                           |
-            | Sort code                       | 11-11-11                     |
-            | Account number                  | 11111111                     |
-            | DOB                             | 21/09/1981                   |
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Course length              | 7 (limited to 9)         |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Entire course length       | 14                       |
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
@@ -145,7 +127,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 30/06/2016                     |
-            | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
             | Course length                   | 17 (limited to 9)              |
@@ -157,10 +138,13 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Number of dependants            | 1                              |
             | Entire course length            | 23                             |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
-
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Course length              | 17 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Entire course length       | 23                       |
 
