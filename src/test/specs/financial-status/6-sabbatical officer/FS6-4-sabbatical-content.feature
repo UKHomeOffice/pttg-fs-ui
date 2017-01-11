@@ -31,6 +31,8 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
+            | Continuation Course             |
+
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -57,6 +59,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
+            | Continuation Course             |
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant has less than 28 days funds text write up
@@ -79,6 +82,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
+            | Continuation Course             |
 
 
  ###################################### Section - Check for text on Output  - Insufficient Information ######################################
