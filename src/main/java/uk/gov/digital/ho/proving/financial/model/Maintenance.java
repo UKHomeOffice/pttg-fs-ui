@@ -13,7 +13,7 @@ public final class Maintenance {
     private BigDecimal tuitionFeesAlreadyPaid;
 
     @NotNull(message = "Missing parameter")
-    private Integer numberOfDependants;
+    private Integer dependants;
 
     @NotNull(message = "Missing parameter")
     private BigDecimal accommodationFeesAlreadyPaid;
@@ -22,11 +22,11 @@ public final class Maintenance {
 
     }
 
-    public Maintenance(BigDecimal totalTuitionFees, BigDecimal tuitionFeesAlreadyPaid, BigDecimal accommodationFeesAlreadyPaid, Integer numberOfDependants) {
+    public Maintenance(BigDecimal totalTuitionFees, BigDecimal tuitionFeesAlreadyPaid, BigDecimal accommodationFeesAlreadyPaid, Integer dependants) {
         this.totalTuitionFees = totalTuitionFees;
         this.tuitionFeesAlreadyPaid = tuitionFeesAlreadyPaid;
         this.accommodationFeesAlreadyPaid = accommodationFeesAlreadyPaid;
-        this.numberOfDependants = numberOfDependants;
+        this.dependants = dependants;
     }
 
     public BigDecimal getTotalTuitionFees() {
@@ -53,12 +53,12 @@ public final class Maintenance {
         this.accommodationFeesAlreadyPaid = accommodationFeesAlreadyPaid;
     }
 
-    public Integer getNumberOfDependants() {
-        return numberOfDependants;
+    public Integer getDependants() {
+        return dependants;
     }
 
-    public void setNumberOfDependants(Integer numberOfDependants) {
-        this.numberOfDependants = numberOfDependants;
+    public void setDependants(Integer dependants) {
+        this.dependants = dependants;
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class Maintenance {
         return "Maintenance{" +
             "totalTuitionFees=" + totalTuitionFees +
             ", tuitionFeesAlreadyPaid=" + tuitionFeesAlreadyPaid +
-            ", numberOfDependants=" + numberOfDependants +
+            ", dependants=" + dependants +
             ", accommodationFeesAlreadyPaid=" + accommodationFeesAlreadyPaid +
             '}';
     }
@@ -78,12 +78,12 @@ public final class Maintenance {
         Maintenance that = (Maintenance) o;
         return Objects.equals(totalTuitionFees, that.totalTuitionFees) &&
             Objects.equals(tuitionFeesAlreadyPaid, that.tuitionFeesAlreadyPaid) &&
-            Objects.equals(numberOfDependants, that.numberOfDependants) &&
+            Objects.equals(dependants, that.dependants) &&
             Objects.equals(accommodationFeesAlreadyPaid, that.accommodationFeesAlreadyPaid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalTuitionFees, tuitionFeesAlreadyPaid, numberOfDependants, accommodationFeesAlreadyPaid);
+        return Objects.hash(totalTuitionFees, tuitionFeesAlreadyPaid, dependants, accommodationFeesAlreadyPaid);
     }
 }

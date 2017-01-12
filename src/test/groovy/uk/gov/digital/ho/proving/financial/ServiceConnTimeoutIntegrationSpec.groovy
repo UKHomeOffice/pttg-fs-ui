@@ -25,7 +25,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 class ServiceConnTimeoutIntegrationSpec extends Specification {
 
     def path = "/pttg/financialstatus/v1/t4/accounts/123456/12345678/dailybalancestatus?"
-    def params = "dob=1990-10-04&toDate=2015-01-01&inLondon=true&studentType=nondoctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1&numberOfDependants=1"
+    def params = "dob=1990-10-04&toDate=2015-01-01&inLondon=true&studentType=nondoctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1&dependants=1"
 
     def url
 

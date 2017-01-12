@@ -50,7 +50,7 @@ public class ApiUrls {
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
             .queryParam("tuitionFeesPaid", maintenance.getTuitionFeesAlreadyPaid())
             .queryParam("accommodationFeesPaid", maintenance.getAccommodationFeesAlreadyPaid())
-            .queryParam("dependants", maintenance.getNumberOfDependants())
+            .queryParam("dependants", maintenance.getDependants())
             .queryParam("courseType", course.getCourseType())
             .build()
             .toUri();
