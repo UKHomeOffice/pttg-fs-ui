@@ -51,6 +51,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Course length              | 2 (limited to 9)         |
+            | Entire Course Length       | 6                        |
             | Lowest Balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
 
@@ -89,5 +90,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Course length              | 1 (limited to 9)         |
+            | Entire course length       | 6                        |
             | Estimated Leave End Date   | 22/10/2017               |
 

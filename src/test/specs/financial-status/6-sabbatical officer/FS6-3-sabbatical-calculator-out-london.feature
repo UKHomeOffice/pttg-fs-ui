@@ -51,8 +51,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Course length              | 7 (limited to 9)         |
+            | Entire course length       | 14                       |
             | Lowest Balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
+
 
     Scenario: Laura is a sabbatical officer not in London student and has sufficient funds
         Given the account has sufficient funds
@@ -88,4 +90,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Course length              | 7 (limited to 9)         |
+            | Entire course length       | 14                       |
             | Estimated Leave End Date   | 22/10/2017               |
+

@@ -48,7 +48,6 @@ Feature: Show clear error details when inputs are invalid
             | Account number                  |  |
             | DOB                             |  |
             | Continuation Course             |  |
-
         Then the service displays the following error message
             | validation-error-summary-text | Make sure that all the fields have been completed |
         And the error summary list contains the text
@@ -61,7 +60,7 @@ Feature: Show clear error details when inputs are invalid
             | The account number is invalid                  |
             | The sort code is invalid                       |
             | The date of birth is invalid                   |
-            | The continuation course is invalid            |
+            | The course continuation option is invalid             |
 
 ######################### Validation on the End Date Field #########################
 
@@ -244,4 +243,4 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Continuation Course |  |
         Then the service displays the following error message
-            | dob-error | Enter a valid continuation course |
+            | Continuation Course-error | Select an option |

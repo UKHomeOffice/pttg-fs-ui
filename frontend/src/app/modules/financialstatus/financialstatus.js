@@ -75,7 +75,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseEndDate',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid',
-          // 'continuationCourse',
+          'continuationCourse',
           'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
@@ -88,8 +88,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid'
-          // 'continuationCourse',
-          // 'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
       },
@@ -101,8 +99,6 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'courseType',
           'totalTuitionFees',
           'tuitionFeesAlreadyPaid'
-          // 'continuationCourse',
-          // 'originalCourseStartDate'
         ],
         noDependantsOnCourseLength: null
       }
