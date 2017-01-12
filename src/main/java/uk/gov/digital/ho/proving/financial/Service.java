@@ -24,6 +24,8 @@ import java.time.LocalDate;
 @ControllerAdvice
 public class Service {
 
+    private final String TIER_4 = "t4";
+
     private static Logger LOGGER = LoggerFactory.getLogger(Service.class);
 
     @Autowired
@@ -41,7 +43,7 @@ public class Service {
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
-        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus("t4", account, toDate, course, maintenance, accessToken);
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(TIER_4, account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
     }
 

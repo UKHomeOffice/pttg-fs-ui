@@ -58,6 +58,11 @@ public class FinancialStatusChecker {
 
     private HttpEntity<?> entity = new HttpEntity<>(getHeaders());
 
+
+    private final String TIER_2 = "t2";
+    private final String TIER_4 = "t4";
+    private final String TIER_5 = "t5";
+
     @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, Course course, Maintenance maintenance, String accessToken) {
 
@@ -98,12 +103,12 @@ public class FinancialStatusChecker {
         ThresholdResult thresholdResult = null;
 
         switch (tier.toLowerCase()) {
-            case "t2":
+            case TIER_2:
                 URI t2Uri = apiUrls.t2ThresholdUrlFor(applicantType, dependants);
                 thresholdResult = getForObject(t2Uri, ThresholdResult.class, accessToken);
                 break;
 
-            case "t5":
+            case TIER_5:
                 URI t5Uri = apiUrls.t5ThresholdUrlFor(applicantType, dependants);
                 thresholdResult = getForObject(t5Uri, ThresholdResult.class, accessToken);
                 break;
@@ -139,13 +144,13 @@ public class FinancialStatusChecker {
         LocalDate fromDate = null;
 
         switch (tier) {
-            case "t2":
+            case TIER_2:
                 fromDate = toDate.minusDays(daysToCheckT2T5 - 1);
                 break;
-            case "t4":
+            case TIER_4:
                 fromDate = toDate.minusDays(daysToCheckT4 - 1);
                 break;
-            case "t5":
+            case TIER_5:
                 fromDate = toDate.minusDays(daysToCheckT2T5 - 1);
                 break;
         }
