@@ -6,6 +6,7 @@ Feature: Insufficient Records
         And the doctorate student type is chosen
         Given the account does not have sufficient records
         When the financial status check is performed with
+            | Application raised date         | 11/06/2016 |
             | End date                        | 10/06/2016 |
             | In London                       | No         |
             | Accommodation fees already paid | 0          |

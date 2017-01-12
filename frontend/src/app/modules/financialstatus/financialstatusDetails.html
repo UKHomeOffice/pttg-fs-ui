@@ -10,15 +10,23 @@
 
         <hod-form name="finStatusDetails" submit="detailsSubmit">
 
-            <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered" config="conf.endDate"></hod-date>
+            <hod-date name="applicationRaisedDate" label="Application raised date" field="finStatus.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
 
-            <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
+            <hod-date name="endDate" label="End date of 28-day period" field="finStatus.toDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
 
+            <div ng-if="!isCalc">
+                <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>
+            </div>
+            
             <hod-number name="numberOfDependants" label="Number of dependants" field="finStatus.numberOfDependants" config="conf.numberOfDependants"></hod-number>
 
-            <hod-sortcode name="sortCode" label="Sort code" field="finStatus.sortCode"></hod-sortcode>
+            <div ng-if="!isCalc">
+                <hod-sortcode name="sortCode" label="Sort code" field="finStatus.sortCode" conf="conf.sortCode"></hod-sortcode>
 
-            <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
+                <hod-number name="accountNumber" label="Account number" field="finStatus.accountNumber" config="conf.accountNumber"></hod-number>
+            </div>
+
+            <hod-radio name="courseType" label="Course type" field="finStatus.courseType" options="courseTypeOptions" config="conf.courseType"></hod-radio>
 
             <hod-radio name="inLondon" label="In London?" field="finStatus.inLondon" options="yesNoOptions" config="conf.inLondon"></hod-radio>
 
@@ -26,7 +34,11 @@
 
             <hod-date name="courseEndDate" label="End date of course" field="finStatus.courseEndDate" config="conf.courseEndDate"></hod-date>
 
-            <hod-date name="continuationEndDate" label="Continuation end date" field="finStatus.continuationEndDate" config="conf.continuationEndDate" hint="Optional"></hod-date>
+            <hod-radio name="continuationCourse" label="Is the course a continuation?" field="finStatus.continuationCourse" options="yesNoOptions" config="conf.continuationCourse"></hod-radio>
+
+            <div class="panel panel-border-wide text" ng-if="finStatus.continuationCourse=='yes'">
+                <hod-date name="originalCourseStartDate" label="Original course start date" field="finStatus.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>
+            </div>
 
             <hod-number name="totalTuitionFees" label="Total tuition fees for the first year" field="finStatus.totalTuitionFees" config="conf.totalTuitionFees"></hod-number>
 

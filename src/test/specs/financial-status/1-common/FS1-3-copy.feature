@@ -7,6 +7,7 @@ Feature: Copy results to paste buffer
         And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
+            | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
@@ -18,22 +19,9 @@ Feature: Copy results to paste buffer
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
+            | Continuation Course             | No         |
+            | Course type                     | Main       |
 
-
-    ## test the content that appears above the 'copy' button when the test passed
-    Scenario: summary copy text
-        Given the account has sufficient funds
-        And the financial status check is performed
-        Then the service displays the following result
-            | Copy summary | The check financial status service confirmed that Laura Taylor passed the requirements as the daily closing balance was above the total funds required. |
-
-        
-    ## test the content that appears above the 'copy' button when the test failed
-    Scenario: summary copy text
-        Given the account does not have sufficient funds
-        And the financial status check is performed
-        Then the service displays the following result
-            | Copy summary | The check financial status service confirmed that Shelly Smith did not pass the requirements as the daily closing balance was below the total funds required. |
 
 
     ## WARNING this test will only be exectuted in Firefox as PhantomJS and Chrome have proven unreliable
@@ -70,5 +58,37 @@ Feature: Copy results to paste buffer
             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
             | Number of dependants            | 0                                               |
             | Sort code                       | 11-11-11                                        |
-            | Account number                  | 11111111                                        |
+            | Account number                  | ****1111                                        |
             | Date of birth                   | 27/07/1981                                      |
+            | Application raised date         | 31/05/2015                                      |
+            | Continuation Course             | No                                              |
+            | Leave End Date                  |                                                 |
+            | Date Received                   |                                                 |
+
+    Scenario: copy results when continuation course is selected as yes
+        Given the account has sufficient funds
+        And the financial status check is performed with
+            | Continuation course        | Yes      |
+            | Original course start date | 1/1/2014 |
+        When the copy button is clicked
+        Then the copied text includes
+            | PASSED                          | This applicant meets the financial requirements |
+            | Account holder name             | Laura Taylor                                    |
+            | Total funds required            | £16,090.00                                      |
+            | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
+            | Course length                   | 7 (limited to 9)                                |
+            | Student type                    | Tier 4 (General) student                        |
+            | In London                       | Yes                                             |
+            | Course dates                    | 30/05/2016 to 30/11/2016                        |
+            | Total tuition fees              | £8,500.00                                       |
+            | Tuition fees already paid       | £10.00                                          |
+            | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+            | Number of dependants            | 0                                               |
+            | Sort code                       | 11-11-11                                        |
+            | Account number                  | ****111X                                        |
+            | Date of birth                   | 27/07/1981                                      |
+            | Application raised date         |                                                 |
+            | Continuation Course             | Yes                                             |
+            | Original Course Start Date      |                                                 |
+            | Leave End Date                  |                                                 |
+            | Result timestamp                |                                                 |

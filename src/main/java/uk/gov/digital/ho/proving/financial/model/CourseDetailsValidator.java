@@ -11,7 +11,7 @@ public class CourseDetailsValidator implements ConstraintValidator<CourseDetails
 
     public static final String COURSE_START_DATE_PARAM = "courseStartDate";
     public static final String COURSE_END_DATE_PARAM = "courseEndDate";
-    public static final String CONTINUATION_END_DATE_PARAM = "continuationEndDate";
+    public static final String ORIGINAL_COURSE_START_DATE_PARAM = "originalCourseStartDate";
 
     public static final String IS_NOT_ALLOWED = " is not allowed";
     public static final String IS_REQUIRED = " is required";
@@ -32,8 +32,8 @@ public class CourseDetailsValidator implements ConstraintValidator<CourseDetails
             if(value.getCourseEndDate() != null){
                 return notAllowed(COURSE_END_DATE_PARAM, context);
             }
-            if(value.getContinuationEndDate() != null){
-                return notAllowed(CONTINUATION_END_DATE_PARAM, context);
+            if(value.getOriginalCourseStartDate() != null){
+                return notAllowed(ORIGINAL_COURSE_START_DATE_PARAM, context);
             }
 
             return true;

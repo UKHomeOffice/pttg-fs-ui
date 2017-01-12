@@ -19,6 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 01/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course start date               | 30/05/2016 |
@@ -41,10 +42,18 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Sort code                       | 11-11-14                                      |
             | Account number                  | 11111114                                      |
             | DOB                             | 27/07/1981                                    |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 7 (limited to 9)         |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
 
     Scenario: Laura is a sabbatical officer not in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 19/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | No         |
             | Course start date               | 30/05/2016 |
@@ -66,3 +75,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Sort code                       | 22-22-23                                      |
             | Account number                  | 22222223                                      |
             | DOB                             | 25/10/1982                                    |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 7 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |

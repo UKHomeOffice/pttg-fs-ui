@@ -17,6 +17,8 @@ import uk.gov.digital.ho.proving.financial.integration.*
 import uk.gov.digital.ho.proving.financial.model.CappedValues
 import uk.gov.digital.ho.proving.financial.model.ResponseDetails
 
+import java.time.LocalDate
+
 import static org.hamcrest.core.AllOf.allOf
 import static org.hamcrest.core.Is.is
 import static org.hamcrest.core.StringContains.containsString
@@ -49,7 +51,7 @@ class ServiceSpec extends Specification {
     final String DOB = '1990-10-04'
     final String COURSE_START_DATE = '2016-06-01'
     final String COURSE_END_DATE = '2016-07-01'
-    final String CONTINUATION_END_DATE = '2016-08-01'
+    final String ORIGINAL_COURSE_START_DATE = '2016-04-01'
 
     ObjectMapper mapper = new ServiceConfiguration().getMapper()
 
@@ -90,16 +92,17 @@ class ServiceSpec extends Specification {
 
     }
 
-    def MappingJackson2HttpMessageConverter createMessageConverter() {
+    MappingJackson2HttpMessageConverter createMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter()
         converter.setObjectMapper(new ServiceConfiguration().getMapper())
         converter
     }
 
     ResponseDetails details = new ResponseDetails("200", "OK")
-    CappedValues cappedValues= new CappedValues(100, 9, 3)
+    CappedValues cappedValues= new CappedValues(100, 9)
 
-    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, cappedValues, details))
+
+    String thresholdResponseJson = mapper.writeValueAsString(new ThresholdResult(1, LocalDate.of(2000,1,1), cappedValues, details))
     String passResponseJson = mapper.writeValueAsString(new DailyBalanceStatusResult(ACCOUNT_HOLDER_NAME, true, null, details))
 
     def apiRespondsWith(threshold, balance) {
@@ -129,11 +132,13 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('numberOfDependants', '1')
+                .param('courseType', 'main')
+
         )
 
         then:
@@ -161,11 +166,12 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-            // no continuationEndDate
+            // no originalCourseStartDate
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('numberOfDependants', '1')
+                .param('courseType', 'main')
         )
 
         then:
@@ -219,7 +225,7 @@ class ServiceSpec extends Specification {
                 .param('totalTuitionFees', '1')
                 // missing course start date
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('numberOfDependants', '1')
@@ -246,7 +252,7 @@ class ServiceSpec extends Specification {
                 .param('totalTuitionFees', '1')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('numberOfDependants', '1')
@@ -273,7 +279,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -301,7 +307,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', '99-01-1901')
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -329,7 +335,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', '99-01-1901')
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -357,7 +363,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', '99-01-1901')
+                .param('originalCourseStartDate', '99-01-1901')
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -370,7 +376,7 @@ class ServiceSpec extends Specification {
             andExpect(jsonPath("code", is("0003")))
             andExpect(jsonPath("message", allOf(
                 containsString("ConversionFailedException"),
-                containsString("continuationEndDate"))))
+                containsString("originalCourseStartDate"))))
         }
     }
 
@@ -386,7 +392,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -418,7 +424,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -456,7 +462,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -488,7 +494,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -520,7 +526,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -552,7 +558,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
@@ -582,7 +588,7 @@ class ServiceSpec extends Specification {
                 .param('studentType', 'non-doctorate')
                 .param('courseStartDate', COURSE_START_DATE)
                 .param('courseEndDate', COURSE_END_DATE)
-                .param('continuationEndDate', CONTINUATION_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')

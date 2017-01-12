@@ -19,7 +19,10 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Total funds required  |
             | 28-day period checked |
             | Course length         |
+            | Estimated leave end date |
+            | Result timestamp      |
         And the service displays the following your search headers in order
+            | Application raised date         |
             | Student type                    |
             | In London                       |
             | Course dates                    |
@@ -36,7 +39,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Not passed                                              |
+            | Page dynamic heading | Not passed                                                            |
             | Page dynamic detail  | One or more daily closing balances are below the total funds required |
         And the service displays the following results headers in order
             | Account holder name   |
@@ -45,6 +48,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Course length         |
             | Lowest balance        |
         And the service displays the following your search headers in order
+            | Application raised date         |
             | Student type                    |
             | In London                       |
             | Course dates                    |
@@ -59,13 +63,14 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         Given the account does not have sufficient records
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Not passed                                       |
+            | Page dynamic heading | Not passed                                                          |
             | Page dynamic detail  | The records for this account does not cover the whole 28 day period |
         And the service displays the following results headers in order
             | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
         And the service displays the following your search headers in order
+            | Application raised date         |
             | Student type                    |
             | In London                       |
             | Course dates                    |

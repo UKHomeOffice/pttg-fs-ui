@@ -152,9 +152,9 @@ gulp.task('startwatch', function() {
 });
 
 gulp.task('test', function (done) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js'
-  }, done);
+  //karma.start({
+    //configFile: __dirname + '/karma.conf.js'
+ // }, done);
 });
 
 gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify']);

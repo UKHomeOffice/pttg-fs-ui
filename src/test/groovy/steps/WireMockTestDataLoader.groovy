@@ -38,7 +38,6 @@ class WireMockTestDataLoader {
     def stubTestData(String fileName, String url) {
 
         def json = jsonFromFile(fileName)
-
         if (json == null) {
             assert false: "No test data file was loaded for $fileName from directory $dataDirName - " +
                 "Please add it or check filename is correct"

@@ -30,11 +30,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And caseworker is using the financial status service ui
         And the non-doctorate student type is chosen
         And the default details are
+            | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | continuation end date    |            |
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
@@ -42,6 +42,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
+            | Continuation Course             | No         |
+            | Course type                     | Main       |
 
  ######### Overall course <12 months In London #############
 
@@ -50,11 +52,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                         | Not passed                   |
-            | Account holder name             | Shelly Smith                 |
-            | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
-            | Course length                   | 7 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 03/10/2016        |
+            | Application Raised Date         | 31/05/2016                   |
             | Student type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
@@ -65,8 +63,16 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
+            | Continuation Course             | No                           |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 7 (limited to 9)         |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
 
-
+   # //*[@id="resultsTable"]/tbody/tr[1]/td
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
@@ -77,10 +83,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
             | Outcome                         | Passed                         |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Course length                   | 9 (limited to 9)               |
+            | Application Raised Date         | 31/05/2016                     |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Course dates checked            | 30/05/2016 to 30/01/2017       |
@@ -91,15 +94,23 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
+            | Continuation Course             | No                             |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
 
  ###### overall course length 12+ months In London #######
 
-    Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
+    Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds2
         Given the account does not have sufficient funds
         When the financial status check is performed with
             | Course end date | 30/01/2017 |
         Then the service displays the following result
             | Outcome                         | Not passed                   |
+            | Application Raised Date         | 31/05/2016                   |
             | Account holder name             | Shelly Smith                 |
             | Total funds required            | £16,090.00                   |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
@@ -115,9 +126,17 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
+            | Continuation Course             | No                           |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
 
 
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
+    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds1
         Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 30/05/2017 |
@@ -127,11 +146,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | DOB                             | 06/04/1989 |
         Then the service displays the following result
             | Outcome                         | Passed                         |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
+            | Application Raised Date         | 31/05/2016                     |
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
-            | Course length                   | 13 (limited to 9)              |
             | Student Type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
@@ -141,3 +157,12 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
+            | Continuation Course             | No                             |
+            | Estimated Leave End Date        | 22/10/2017                     |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Course length              | 13 (limited to 9)        |
+            | Estimated Leave End Date   | 22/10/2017               |
+

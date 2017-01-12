@@ -14,16 +14,13 @@ public final class CappedValues {
 
     private final BigDecimal accommodationFeesPaid;
     private final int courseLength;
-    private final int continuationLength;
 
     @JsonCreator
     public CappedValues(@JsonProperty("accommodationFeesPaid") BigDecimal accommodationFeesPaid,
-                        @JsonProperty("courseLength") int courseLength,
-                        @JsonProperty("continuationLength") int continuationLength
+                        @JsonProperty("courseLength") int courseLength
     ) {
         this.accommodationFeesPaid = accommodationFeesPaid;
         this.courseLength = courseLength;
-        this.continuationLength = continuationLength;
     }
 
     public BigDecimal getAccommodationFeesPaid() {
@@ -33,16 +30,12 @@ public final class CappedValues {
     public int getCourseLength() {
         return courseLength;
     }
-    public int getContinuationLength() {
-        return continuationLength;
-    }
 
     @Override
     public String toString() {
         return "CappedValues{" +
             "accommodationFeesPaid=" + accommodationFeesPaid +
             ", courseLength=" + courseLength +
-            ", continuationLength=" + continuationLength +
             '}';
     }
 
@@ -54,7 +47,6 @@ public final class CappedValues {
         CappedValues that = (CappedValues) o;
 
         if (courseLength != that.courseLength) return false;
-        if (continuationLength != that.continuationLength) return false;
         return accommodationFeesPaid != null ? accommodationFeesPaid.equals(that.accommodationFeesPaid) : that.accommodationFeesPaid == null;
 
     }
@@ -63,7 +55,6 @@ public final class CappedValues {
     public int hashCode() {
         int result = accommodationFeesPaid != null ? accommodationFeesPaid.hashCode() : 0;
         result = 31 * result + courseLength;
-        result = 31 * result + continuationLength;
         return result;
     }
 }
