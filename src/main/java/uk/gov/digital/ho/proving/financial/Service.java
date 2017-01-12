@@ -20,7 +20,7 @@ import java.time.LocalDate;
  * @Author Home Office Digital
  */
 @RestController
-@RequestMapping(path = "/pttg/financialstatusservice/v1/accounts/")
+@RequestMapping(path = "/pttg/financialstatus/v1/")
 @ControllerAdvice
 public class Service {
 
@@ -33,7 +33,7 @@ public class Service {
     private ApiAvailabilityChecker apiAvailabilityChecker;
 
 
-    @RequestMapping(path = "{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = "t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(
         @Valid Account account,
         @Valid Course course,
@@ -43,9 +43,24 @@ public class Service {
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
 
-        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(account, toDate, course, maintenance, accessToken);
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus("t4", account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
     }
+
+    @RequestMapping(path = "{tier:t2|t5}/accounts/{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity status(
+        @Valid Account account,
+        @PathVariable String tier,
+        @RequestParam String applicantType,
+        @RequestParam Integer dependants,
+        @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
+    ) {
+        LOGGER.debug("Status for: account: {}, applicantType: {}, dependants: {}", account, applicantType, dependants);
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(tier, account, toDate, null, null, accessToken);
+        return ResponseEntity.ok(result);
+    }
+
 
 
     @RequestMapping(path = "availability", method = RequestMethod.GET, produces = "application/json")

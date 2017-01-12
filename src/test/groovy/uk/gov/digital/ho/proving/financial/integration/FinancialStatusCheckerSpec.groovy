@@ -24,6 +24,7 @@ class FinancialStatusCheckerSpec extends Specification {
     public static final String ACCOUNT_HOLDER_NAME = "Ray Purchase"
     FinancialStatusChecker checker
 
+    String tier = "t4";
     LocalDate dob = LocalDate.of(1980,1,1);
     Account account = new Account("", "", dob)
     LocalDate toDate = LocalDate.now()
@@ -61,11 +62,11 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.thresholdUrlFor(*_)
-        1 * urls.dailyBalanceStatusUrlFor(*_)
+        1 * urls.t4ThresholdUrlFor(*_)
+        1 * urls.t4DailyBalanceStatusUrlFor(*_)
     }
 
     def 'uses result of threshold for daily balance status call'() {
@@ -76,25 +77,25 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.dailyBalanceStatusUrlFor(_, 123.45, _, _)
+        1 * urls.t4DailyBalanceStatusUrlFor(_, 123.45, _, _)
     }
 
     @Unroll("Date range is inclusive, so when period is #period days, then there are #between days between from and to")
     def 'calculates fromDate so that fromDate to toDate inclusive equals daysToCheck'() {
 
         given:
-        checker.daysToCheck = period
+        checker.daysToCheckT4 = period
         template.exchange(_, _, _, ThresholdResult.class) >> thresholdResponse
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.dailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
+        1 * urls.t4DailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
 
         where:
         period | between
@@ -105,13 +106,13 @@ class FinancialStatusCheckerSpec extends Specification {
     def 'adds calculated threshold and fromDate to outgoing result'() {
 
         given:
-        checker.daysToCheck = 10
+        checker.daysToCheckT4 = 10
         thresholdOf(123.45)
         template.exchange(_, _, _, ThresholdResult.class) >> thresholdResponse
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        def response = checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        def response = checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
         response.minimum == 123.45
@@ -130,7 +131,7 @@ class FinancialStatusCheckerSpec extends Specification {
         1 * auditor.publishEvent(_) >> {args -> event2 = args[0].auditEvent}
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
 
