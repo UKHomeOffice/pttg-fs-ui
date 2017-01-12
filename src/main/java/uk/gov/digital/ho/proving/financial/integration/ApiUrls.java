@@ -66,14 +66,12 @@ public class ApiUrls {
         return expanded;
     }
 
-    public URI t2ThresholdUrlFor(Course course, String applicantType, Integer dependants) {
+    public URI t2ThresholdUrlFor(String applicantType, Integer dependants) {
 
         LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceT2Endpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT2Endpoint)
             .queryParam("applicantType", applicantType)
-            .queryParam("courseStartDate", course.getCourseStartDate())
-            .queryParam("courseEndDate", course.getCourseEndDate())
             .queryParam("dependants", dependants)
             .build()
             .toUri();
@@ -82,14 +80,12 @@ public class ApiUrls {
         return expanded;
     }
 
-    public URI t5ThresholdUrlFor(Course course, String applicantType, Integer dependants) {
+    public URI t5ThresholdUrlFor(String applicantType, Integer dependants) {
 
         LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceT5Endpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT5Endpoint)
             .queryParam("applicantType", applicantType)
-            .queryParam("courseStartDate", course.getCourseStartDate())
-            .queryParam("courseEndDate", course.getCourseEndDate())
             .queryParam("dependants", dependants)
             .build()
             .toUri();
