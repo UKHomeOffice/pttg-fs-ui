@@ -24,20 +24,14 @@ public class ApiUrls {
     @Value("${api.root}")
     private String apiRoot;
 
-    @Value("${api.dailybalance.t4.endpoint}")
-    private String apiDailyBalanceT4Endpoint;
+    @Value("${api.dailybalance.endpoint}")
+    private String apiDailyBalanceEndpoint;
 
     @Value("${api.threshold.t4.endpoint}")
     private String apiThresholdT4Endpoint;
 
-    @Value("${api.dailybalance.t2.endpoint}")
-    private String apiDailyBalanceT2Endpoint;
-
     @Value("${api.threshold.t2.endpoint}")
     private String apiThresholdT2Endpoint;
-
-    @Value("${api.dailybalance.t5.endpoint}")
-    private String apiDailyBalanceT5Endpoint;
 
     @Value("${api.threshold.t5.endpoint}")
     private String apiThresholdT5Endpoint;
@@ -45,7 +39,7 @@ public class ApiUrls {
 
     public URI t4ThresholdUrlFor(Course course, Maintenance maintenance) {
 
-        LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceT4Endpoint);
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT4Endpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT4Endpoint)
             .queryParam("inLondon", course.getInLondon())
@@ -68,7 +62,7 @@ public class ApiUrls {
 
     public URI t2ThresholdUrlFor(String applicantType, Integer dependants) {
 
-        LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceT2Endpoint);
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT2Endpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT2Endpoint)
             .queryParam("applicantType", applicantType)
@@ -82,7 +76,7 @@ public class ApiUrls {
 
     public URI t5ThresholdUrlFor(String applicantType, Integer dependants) {
 
-        LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceT5Endpoint);
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT5Endpoint);
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT5Endpoint)
             .queryParam("applicantType", applicantType)
@@ -94,39 +88,9 @@ public class ApiUrls {
         return expanded;
     }
 
-    public URI t4DailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
+    public URI dailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
 
-        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceT4Endpoint)
-            .queryParam("dob", account.getDob())
-            .queryParam("minimum", totalFundsRequired.toPlainString())
-            .queryParam("fromDate", from)
-            .queryParam("toDate", to)
-            .buildAndExpand(account.getSortCode(), account.getAccountNumber())
-            .toUri();
-
-        LOGGER.debug(expanded.toString());
-
-        return expanded;
-    }
-
-    public URI t2DailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
-
-        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceT2Endpoint)
-            .queryParam("dob", account.getDob())
-            .queryParam("minimum", totalFundsRequired.toPlainString())
-            .queryParam("fromDate", from)
-            .queryParam("toDate", to)
-            .buildAndExpand(account.getSortCode(), account.getAccountNumber())
-            .toUri();
-
-        LOGGER.debug(expanded.toString());
-
-        return expanded;
-    }
-
-    public URI t5DailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
-
-        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceT5Endpoint)
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceEndpoint)
             .queryParam("dob", account.getDob())
             .queryParam("minimum", totalFundsRequired.toPlainString())
             .queryParam("fromDate", from)

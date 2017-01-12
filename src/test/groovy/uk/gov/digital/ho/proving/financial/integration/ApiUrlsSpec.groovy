@@ -28,7 +28,7 @@ class ApiUrlsSpec extends Specification {
 
         apiUrls.apiRoot = root
         apiUrls.apiThresholdT4Endpoint = thresholdEndpoint
-        apiUrls.apiDailyBalanceT4Endpoint = balanceEndpoint
+        apiUrls.apiDailyBalanceEndpoint = balanceEndpoint
     }
 
 
@@ -59,7 +59,7 @@ class ApiUrlsSpec extends Specification {
         LocalDate to = LocalDate.of(2016, 1, 28)
 
         when:
-        def url = apiUrls.t4DailyBalanceStatusUrlFor(account, totalFundsRequired, from, to)
+        def url = apiUrls.dailyBalanceStatusUrlFor(account, totalFundsRequired, from, to)
 
         then:
         url.host == 'localhost'

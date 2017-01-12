@@ -66,7 +66,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
         then:
         1 * urls.t4ThresholdUrlFor(*_)
-        1 * urls.t4DailyBalanceStatusUrlFor(*_)
+        1 * urls.dailyBalanceStatusUrlFor(*_)
     }
 
     def 'uses result of threshold for daily balance status call'() {
@@ -80,7 +80,7 @@ class FinancialStatusCheckerSpec extends Specification {
         checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.t4DailyBalanceStatusUrlFor(_, 123.45, _, _)
+        1 * urls.dailyBalanceStatusUrlFor(_, 123.45, _, _)
     }
 
     @Unroll("Date range is inclusive, so when period is #period days, then there are #between days between from and to")
@@ -95,7 +95,7 @@ class FinancialStatusCheckerSpec extends Specification {
         checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.t4DailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
+        1 * urls.dailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
 
         where:
         period | between

@@ -99,7 +99,7 @@ public class FinancialStatusChecker {
 
         switch (tier.toLowerCase()) {
             case "t2":
-                URI t2Uri = apiUrls.t5ThresholdUrlFor(applicantType, dependants);
+                URI t2Uri = apiUrls.t2ThresholdUrlFor(applicantType, dependants);
                 thresholdResult = getForObject(t2Uri, ThresholdResult.class, accessToken);
                 break;
 
@@ -126,27 +126,9 @@ public class FinancialStatusChecker {
 
         LocalDate fromDate = daysBefore(toDate, tier);
 
-        DailyBalanceStatusResult dailyBalanceStatusResult = null;
-
-        switch (tier.toLowerCase()) {
-            case "t4":
-                URI t4Uri = apiUrls.t4DailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
-                dailyBalanceStatusResult = getForObject(t4Uri, DailyBalanceStatusResult.class, accessToken)
-                    .withFromDate(fromDate);
-                break;
-
-            case "t2":
-                URI t2Uri = apiUrls.t2DailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
-                dailyBalanceStatusResult = getForObject(t2Uri, DailyBalanceStatusResult.class, accessToken)
-                    .withFromDate(fromDate);
-                break;
-
-            case "t5":
-                URI t5Uri = apiUrls.t5DailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
-                dailyBalanceStatusResult = getForObject(t5Uri, DailyBalanceStatusResult.class, accessToken)
-                    .withFromDate(fromDate);
-                break;
-        }
+        URI uri = apiUrls.dailyBalanceStatusUrlFor(account, totalFundsRequired, fromDate, toDate);
+        DailyBalanceStatusResult dailyBalanceStatusResult = getForObject(uri, DailyBalanceStatusResult.class, accessToken)
+            .withFromDate(fromDate);
 
         LOGGER.debug("Daily balance status result: {}", value("dailyBalanceStatusResult", dailyBalanceStatusResult));
         return dailyBalanceStatusResult;

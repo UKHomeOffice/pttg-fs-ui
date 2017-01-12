@@ -32,7 +32,6 @@ public class Service {
     @Autowired
     private ApiAvailabilityChecker apiAvailabilityChecker;
 
-
     @RequestMapping(path = "t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(
         @Valid Account account,
@@ -42,7 +41,6 @@ public class Service {
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
-
         FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus("t4", account, toDate, course, maintenance, accessToken);
         return ResponseEntity.ok(result);
     }
@@ -61,15 +59,9 @@ public class Service {
         return ResponseEntity.ok(result);
     }
 
-
-
     @RequestMapping(path = "availability", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity availability(){
         return apiAvailabilityChecker.check();
     }
-
-
-
-
 
 }

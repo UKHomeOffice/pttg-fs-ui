@@ -68,7 +68,7 @@ class ServiceSpec extends Specification {
     def setup() {
 
         apiUrls.apiRoot = ''
-        apiUrls.apiDailyBalanceT4Endpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
+        apiUrls.apiDailyBalanceEndpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
         apiUrls.apiThresholdT4Endpoint = "/pttg/financialstatus/v1/t4/maintenance/threshold"
 
         RestTemplate restTemplate = new RestTemplate()
