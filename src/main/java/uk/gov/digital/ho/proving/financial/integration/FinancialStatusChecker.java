@@ -65,7 +65,7 @@ public class FinancialStatusChecker {
         auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, course, maintenance)));
         LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, Course: {}, Maintenance: {}", account, toDate, course, maintenance);
 
-        ThresholdResult thresholdResult = getThreshold(tier, course, maintenance, accessToken);
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
         DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(tier, account, toDate, thresholdResult.getThreshold(), accessToken);
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
@@ -75,15 +75,29 @@ public class FinancialStatusChecker {
         return fundingCheckResponse;
     }
 
-    private ThresholdResult getThreshold(String tier, Course course, Maintenance maintenance, String accessToken) {
+    @Retryable(interceptor = "connectionExceptionInterceptor")
+    public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, String applicantType, Integer dependants, String accessToken) {
+
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, null, applicantType, dependants)));
+        LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, String: {}, Integer: {}", account, toDate, applicantType, dependants);
+
+        ThresholdResult thresholdResult = getThreshold(tier,null,  applicantType, dependants, accessToken);
+        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(tier, account, toDate, thresholdResult.getThreshold(), accessToken);
+
+        FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
+
+        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, auditData(fundingCheckResponse)));
+
+        return fundingCheckResponse;
+    }
+
+
+    private ThresholdResult getThreshold(String tier, Course course, String applicantType, Integer fependants , String accessToken) {
 
         ThresholdResult thresholdResult = null;
 
         switch (tier.toLowerCase()) {
-            case "t4":
-                URI t4Uri = apiUrls.t4ThresholdUrlFor(course, maintenance);
-                thresholdResult = getForObject(t4Uri, ThresholdResult.class, accessToken);
-                break;
             case "t2":
                 URI t2Uri = apiUrls.t5ThresholdUrlFor(course, "xxx", -1);
                 thresholdResult = getForObject(t2Uri, ThresholdResult.class, accessToken);
@@ -94,6 +108,15 @@ public class FinancialStatusChecker {
                 thresholdResult = getForObject(t5Uri, ThresholdResult.class, accessToken);
                 break;
         }
+
+        LOGGER.debug("Threshold result: {}", value("thresholdResult", thresholdResult));
+        return thresholdResult;
+    }
+
+    private ThresholdResult getThreshold(Course course, Maintenance maintenance, String accessToken) {
+
+        URI t4Uri = apiUrls.t4ThresholdUrlFor(course, maintenance);
+        ThresholdResult  thresholdResult = getForObject(t4Uri, ThresholdResult.class, accessToken);
 
         LOGGER.debug("Threshold result: {}", value("thresholdResult", thresholdResult));
         return thresholdResult;
@@ -176,6 +199,21 @@ public class FinancialStatusChecker {
 
         return auditData;
     }
+
+    private Map<String, Object> auditData(Account account, LocalDate toDate, Course course, String applicantType, Integer dependants) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "daily-balance-status");
+        auditData.put("account", account);
+        auditData.put("toDate", toDate.format(DateTimeFormatter.ISO_DATE));
+        auditData.put("course", course);
+        auditData.put("applicantType", applicantType);
+        auditData.put("dependants", dependants);
+
+        return auditData;
+    }
+
 
     private Map<String, Object> auditData(FundingCheckResponse response) {
 

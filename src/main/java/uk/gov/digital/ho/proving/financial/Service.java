@@ -57,7 +57,7 @@ public class Service {
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Status for: account: {}, applicantType: {}, dependants: {}", account, applicantType, dependants);
-        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(tier, account, toDate, null, null, accessToken);
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(tier, account, toDate, applicantType, dependants, accessToken);
         return ResponseEntity.ok(result);
     }
 
