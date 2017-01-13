@@ -1,0 +1,22 @@
+<fieldset class="form-group" ng-class="{error: displayError}" ng-hide="config.hidden" id="{{ config.id }}-wrapper">
+  <legend class="form-label-bold">{{ label }}</legend>
+  <div class="form-date" id="{{ config.id }}">
+    <span class="form-hint">{{ hint }}</span>
+    <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
+
+    <div class="form-group form-group-day">
+      <label for="{{ config.id }}Day">Day</label>
+      <input class="form-control" name="{{ name }}Day" id="{{ config.id }}Day" type="text" ng-model="data.day" ng-change="dateChanged()" autocomplete="off" maxlength="2" />
+    </div>
+
+    <div class="form-group form-group-month">
+      <label for="{{ config.id }}Month">Month</label>
+      <input class="form-control" name="{{ name }}Month" id="{{ config.id }}Month" type="text" ng-model="data.month" ng-change="dateChanged()" autocomplete="off" maxlength="2" />
+    </div>
+
+    <div class="form-group form-group-year">
+      <label for="{{ config.id }}Year">Year</label>
+      <input class="form-control" name="{{ name }}Year" id="{{ config.id }}Year" type="text" ng-model="data.year" ng-change="dateChanged()" autocomplete="off" maxlength="4" />
+    </div>
+  </div>
+</fieldset>

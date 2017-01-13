@@ -1,0 +1,12 @@
+{
+    "accountHolderName" : "Shelly Smith",
+    "pass" : false,
+    "failureReason" : {
+        "lowestBalanceDate": "2016-06-01",
+        "lowestBalanceValue": 1574.90
+    },
+    "status" : {
+        "code" : "200",
+        "message" : "OK"
+    }
+}

@@ -12,4 +12,4 @@ Feature: Show clear error details when inputs are invalid - Tier 2, 4 or 5
         And caseworker is using the financial status service ui
         When the student type choice is submitted
         Then the service displays the following error message
-            | application-type-error | Select an option |
+            | applicant-type-error | Select an option |

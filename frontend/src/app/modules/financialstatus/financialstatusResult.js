@@ -20,7 +20,7 @@ financialstatusModule.constant('RESULT_TEXT', {
   passed: 'Passed',
   notpassed: 'Not passed',
   meetsreq: 'This applicant meets the financial requirements',
-  day28cover: 'The records for this account does not cover the whole 28 day period',
+  day28cover: 'The records for this account does not cover the whole {{n}} day period',
   balancesbelow: 'One or more daily closing balances are below the total funds required',
   datamismatch: 'the account number, sort code and date of birth do not match a Barclays account',
   accesscond: 'One or more of the following conditions prevented us from accessing the account:',
@@ -164,7 +164,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     if (!isCalc) {
       summary.push({
         id: 'maintenancePeriodChecked',
-        label: '28-day period checked',
+        label: ((student.tier === 4) ? 28 : 90) + '-day period checked',
         value: $filter('dateDisplay')(data.periodCheckedFrom) + ' to ' + $filter('dateDisplay')(reqdata.toDate)
       })
     }
@@ -280,14 +280,14 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     // default criteria list we're going to show
     var criteriaList = {
       applicationRaisedDate: true,
-      studentType: true,
+      applicantType: true,
       courseType: (student.hiddenFields.indexOf('courseType') === -1),
-      inLondon: true,
+      inLondon: (student.hiddenFields.indexOf('inLondon') === -1),
       courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1),
       continuationCourse: (student.hiddenFields.indexOf('continuationCourse') === -1),
       tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1),
       accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1),
-      numberOfDependants: true,
+      dependants: (student.hiddenFields.indexOf('dependants') === -1),
       bankAccount: !isCalc,
       dob: !isCalc
     }
@@ -309,10 +309,10 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     }
 
     // add the criteria
-    if (criteriaList.studentType) {
+    if (criteriaList.applicantType) {
       criteria.push({
-        id: 'studentType',
-        label: 'Student type',
+        id: 'applicantType',
+        label: 'Applicant type',
         value: student.full
       })
     }
@@ -393,11 +393,11 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       })
     }
 
-    if (criteriaList.numberOfDependants) {
+    if (criteriaList.dependants) {
       criteria.push({
-        id: 'numberOfDependants',
+        id: 'dependants',
         label: 'Number of dependants',
-        value: reqdata.numberOfDependants
+        value: reqdata.dependants
       })
     }
 
@@ -467,7 +467,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     // setup the results service object with what we already know
     var resServ = FinancialstatusResultService
     var finStatus = FinancialstatusService.getDetails()
-    var sType = FinancialstatusService.getStudentTypeByID(finStatus.studentType)
+    var sType = FinancialstatusService.getApplicantTypeByID(finStatus.applicantType)
 
     resServ.setStudent(sType)
     resServ.setResponse(resdata)
@@ -483,7 +483,7 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     // set the text
     var text = resServ.getText(state)
     $scope.heading = text.heading
-    $scope.reason = text.reason
+    $scope.reason = text.reason.replace('{{n}}', (sType.tier === 4) ? 28 : 90)
     $scope.reasonInfo = text.reasonInfo
 
     if (!$scope.isCalc) {
@@ -505,9 +505,9 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     // edit search button
     $scope.editSearch = function (e) {
       if (FinancialstatusService.isCalc()) {
-        $state.go('financialStatusCalcDetails', {studentType: sType.value})
+        $state.go('financialStatusCalcDetails', {applicantType: sType.value})
       } else {
-        $state.go('financialStatusDetails', {studentType: sType.value})
+        $state.go('financialStatusDetails', {applicantType: sType.value})
       }
     }
 

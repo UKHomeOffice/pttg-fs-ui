@@ -24,7 +24,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Result timestamp      |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Student type                    |
+            | Applicant type                    |
             | In London                       |
             | Accommodation fees already paid |
             | Number of dependants            |

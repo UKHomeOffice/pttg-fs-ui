@@ -1,0 +1,625 @@
+Searching 34 files for "| Dependants"
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/1-common/FS1-1-edit_button.feature:
+   14              | End Date                        | 01/05/2016 |
+   15              | DOB                             | 29/07/1978 |
+   16:             | Dependants                      | 0          |
+   17              | Sort code                       | 33-33-33   |
+   18              | Account number                  | 33333333   |
+   ..
+   31              | End Date                        | 01/05/2016 |
+   32              | DOB                             | 29/07/1978 |
+   33:             | Dependants                      | 0          |
+   34              | Sort code                       | 33-33-33   |
+   35              | Account number                  | 33333333   |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/1-common/FS1-1-edit_button_nonbarclays.feature:
+   13              | Application raised date         | 02/05/2016 |
+   14              | End Date                        | 01/05/2016 |
+   15:             | Dependants            | 0          |
+   16              | In London                       | No         |
+   17              | Course Start Date               | 30/05/2016 |
+   ..
+   27              | Application raised date         | 02/05/2016 |
+   28              | End Date                        | 01/05/2016 |
+   29:             | Dependants            | 0          |
+   30              | In London                       | No         |
+   31              | Course Start Date               | 30/05/2016 |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/1-common/FS1-3-copy-nonbarclays.feature:
+   16              | Tuition fees already paid       | 10         |
+   17              | Accommodation fees already paid | 20         |
+   18:             | Dependants            | 0          |
+   19              | Continuation Course             | No         |
+   20              | Course type                     | Main       |
+   ..
+   41              | Tuition fees already paid       | £10.00                                          |
+   42              | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+   43:             | Dependants            | 0                                               |
+   44              | Application raised date         | 31/05/2015                                      |
+   45              | Continuation Course             | No                                              |
+   ..
+   63              | Tuition fees already paid       | £10.00                                          |
+   64              | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+   65:             | Dependants            | 0                                               |
+   66              | Application raised date         |                                                 |
+   67              | Continuation Course             | Yes                                             |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/1-common/FS1-3-copy.feature:
+   16              | Tuition fees already paid       | 10         |
+   17              | Accommodation fees already paid | 20         |
+   18:             | Dependants            | 0          |
+   19              | Sort code                       | 11-11-11   |
+   20              | Account number                  | 11111111   |
+   ..
+   57              | Tuition fees already paid       | £10.00                                          |
+   58              | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+   59:             | Dependants            | 0                                               |
+   60              | Sort code                       | 11-11-11                                        |
+   61              | Account number                  | ****1111                                        |
+   ..
+   84              | Tuition fees already paid       | £10.00                                          |
+   85              | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+   86:             | Dependants            | 0                                               |
+   87              | Sort code                       | 11-11-11                                        |
+   88              | Account number                  | ****111X                                        |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/3-doctorate/FS3-1-doctorate-input-validation.feature:
+   25              | In London                       | Yes        |
+   26              | Accommodation fees already paid | 0          |
+   27:             | Dependants                      | 0          |
+   28              | Sort code                       | 111111     |
+   29              | Account number                  | 11111111   |
+   ..
+   38              | In London                       |  |
+   39              | Accommodation fees already paid |  |
+   40:             | Dependants            |  |
+   41              | Sort code                       |  |
+   42              | Account number                  |  |
+   ..
+  134      Scenario: Case Worker does NOT enter Dependants
+  135          When the financial status check is performed with
+  136:             | Dependants |  |
+  137          Then the service displays the following error message
+  138:             | Dependants-error | Enter a valid number of dependants |
+  139  
+  140      Scenario: Case Worker enters invalid Dependants - not numbers 0-9
+  141          When the financial status check is performed with
+  142:             | Dependants | A |
+  143          Then the service displays the following error message
+  144:             | Dependants-error | Enter a valid number of dependants |
+  145  
+  146      Scenario: Case Worker enters invalid Dependants - negative
+  147          When the financial status check is performed with
+  148:             | Dependants | -1 |
+  149          Then the service displays the following error message
+  150:             | Dependants-error | Enter a valid number of dependants |
+  151  
+  152      Scenario: Case Worker enters invalid Dependants - fractional
+  153          When the financial status check is performed with
+  154:             | Dependants | 1.1 |
+  155          Then the service displays the following error message
+  156:             | Dependants-error | Enter a valid number of dependants |
+  157  
+  158          ######################### Validation on the Date of birth Field #########################
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/3-doctorate/FS3-2-doctorate-calculator-in-london.feature:
+   20              | In London                       | Yes        |
+   21              | Accommodation fees already paid | 100        |
+   22:             | Dependants            | 0          |
+   23              | Sort code                       | 22-22-23   |
+   24              | Account number                  | 22222223   |
+   ..
+   37              | In London                       | Yes                                                   |
+   38              | Accommodation fees already paid | £100.00 (limited to £1,265.00)                        |
+   39:             | Dependants            | 0                                                     |
+   40              | Sort code                       | 22-22-23                                              |
+   41              | Account number                  | 22222223                                              |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/3-doctorate/FS3-3-doctorate-calculator-out-london.feature:
+   24              | In London                       | No         |
+   25              | Accommodation fees already paid | 265        |
+   26:             | Dependants            | 0          |
+   27              | Sort code                       | 22-22-23   |
+   28              | Account number                  | 22222223   |
+   ..
+   36              | In London                       | No                                                    |
+   37              | Accommodation fees already paid | £265.00 (limited to £1,265.00)                        |
+   38:             | Dependants            | 0                                                     |
+   39              | Sort code                       | 22-22-23                                              |
+   40              | Account number                  | 22222223                                              |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/3-doctorate/FS3-5-doctorate-insufficient-information.feature:
+   14              | In London                       | No         |
+   15              | Accommodation fees already paid | 0          |
+   16:             | Dependants            | 0          |
+   17              | Sort code                       | 99-99-99   |
+   18              | Account number                  | 99999999   |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/3-doctorate/FS4-6-doctorate-record-count.feature:
+   11              | In London                       | No         |
+   12              | Accommodation fees already paid | 0          |
+   13:             | Dependants            | 0          |
+   14              | Sort code                       | 11-11-11   |
+   15              | Account number                  | 11111111   |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-1-non-doctorate-input-validation-nonbarclays.feature:
+   25              | Tuition fees already paid       | 0          |
+   26              | Accommodation fees already paid | 0          |
+   27:             | Dependants            | 0          |
+   28              | Continuation Course             | No         |
+   29              | Course type                     | Main       |
+   ..
+   42              | Tuition fees already paid       |  |
+   43              | Accommodation fees already paid |  |
+   44:             | Dependants            |  |
+   45              | Continuation Course             |  |
+   46              | Course type                     |  |
+   ..
+  211      Scenario: Case Worker does NOT enter Dependants
+  212          When the financial status check is performed with
+  213:             | Dependants |  |
+  214          Then the service displays the following error message
+  215:             | Dependants-error | Enter a valid number of dependants |
+  216  
+  217      Scenario: Case Worker enters invalid Dependants - not numbers 0-9
+  218          When the financial status check is performed with
+  219:             | Dependants | A |
+  220          Then the service displays the following error message
+  221:             | Dependants-error | Enter a valid number of dependants |
+  222  
+  223      Scenario: Case Worker enters invalid Dependants - negative
+  224          When the financial status check is performed with
+  225:             | Dependants | -1 |
+  226          Then the service displays the following error message
+  227:             | Dependants-error | Enter a valid number of dependants |
+  228  
+  229      Scenario: Case Worker enters invalid Dependants - fractional
+  230          When the financial status check is performed with
+  231:             | Dependants | 1.1 |
+  232          Then the service displays the following error message
+  233:             | Dependants-error | Enter a valid number of dependants |
+  234  
+  235      Scenario: Case Worker enters invalid Dependants - course length 6 months or less ######### RM
+  ...
+  237              | Course start date    | 30/05/2016 |
+  238              | Course end date      | 30/10/2016 |
+  239:             | Dependants | 1          |
+  240          Then the service displays the following error message
+  241:             | Dependants-error | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
+  242  
+  243      Scenario: Case Worker enters invalid Dependants - course length 6 months or less, then changes course length to above 6 months
+  ...
+  245              | Course start date    | 30/05/2016 |
+  246              | Course end date      | 30/10/2016 |
+  247:             | Dependants | 1          |
+  248          When these fields are updated with
+  249              | Course end date | 30/05/2017 |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-1-non-doctorate-input-validation.feature:
+   28              | Tuition fees already paid       | 0          |
+   29              | Accommodation fees already paid | 0          |
+   30:             | Dependants            | 0          |
+   31              | Sort code                       | 11-11-11   |
+   32              | Account number                  | 11111111   |
+   ..
+   48              | Tuition fees already paid       |  |
+   49              | Accommodation fees already paid |  |
+   50:             | Dependants            |  |
+   51              | Sort code                       |  |
+   52              | Account number                  |  |
+   ..
+  278      Scenario: Case Worker does NOT enter Dependants
+  279          When the financial status check is performed with
+  280:             | Dependants |  |
+  281          Then the service displays the following error message
+  282:             | Dependants-error | Enter a valid number of dependants |
+  283  
+  284      Scenario: Case Worker enters invalid Dependants - not numbers 0-9
+  285          When the financial status check is performed with
+  286:             | Dependants | A |
+  287          Then the service displays the following error message
+  288:             | Dependants-error | Enter a valid number of dependants |
+  289  
+  290      Scenario: Case Worker enters invalid Dependants - negative
+  291          When the financial status check is performed with
+  292:             | Dependants | -1 |
+  293          Then the service displays the following error message
+  294:             | Dependants-error | Enter a valid number of dependants |
+  295  
+  296      Scenario: Case Worker enters invalid Dependants - fractional
+  297          When the financial status check is performed with
+  298:             | Dependants | 1.1 |
+  299          Then the service displays the following error message
+  300:             | Dependants-error | Enter a valid number of dependants |
+  301  
+  302      Scenario: Case Worker enters invalid Dependants - course length 6 months or less ######### RM
+  ...
+  304              | Course start date    | 30/05/2016 |
+  305              | Course end date      | 30/10/2016 |
+  306:             | Dependants | 1          |
+  307          Then the service displays the following error message
+  308:             | Dependants-error | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
+  309  
+  310      Scenario: Case Worker enters invalid Dependants - course length 6 months or less, then changes course length to above 6 months
+  ...
+  312              | Course start date    | 30/05/2016 |
+  313              | Course end date      | 30/10/2016 |
+  314:             | Dependants | 1          |
+  315          When these fields are updated with
+  316              | Course end date | 30/05/2017 |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-2-continuation-non-doctorate-calculator-in-london-nonbarclays.feature:
+   42              | Tuition fees already paid       | 0          |
+   43              | Accommodation fees already paid | 0          |
+   44:             | Dependants            | 1          |
+   45              | Continuation Course             | Yes        |
+   46              | Original Course Start Date      | 30/10/2015 |
+   ..
+   66              | Tuition fees already paid       | £500.00                        |
+   67              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+   68:             | Dependants            | 1                              |
+   69              | Entire course length            | 16                             |
+   70              | Continuation Course             | Yes                            |
+   ..
+   95              | Tuition fees already paid       | £500.00                        |
+   96              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+   97:             | Dependants            | 1                              |
+   98              | Entire course length            | 16                             |
+   99              | Continuation Course             | Yes                            |
+  ...
+  122              | Tuition fees already paid       | £0.00                        |
+  123              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+  124:             | Dependants            | 1                            |
+  125              | Entire course length            | 14                           |
+  126              | Continuation Course             | Yes                          |
+  ...
+  151              | Tuition fees already paid       | £500.00                        |
+  152              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+  153:             | Dependants            | 1                              |
+  154              | Entire course length            | 23                             |
+  155              | Continuation Course             | Yes                            |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-2-continuation-non-doctorate-calculator-in-london.feature:
+   42              | Tuition fees already paid       | 0          |
+   43              | Accommodation fees already paid | 0          |
+   44:             | Dependants            | 1          |
+   45              | Sort code                       | 11-11-11   |
+   46              | Account number                  | 11111111   |
+   ..
+   73              | Tuition fees already paid       | £500.00                        |
+   74              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+   75:             | Dependants            | 1                              |
+   76              | Entire course length            | 16                             |
+   77              | Continuation Course             | Yes                            |
+   ..
+  103              | Tuition fees already paid       | £0.00                        |
+  104              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+  105:             | Dependants            | 1                            |
+  106              | Entire course length            | 14                           |
+  107              | Continuation Course             | Yes                          |
+  ...
+  137              | Tuition fees already paid       | £500.00                        |
+  138              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+  139:             | Dependants            | 1                              |
+  140              | Entire course length            | 23                             |
+  141              | Continuation Course             | Yes                            |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-2-new-non-doctorate-calculator-in-london-nonbarclays.feature:
+   39              | Tuition fees already paid       | 0          |
+   40              | Accommodation fees already paid | 0          |
+   41:             | Dependants            | 1          |
+   42              | Continuation Course             | No         |
+   43              | Course type                     | Main       |
+   ..
+   57              | Tuition fees already paid       | £0.00                        |
+   58              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+   59:             | Dependants            | 1                            |
+   60          And the result table contains the following
+   61              | Total funds required       | £16,090.00               |
+   ..
+   77              | Tuition fees already paid       | £0.00                        |
+   78              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+   79:             | Dependants            | 1                            |
+   80              | Continuation Course             | No                           |
+   81          And the result table contains the following
+   ..
+  102              | Tuition fees already paid       | £500.00                        |
+  103              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+  104:             | Dependants            | 1                              |
+  105              | Continuation Course             | No                             |
+  106              | Estimated Leave End Date        | 22/10/2017                     |
+  ...
+  127              | Tuition fees already paid       | £0.00                        |
+  128              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+  129:             | Dependants            | 1                            |
+  130              | Continuation Course             | No                           |
+  131          And the result table contains the following
+  ...
+  152              | Tuition fees already paid       | £500.00                        |
+  153              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+  154:             | Dependants            | 1                              |
+  155              | Continuation Course             | No                             |
+  156              | Estimated Leave End Date        | 22/10/2017                     |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-2-new-non-doctorate-calculator-in-london.feature:
+   39              | Tuition fees already paid       | 0          |
+   40              | Accommodation fees already paid | 0          |
+   41:             | Dependants            | 1          |
+   42              | Sort code                       | 11-11-11   |
+   43              | Account number                  | 11111111   |
+   ..
+   60              | Tuition fees already paid       | £0.00                        |
+   61              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+   62:             | Dependants            | 1                            |
+   63              | Sort code                       | 11-11-11                     |
+   64              | Account number                  | 11111111                     |
+   ..
+   91              | Tuition fees already paid       | £500.00                        |
+   92              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+   93:             | Dependants            | 1                              |
+   94              | Sort code                       | 11-11-11                       |
+   95              | Account number                  | 11111111                       |
+   ..
+  123              | Tuition fees already paid       | £0.00                        |
+  124              | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+  125:             | Dependants            | 1                            |
+  126              | Sort code                       | 11-11-11                     |
+  127              | Account number                  | 11111111                     |
+  ...
+  154              | Tuition fees already paid       | £500.00                        |
+  155              | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+  156:             | Dependants            | 1                              |
+  157              | Sort code                       | 11-11-11                       |
+  158              | Account number                  | 11111111                       |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-4-non-doctorate-content.feature:
+   14              | Tuition fees already paid       | 0          |
+   15              | Accommodation fees already paid | 0          |
+   16:             | Dependants            | 1          |
+   17              | Continuation Course             | No         |
+   18              | Course type                     | Main       |
+   ..
+   80              | Tuition fees already paid       |
+   81              | Accommodation fees already paid |
+   82:             | Dependants            |
+   83              | Sort code                       |
+   84              | Account number                  |
+   ..
+  110              | Tuition fees already paid       |
+  111              | Accommodation fees already paid |
+  112:             | Dependants            |
+  113              | Sort code                       |
+  114              | Account number                  |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/4-non-doctorate/FS4-5-non-doctorate-insufficient-information.feature:
+   18              | Tuition fees already paid       | 0          |
+   19              | Accommodation fees already paid | 0          |
+   20:             | Dependants            | 0          |
+   21              | Sort code                       | 99-99-99   |
+   22              | Account number                  | 99999999   |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/5-pgdd/FS5-1-pgdd-calculator-in-london.feature:
+   26              | Course end date                 | 30/07/2016 |
+   27              | Accommodation fees already paid | 0          |
+   28:             | Dependants            | 0          |
+   29              | Sort code                       | 11-11-12   |
+   30              | Account number                  | 11111112   |
+   ..
+   41              | Course length                   | 3 (limited to 9)                                          |
+   42              | Accommodation fees already paid | £0.00 (limited to £1,265.00)                              |
+   43:             | Dependants            | 0                                                         |
+   44              | Sort code                       | 11-11-12                                                  |
+   45              | Account number                  | 11111112                                                  |
+   ..
+   56              | Course end date                 | 30/06/2016 |
+   57              | Accommodation fees already paid | 100        |
+   58:             | Dependants            | 0          |
+   59              | Sort code                       | 22-22-23   |
+   60              | Account number                  | 22222223   |
+   ..
+   70              | Course length                   | 2 (limited to 9)                                          |
+   71              | Accommodation fees already paid | £100.00 (limited to £1,265.00)                            |
+   72:             | Dependants            | 0                                                         |
+   73              | Sort code                       | 22-22-23                                                  |
+   74              | Account number                  | 22222223                                                  |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/6-sabbatical officer/FS6-1-sabbatical-input-validation.feature:
+   28              | Course end date                 | 20/04/2016 |
+   29              | Accommodation fees already paid | 0          |
+   30:             | Dependants            | 0          |
+   31              | Sort code                       | 11-11-11   |
+   32              | Account number                  | 11111111   |
+   ..
+   43              | Course end date                 |  |
+   44              | Accommodation fees already paid |  |
+   45:             | Dependants            |  |
+   46              | Sort code                       |  |
+   47              | Account number                  |  |
+   ..
+  193      Scenario: Case Worker does NOT enter Dependants
+  194          When the financial status check is performed with
+  195:             | Dependants       |                                      |
+  196          Then the service displays the following error message
+  197:             | Dependants-error | Enter a valid number of dependants   |
+  198  
+  199      Scenario: Case Worker enters invalid Dependants - not numbers 0-9
+  200          When the financial status check is performed with
+  201:             | Dependants       | A                                    |
+  202          Then the service displays the following error message
+  203:             | Dependants-error | Enter a valid number of dependants   |
+  204  
+  205      Scenario: Case Worker enters invalid Dependants - negative
+  206          When the financial status check is performed with
+  207:             | Dependants       | -1                                   |
+  208          Then the service displays the following error message
+  209:             | Dependants-error | Enter a valid number of dependants   |
+  210  
+  211      Scenario: Case Worker enters invalid Dependants - fractional
+  212          When the financial status check is performed with
+  213:             | Dependants       | 1.1                                  |
+  214          Then the service displays the following error message
+  215:             | Dependants-error | Enter a valid number of dependants   |
+  216  
+  217   ######################### Validation on the Date of birth Field #########################
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/6-sabbatical officer/FS6-2-sabbatical-calculator-in-london.feature:
+   26              | Course end date                 | 20/04/2016 |
+   27              | Accommodation fees already paid | 0          |
+   28:             | Dependants            | 0          |
+   29              | Sort code                       | 11-11-12   |
+   30              | Account number                  | 11111112   |
+   ..
+   39              | Course length                   | 2 (limited to 9)                              |
+   40              | Accommodation fees already paid | £0.00 (limited to £1,265.00)                  |
+   41:             | Dependants            | 0                                             |
+   42              | Sort code                       | 11-11-12                                      |
+   43              | Account number                  | 11111112                                      |
+   ..
+   61              | Course end date                 | 30/03/2016 |
+   62              | Accommodation fees already paid | 100        |
+   63:             | Dependants            | 0          |
+   64              | Sort code                       | 22-22-23   |
+   65              | Account number                  | 22222223   |
+   ..
+   73              | Course length                   | 1 (limited to 9)                              |
+   74              | Accommodation fees already paid | £100.00 (limited to £1,265.00)                |
+   75:             | Dependants            | 0                                             |
+   76              | Sort code                       | 22-22-23                                      |
+   77              | Account number                  | 22222223                                      |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/6-sabbatical officer/FS6-3-sabbatical-calculator-out-london.feature:
+   26              | Course end date                 | 30/11/2016 |
+   27              | Accommodation fees already paid | 0          |
+   28:             | Dependants            | 0          |
+   29              | Sort code                       | 11-11-14   |
+   30              | Account number                  | 11111114   |
+   ..
+   39              | Course length                   | 7 (limited to 9)                              |
+   40              | Accommodation fees already paid | £0.00 (limited to £1,265.00)                  |
+   41:             | Dependants            | 0                                             |
+   42              | Sort code                       | 11-11-14                                      |
+   43              | Account number                  | 11111114                                      |
+   ..
+   60              | Course end date                 | 30/11/2016 |
+   61              | Accommodation fees already paid | 265        |
+   62:             | Dependants            | 0          |
+   63              | Sort code                       | 22-22-23   |
+   64              | Account number                  | 22222223   |
+   ..
+   72              | Course length                   | 7 (limited to 9)                              |
+   73              | Accommodation fees already paid | £265.00 (limited to £1,265.00)                |
+   74:             | Dependants            | 0                                             |
+   75              | Sort code                       | 22-22-23                                      |
+   76              | Account number                  | 22222223                                      |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/6-sabbatical officer/FS6-4-sabbatical-content.feature:
+   28              | Course dates                    |
+   29              | Accommodation fees already paid |
+   30:             | Dependants            |
+   31              | Sort code                       |
+   32              | Account number                  |
+   ..
+   54              | Course dates                    |
+   55              | Accommodation fees already paid |
+   56:             | Dependants            |
+   57              | Sort code                       |
+   58              | Account number                  |
+   ..
+   76              | Course dates                    |
+   77              | Accommodation fees already paid |
+   78:             | Dependants            |
+   79              | Sort code                       |
+   80              | Account number                  |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/7-Tier 2 (General) & Tier 5 (Temporary)/FS3-1-tiers-2&5-input-validation.feature:
+   15          And the t2main student type is chosen
+   16          And the default details are
+   17:             | Dependants | 0          |
+   18              | Sort code            | 111111     |
+   19              | Account number       | 11111111   |
+   ..
+   26      Scenario: Error summary details are shown when a validation error occurs
+   27          When the financial status check is performed with
+   28:             | Dependants |  |
+   29              | Sort code            |  |
+   30              | Account number       |  |
+   ..
+   96      Scenario: Case Worker does NOT enter Dependants
+   97          When the financial status check is performed with
+   98:             | Dependants |  |
+   99          Then the service displays the following error message
+  100:             | Dependants-error | Enter a valid number of dependants |
+  101  
+  102      Scenario: Case Worker enters invalid Dependants - not numbers 0-9
+  103          When the financial status check is performed with
+  104:             | Dependants | A |
+  105          Then the service displays the following error message
+  106:             | Dependants-error | Enter a valid number of dependants |
+  107  
+  108      Scenario: Case Worker enters invalid Dependants - negative
+  109          When the financial status check is performed with
+  110:             | Dependants | -1 |
+  111          Then the service displays the following error message
+  112:             | Dependants-error | Enter a valid number of dependants |
+  113  
+  114      Scenario: Case Worker enters invalid Dependants - fractional
+  115          When the financial status check is performed with
+  116:             | Dependants | 1.1 |
+  117          Then the service displays the following error message
+  118:             | Dependants-error | Enter a valid number of dependants |
+  119  
+  120          ######################### Validation on the Date of birth Field #########################
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/7-Tier 2 (General) & Tier 5 (Temporary)/FS3-3-tiers-2&5-calculator.feature:
+   24          Given the account has sufficient funds for tier 2
+   25          When the financial status check is performed with
+   26:             | Dependants              | 0          |
+   27          Then the service displays the following result
+   28              | Outcome                    | Passed                   |
+   ..
+   30              | Total funds required       | £945.00                  |
+   31              | Maintenance period checked | 06/04/2016 to 04/07/2016 |
+   32:             | Dependants                 | 0                        |
+   33              | Sort code                  | 22-22-23                 |
+   34              | Account number             | 22222223                 |
+   ..
+   40          Given the account does not have sufficient funds for tier 2
+   41          When the financial status check is performed with
+   42:             | Dependants     | 1   |
+   43          Then the service displays the following result
+   44              | Outcome                    | Not passed               |
+   ..
+   47              | Lowest Balance             | £1,574.90 on 01/06/2016  |
+   48              | Maintenance period checked | 06/04/2016 to 04/07/2016 |
+   49:             | Dependants                 | 1                        |
+   50              | Sort code                  | 22-22-23                 |
+   51              | Account number             | 22222223                 |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/7-Tier 2 (General) & Tier 5 (Temporary)/FS3-4-tiers-2&5-content.feature:
+   11              | Account number          | 22222223   |
+   12              | DOB                     | 25/03/1987 |
+   13:             | dependants              | 0          |
+   14  
+   15  
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/7-Tier 2 (General) & Tier 5 (Temporary)/FS3-5-tiers-2&5-insufficient-information.feature:
+   15              | Account number          | 99999999   |
+   16              | DOB                     | 27/05/1986 |
+   17:             | Dependants              | 0          |
+   18          Then the service displays the following page content
+   19              | Page dynamic heading | Invalid or inaccessible account                                                  |
+
+/Library/WebServer/Documents/hod/pttg-fs-ui/src/test/specs/financial-status/FS0-3-route-selection-content.feature:
+   10              | Tier-label               | Tier 2                                                                                                 |
+   11              | Application-type-1-label | Main applicant (with & without dependants)                                                             |
+   12:             | Application-type-2-label | Dependants only                                                                                        |
+   13              | Tier-label               | Tier 4                                                                                                 |
+   14              | Student-type-0-label     | General student                                                                                        |
+   ..
+   18              | Tier-label               | Tier 5                                                                                                 |
+   19              | Application-type-3-label | Main applicant (with & without dependants)                                                             |
+   20:             | Application-type-4-label | Dependants only                                                                                        |
+   21  
+
+119 matches across 27 files

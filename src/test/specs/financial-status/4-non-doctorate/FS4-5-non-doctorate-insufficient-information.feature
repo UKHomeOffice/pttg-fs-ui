@@ -17,7 +17,7 @@ Feature: Insufficient Information
             | Total tuition fees              | 3000.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
             | DOB                             | 29/07/1978 |

@@ -1,0 +1,15 @@
+<form name="{{ name }}Form" ng-submit="submitForm()" ng-model-options="{ allowInvalid: true }" novalidate>
+  <div class="error-summary" role="group" aria-label="Form error summary" tabindex="-1" ng-if="showErrors">
+    <h1 class="heading-medium error-summary-heading" id="validation-error-summary-heading">There's some invalid information</h1>
+
+    <p id="validation-error-summary-text">Make sure that all the fields have been completed</p>
+
+    <ul class="error-summary-list" id="error-summary-list">
+      <li ng-repeat="obj in errorList">
+        <a href="" ng-click="errorClicked(obj.anchor)">{{ obj.msg }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <ng-transclude></ng-transclude>
+</form>

@@ -12,7 +12,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         Given the financial status check is performed with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |
@@ -26,7 +26,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         Then the inputs will be populated with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |

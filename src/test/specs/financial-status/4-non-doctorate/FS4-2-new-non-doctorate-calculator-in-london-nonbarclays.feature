@@ -7,7 +7,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Tuition fees already paid - total amount of tuition fees already paid
     Accommodation fees already paid - The maximum amount paid can be £1265
 
-    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * number of dependants) + (total tuition fees - tuition fees paid - accommodation fees paid)
+    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * Dependants) + (total tuition fees - tuition fees paid - accommodation fees paid)
 
 #   Requirement to meet Tier 4 pass (Continuation applications only)
 #
@@ -38,7 +38,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 1          |
+            | Dependants            | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
 
@@ -50,13 +50,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Student type                    | Tier 4 (General) student     |
+            | Applicant type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
+            | Dependants            | 1                            |
         And the result table contains the following
             | Total funds required       | £16,090.00               |
             | Course length              | 7 (limited to 9)         |
@@ -70,13 +70,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Student type                    | Tier 4 (General) student     |
+            | Applicant type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
+            | Dependants            | 1                            |
             | Continuation Course             | No                           |
         And the result table contains the following
             | Total funds required       | £16,090.00               |
@@ -95,13 +95,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
-            | Student Type                    | Tier 4 (General) student       |
+            | Applicant type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Course dates checked            | 30/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependants            | 1                              |
+            | Dependants            | 1                              |
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
@@ -120,13 +120,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 9 (limited to 9)             |
-            | Student type                    | Tier 4 (General) student     |
+            | Applicant type                    | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/01/2017     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
+            | Dependants            | 1                            |
             | Continuation Course             | No                           |
         And the result table contains the following
             | Total funds required       | £16,090.00               |
@@ -146,12 +146,12 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total funds required            | £16,090.00                     |
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
             | Course length                   | 13 (limited to 9)              |
-            | Student Type                    | Tier 4 (General) student       |
+            | Applicant type                    | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependants            | 1                              |
+            | Dependants            | 1                              |
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following

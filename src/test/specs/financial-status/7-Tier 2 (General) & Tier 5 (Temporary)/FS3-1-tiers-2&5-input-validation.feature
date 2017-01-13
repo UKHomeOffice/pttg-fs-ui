@@ -12,21 +12,20 @@ Feature: Show clear error details when inputs are invalid
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the doctorate student type is chosen
+        And the t2main student type is chosen
         And the default details are
-            | Main applicant       | Yes        |
-            | Number of dependants | 0          |
+            | Dependants | 0          |
             | Sort code            | 111111     |
             | Account number       | 11111111   |
             | DOB                  | 27/07/1981 |
+            | End Date             | 30/05/2016 |
 
 
 ######################### General validation message display #########################
 
     Scenario: Error summary details are shown when a validation error occurs
         When the financial status check is performed with
-            | Main applicant       |  |
-            | Number of dependants |  |
+            | Dependants |  |
             | Sort code            |  |
             | Account number       |  |
             | DOB                  |  |
@@ -34,7 +33,6 @@ Feature: Show clear error details when inputs are invalid
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
         And the error summary list contains the text
-            | The main applicant is invalid       |
             | The number of dependants is invalid |
             | The account number is invalid       |
             | The sort code is invalid            |
@@ -93,31 +91,31 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | account number-error | Enter a valid account number |
 
- ######################### Validation on the number of dependants Field #########################
+ ######################### Validation on the Dependants Field #########################
 
-    Scenario: Case Worker does NOT enter number of dependants
+    Scenario: Case Worker does NOT enter Dependants
         When the financial status check is performed with
-            | Number of dependants |  |
+            | Dependants |  |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
+    Scenario: Case Worker enters invalid Dependants - not numbers 0-9
         When the financial status check is performed with
-            | Number of dependants | A |
+            | Dependants | A |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - negative
+    Scenario: Case Worker enters invalid Dependants - negative
         When the financial status check is performed with
-            | Number of dependants | -1 |
+            | Dependants | -1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - fractional
+    Scenario: Case Worker enters invalid Dependants - fractional
         When the financial status check is performed with
-            | Number of dependants | 1.1 |
+            | Dependants | 1.1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
         ######################### Validation on the Date of birth Field #########################
 
@@ -138,12 +136,3 @@ Feature: Show clear error details when inputs are invalid
             | DOB | 25/08/198x |
         Then the service displays the following error message
             | dob-error | Enter a valid date of birth |
-
-  ######################### Validation on the number of main applicant Field #########################
-
-    Scenario: Case Worker does NOT enter number of dependants
-        When the financial status check is performed with
-            | Main applicant |  |
-        Then the service displays the following error message
-            | Main applicant-error | Choose a valid response - yes or no |
-

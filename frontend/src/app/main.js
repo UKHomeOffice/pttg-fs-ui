@@ -1,3 +1,5 @@
+/* global angular */
+
 // git update-index --skip-worktree serenity.properties
 
 var app = angular.module('hod.proving', [
@@ -10,13 +12,13 @@ var app = angular.module('hod.proving', [
 ])
 
 app.constant('CONFIG', {
-  api: '/pttg/financialstatusservice/v1/accounts/',
+  api: '/pttg/financialstatus/v1/',
   timeout: 20000,
   retries: 0
 })
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/financial-status-student-type')
+  $urlRouterProvider.otherwise('/financial-status')
 
   $stateProvider.state({
     name: 'default',
