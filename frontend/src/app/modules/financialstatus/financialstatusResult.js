@@ -285,6 +285,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
       inLondon: true,
       courseDatesChecked: (student.hiddenFields.indexOf('courseStartDate') === -1),
       continuationCourse: (student.hiddenFields.indexOf('continuationCourse') === -1),
+      originalCourseStartDate: (student.hiddenFields.indexOf('originalCourseStartDate') === -1),
       tuitionFees: (student.hiddenFields.indexOf('totalTuitionFees') === -1),
       accommodationFeesAlreadyPaid: (student.hiddenFields.indexOf('accommodationFeesAlreadyPaid') === -1),
       numberOfDependants: true,
@@ -353,11 +354,13 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
           value: 'Yes'
         })
 
-        criteria.push({
-          id: 'originalCourseStartDate',
-          label: 'Original course start date',
-          value: $filter('dateDisplay')(reqdata.originalCourseStartDate)
-        })
+        if (criteriaList.originalCourseStartDate) {
+          criteria.push({
+            id: 'originalCourseStartDate',
+            label: 'Original course start date',
+            value: $filter('dateDisplay')(reqdata.originalCourseStartDate)
+          })
+        }
       } else {
         criteria.push({
           id: 'continuationCourse',

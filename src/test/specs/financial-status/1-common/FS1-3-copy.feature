@@ -27,19 +27,6 @@ Feature: Copy results to paste buffer
     ## WARNING this test will only be exectuted in Firefox as PhantomJS and Chrome have proven unreliable
     ## although the actual functionality in the end product is expected to work in all modern browsers
     ## the methods available to test copy paste are poorly supported
-    Scenario: copy button clicked indication
-        Given the account does not have sufficient funds
-        And the financial status check is performed
-        And the copy button text is 'Copy to clipboard'
-        When the copy button is clicked
-        Then the copy button text is 'Copied'
-        And after at least 3 seconds
-        And the copy button text is 'Copy to clipboard'
-
-
-    ## WARNING this test will only be exectuted in Firefox as PhantomJS and Chrome have proven unreliable
-    ## although the actual functionality in the end product is expected to work in all modern browsers
-    ## the methods available to test copy paste are poorly supported
     Scenario: copy results
         Given the account has sufficient funds
         And the financial status check is performed

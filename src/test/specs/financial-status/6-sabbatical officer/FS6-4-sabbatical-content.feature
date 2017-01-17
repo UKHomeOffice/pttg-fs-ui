@@ -26,11 +26,14 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Student type                    |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
+
+
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -52,6 +55,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Student type                    |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |
@@ -74,6 +78,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Student type                    |
             | In London                       |
             | Course dates                    |
+            | Continuation course             |
             | Accommodation fees already paid |
             | Number of dependants            |
             | Sort code                       |

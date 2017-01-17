@@ -29,6 +29,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code                       | 11-11-12   |
             | Account number                  | 11111112   |
             | DOB                             | 18/01/1992 |
+            | Continuation Course             | Yes        |
+            | Original Course Start Date      | 30/10/2015 |
         Then the service displays the following result
             | Outcome                         | Not passed                                                |
             | Account holder name             | Shelly Smith                                              |
@@ -44,6 +46,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code                       | 11-11-12                                                  |
             | Account number                  | 11111112                                                  |
             | DOB                             | 18/01/1992                                                |
+            | Continuation Course             | Yes                                                       |
+            | Original Course Start Date      | 30/10/2015                                                |
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
@@ -59,6 +63,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
             | DOB                             | 01/01/1976 |
+            | Continuation Course             | Yes        |
+            | Original Course Start Date      | 30/10/2015 |
         Then the service displays the following result
             | Outcome                         | Passed                                                    |
             | Account holder name             | Laura Taylor                                              |
@@ -73,3 +79,5 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code                       | 22-22-23                                                  |
             | Account number                  | 22222223                                                  |
             | DOB                             | 01/01/1976                                                |
+            | Continuation Course             | Yes                                                       |
+            | Original Course Start Date      | 30/10/2015                                                |

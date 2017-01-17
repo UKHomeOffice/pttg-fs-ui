@@ -199,7 +199,7 @@ class Steps {
         entriesAsList.eachWithIndex { v, index ->
             def oneBasedIndex = index + 1;
             def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
-            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
+            assert result: "Could not find header [$v] for $tableId table row, [$oneBasedIndex] "
         }
     }
 
@@ -428,6 +428,7 @@ class Steps {
                 'Sort code'                      : '11-11-11',
                 'Account number'                 : '11111111',
                 'dob'                            : '29/07/1978',
+                'Continuation course'            : 'No'
             ]
 
             if (studentType.equalsIgnoreCase('non-doctorate')) {

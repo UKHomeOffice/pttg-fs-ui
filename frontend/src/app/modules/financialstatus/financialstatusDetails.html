@@ -35,8 +35,8 @@
             <hod-date name="courseEndDate" label="End date of course" field="finStatus.courseEndDate" config="conf.courseEndDate"></hod-date>
 
             <hod-radio name="continuationCourse" label="Is the course a continuation?" field="finStatus.continuationCourse" options="yesNoOptions" config="conf.continuationCourse"></hod-radio>
-
-            <div class="panel panel-border-wide text" ng-if="finStatus.continuationCourse=='yes'">
+            
+            <div class="panel panel-border-wide text" ng-show="(finStatus.continuationCourse=='yes' && !conf.originalCourseStartDate.hidden)">
                 <hod-date name="originalCourseStartDate" label="Original course start date" field="finStatus.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>
             </div>
 
