@@ -4,7 +4,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
 
     The service will display a result page when a 'success' status is received from the Consent API and the balances data has been received from the Balances API.
 
-    Scenario: Consent granted and display result page
+    Scenario: Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
@@ -25,7 +25,3 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         When the Barclays Balances API is invoked
         Then the service receives balance data from Barclays
         And the service displays the result page including the results and your search headers
-
-
-
-

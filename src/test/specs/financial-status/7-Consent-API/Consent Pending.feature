@@ -32,9 +32,9 @@ Feature: Process 'pending' status and display the appropriate output page
             | status | "PENDING" |
         Then  The service displays the 'Consent pending' output page
 
-      ## Service receives a 'Pending'status then 'Success' Status - result page ##
+      ## Service receives a 'Pending' status then 'Success' Status - result page ##
 
-    Scenario: 'Pending' status received from the Consent API followed by 'Success' status - result page for a Doctorate in London student who has sufficient funds
+    Scenario: 'Pending' status received from the Consent API followed by 'Success' status - result page for a Doctorate in London student who does has sufficient funds
 
         Given the financial status check is performed
         And the doctorate student type is chosen
@@ -55,7 +55,7 @@ Feature: Process 'pending' status and display the appropriate output page
         Then the service receives balance data from Barclays
         And the service displays the 'not passed' page including the results and your search headers
 
-        ## Service receives a 'Pending' status and then times out (e.g > 15 minutes without response)
+        ## Service receives a 'Pending' status and then times out (e.g > 15 minutes without a response from applicant)
 
     Scenario: 'Pending' status received from the Consent API and remains at Pending status after 15 minutes
 
