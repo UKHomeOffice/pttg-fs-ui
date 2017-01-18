@@ -24,7 +24,7 @@ Feature: Show clear error details when inputs are invalid
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
 
@@ -41,7 +41,7 @@ Feature: Show clear error details when inputs are invalid
             | Total tuition fees              |  |
             | Tuition fees already paid       |  |
             | Accommodation fees already paid |  |
-            | Dependants            |  |
+            | Dependants                      |  |
             | Continuation Course             |  |
             | Course type                     |  |
         Then the service displays the following message
@@ -234,17 +234,17 @@ Feature: Show clear error details when inputs are invalid
 
     Scenario: Case Worker enters invalid Dependants - course length 6 months or less ######### RM
         When the financial status check is performed with
-            | Course start date    | 30/05/2016 |
-            | Course end date      | 30/10/2016 |
-            | Dependants | 1          |
+            | Course start date | 30/05/2016 |
+            | Course end date   | 30/10/2016 |
+            | Dependants        | 1          |
         Then the service displays the following error message
             | Dependants-error | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
 
     Scenario: Case Worker enters invalid Dependants - course length 6 months or less, then changes course length to above 6 months
         Given the financial status check is performed with
-            | Course start date    | 30/05/2016 |
-            | Course end date      | 30/10/2016 |
-            | Dependants | 1          |
+            | Course start date | 30/05/2016 |
+            | Course end date   | 30/10/2016 |
+            | Dependants        | 1          |
         When these fields are updated with
             | Course end date | 30/05/2017 |
         And the submit button is clicked

@@ -38,7 +38,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Result timestamp         |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | Course type                     |
             | In London                       |
             | Course dates                    |
@@ -71,7 +71,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Result timestamp         |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | Course type                     |
             | In London                       |
             | Course dates                    |
@@ -93,15 +93,15 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Page dynamic heading | Not passed                                                          |
             | Page dynamic detail  | The records for this account does not cover the whole 28 day period |
         And the service displays the following results headers in order
-            | Account holder name   |
-            | Total funds required  |
-            | 28-day period checked |
-            | Course length         |
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Course length            |
             | Estimated leave end date |
-            | Result timestamp      |
+            | Result timestamp         |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | Course type                     |
             | In London                       |
             | Course dates                    |
