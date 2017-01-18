@@ -48,7 +48,7 @@ financialstatusModule.controller(
     }
 
     $scope.tier = sType.tier
-
+    $scope.ndays = (sType.tier === 4) ? 28 : 90
     // track that we're now on the main form details page
     ga('set', 'page', $state.href($state.current.name, $stateParams))
     ga('send', 'pageview')
