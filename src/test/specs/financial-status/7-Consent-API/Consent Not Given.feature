@@ -9,6 +9,10 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         And caseworker is using the financial status service ui
         And caseworker submits the 'Get Consent' section of the form
         And the Consent API is invoked
+        And the default details are
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222223   |
 
             ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
 
