@@ -20,9 +20,6 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
             | Number of dependants            | 0          |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         And the Barclays Consent API response returns
             | status | "SUCCESS |
         When the Barclays Balances API is invoked
