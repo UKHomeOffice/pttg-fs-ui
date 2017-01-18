@@ -19,7 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
             | DOB                             | 25/03/1987 |
@@ -33,10 +33,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Account holder name             | Laura Taylor                                          |
             | Total funds required            | £16,090.00                                            |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Applicant type                    | Tier 4 (General) student (doctorate extension scheme) |
+            | Applicant type                  | Tier 4 (General) student (doctorate extension scheme) |
             | In London                       | Yes                                                   |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00)                        |
-            | Dependants            | 0                                                     |
+            | Dependants                      | 0                                                     |
             | Sort code                       | 22-22-23                                              |
             | Account number                  | 22222223                                              |
             | DOB                             | 25/03/1987                                            |
