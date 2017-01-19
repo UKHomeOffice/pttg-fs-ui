@@ -28,7 +28,7 @@ Feature: Show clear error details when inputs are invalid
             | Course start date               | 01/03/2016 |
             | Course end date                 | 20/04/2016 |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
@@ -43,7 +43,7 @@ Feature: Show clear error details when inputs are invalid
             | Course start date               |  |
             | Course end date                 |  |
             | Accommodation fees already paid |  |
-            | Number of dependants            |  |
+            | Dependants                      |  |
             | Sort code                       |  |
             | Account number                  |  |
             | DOB                             |  |
@@ -192,30 +192,30 @@ Feature: Show clear error details when inputs are invalid
             | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
 
- ######################### Validation on the number of dependants Field #########################
-    Scenario: Case Worker does NOT enter number of dependants
+ ######################### Validation on the Dependants Field #########################
+    Scenario: Case Worker does NOT enter Dependants
         When the financial status check is performed with
-            | Number of dependants |  |
+            | Dependants |  |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
+    Scenario: Case Worker enters invalid Dependants - not numbers 0-9
         When the financial status check is performed with
-            | Number of dependants | A |
+            | Dependants | A |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - negative
+    Scenario: Case Worker enters invalid Dependants - negative
         When the financial status check is performed with
-            | Number of dependants | -1 |
+            | Dependants | -1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - fractional
+    Scenario: Case Worker enters invalid Dependants - fractional
         When the financial status check is performed with
-            | Number of dependants | 1.1 |
+            | Dependants | 1.1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
  ######################### Validation on the Date of birth Field #########################
 
@@ -234,6 +234,7 @@ Feature: Show clear error details when inputs are invalid
     Scenario: Case Worker enters invalid Date og birth - not numbers 0-9
         When the financial status check is performed with
             | DOB | @1/07/1986 |
+
         Then the service displays the following error message
             | dob-error | Enter a valid date of birth |
 

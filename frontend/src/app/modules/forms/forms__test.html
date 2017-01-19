@@ -1,0 +1,83 @@
+<h1>{{ testElement }}</h1>
+
+<div ng-if="testElement === 'text'">
+  <hod-form id="testFormText">
+    <!-- test defaults -->
+    <hod-text></hod-text>
+
+    <!-- test autoassign id  -->
+    <hod-text label="This is my first test"></hod-text>
+
+    <!-- test basics -->
+    <hod-text label="Forename" name="forename" hint="Let me give you a clue" required="false" field="values.forename" config="confForename"></hod-text>
+
+
+    <hod-text id="surnameTest" label="Surname" name="surname" hint="What is your name" field="values.surname" config="confSurname"></hod-text>
+    <p id="surnameFeedback">values.surname: <span>{{ values.surname }}</span></p>
+
+    <hod-number label="A number" name="numTest" hint="Enter a number" field="values.n"></hod-number>
+
+    <hod-number label="Max test" name="maxTest" hint="Enter a number up to 123" field="values.max" config="confMax"></hod-number>
+
+    <hod-number label="Min test" name="minTest" hint="Enter a number above 123" field="values.min" config="confMin"></hod-number>
+
+    <hod-number label="MinMax test" name="minMaxTest" hint="Enter a number between 10 and 20" field="values.minMax" config="confMinMax"></hod-number>
+
+    <hod-number label="Length test" name="lengthTest" hint="8 chars long" field="values.len" config="confLength"></hod-number>
+
+    <hod-number label="Float test" name="floatMaxTest" hint="Enter a number up to 123" field="values.float" config="confFloat"></hod-number>
+
+    <hod-text label="Hidden" name="hiddenText" field="values.hiddenText" config="confHiddenText"></hod-text>
+    <hod-number label="Hidden" name="hiddenNumber" field="values.hiddenNumber" config="confHiddenNumber"></hod-number>
+
+    <hod-submit></hod-submit>
+  </hod-form>
+</div>
+
+
+<div ng-if="testElement === 'radio'">
+  <hod-form id="testFormRadio">
+
+    <hod-radio name="student-type" label="Student type" field="values.sType" options="sTypeOptions" config="confType"></hod-radio>
+
+    <hod-radio name="london" label="In London" field="values.london" options="londonOptions" config="confLondon"></hod-radio>
+
+    <hod-submit></hod-submit>
+  </hod-form>
+</div>
+
+
+<div ng-if="testElement === 'date'">
+  <hod-form id="testFormDate">
+
+    <hod-date label="Start date" field="values.start" config="confStart"></hod-date>
+
+    <hod-date label="End date" hint="When does this thing end" field="values.end" config="confEnd"></hod-date>
+
+    <hod-date label="Age date" hint="When were you born?" name="dob" field="values.dob" config="confDob"></hod-date>
+
+    <hod-date label="Hidden date" name="hide" field="values.hiddenDate" config="confHiddenDate"></hod-date>
+
+    <hod-submit></hod-submit>
+  </hod-form>
+  <p id="startFeedback">{{ values.start }}</p>
+  <p id="endFeedback">{{ values.end }}</p>
+</div>
+
+
+<div ng-if="testElement === 'sortcode'">
+  <hod-form id="testFormSortcode">
+    <hod-sortcode label="Sort code" hint="For example 12 34 56" field="values.sortcode" config="confSortcode"></hod-sortcode>
+
+    <hod-sortcode label="Sort code2" field="values.sortcode2" config="confSortcode2"></hod-sortcode>
+
+    <p id="sortcodeFeedback">{{ values.sortcode }}</p>
+    <p id="sortcode2Feedback">{{ values.sortcode2 }}</p>
+
+    <hod-submit></hod-submit>
+  </hod-form>
+</div>
+
+
+
+

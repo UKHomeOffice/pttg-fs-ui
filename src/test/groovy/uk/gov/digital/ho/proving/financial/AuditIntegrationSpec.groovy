@@ -32,8 +32,8 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
     ])
 class AuditIntegrationSpec extends Specification {
 
-    def path = "/pttg/financialstatusservice/v1/accounts/123456/12345678/dailybalancestatus?"
-    def params = "dob=1990-10-04&toDate=2015-01-01&inLondon=true&studentType=nondoctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1&numberOfDependants=1"
+    def path = "/pttg/financialstatus/v1/t4/accounts/123456/12345678/dailybalancestatus?"
+    def params = "dob=1990-10-04&toDate=2015-01-01&inLondon=true&studentType=nondoctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&totalTuitionFees=1&tuitionFeesAlreadyPaid=1&accommodationFeesAlreadyPaid=1&dependants=1"
     def url
 
     @Autowired
@@ -43,8 +43,8 @@ class AuditIntegrationSpec extends Specification {
     @Autowired
     AuditEventRepository auditEventRepository
 
-    def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
-    def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
+    def thresholdUrlRegex = "/pttg/financialstatus/v1/maintenance/threshold*"
+    def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts.*"
 
     Appender logAppender = Mock()
 

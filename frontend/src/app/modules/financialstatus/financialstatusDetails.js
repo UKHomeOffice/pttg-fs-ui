@@ -10,7 +10,7 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
   // define a route for the details of the form
   $stateProvider.state({
     name: 'financialStatusDetails',
-    url: '/:studentType',
+    url: '/:applicantType',
     title: 'Financial Status : Query',
     parent: 'financialStatus',
     views: {
@@ -23,7 +23,7 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
 
   $stateProvider.state({
     name: 'financialStatusCalcDetails',
-    url: '/:studentType',
+    url: '/:applicantType',
     title: 'Financial Status : Query',
     parent: 'financialStatusCalc',
     views: {
@@ -39,7 +39,7 @@ financialstatusModule.config(['$stateProvider', '$urlRouterProvider', function (
 financialstatusModule.controller(
 'FinancialstatusDetailsCtrl', ['$rootScope', '$scope', '$state', '$stateParams', 'FinancialstatusService', 'IOService', '$window', '$timeout',
   function ($rootScope, $scope, $state, $stateParams, FinancialstatusService, IOService, $window, $timeout) {
-    var sType = _.findWhere(FinancialstatusService.getStudentTypes(), {value: $stateParams.studentType})
+    var sType = _.findWhere(FinancialstatusService.getApplicantTypes(), {value: $stateParams.applicantType})
     $scope.isCalc = FinancialstatusService.isCalc()
     if (!sType) {
     // this is not a valid student type option - abort!
@@ -47,6 +47,8 @@ financialstatusModule.controller(
       return
     }
 
+    $scope.tier = sType.tier
+    $scope.ndays = (sType.tier === 4) ? 28 : 90
     // track that we're now on the main form details page
     ga('set', 'page', $state.href($state.current.name, $stateParams))
     ga('send', 'pageview')
@@ -210,7 +212,7 @@ financialstatusModule.controller(
           }
         }
       },
-      numberOfDependants: {
+      dependants: {
         classes: { 'form-control-1-8': true },
         validate: function (v, s) {
           var len = FinancialstatusService.getCourseLength()
@@ -287,7 +289,7 @@ financialstatusModule.controller(
     })
 
     $scope.finStatus = FinancialstatusService.getDetails()
-    $scope.finStatus.studentType = sType.value
+    $scope.finStatus.applicantType = sType.value
     $scope.yesNoOptions = [{label: 'Yes', value: 'yes'}, {label: 'No', value: 'no'}]
     $scope.courseTypeOptions = FinancialstatusService.getCourseTypeOptions()
     $scope.pageTitle = sType.label

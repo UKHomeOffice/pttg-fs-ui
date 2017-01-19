@@ -25,7 +25,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | Sort code                       | 11-11-14   |
             | Account number                  | 11111114   |
             | DOB                             | 27/07/1981 |
@@ -40,7 +40,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | In London                       | No                                                  |
             | Course length                   | 7 (limited to 9)                                    |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00)                        |
-            | Number of dependants            | 0                                                   |
+            | Dependants            | 0                                                   |
             | Sort code                       | 11-11-14                                            |
             | Account number                  | 11111114                                            |
             | DOB                             | 27/07/1981                                          |
@@ -65,7 +65,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 265        |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
             | DOB                             | 25/10/1982 |
@@ -79,7 +79,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | In London                       | No                                                  |
             | Course length                   | 7 (limited to 9)                                    |
             | Accommodation fees already paid | £265.00 (limited to £1,265.00)                      |
-            | Number of dependants            | 0                                                   |
+            | Dependants            | 0                                                   |
             | Sort code                       | 22-22-23                                            |
             | Account number                  | 22222223                                            |
             | DOB                             | 25/10/1982                                          |

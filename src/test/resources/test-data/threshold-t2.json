@@ -1,0 +1,11 @@
+{
+    "threshold": "945.00",
+    "cappedValues" : {
+        "accommodationFeesPaid": "1265.00",
+        "courseLength": 9
+    },
+    "status": {
+        "code": "200",
+        "message": "OK"
+    }
+}

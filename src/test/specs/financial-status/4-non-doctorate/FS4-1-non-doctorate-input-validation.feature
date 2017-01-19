@@ -27,7 +27,7 @@ Feature: Show clear error details when inputs are invalid
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
@@ -47,7 +47,7 @@ Feature: Show clear error details when inputs are invalid
             | Total tuition fees              |  |
             | Tuition fees already paid       |  |
             | Accommodation fees already paid |  |
-            | Number of dependants            |  |
+            | Dependants                      |  |
             | Sort code                       |  |
             | Account number                  |  |
             | DOB                             |  |
@@ -274,44 +274,44 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
 
-######################### Validation on the number of dependants Field #########################
-    Scenario: Case Worker does NOT enter number of dependants
+######################### Validation on the Dependants Field #########################
+    Scenario: Case Worker does NOT enter Dependants
         When the financial status check is performed with
-            | Number of dependants |  |
+            | Dependants |  |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - not numbers 0-9
+    Scenario: Case Worker enters invalid Dependants - not numbers 0-9
         When the financial status check is performed with
-            | Number of dependants | A |
+            | Dependants | A |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - negative
+    Scenario: Case Worker enters invalid Dependants - negative
         When the financial status check is performed with
-            | Number of dependants | -1 |
+            | Dependants | -1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - fractional
+    Scenario: Case Worker enters invalid Dependants - fractional
         When the financial status check is performed with
-            | Number of dependants | 1.1 |
+            | Dependants | 1.1 |
         Then the service displays the following error message
-            | number Of Dependants-error | Enter a valid number of dependants |
+            | Dependants-error | Enter a valid number of dependants |
 
-    Scenario: Case Worker enters invalid number of dependants - course length 6 months or less ######### RM
+    Scenario: Case Worker enters invalid Dependants - course length 6 months or less ######### RM
         When the financial status check is performed with
-            | Course start date    | 30/05/2016 |
-            | Course end date      | 30/10/2016 |
-            | Number of dependants | 1          |
+            | Course start date | 30/05/2016 |
+            | Course end date   | 30/10/2016 |
+            | Dependants        | 1          |
         Then the service displays the following error message
-            | number Of Dependants-error | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
+            | Dependants-error | Main applicants cannot be accompanied by dependants on courses of 6 months or less |
 
-    Scenario: Case Worker enters invalid number of dependants - course length 6 months or less, then changes course length to above 6 months
+    Scenario: Case Worker enters invalid Dependants - course length 6 months or less, then changes course length to above 6 months
         Given the financial status check is performed with
-            | Course start date    | 30/05/2016 |
-            | Course end date      | 30/10/2016 |
-            | Number of dependants | 1          |
+            | Course start date | 30/05/2016 |
+            | Course end date   | 30/10/2016 |
+            | Dependants        | 1          |
         When these fields are updated with
             | Course end date | 30/05/2017 |
         And the submit button is clicked

@@ -62,25 +62,28 @@ class Steps {
 
     def pageUrls = [
         'studentType'       : uiRoot,
-        'doctorateQuery'    : uiRoot + '#!/financial-status-query-doctorate',
-        'non-doctorateQuery': uiRoot + '#!/financial-status-query-non-doctorate',
-        'pgddQuery'         : uiRoot + '#!/financial-status-query-pgdd',
-        'ssoQuery'          : uiRoot + '#!/financial-status-query-sso'
+        'doctorate'         : uiRoot + '#!/financial-status/doctorate',
+        'non-doctorate'     : uiRoot + '#!/financial-status/non-doctorate',
+        'pgdd'              : uiRoot + '#!/financial-status/pgdd',
+        'sso'               : uiRoot + '#!/financial-status/sso',
+        't2main'            : uiRoot + '#!/financial-status/t2main',
+        't2dependant'       : uiRoot + '#!/financial-status/t2dependant',
+        'studentTypeCalc'   : uiRoot + '#!/financial-status-calc',
     ]
 
-    def pageLocations = [
-        'studentType'       : '#!/financial-status-student-type',
-        'doctorateQuery'    : '#!/financial-status-query-doctorate',
-        'pgddQuery'         : '#!/financial-status-query-pgdd',
-        'ssoQuery'          : '#!/financial-status-query-sso',
-        'non-doctorateQuery': '#!/financial-status-query-non-doctorate',
-        'accountNotFound'   : '#!/financial-status-no-record',
+//    def pageLocations = [
+//        'studentType'       : '#!/financial-status',
+//        'doctorateQuery'    : '#!/financial-status/doctorate',
+//        'pgddQuery'         : '#!/financial-status/pgdd',
+//        'ssoQuery'          : '#!/financial-status/sso',
+//        'non-doctorateQuery': '#!/financial-status/non-doctorate',
+//        'accountNotFound'   : '#!/financial-status/no-record',
+//
+//        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
+//    ]
 
-        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
-    ]
-
-    def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
-    def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
+    def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
+    def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts.*"
 
     def sortCodeParts = ["Part1", "Part2", "Part3"]
     def sortCodeDelimiter = "-"
@@ -89,22 +92,26 @@ class Steps {
     def dateDelimiter = "/"
 
     def inLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'inLondon-0')
-        .withOption('no', 'inLondon-1')
+        .withOption('yes', 'inLondon-yes')
+        .withOption('no', 'inLondon-no')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'student-type-0')
-        .withOption('doctorate', 'student-type-1')
-        .withOption('pgdd', 'student-type-2')
-        .withOption('sso', 'student-type-3')
+        .withOption('non-doctorate', 'applicant-type-nondoctorate')
+        .withOption('doctorate', 'applicant-type-doctorate')
+        .withOption('pgdd', 'applicant-type-pgdd')
+        .withOption('sso', 'applicant-type-sso')
+        .withOption('t2main', 'applicant-type-t2main')
+        .withOption('t2dependant', 'applicant-type-t2dependant')
+        .withOption('t5main', 'applicant-type-t5main')
+        .withOption('t5dependant', 'applicant-type-t5dependant')
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('pre-sessional', 'courseType-0')
-        .withOption('main', 'courseType-1')
+        .withOption('pre-sessional', 'courseType-pre-sessional')
+        .withOption('main', 'courseType-main')
 
     def continuationCourseRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'continuationCourse-0')
-        .withOption('no', 'continuationCourse-1')
+        .withOption('yes', 'continuationCourse-yes')
+        .withOption('no', 'continuationCourse-no')
 
     def studentType
 
@@ -168,7 +175,7 @@ class Steps {
 
         driver.sleep(200)
 
-        def expected = pageLocations[location]
+        def expected = pageUrls[location]
         def actual = driver.currentUrl
 
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
@@ -320,11 +327,11 @@ class Steps {
     @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
     public void user_is_using_the_ui(String service) throws Throwable {
         if (service.trim() == 'financial status calculator service') {
-            driver.get(uiRoot + pageLocations['studentTypeCalc'])
+            driver.get(pageUrls['studentTypeCalc'])
             driver.navigate().refresh()
             assertCurrentPage('studentTypeCalc')
         } else if (service.trim() == 'financial status service') {
-            driver.get(uiRoot + pageLocations['studentType'])
+            driver.get(pageUrls['studentType'])
             driver.navigate().refresh()
             assertCurrentPage('studentType')
         } else {
@@ -343,10 +350,23 @@ class Steps {
         defaultFields = arg1
     }
 
+    @Given("^the account has sufficient funds for tier (\\d)\$")
+    public void the_account_has_sufficient_funds_for_tier(int tier) {
+        println "tier " + tier
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold-t" + tier, thresholdUrlRegex)
+    }
+
     @Given("^the account has sufficient funds\$")
     public void the_account_has_sufficient_funds() {
         testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds for tier (\\d)\$")
+    public void the_account_does_not_have_sufficient_funds_for_tier(int tier) {
+        testDataLoader.stubTestData("threshold-t" + tier, thresholdUrlRegex)
+        testDataLoader.stubTestData("dailyBalanceFail-low-balance-t" + tier, balanceCheckUrlRegex)
     }
 
     @Given("^the account does not have sufficient funds\$")
@@ -424,7 +444,7 @@ class Steps {
                 'End date'                       : '30/05/2016',
                 'In London'                      : 'Yes',
                 'Accommodation fees already paid': '0',
-                'Number of dependants'           : '1',
+                'Dependants'                     : '1',
                 'Sort code'                      : '11-11-11',
                 'Account number'                 : '11111111',
                 'dob'                            : '29/07/1978',

@@ -27,7 +27,7 @@ class ApiUrlsSpec extends Specification {
         apiUrls = new ApiUrls()
 
         apiUrls.apiRoot = root
-        apiUrls.apiThresholdEndpoint = thresholdEndpoint
+        apiUrls.apiThresholdT4Endpoint = thresholdEndpoint
         apiUrls.apiDailyBalanceEndpoint = balanceEndpoint
     }
 
@@ -39,7 +39,7 @@ class ApiUrlsSpec extends Specification {
         def maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
         when:
-        def url = apiUrls.thresholdUrlFor(course, maintenance)
+        def url = apiUrls.t4ThresholdUrlFor(course, maintenance)
 
         then:
         url.host == 'localhost'
@@ -67,6 +67,6 @@ class ApiUrlsSpec extends Specification {
 
         url.path == balanceEndpoint
 
-        url.query == 'dob=1980-01-01&userId=anonymous&accountHolderConsent=true&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
+        url.query == 'dob=1980-01-01&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
     }
 }

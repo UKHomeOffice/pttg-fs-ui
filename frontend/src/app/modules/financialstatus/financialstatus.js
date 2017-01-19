@@ -32,7 +32,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     return {
       continuationCourse: null,
       applicationRaisedDate: '',
-      studentType: '',
+      applicantType: '',
       toDate: '',
       inLondon: null,
       originalCourseStartDate: '',
@@ -41,7 +41,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       totalTuitionFees: '',
       tuitionFeesAlreadyPaid: '',
       accommodationFeesAlreadyPaid: '',
-      numberOfDependants: '',
+      dependants: '',
       sortCode: '',
       accountNumber: '',
       dob: ''
@@ -56,9 +56,46 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   }
 
   // get the available types
-  this.getStudentTypes = function () {
+  this.getApplicantTypes = function () {
     return [
       {
+        tier: 2,
+        value: 't2main',
+        label: 'Main applicant (with & without dependants)',
+        full: 'Main applicant (with & without dependants)',
+        hiddenFields: [
+          'courseStartDate',
+          'courseEndDate',
+          'accommodationFeesAlreadyPaid',
+          'inLondon',
+          'courseType',
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationCourse'
+        ],
+        noDependantsOnCourseLength: null
+      },
+      {
+        tier: 2,
+        value: 't2dependant',
+        label: 'Dependant only',
+        full: 'Dependant only',
+        hiddenFields: [
+          'dependants',
+          'courseStartDate',
+          'courseEndDate',
+          'accommodationFeesAlreadyPaid',
+          'inLondon',
+          'courseType',
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationCourse',
+          'originalCourseStartDate'
+        ],
+        noDependantsOnCourseLength: null
+      },
+      {
+        tier: 4,
         value: 'nondoctorate',
         label: 'General student',
         full: 'Tier 4 (General) student',
@@ -66,6 +103,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         noDependantsOnCourseLength: 6
       },
       {
+        tier: 4,
         value: 'doctorate',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
@@ -81,6 +119,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         noDependantsOnCourseLength: null
       },
       {
+        tier: 4,
         value: 'pgdd',
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
@@ -92,6 +131,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         noDependantsOnCourseLength: null
       },
       {
+        tier: 4,
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
@@ -101,13 +141,49 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
           'tuitionFeesAlreadyPaid'
         ],
         noDependantsOnCourseLength: null
+      },
+      {
+        tier: 5,
+        value: 't5main',
+        label: 'Main applicant (with & without dependants)',
+        full: 'Main applicant (with & without dependants)',
+        hiddenFields: [
+          'courseStartDate',
+          'courseEndDate',
+          'accommodationFeesAlreadyPaid',
+          'inLondon',
+          'courseType',
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationCourse'
+        ],
+        noDependantsOnCourseLength: null
+      },
+      {
+        tier: 5,
+        value: 't5dependant',
+        label: 'Dependant only',
+        full: 'Dependant only',
+        hiddenFields: [
+          'dependants',
+          'courseStartDate',
+          'courseEndDate',
+          'accommodationFeesAlreadyPaid',
+          'inLondon',
+          'courseType',
+          'totalTuitionFees',
+          'tuitionFeesAlreadyPaid',
+          'continuationCourse',
+          'originalCourseStartDate'
+        ],
+        noDependantsOnCourseLength: null
       }
     ]
   }
 
   // get the config detail of the student given the typ code eg sso fo Student union sabbatical officer
-  this.getStudentTypeByID = function (typ) {
-    return _.findWhere(me.getStudentTypes(), { value: typ })
+  this.getApplicantTypeByID = function (typ) {
+    return _.findWhere(me.getApplicantTypes(), { value: typ })
   }
 
   // set form the validation status
@@ -122,7 +198,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
 
   // determine the course length given start and end dates
   this.getCourseLength = function () {
-    if (finStatus.studentType === 'doctorate') {
+    if (finStatus.applicantType === 'doctorate') {
       return 2
     }
 
@@ -134,7 +210,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
   }
 
   this.getEntireCourseLength = function () {
-    if (finStatus.studentType === 'doctorate') {
+    if (finStatus.applicantType === 'doctorate') {
       return 2
     }
 
@@ -167,8 +243,13 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       return
     }
 
-    finStatus.courseLength = Math.ceil(me.getCourseLength())
-    finStatus.entireCourseLength = Math.ceil(me.getEntireCourseLength())
+    var applicantType = this.getApplicantTypeByID(finStatus.applicantType)
+    var tier = applicantType.tier
+
+    if (tier === 4) {
+      finStatus.courseLength = Math.ceil(this.getCourseLength())
+      finStatus.entireCourseLength = Math.ceil(this.getEntireCourseLength())
+    }
 
     // make a copy of the finStatus object and delete fields we don't want to send
     var details = angular.copy(finStatus)
@@ -183,6 +264,12 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       resultUrl = 'financialStatusCalcResults'
     }
 
+    if (tier === 2 || tier === 5) {
+      details.applicantType = finStatus.applicantType.substr(2)
+    }
+    details.studentType = details.applicantType
+
+    // delete details.applicantType
     delete details.applicationRaisedDate
     delete details.sortCode
     delete details.accountNumber
@@ -192,12 +279,16 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     }
     delete details.continuationCourse
 
-    var stud = this.getStudentTypeByID(finStatus.studentType)
+    var stud = this.getApplicantTypeByID(finStatus.applicantType)
     _.each(stud.hiddenFields, function (f) {
       delete details[f]
     })
 
-    var url = sortCode + '/' + accountNumber + '/dailybalancestatus'
+    if (details.applicantType === 'dependant') {
+      details.dependants = 0
+    }
+
+    var url = 't' + tier + '/accounts/' + sortCode + '/' + accountNumber + '/dailybalancestatus'
     var attemptNum = 0
 
     var trySendDetails = function () {
@@ -207,7 +298,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         console.log('trySendDetails', attemptNum, url, details)
         lastAPIresponse = result.data
         lastAPIresponse.responseTimeStamp = new Date()
-        $state.go(resultUrl, {studentType: finStatus.studentType})
+        $state.go(resultUrl, {applicantType: finStatus.applicantType})
       }, function (err) {
         console.log('trySendDetails', attemptNum, err)
         if (err.status === -1 && attemptNum < CONFIG.retries) {
@@ -225,7 +316,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
             status: err.status
           }
         }
-        $state.go(resultUrl, {studentType: finStatus.studentType})
+        $state.go(resultUrl, {applicantType: finStatus.applicantType})
       })
     }
     // start attempting to make the request

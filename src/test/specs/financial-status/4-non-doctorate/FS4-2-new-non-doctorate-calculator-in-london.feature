@@ -7,7 +7,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Tuition fees already paid - total amount of tuition fees already paid
     Accommodation fees already paid - The maximum amount paid can be £1265
 
-    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * number of dependants) + (total tuition fees - tuition fees paid - accommodation fees paid)
+    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * Dependants) + (total tuition fees - tuition fees paid - accommodation fees paid)
 
 #   Requirement to meet Tier 4 pass (Continuation applications only)
 #
@@ -38,7 +38,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 1          |
+            | Dependants                      | 1          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 21/09/1981 |
@@ -53,13 +53,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Application Raised Date         | 31/05/2016                   |
-            | Student type                    | Tier 4 (General) student     |
+            | Applicant type                  | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
+            | Dependants                      | 1                            |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
@@ -84,13 +84,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 31/05/2016                     |
-            | Student Type                    | Tier 4 (General) student       |
+            | Applicant type                  | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Course dates checked            | 30/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependants            | 1                              |
+            | Dependants                      | 1                              |
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |
@@ -116,13 +116,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
             | Course length                   | 9 (limited to 9)             |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
-            | Student type                    | Tier 4 (General) student     |
+            | Applicant type                  | Tier 4 (General) student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/01/2017     |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
-            | Number of dependants            | 1                            |
+            | Dependants                      | 1                            |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
@@ -148,12 +148,12 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Outcome                         | Passed                         |
             | Application Raised Date         | 31/05/2016                     |
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
-            | Student Type                    | Tier 4 (General) student       |
+            | Applicant type                  | Tier 4 (General) student       |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Number of dependants            | 1                              |
+            | Dependants                      | 1                              |
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |
             | DOB                             | 06/04/1989                     |

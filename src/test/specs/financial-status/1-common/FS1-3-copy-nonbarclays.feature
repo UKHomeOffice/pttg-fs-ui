@@ -15,7 +15,7 @@ Feature: Copy results to paste buffer
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 10         |
             | Accommodation fees already paid | 20         |
-            | Number of dependants            | 0          |
+            | Dependants            | 0          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
 
@@ -34,13 +34,13 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Student type                    | Tier 4 (General) student                        |
+            | Applicant type                    | Tier 4 (General) student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |
             | Tuition fees already paid       | £10.00                                          |
             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
-            | Number of dependants            | 0                                               |
+            | Dependants            | 0                                               |
             | Application raised date         | 31/05/2015                                      |
             | Continuation Course             | No                                              |
             | Leave End Date                  |                                                 |
@@ -56,13 +56,13 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Student type                    | Tier 4 (General) student                        |
+            | Applicant type                    | Tier 4 (General) student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |
             | Tuition fees already paid       | £10.00                                          |
             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
-            | Number of dependants            | 0                                               |
+            | Dependants            | 0                                               |
             | Application raised date         |                                                 |
             | Continuation Course             | Yes                                             |
             | Original Course Start Date      |                                                 |
