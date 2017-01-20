@@ -65,6 +65,7 @@ financialstatusModule.controller(
 
     var isCalc = ($state.current.name.indexOf('Calc') > 0)
 
+    $scope.title = (isCalc) ? 'Maintenance calculator' : 'Online statement checker for a Barclays current account holder (must be in the applicant’s name only).'
     $scope.typeSubmit = function (isValid, formScope, formCtrl) {
       FinancialstatusService.trackFormSubmission(formScope)
 
