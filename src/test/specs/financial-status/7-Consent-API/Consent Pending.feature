@@ -1,4 +1,4 @@
-Feature: Process 'pending' status and display the appropriate output page
+    Feature: Process 'pending' status and display the appropriate output page
 
     The Barclays Consent API response will return a consent 'status' (Success, Failure, Invalid, Pending) when invoked.
 
@@ -96,26 +96,6 @@ Feature: Process 'pending' status and display the appropriate output page
         And the service displays the 'More than 15 minutes has passed' page including the results and your search headers
         Then The 'Check Again' link is not available selection
 
-
-        ## Display Timeout bar on Consent pending output page ##
-
-    Scenario: Service receives a 'Pending' status and displays the appropriate output page with timeout bar
-
-        Given the financial status check is performed
-        And the default details are
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
-        When the Barclays Consent API provides the following response:
-            | status | "PENDING" |
-        Then The service displays the 'Consent pending' output page
-        And I can view a timeout bar which expires after 15 minutes
-
-
         ##  Timeout bar counts down from the 'Initiated Status' being received ##
 
     Scenario:  The 'Consent pending' output page displays the timeout bar and uses the 'Initiated Status' to start timing
@@ -135,6 +115,6 @@ Feature: Process 'pending' status and display the appropriate output page
         And the Barclays Consent API provides the following response:
             | status | "PENDING" |
         And  The service displays the 'Consent pending' output page
-        Then The timeout bar counts down for a period of 15 minutes starting from the time stamp of the receipt of the 'Initiated' status
+        Then I can view a timeout bar and it counts down for a period of 15 minutes starting from the time stamp of the receipt of the 'Initiated' status
 
 
