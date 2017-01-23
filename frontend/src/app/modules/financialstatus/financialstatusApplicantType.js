@@ -43,19 +43,21 @@ financialstatusModule.controller(
     ga('send', 'pageview')
 
     var appTypes = FinancialstatusService.getApplicantTypes()
-
+    var t2 = FinancialstatusService.getApplicantTier(2)
+    var t4 = FinancialstatusService.getApplicantTier(4)
+    var t5 = FinancialstatusService.getApplicantTier(5)
     $scope.applicantTypeOptions = {
       groups: [
         {
-          label: 'Tier 2',
+          label: t2.label,
           options: _.where(appTypes, {tier: 2})
         },
         {
-          label: 'Tier 4',
+          label: t4.label,
           options: _.where(appTypes, {tier: 4})
         },
         {
-          label: 'Tier 5',
+          label: t5.label,
           options: _.where(appTypes, {tier: 5})
         }
       ]

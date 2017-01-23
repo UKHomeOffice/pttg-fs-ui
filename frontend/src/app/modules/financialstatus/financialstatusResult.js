@@ -271,6 +271,7 @@ financialstatusModule.factory('FinancialstatusResultService', ['FinancialstatusS
     var criteria = []
     var from
     var to
+    var t = FinancialstatusService.getApplicantTier(student.tier)
     var isCalc = FinancialstatusService.isCalc()
     // no summary required if the api failed
     if (state === RESULT_STATES.failure) {

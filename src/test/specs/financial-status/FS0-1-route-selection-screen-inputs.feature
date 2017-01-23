@@ -9,9 +9,9 @@ Feature: Route selection screen inputs - All tiers
         Examples:
             | student-type  | page-title                       |
             | non-doctorate | General student                  |
-            | doctorate     | Doctorate extension scheme       |
-            | pgdd          | Postgraduate doctor or dentist   |
-            | sso           | Student union sabbatical officer |
+            | doctorate     | General doctorate extension scheme       |
+            | pgdd          | General postgraduate doctor or dentist   |
+            | sso           | General student union sabbatical officer |
 
     Scenario Outline: Caseworker selects Tier 2 (General)
         Given the api health check response has status 200

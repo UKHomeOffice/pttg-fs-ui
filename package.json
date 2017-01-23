@@ -50,7 +50,6 @@
     "moment": "^2.14.1",
     "node-sass": "^3.4.2",
     "phantomjs-prebuilt": "~2.1.7",
-    "pttg-angular": "git+https://github.com/UKHomeOffice/pttg-angular.git",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
     "snyk": "^1.19.1",

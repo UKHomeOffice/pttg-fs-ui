@@ -475,7 +475,6 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
         }
 
         scope.radioClick = function (opt) {
-          console.log('radioClick', opt)
           scope.field = opt.value
           scope.$applyAsync()
           if (scope.config.onClick) {
