@@ -15,7 +15,7 @@ class CourseSpec extends Specification {
 
         given:
         def aDate = LocalDate.of(2019, 1, 1)
-        def instance = new Course(true, aDate, aDate, "doctorate")
+        def instance = new Course(true, aDate, aDate, "doctorate", "main")
 
         when:
         def output = instance.toString()

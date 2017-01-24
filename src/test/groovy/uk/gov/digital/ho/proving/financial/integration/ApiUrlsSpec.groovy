@@ -27,7 +27,7 @@ class ApiUrlsSpec extends Specification {
         apiUrls = new ApiUrls()
 
         apiUrls.apiRoot = root
-        apiUrls.apiThresholdEndpoint = thresholdEndpoint
+        apiUrls.apiThresholdT4Endpoint = thresholdEndpoint
         apiUrls.apiDailyBalanceEndpoint = balanceEndpoint
     }
 
@@ -35,11 +35,11 @@ class ApiUrlsSpec extends Specification {
     def "generates threshold url"() {
 
         given:
-        def course = new Course(true, aDate, aDate, "doctorate")
+        def course = new Course(true, aDate, aDate, "doctorate", "main")
         def maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
         when:
-        def url = apiUrls.thresholdUrlFor(course, maintenance)
+        def url = apiUrls.t4ThresholdUrlFor(course, maintenance)
 
         then:
         url.host == 'localhost'
@@ -47,7 +47,7 @@ class ApiUrlsSpec extends Specification {
 
         url.path == thresholdEndpoint
 
-        url.query == 'inLondon=true&studentType=doctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&continuationEndDate&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1'
+        url.query == 'inLondon=true&studentType=doctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1&courseType=main'
     }
 
     def "generates daily balance url"() {
@@ -67,6 +67,6 @@ class ApiUrlsSpec extends Specification {
 
         url.path == balanceEndpoint
 
-        url.query == 'dob=1980-01-01&userId=anonymous&accountHolderConsent=true&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
+        url.query == 'dob=1980-01-01&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
     }
 }

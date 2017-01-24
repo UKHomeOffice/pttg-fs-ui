@@ -1,0 +1,23 @@
+<div class="form-group" ng-class="{error: displayError}" ng-hide="config.hidden">
+  <fieldset>
+    <legend class="form-label-bold">{{ label }}</legend>
+    <div class="form-date">
+      <span class="form-hint">{{ hint }}</span>
+      <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
+      <div class="form-group form-group-sortcode">
+        <label for="{{ config.id }}Part1" class="visuallyhidden">Sortcode part 1</label>
+        <input class="form-control" name="{{ name }}Part1" id="{{ config.id }}Part1" type="text" ng-model="data.part1" ng-change="itChanged()" autocomplete="off" maxlength="2" />
+      </div>
+
+      <div class="form-group form-group-sortcode">
+        <label for="{{ name }}Part2" class="visuallyhidden">Sortcode part 2</label>
+        <input class="form-control" name="{{ name }}Part2" id="{{ config.id }}Part2" type="text" ng-model="data.part2" ng-change="itChanged()" autocomplete="off" maxlength="2" />
+      </div>
+
+      <div class="form-group form-group-sortcode">
+        <label for="{{ name }}Part3" class="visuallyhidden">Sortcode part 3</label>
+        <input class="form-control" name="{{ name }}Part3" id="{{ config.id }}Part3" type="text" ng-model="data.part3" ng-change="itChanged()" autocomplete="off" maxlength="2" />
+      </div>
+    </div>
+  </fieldset>
+</div>

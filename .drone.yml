@@ -57,7 +57,7 @@ pipeline:
       branch: master
 
   deploy_to_dev:
-    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - KUBE_NAMESPACE=pt-i-dev
@@ -72,7 +72,7 @@ pipeline:
       branch: master
 
   deploy_to_test:
-    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - KUBE_NAMESPACE=pt-i-test

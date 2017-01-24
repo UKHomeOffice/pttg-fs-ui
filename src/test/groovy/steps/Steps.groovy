@@ -62,23 +62,28 @@ class Steps {
 
     def pageUrls = [
         'studentType'       : uiRoot,
-        'doctorateQuery'    : uiRoot + '#/financial-status-query-doctorate',
-        'non-doctorateQuery': uiRoot + '#/financial-status-query-non-doctorate',
-        'pgddQuery'         : uiRoot + '#/financial-status-query-pgdd',
-        'ssoQuery'         : uiRoot + '#/financial-status-query-sso'
+        'doctorate'         : uiRoot + '#!/financial-status/doctorate',
+        'non-doctorate'     : uiRoot + '#!/financial-status/non-doctorate',
+        'pgdd'              : uiRoot + '#!/financial-status/pgdd',
+        'sso'               : uiRoot + '#!/financial-status/sso',
+        't2main'            : uiRoot + '#!/financial-status/t2main',
+        't2dependant'       : uiRoot + '#!/financial-status/t2dependant',
+        'studentTypeCalc'   : uiRoot + '#!/financial-status-calc',
     ]
 
-    def pageLocations = [
-        'studentType'       : '#/financial-status-student-type',
-        'doctorateQuery'    : '#/financial-status-query-doctorate',
-        'pgddQuery'         : '#/financial-status-query-pgdd',
-        'ssoQuery'          : '#/financial-status-query-sso',
-        'non-doctorateQuery': '#/financial-status-query-non-doctorate',
-        'accountNotFound'   : '#/financial-status-no-record'
-    ]
+//    def pageLocations = [
+//        'studentType'       : '#!/financial-status',
+//        'doctorateQuery'    : '#!/financial-status/doctorate',
+//        'pgddQuery'         : '#!/financial-status/pgdd',
+//        'ssoQuery'          : '#!/financial-status/sso',
+//        'non-doctorateQuery': '#!/financial-status/non-doctorate',
+//        'accountNotFound'   : '#!/financial-status/no-record',
+//
+//        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
+//    ]
 
-    def thresholdUrlRegex = "/pttg/financialstatusservice/v1/maintenance/threshold*"
-    def balanceCheckUrlRegex = "/pttg/financialstatusservice/v1/accounts.*"
+    def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
+    def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts.*"
 
     def sortCodeParts = ["Part1", "Part2", "Part3"]
     def sortCodeDelimiter = "-"
@@ -87,14 +92,26 @@ class Steps {
     def dateDelimiter = "/"
 
     def inLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'inLondon-0')
-        .withOption('no', 'inLondon-1')
+        .withOption('yes', 'inLondon-yes')
+        .withOption('no', 'inLondon-no')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'student-type-0')
-        .withOption('doctorate', 'student-type-1')
-        .withOption('pgdd', 'student-type-2')
-        .withOption('sso', 'student-type-3')
+        .withOption('non-doctorate', 'applicant-type-nondoctorate')
+        .withOption('doctorate', 'applicant-type-doctorate')
+        .withOption('pgdd', 'applicant-type-pgdd')
+        .withOption('sso', 'applicant-type-sso')
+        .withOption('t2main', 'applicant-type-t2main')
+        .withOption('t2dependant', 'applicant-type-t2dependant')
+        .withOption('t5main', 'applicant-type-t5main')
+        .withOption('t5dependant', 'applicant-type-t5dependant')
+
+    def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('pre-sessional', 'courseType-pre-sessional')
+        .withOption('main', 'courseType-main')
+
+    def continuationCourseRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('yes', 'continuationCourse-yes')
+        .withOption('no', 'continuationCourse-no')
 
     def studentType
 
@@ -158,7 +175,7 @@ class Steps {
 
         driver.sleep(200)
 
-        def expected = pageLocations[location]
+        def expected = pageUrls[location]
         def actual = driver.currentUrl
 
         assert actual.contains(expected): "Expected current page location to contain text: '$expected' but actual page location was '$actual' - Something probably went wrong earlier"
@@ -189,7 +206,7 @@ class Steps {
         entriesAsList.eachWithIndex { v, index ->
             def oneBasedIndex = index + 1;
             def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
-            assert result: "Could not find header [$v] for Results table row, [$oneBasedIndex] "
+            assert result: "Could not find header [$v] for $tableId table row, [$oneBasedIndex] "
         }
     }
 
@@ -200,11 +217,14 @@ class Steps {
 
     private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
 
+
+
         entries.each { k, v ->
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
-
             assert element.getText() == v
+
+
         }
     }
 
@@ -229,6 +249,12 @@ class Steps {
             } else if (fieldName == "studentType") {
                 assertRadioSelection(studentTypeRadio, v)
 
+            } else if (fieldName == "continuationCourse") {
+                assertRadioSelection(continuationCourseRadio, v)
+
+            } else if (fieldName == "courseType") {
+                assertRadioSelection(courseTypeRadio, v)
+
             } else {
                 assert driver.findElement(By.id(fieldName)).getAttribute("value") == v
             }
@@ -246,13 +272,22 @@ class Steps {
                 fillOrClearBySplitting(key, v, sortCodeParts, sortCodeDelimiter)
 
             } else {
-                def element = driver.findElement(By.id(key))
+
 
                 if (key == "inLondon") {
                     clickRadioButton(driver, inLondonRadio, v)
+
                 } else if (key == "studentType") {
                     clickRadioButton(driver, studentTypeRadio, v)
+
+                } else if (key == "continuationCourse") {
+                    clickRadioButton(driver, continuationCourseRadio, v)
+
+                } else if (key == "courseType") {
+                    clickRadioButton(driver, courseTypeRadio, v)
+
                 } else {
+                    def element = driver.findElement(By.id(key))
                     sendKeys(element, v)
                 }
             }
@@ -289,10 +324,19 @@ class Steps {
         return response.getStatusCode();
     }
 
-    @Given("^(?:caseworker|user) is using the financial status service ui\$")
-    public void user_is_using_the_financial_status_service_ui() throws Throwable {
-        driver.get(uiRoot)
-        assertCurrentPage('studentType')
+    @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
+    public void user_is_using_the_ui(String service) throws Throwable {
+        if (service.trim() == 'financial status calculator service') {
+            driver.get(pageUrls['studentTypeCalc'])
+            driver.navigate().refresh()
+            assertCurrentPage('studentTypeCalc')
+        } else if (service.trim() == 'financial status service') {
+            driver.get(pageUrls['studentType'])
+            driver.navigate().refresh()
+            assertCurrentPage('studentType')
+        } else {
+            assert false
+        }
     }
 
     @Given("^the (.*) student type is chosen\$")
@@ -303,16 +347,26 @@ class Steps {
 
     @Given("^the default details are\$")
     public void the_default_details_are(DataTable arg1) throws Throwable {
-        // println 'BACKGROUND the default details are';
         defaultFields = arg1
-       // Map<String, String> entries = arg1.asMap(String.class, String.class)
-       // submitEntries(entries)
+    }
+
+    @Given("^the account has sufficient funds for tier (\\d)\$")
+    public void the_account_has_sufficient_funds_for_tier(int tier) {
+        println "tier " + tier
+        testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+        testDataLoader.stubTestData("threshold-t" + tier, thresholdUrlRegex)
     }
 
     @Given("^the account has sufficient funds\$")
     public void the_account_has_sufficient_funds() {
         testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+    }
+
+    @Given("^the account does not have sufficient funds for tier (\\d)\$")
+    public void the_account_does_not_have_sufficient_funds_for_tier(int tier) {
+        testDataLoader.stubTestData("threshold-t" + tier, thresholdUrlRegex)
+        testDataLoader.stubTestData("dailyBalanceFail-low-balance-t" + tier, balanceCheckUrlRegex)
     }
 
     @Given("^the account does not have sufficient funds\$")
@@ -386,13 +440,15 @@ class Steps {
             validDefaultEntries = defaultFields.asMap(String.class, String.class)
         } else {
             validDefaultEntries = [
+                'Application raised date'        : '29/06/2016',
                 'End date'                       : '30/05/2016',
                 'In London'                      : 'Yes',
                 'Accommodation fees already paid': '0',
-                'Number of dependants'           : '1',
+                'Dependants'                     : '1',
                 'Sort code'                      : '11-11-11',
                 'Account number'                 : '11111111',
                 'dob'                            : '29/07/1978',
+                'Continuation course'            : 'No'
             ]
 
             if (studentType.equalsIgnoreCase('non-doctorate')) {
@@ -417,7 +473,6 @@ class Steps {
     @When("^the financial status check is performed with\$")
     public void the_financial_status_check_is_performed_with(DataTable arg1) throws Throwable {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
-
         if (defaultFields) {
             Map<String, String> defaultEntries = defaultFields.asMap(String.class, String.class)
             submitEntries(defaultEntries + entries)
@@ -452,14 +507,14 @@ class Steps {
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--newSearch")).click()
+        driver.findElement(By.className("newsearch")).click()
         //assertTextFieldEqualityForTable(expectedResult)
     }
 
     @When("^the edit search button is clicked\$")
     public void the_edit_search_button_is_clicked() throws Throwable {
         driver.sleep(delay)
-        driver.findElement(By.className("button--editSearch")).click()
+        driver.findElement(By.className("yoursearch--edit")).click()
     }
 
     @When("^the copy button is clicked\$")
@@ -498,7 +553,43 @@ class Steps {
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
+        driver.sleep(200)
+        def actual = driver.currentUrl
+        assert actual.contains('result'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
         assertTextFieldEqualityForTable(expectedResult)
+    }
+
+
+
+    @Then("^the result table contains the following\$")
+    public void the_result_table_contains_the_following(DataTable arg1) throws Throwable {
+        Map<String,String> entries = arg1.asMap(String.class,String.class)
+
+        ArrayList<String> scenarioTable = new ArrayList<>()
+        String[] resultTable = entries.keySet()
+
+        for(String s:resultTable){
+            scenarioTable.add(entries.get(s))
+        }
+
+        for (int j = 0; j < resultTable.size(); j++) {
+            assert scenarioTable.contains(driver.findElement(By.id(toCamelCase(resultTable[j]))).getText())
+        }
+
+
+        int numRows = driver.findElements(By.xpath('//*[@id="resultsTable"]/tbody/tr')).size()
+
+        for(int i=1; i <= numRows; i++) {
+
+//            if (tr) {
+                if (driver.findElement(By.id("resultTimestamp")).getText() != driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()) {
+                    if (driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText() == null) {
+                        break;
+                    }
+                    assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText())
+                }
+//            }
+        }
     }
 
     @Then("^the service displays the following page content\$")

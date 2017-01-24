@@ -9,6 +9,7 @@ Feature: Insufficient Information
         And the non-doctorate student type is chosen
         Given no record for the account
         When the financial status check is performed with
+            | Application raised date         | 30/06/2016 |
             | End date                        | 10/06/2016 |
             | In London                       | No         |
             | Course start date               | 30/05/2016 |
@@ -16,15 +17,17 @@ Feature: Insufficient Information
             | Total tuition fees              | 3000.00    |
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
             | Sort code                       | 99-99-99   |
             | Account number                  | 99999999   |
             | DOB                             | 29/07/1978 |
+            | Course type                     | Main       |
+            | Continuation course             | No         |
         #Then the service displays the account not found page
         And the service displays the following page content
             | Page dynamic heading | Invalid or inaccessible account                                                  |
             | Page Dynamic detail  | One or more of the following conditions prevented us from accessing the account: |
         And the service displays the following your search data
-            | Sort Code      | 99-99-99 |
-            | Account Number | 99999999 |
+            | Sort Code      | 99-99-99   |
+            | Account Number | 99999999   |
             | DOB            | 29/07/1978 |

@@ -60,7 +60,7 @@ class FundingCheckResponseSpec extends Specification {
     def "generates meaningful toString instead of just a hash"() {
 
         given:
-        def instance = new FundingCheckResponse(false, null, null, null, null, null)
+        def instance = new FundingCheckResponse(false, null, null, null, null, null, null)
 
         when:
         def output = instance.toString()
@@ -90,7 +90,8 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         null,
-        null
+        null,
+        LocalDate.of(2016,1,1)
     )
 
     def static sampleTwo = new FundingCheckResponse(
@@ -99,7 +100,8 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         lowBalanceFailure,
-        new CappedValues(1265.00, 9, 3)
+        new CappedValues(1265.00, 9),
+        LocalDate.of(2016,1,1)
     )
 
     def static sampleThree = new FundingCheckResponse(
@@ -108,7 +110,8 @@ class FundingCheckResponseSpec extends Specification {
         LocalDate.of(2015, 10, 3),
         BigDecimal.valueOf(100),
         recordCountFailure,
-        new CappedValues(1265.00, 9, 3)
+        new CappedValues(1265.00, 9),
+        LocalDate.of(2016,1,1)
     )
 
     def stringFromFile(String fileName) {

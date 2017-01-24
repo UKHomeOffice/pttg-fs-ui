@@ -27,24 +27,31 @@ public class ApiUrls {
     @Value("${api.dailybalance.endpoint}")
     private String apiDailyBalanceEndpoint;
 
-    @Value("${api.threshold.endpoint}")
-    private String apiThresholdEndpoint;
+    @Value("${api.threshold.t4.endpoint}")
+    private String apiThresholdT4Endpoint;
+
+    @Value("${api.threshold.t2.endpoint}")
+    private String apiThresholdT2Endpoint;
+
+    @Value("${api.threshold.t5.endpoint}")
+    private String apiThresholdT5Endpoint;
 
 
-    public URI thresholdUrlFor(Course course, Maintenance maintenance) {
+    public URI t4ThresholdUrlFor(Course course, Maintenance maintenance) {
 
-        LOGGER.debug("root: {}, end: {}", apiRoot, apiDailyBalanceEndpoint);
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT4Endpoint);
 
-        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdEndpoint)
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT4Endpoint)
             .queryParam("inLondon", course.getInLondon())
             .queryParam("studentType", course.getStudentType())
             .queryParam("courseStartDate", course.getCourseStartDate())
             .queryParam("courseEndDate", course.getCourseEndDate())
-            .queryParam("continuationEndDate", course.getContinuationEndDate())
+            .queryParam("originalCourseStartDate", course.getOriginalCourseStartDate())
             .queryParam("tuitionFees", maintenance.getTotalTuitionFees())
             .queryParam("tuitionFeesPaid", maintenance.getTuitionFeesAlreadyPaid())
             .queryParam("accommodationFeesPaid", maintenance.getAccommodationFeesAlreadyPaid())
-            .queryParam("dependants", maintenance.getNumberOfDependants())
+            .queryParam("dependants", maintenance.getDependants())
+            .queryParam("courseType", course.getCourseType())
             .build()
             .toUri();
 
@@ -53,13 +60,38 @@ public class ApiUrls {
         return expanded;
     }
 
+    public URI t2ThresholdUrlFor(String applicantType, Integer dependants) {
+
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT2Endpoint);
+
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT2Endpoint)
+            .queryParam("applicantType", applicantType)
+            .queryParam("dependants", dependants)
+            .build()
+            .toUri();
+
+        LOGGER.debug(expanded.toString());
+        return expanded;
+    }
+
+    public URI t5ThresholdUrlFor(String applicantType, Integer dependants) {
+
+        LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT5Endpoint);
+
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiThresholdT5Endpoint)
+            .queryParam("applicantType", applicantType)
+            .queryParam("dependants", dependants)
+            .build()
+            .toUri();
+
+        LOGGER.debug(expanded.toString());
+        return expanded;
+    }
+
     public URI dailyBalanceStatusUrlFor(Account account, BigDecimal totalFundsRequired, LocalDate from, LocalDate to) {
 
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiDailyBalanceEndpoint)
             .queryParam("dob", account.getDob())
-            //TODO replace when user and consent values are captured
-            .queryParam("userId", "anonymous")
-            .queryParam("accountHolderConsent", Boolean.TRUE)
             .queryParam("minimum", totalFundsRequired.toPlainString())
             .queryParam("fromDate", from)
             .queryParam("toDate", to)
@@ -70,4 +102,5 @@ public class ApiUrls {
 
         return expanded;
     }
+
 }

@@ -1,32 +1,31 @@
-var target = 'src/main/webapp/';
-var sourcePath = 'frontend/src/';
+var target = 'src/main/webapp/'
+var sourcePath = 'frontend/src/'
 
-var gulp = require('gulp');
-var async = require('async');
-var run = require('run-sequence');
-var karma = require('karma').server;
-var minifyHTML = require('gulp-html-minifier');
+var gulp = require('gulp')
+var async = require('async')
+var run = require('run-sequence')
+var karma = require('karma').server
+var minifyHTML = require('gulp-html-minifier')
 // var imagemin = require('gulp-imagemin');
 // var imageminJpegRecompress = require('imagemin-jpeg-recompress');
-var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify')
 // var nodemon = require('gulp-nodemon');
-var templateCache = require('gulp-angular-templatecache');
-var del = require('del');
-var concat = require('gulp-concat');
-var plumber = require('gulp-plumber');
-var gutil = require('gulp-util');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var htmlmin = require('gulp-htmlmin');
-var sourcemaps = require('gulp-sourcemaps');
-
+var templateCache = require('gulp-angular-templatecache')
+var del = require('del')
+var concat = require('gulp-concat')
+var plumber = require('gulp-plumber')
+var gutil = require('gulp-util')
+var sass = require('gulp-sass')
+var autoprefixer = require('gulp-autoprefixer')
+var htmlmin = require('gulp-htmlmin')
+var sourcemaps = require('gulp-sourcemaps')
 
 // error function for plumber
 var onError = function (err) {
-  gutil.beep();
-  console.log(err);
-  this.emit('end');
-};
+  gutil.beep()
+  console.log(err)
+  this.emit('end')
+}
 
 // 'govuk_template': 'frameworks/govuk_template_mustache',
 // 'govuk_frontend_toolkit': 'node_modules/govuk_frontend_toolkit',
@@ -34,14 +33,14 @@ var onError = function (err) {
 
 var config = {
   sass: {
-    src:  sourcePath + 'styles/main.scss',
+    src: sourcePath + 'styles/main.scss',
     options: {
       noCache: true,
       compass: false,
       bundleExec: true,
       sourcemap: true,
       outputStyle: 'compressed',
-      includePaths: ['node_modules/govuk-elements-sass/public/sass','node_modules/govuk_frontend_toolkit/stylesheets']
+      includePaths: ['node_modules/govuk-elements-sass/public/sass', 'node_modules/govuk_frontend_toolkit/stylesheets']
     }
   },
   autoprefixer: {
@@ -56,58 +55,52 @@ var config = {
     ],
     cascade: true
   }
-};
-
+}
 
 gulp.task('assets', function () {
-  gulp.src([sourcePath + 'assets/**/*']).pipe(gulp.dest(target +'assets'));
-});
+  gulp.src([sourcePath + 'assets/**/*']).pipe(gulp.dest(target + 'assets'))
+})
 
-
-gulp.task('sass', function(){
+gulp.task('sass', function () {
   return gulp.src(config.sass.src)
     .pipe(plumber({ errorHandler: onError }))
     .pipe(autoprefixer(config.autoprefixer.browsers))
     .pipe(sass(config.sass.options)) // Using gulp-sass
-    .pipe(gulp.dest(target + 'styles'));
-});
+    .pipe(gulp.dest(target + 'styles'))
+})
 
-
-gulp.task('minifyHtml', function() {
+gulp.task('minifyHtml', function () {
   return gulp.src(sourcePath + '*.html')
     .pipe(plumber({ errorHandler: onError }))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest(target))
-});
-
+})
 
 gulp.task('uglify', function () {
   return gulp.src([
     sourcePath + 'app/main.js',
     '_temp/templates.js',
-    sourcePath + 'app/modules/**/*.js',
-    'node_modules/pttg-angular/src/app/modules/forms/forms.js'
-    ])
+    sourcePath + 'app/modules/**/*.js'
+    // 'node_modules/pttg-angular/src/app/modules/forms/forms.js'
+  ])
   .pipe(sourcemaps.init())
   .pipe(plumber())
   .pipe(uglify())
   .pipe(concat('main.js'))
   .pipe(sourcemaps.write('./'))
-  .pipe(gulp.dest(target + 'app'));
-});
-
+  .pipe(gulp.dest(target + 'app'))
+})
 
 gulp.task('angTemplates', function () {
   return gulp.src([
-    sourcePath + 'app/modules/**/*.html',
-    'node_modules/pttg-angular/src/app/modules/form*/*.html'
+    sourcePath + 'app/modules/**/*.html'
+    // 'node_modules/pttg-angular/src/app/modules/form*/*.html'
   ])
   .pipe(plumber())
   .pipe(htmlmin({collapseWhitespace: true}))
-  .pipe(templateCache({root: 'modules/', module:'hod.proving'}))
-  .pipe(gulp.dest('_temp'));
-});
-
+  .pipe(templateCache({root: 'modules/', module: 'hod.proving'}))
+  .pipe(gulp.dest('_temp'))
+})
 
 gulp.task('vendor', function () {
   return gulp.src([
@@ -117,48 +110,46 @@ gulp.task('vendor', function () {
     'node_modules/angular-ui-validate/dist/validate.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/moment/min/moment.min.js',
-    'node_modules/clipboard/dist/clipboard.min.js',
+    'node_modules/clipboard/dist/clipboard.min.js'
     // 'node_modules/govuk_frontend_toolkit/javascripts/govuk/selection-buttons.js'
   ])
   .pipe(plumber())
   .pipe(concat('vendor.js'))
-  .pipe(gulp.dest(target + 'app'));
-});
-
+  .pipe(gulp.dest(target + 'app'))
+})
 
 gulp.task('templateAndUglify', function () {
   async.series([
     function (done) {
       run(['angTemplates'], function () {
-        done();
-      });
+        done()
+      })
     },
     function (done) {
       run(['uglify'], function () {
-        done();
-      });
-    },
+        done()
+      })
+    }
   ], function () {
-    console.log('templateAndUglify done');
-  });
-});
+    console.log('templateAndUglify done')
+  })
+})
 
-
-gulp.task('startwatch', function() {
-  gulp.watch(sourcePath + 'index.html', ['minifyHtml']);
-  gulp.watch(sourcePath + 'app/modules/**/*.html', ['templateAndUglify']);
-  gulp.watch([sourcePath + 'app/main.js', sourcePath + 'app/modules/**/*.js'], ['uglify']);
-  gulp.watch(sourcePath + 'styles/*.scss', ['sass']);
-});
+gulp.task('startwatch', function () {
+  gulp.watch(sourcePath + 'index.html', ['minifyHtml'])
+  gulp.watch(sourcePath + 'app/modules/**/*.html', ['templateAndUglify'])
+  gulp.watch([sourcePath + 'app/main.js', sourcePath + 'app/modules/**/*.js'], ['uglify'])
+  gulp.watch(sourcePath + 'styles/*.scss', ['sass'])
+})
 
 gulp.task('test', function (done) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js'
-  }, done);
-});
+  // karma.start({
+    // configFile: __dirname + '/karma.conf.js'
+ // }, done);
+})
 
-gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify']);
-gulp.task('watch', ['startwatch', 'vendor']);
-gulp.task('default', ['build']);
-gulp.task('inline', ['default', 'inlineHTML']);
+gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify'])
+gulp.task('watch', ['startwatch', 'vendor'])
+gulp.task('default', ['build'])
+gulp.task('inline', ['default', 'inlineHTML'])
 

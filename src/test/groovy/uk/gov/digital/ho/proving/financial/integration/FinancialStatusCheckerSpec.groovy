@@ -24,11 +24,12 @@ class FinancialStatusCheckerSpec extends Specification {
     public static final String ACCOUNT_HOLDER_NAME = "Ray Purchase"
     FinancialStatusChecker checker
 
+    String tier = "t4";
     LocalDate dob = LocalDate.of(1980,1,1);
     Account account = new Account("", "", dob)
     LocalDate toDate = LocalDate.now()
     LocalDate aDate = LocalDate.of(2016, 1, 1)
-    Course course = new Course(true, aDate, aDate, "nondoctorate")
+    Course course = new Course(true, aDate, aDate, "nondoctorate", "main")
     Maintenance maintenance = new Maintenance(ONE, ONE, ONE, 1)
 
     def recordCountFailure = new FailureReason(27)
@@ -50,7 +51,7 @@ class FinancialStatusCheckerSpec extends Specification {
 
     def thresholdOf(BigDecimal minimum) {
         def threshold = BigDecimal.valueOf(minimum)
-        def thresholdResult = new ThresholdResult(threshold, new CappedValues(100, 9, 3), new ResponseDetails("200", "OK"))
+        def thresholdResult = new ThresholdResult(threshold, LocalDate.of(2000,1,1), new CappedValues(100, 9), new ResponseDetails("200", "OK"))
         thresholdResponse = new ResponseEntity(thresholdResult, OK);
     }
 
@@ -61,10 +62,10 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
-        1 * urls.thresholdUrlFor(*_)
+        1 * urls.t4ThresholdUrlFor(*_)
         1 * urls.dailyBalanceStatusUrlFor(*_)
     }
 
@@ -76,7 +77,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, 123.45, _, _)
@@ -86,12 +87,12 @@ class FinancialStatusCheckerSpec extends Specification {
     def 'calculates fromDate so that fromDate to toDate inclusive equals daysToCheck'() {
 
         given:
-        checker.daysToCheck = period
+        checker.daysToCheckT4 = period
         template.exchange(_, _, _, ThresholdResult.class) >> thresholdResponse
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
@@ -105,13 +106,13 @@ class FinancialStatusCheckerSpec extends Specification {
     def 'adds calculated threshold and fromDate to outgoing result'() {
 
         given:
-        checker.daysToCheck = 10
+        checker.daysToCheckT4 = 10
         thresholdOf(123.45)
         template.exchange(_, _, _, ThresholdResult.class) >> thresholdResponse
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        def response = checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        def response = checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
         response.minimum == 123.45
@@ -130,7 +131,7 @@ class FinancialStatusCheckerSpec extends Specification {
         1 * auditor.publishEvent(_) >> {args -> event2 = args[0].auditEvent}
 
         when:
-        checker.checkDailyBalanceStatus(account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
 
         then:
 
