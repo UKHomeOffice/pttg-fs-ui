@@ -502,7 +502,11 @@ financialstatusModule.controller('FinancialstatusResultCtrl', ['$scope', '$state
     // new search button
     $scope.newSearch = function (e) {
       FinancialstatusService.reset()
-      $state.go('financialStatus')
+      if (FinancialstatusService.isCalc()) {
+        $state.go('financialStatusCalc')
+      } else {
+        $state.go('financialStatus')
+      }
     }
 
     // edit search button
