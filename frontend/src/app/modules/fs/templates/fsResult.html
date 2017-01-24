@@ -1,0 +1,49 @@
+
+<div ng-if="hasBankInfo">
+  <h1 class="heading-large">Consent pending</h1>
+
+  <p>The applicant has not yet responded to the request.</p>
+
+  <p>We will automatically check for consent again in one minute.</p>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" style="width: 25%;"></div>
+  </div>
+
+  <p><a class="" href="please-wait">Check again now</a></p>
+  <p><a class="" href="cancelled">Cancel request</a></p>
+</div>
+
+<h1 id="account-holder" class="heading-large" ng-if="!hasBankInfo">Calculator results</h1>
+<h2 id="account-holder" class="heading-medium" ng-if="hasBankInfo">Calculator results</h2>
+
+<div class="govuk-box-highlight panel-fail">
+  <h3 class="bold-large">{{ threshold | pounds }}</h3>
+  <p><strong class="heading-small">Total daily funds required</strong><br />1 November 2016 - 28 November 2016</p>
+</div>
+
+<table class="table-font-xsmall">
+  <tr ng-repeat="(f, obj) in results">
+    <th>{{ obj.label }}</th>
+    <td>{{ obj.display }}</td>
+  </tr>
+</table>
+
+<h2 class="heading-medium">Your calculation <a class="font-small" href="barclays-general">Edit details</a></h2>
+
+<table class="table-font-xsmall">
+  <tr ng-repeat="(f, obj) in criteria">
+    <th>{{ obj.label }}</th>
+    <td>{{ obj.display }}</td>
+  </tr>
+</table>
+
+
+<div class="form-group">
+  <a id="copy-paste" class="button" href="">Copy results to clipboard</a>
+  <span class="button button-after"></span>
+</div>
+
+<div class="form-group">
+  <a class="" href="index">Start new check</a>
+</div>

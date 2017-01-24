@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular moment */
 
 // git update-index --skip-worktree serenity.properties
 
@@ -6,6 +6,7 @@ var app = angular.module('hod.proving', [
   'ui.router',
   'ngAria',
   'hod.financialstatus',
+  'hod.fs',
   'hod.forms',
   'hod.io',
   'hod.availability'
@@ -18,7 +19,7 @@ app.constant('CONFIG', {
 })
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/financial-status')
+  $urlRouterProvider.otherwise('/fs')
 
   $stateProvider.state({
     name: 'default',
@@ -27,8 +28,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
       'content': {}
     }
   })
-
-  //
 }])
 
 app.run(['$location', '$rootScope', '$window', '$timeout', '$state', 'AvailabilityService', function ($location, $rootScope, $window, $timeout, $state, AvailabilityService) {
@@ -57,7 +56,7 @@ app.filter('pounds', ['$filter', function ($filter) {
 
 app.filter('dateDisplay', function () {
   return function (date) {
-    return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY')
+    return moment(date, 'YYYY-MM-DD').format('DD MMMM YYYY')
   }
 })
 

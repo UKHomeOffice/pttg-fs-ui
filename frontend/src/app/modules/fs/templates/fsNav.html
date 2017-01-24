@@ -1,0 +1,7 @@
+<nav id="nav">
+  <div class="navbar">
+    <ul class="navbar__list-items">
+      <li ng-repeat="t in tiers" ng-class="{active: (tier === t.tier)}"><a ui-sref="fsApplicantType({tier: t.tier})">{{ t.label }}</a></li>
+    </ul>
+  </div>
+</nav>

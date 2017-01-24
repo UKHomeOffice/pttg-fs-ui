@@ -12,7 +12,7 @@
 
             <hod-date name="applicationRaisedDate" label="Application raised date" field="finStatus.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
 
-            <hod-date name="endDate" label="End date of {{ndays}}-day period" field="finStatus.toDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
+            <hod-date name="endDate" label="End date of {{ndays}}-day period" field="finStatus.endDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
 
             <div ng-if="!isCalc">
                 <hod-date name="dob" label="Date of birth" field="finStatus.dob" config="conf.dob"></hod-date>

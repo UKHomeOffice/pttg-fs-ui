@@ -1,0 +1,33 @@
+<h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application</span>Calculate daily funds</h1>
+
+<hod-form name="finStatusDetails" submit="submit">
+
+  <hod-date name="applicationRaisedDate" label="Date application received" field="fs.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
+
+  <hod-date name="endDate" label="Last date of the {{ tier.nDaysRequired }}-day period to check" field="fs.endDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
+
+  <hod-number name="dependants" label="Number of dependants" field="fs.dependants" config="conf.dependants"></hod-number>
+
+  <hod-radio name="inLondon" label="Does the applicant live/reside in London?" field="fs.inLondon" config="conf.inLondon" options="inLondonOptions"></hod-radio>
+
+  <hod-radio name="courseType" label="Course type" field="fs.courseType" config="conf.courseType"></hod-radio>
+
+  <hod-date name="courseStartDate" label="Course start date" field="fs.courseStartDate" config="conf.courseStartDate"></hod-date>
+
+  <hod-date name="courseEndDate" label="Course end date" field="fs.courseEndDate" config="conf.courseEndDate"></hod-date>
+
+  <hod-radio name="continuationCourse" label="Is the course a continuation?" field="fs.continuationCourse" config="conf.continuationCourse"></hod-radio>
+  
+  <div class="panel panel-border-wide text" ng-show="(fs.continuationCourse=='yes' && !conf.originalCourseStartDate.hidden)">
+    <hod-date name="originalCourseStartDate" label="Original course start date" field="fs.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>
+  </div>
+
+  <hod-number name="totalTuitionFees" label="Total tuition fees for the first year" field="fs.totalTuitionFees" config="conf.totalTuitionFees"></hod-number>
+
+  <hod-number name="tuitionFeesAlreadyPaid" label="Tuition fees already paid" field="fs.tuitionFeesAlreadyPaid" config="conf.tuitionFeesAlreadyPaid"></hod-number>
+
+  <hod-number name="accommodationFeesAlreadyPaid" label="Accommodation fees already paid" field="fs.accommodationFeesAlreadyPaid" config="conf.accommodationFeesAlreadyPaid"></hod-number>
+
+  <hod-submit value="Calculate daily funds"></hod-submit>
+
+</hod-form>
