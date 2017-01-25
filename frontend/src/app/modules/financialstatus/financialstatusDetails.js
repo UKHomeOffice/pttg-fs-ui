@@ -48,6 +48,9 @@ financialstatusModule.controller(
     }
 
     $scope.tier = sType.tier
+    var t = FinancialstatusService.getApplicantTier(sType.tier)
+
+    $scope.tierTitle = t.label
     $scope.ndays = (sType.tier === 4) ? 28 : 90
     // track that we're now on the main form details page
     ga('set', 'page', $state.href($state.current.name, $stateParams))
@@ -95,13 +98,13 @@ financialstatusModule.controller(
 
           if (eDate.isAfter(aDate)) {
             // end date cannot be after the application raised date
-            return err
+            return { summary: 'The end date is after the application raised date', msg: 'End date cannot be after application raised date' }
           }
 
           if (eDate.isBefore(aDate.subtract(30, 'days'))) {
             // end date cannot be earlier than 31 days prior
             // to the application raised date
-            return err
+            return { summary: 'The end date must be within 31 days of the application raised date', msg: 'End date is not within 31 days of application raised date' }
           }
 
           return true
@@ -274,7 +277,7 @@ financialstatusModule.controller(
         }
       },
       dob: {
-        max: moment().format('YYYY-MM-DD'),
+        max: moment().subtract(10, 'years').format('YYYY-MM-DD'),
         errors: {
           max: {
             summary: 'Enter a valid date of birth',

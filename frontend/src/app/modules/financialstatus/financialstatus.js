@@ -55,6 +55,18 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
     ]
   }
 
+  this.getApplicantTier = function (n) {
+    switch (n) {
+      case 2:
+        return {tier: 2, label: 'Tier 2'}
+      case 4:
+        return {tier: 4, label: 'Tier 4'}
+      case 5:
+        return {tier: 5, label: 'Tier 5 Temporary Workers'}
+    }
+    return null
+  }
+
   // get the available types
   this.getApplicantTypes = function () {
     return [
@@ -62,7 +74,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         tier: 2,
         value: 't2main',
         label: 'Main applicant (with & without dependants)',
-        full: 'Main applicant (with & without dependants)',
+        full: 'Tier 2 main applicant',
         hiddenFields: [
           'courseStartDate',
           'courseEndDate',
@@ -79,7 +91,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         tier: 2,
         value: 't2dependant',
         label: 'Dependant only',
-        full: 'Dependant only',
+        full: 'Tier 2 dependant only',
         hiddenFields: [
           'dependants',
           'courseStartDate',
@@ -98,14 +110,14 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         tier: 4,
         value: 'nondoctorate',
         label: 'General student',
-        full: 'Tier 4 (General) student',
+        full: 'Tier 4 (General)',
         hiddenFields: [],
         noDependantsOnCourseLength: 6
       },
       {
         tier: 4,
         value: 'doctorate',
-        label: 'Doctorate extension scheme',
+        label: 'General doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
         hiddenFields: [
           'courseType',
@@ -121,7 +133,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       {
         tier: 4,
         value: 'pgdd',
-        label: 'Postgraduate doctor or dentist',
+        label: 'General postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
         hiddenFields: [
           'courseType',
@@ -133,7 +145,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
       {
         tier: 4,
         value: 'sso',
-        label: 'Student union sabbatical officer',
+        label: 'General student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
         hiddenFields: [
           'courseType',
@@ -146,7 +158,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         tier: 5,
         value: 't5main',
         label: 'Main applicant (with & without dependants)',
-        full: 'Main applicant (with & without dependants)',
+        full: 'Tier 5 Temporary worker main applicant',
         hiddenFields: [
           'courseStartDate',
           'courseEndDate',
@@ -163,7 +175,7 @@ financialstatusModule.factory('FinancialstatusService', ['IOService', '$state', 
         tier: 5,
         value: 't5dependant',
         label: 'Dependant only',
-        full: 'Dependant only',
+        full: 'Tier 5 Temporary worker dependant only',
         hiddenFields: [
           'dependants',
           'courseStartDate',

@@ -12,9 +12,9 @@ Feature: Route selection screen content - Tiers 2, 4 or 5
             | applicant-type-t2dependant-label  | Dependant only                                                                                         |
 #            | Tier-label               | Tier 4                                                                                                 |
             | applicant-type-nondoctorate-label | General student                                                                                        |
-            | applicant-type-doctorate-label    | Doctorate extension scheme                                                                             |
-            | applicant-type-pgdd-label         | Postgraduate doctor or dentist                                                                         |
-            | applicant-type-sso-label          | Student union sabbatical officer                                                                       |
+            | applicant-type-doctorate-label    | General doctorate extension scheme                                                                             |
+            | applicant-type-pgdd-label         | General postgraduate doctor or dentist                                                                         |
+            | applicant-type-sso-label          | General student union sabbatical officer                                                                       |
 #            |# Tier-label               | Tier 5                                                                                                 |
             | Applicant-type-t2main-label       | Main applicant (with & without dependants)                                                             |
             | Applicant-type-t2dependant-label  | Dependant only                                                                                         |
