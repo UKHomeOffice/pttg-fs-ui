@@ -12,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
+import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse
+import uk.gov.digital.ho.proving.financial.api.ConsentStatus
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 import uk.gov.digital.ho.proving.financial.integration.*
 import uk.gov.digital.ho.proving.financial.model.CappedValues
@@ -69,6 +71,7 @@ class ServiceSpec extends Specification {
 
         apiUrls.apiRoot = ''
         apiUrls.apiDailyBalanceEndpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
+        apiUrls.apiConsentEndpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/consent"
         apiUrls.apiThresholdT4Endpoint = "/pttg/financialstatus/v1/t4/maintenance/threshold"
 
         RestTemplate restTemplate = new RestTemplate()
@@ -605,4 +608,23 @@ class ServiceSpec extends Specification {
     }
 
 
+    def 'processes valid request and response - consent'() {
+        given:
+        def apiEndpoint = "/pttg/financialstatus/v1/accounts/{sortCode}/{accountNumber}/consent"
+        String consentCheckResponseJson = mapper.writeValueAsString(new ConsentCheckResponse("SUCCESS", new ConsentStatus("200", "OK")))
+        mockServer.expect(method(HttpMethod.GET))
+            .andRespond(withSuccess(consentCheckResponseJson, APPLICATION_JSON))
+
+        when:
+        def response = mockMvc.perform(
+            get(apiEndpoint, SORT_CODE, ACCOUNT_NUMBER)
+                .param('dob', DOB))
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            andExpect(jsonPath("consent", is("SUCCESS")))
+        }
+    }
 }

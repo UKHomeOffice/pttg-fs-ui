@@ -27,6 +27,9 @@ public class ApiUrls {
     @Value("${api.dailybalance.endpoint}")
     private String apiDailyBalanceEndpoint;
 
+    @Value("${api.consent.endpoint}")
+    private String apiConsentEndpoint;
+
     @Value("${api.threshold.t4.endpoint}")
     private String apiThresholdT4Endpoint;
 
@@ -103,4 +106,11 @@ public class ApiUrls {
         return expanded;
     }
 
+    public URI consentUrlFor(Account account) {
+        URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiConsentEndpoint)
+            .buildAndExpand(account.getSortCode(), account.getAccountNumber())
+            .toUri();
+        LOGGER.debug(expanded.toString());
+        return expanded;
+    }
 }

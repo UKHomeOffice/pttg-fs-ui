@@ -17,6 +17,7 @@ class ApiUrlsSpec extends Specification {
     static final String root = 'http://localhost:8080'
     static final String thresholdEndpoint = '/threshold-endpoint'
     static final String balanceEndpoint = '/balance-endpoint'
+    static final String consentEndpoint = '/consent-endpoint/{sortCode}/{accountNumber}/'
 
     ApiUrls apiUrls
 
@@ -29,6 +30,7 @@ class ApiUrlsSpec extends Specification {
         apiUrls.apiRoot = root
         apiUrls.apiThresholdT4Endpoint = thresholdEndpoint
         apiUrls.apiDailyBalanceEndpoint = balanceEndpoint
+        apiUrls.apiConsentEndpoint = consentEndpoint
     }
 
 
@@ -68,5 +70,20 @@ class ApiUrlsSpec extends Specification {
         url.path == balanceEndpoint
 
         url.query == 'dob=1980-01-01&minimum=1&fromDate=2016-01-01&toDate=2016-01-28'
+    }
+
+    def "generates consent url"() {
+        given:
+        def account = new Account("12-34-56", '12345678', LocalDate.of(2017, 1, 1))
+
+        when:
+        def url = apiUrls.consentUrlFor(account)
+
+        then:
+        url.host == 'localhost'
+        url.port == 8080
+
+        def consentEndpointWithAccountDetails = '/consent-endpoint/12-34-56/12345678/'
+        url.path == consentEndpointWithAccountDetails
     }
 }

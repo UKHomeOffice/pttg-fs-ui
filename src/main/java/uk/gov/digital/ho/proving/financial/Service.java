@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
 import uk.gov.digital.ho.proving.financial.health.ApiAvailabilityChecker;
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker;
@@ -58,6 +59,16 @@ public class Service {
     ) {
         LOGGER.debug("Status for: account: {}, applicantType: {}, dependants: {}", account, applicantType, dependants);
         FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(tier, account, toDate, applicantType, dependants, accessToken);
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "accounts/{sortCode}/{accountNumber}/consent", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity consent(
+        @Valid Account account,
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
+    ) {
+        LOGGER.debug("Consent for account: {}", account);
+        ConsentCheckResponse result = financialStatusChecker.checkConsent(account, accessToken);
         return ResponseEntity.ok(result);
     }
 
