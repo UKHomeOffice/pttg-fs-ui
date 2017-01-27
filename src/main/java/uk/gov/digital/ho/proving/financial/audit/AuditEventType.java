@@ -7,7 +7,9 @@ public enum AuditEventType {
     SEARCH,
     SEARCH_RESULT,
     CONSENT,
-    CONSENT_RESULT
+    CONSENT_RESULT,
+    THRESHOLD,
+    THRESHOLD_RESULT
 
     // LOGIN, LOGOUT, etc
 }

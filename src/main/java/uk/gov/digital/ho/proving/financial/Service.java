@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.api.ThresholdResponse;
 import uk.gov.digital.ho.proving.financial.health.ApiAvailabilityChecker;
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker;
+import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
 import uk.gov.digital.ho.proving.financial.model.Maintenance;
@@ -34,6 +36,29 @@ public class Service {
 
     @Autowired
     private ApiAvailabilityChecker apiAvailabilityChecker;
+
+    @RequestMapping(path = "t4/threshold", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity threshold(
+        @Valid Course course,
+        @Valid Maintenance maintenance,
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
+    ) {
+        LOGGER.debug("Threshold for course: {}, maintenance: {}", course, maintenance);
+        ThresholdResponse result = financialStatusChecker.checkThreshold(course, maintenance, accessToken);
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(path = "{tier:t2|t5}/threshold", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity threshold(
+        @PathVariable String tier,
+        @RequestParam String applicantType,
+        @RequestParam Integer dependants,
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
+    ) {
+        LOGGER.debug("Threshold for applicantType: {}, dependants: {}", applicantType, dependants);
+        ThresholdResponse result = financialStatusChecker.checkThreshold(tier, applicantType, dependants, accessToken);
+        return ResponseEntity.ok(result);
+    }
 
     @RequestMapping(path = "t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity status(

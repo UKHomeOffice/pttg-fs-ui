@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.api.ThresholdResponse;
 import uk.gov.digital.ho.proving.financial.audit.AuditActions;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
@@ -35,6 +36,8 @@ import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.CONSENT;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.CONSENT_RESULT;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH_RESULT;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.THRESHOLD;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.THRESHOLD_RESULT;
 
 /**
  * @Author Home Office Digital
@@ -65,6 +68,38 @@ public class FinancialStatusChecker {
     private final String TIER_2 = "t2";
     private final String TIER_4 = "t4";
     private final String TIER_5 = "t5";
+
+    @Retryable(interceptor = "connectionExceptionInterceptor")
+    public ThresholdResponse checkThreshold(Course course, Maintenance maintenance, String accessToken) {
+
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(course, maintenance)));
+        LOGGER.debug("checkThreshold - Course: {}, Maintenance: {}", course, maintenance);
+
+
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
+        ThresholdResponse thresholdResponse = new ThresholdResponse(thresholdResult);
+
+        auditor.publishEvent(auditEvent(THRESHOLD_RESULT, eventId, checkThresholdAuditData(thresholdResponse)));
+
+        return thresholdResponse;
+    }
+
+    @Retryable(interceptor = "connectionExceptionInterceptor")
+    public ThresholdResponse checkThreshold(String tier, String applicantType, Integer dependants, String accessToken) {
+
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(tier, applicantType, dependants)));
+        LOGGER.debug("checkThreshold - applicantType: {}, dependants: {}", applicantType, dependants);
+
+
+        ThresholdResult thresholdResult = getThreshold(tier, applicantType, dependants, accessToken);
+        ThresholdResponse thresholdResponse = new ThresholdResponse(thresholdResult);
+
+        auditor.publishEvent(auditEvent(THRESHOLD_RESULT, eventId, checkThresholdAuditData(thresholdResponse)));
+
+        return thresholdResponse;
+    }
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, Course course, Maintenance maintenance, String accessToken) {
@@ -209,6 +244,39 @@ public class FinancialStatusChecker {
         headers.setAccept(asList(MediaType.APPLICATION_JSON));
 
         return headers;
+    }
+
+    private Map<String, Object> checkThresholdAuditData(Course course, Maintenance maintenance) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("course", course);
+        auditData.put("maintenance", maintenance);
+
+        return auditData;
+    }
+
+    private Map<String, Object> checkThresholdAuditData(String tier, String applicantType, Integer dependants) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("tier", tier);
+        auditData.put("dependants", dependants);
+        auditData.put("applicantType", applicantType);
+
+        return auditData;
+    }
+
+    private Map<String, Object> checkThresholdAuditData(ThresholdResponse response) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("response", response);
+
+        return auditData;
     }
 
     private Map<String, Object> dailyBalanceAuditData(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
