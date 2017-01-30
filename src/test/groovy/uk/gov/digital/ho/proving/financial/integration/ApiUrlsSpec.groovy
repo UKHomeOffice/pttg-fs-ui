@@ -85,5 +85,6 @@ class ApiUrlsSpec extends Specification {
 
         def consentEndpointWithAccountDetails = '/consent-endpoint/12-34-56/12345678/'
         url.path == consentEndpointWithAccountDetails
+        url.query == 'dob=2017-01-01'
     }
 }

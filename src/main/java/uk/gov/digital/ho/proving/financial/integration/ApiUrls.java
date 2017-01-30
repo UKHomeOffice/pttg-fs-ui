@@ -108,6 +108,7 @@ public class ApiUrls {
 
     public URI consentUrlFor(Account account) {
         URI expanded = UriComponentsBuilder.fromUriString(apiRoot + apiConsentEndpoint)
+            .queryParam("dob", account.getDob())
             .buildAndExpand(account.getSortCode(), account.getAccountNumber())
             .toUri();
         LOGGER.debug(expanded.toString());
