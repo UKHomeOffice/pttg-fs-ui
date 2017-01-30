@@ -273,7 +273,6 @@ class Steps {
 
             } else {
 
-
                 if (key == "inLondon") {
                     clickRadioButton(driver, inLondonRadio, v)
 
@@ -283,7 +282,10 @@ class Steps {
                 } else if (key == "continuationCourse") {
                     clickRadioButton(driver, continuationCourseRadio, v)
 
-                } else if (key == "courseType") {
+                }
+                else if(key == "accountNumber"){
+                    driver.findElement(By.id(key)).sendKeys(v)
+                }else if (key == "courseType") {
                     clickRadioButton(driver, courseTypeRadio, v)
 
                 } else {
@@ -430,12 +432,13 @@ class Steps {
 
     @Given("^consent is sought for the following:\$")
     public void consent_is_sought_for_the_following(DataTable arg1){
-
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
+        makeEntries(entries)
     }
 
     @When("^caseworker submits the '(.*)' section of the form\$")
-    public void caseworker_submits_the_Get_Consent_section_of_the_form() {
-
+    public void caseworker_submits_the_Get_Consent_section_of_the_form(String consentButton) {
+    driver.findElement(By.id(toCamelCase(consentButton))).click()
     }
 
     @When("^the student type choice is submitted\$")
