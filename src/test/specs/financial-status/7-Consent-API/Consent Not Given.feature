@@ -7,31 +7,45 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And caseworker submits the 'Get Consent' section of the form
-        And the Consent API is invoked
-        And the default details are
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
 
             ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
 
-    Scenario: 'Pending' status received before the financial status check is performed followed by a 'Failure' Status
+    Scenario: 'Pending' status received when the financial status check is performed
 
-        Given the Barclays Consent API response returns
-            | status | "PENDING" |
-        And the financial status check is performed
-        And the service displays the 'Consent pending' output page
-        And the Consent API is invoked again to obtain the consent status
-        When the Barclays Consent API response returns
-            | status | "Failure" |
-        Then The service displays the 'Consent has not been given' output page including the results and your search headers
+        And consent is sought for the following:
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222224   |
+        When caseworker submits the 'Get Consent' section of the form
+        And the Consent API is invoked
+        And the financial status check is performed with
+            | Application raised date         | 30/05/2016 |
+            | End Date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Accommodation fees already paid | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222224   |
+        Then The service displays the Consent has not been given output page including the results and your search headers
 
         ## 'Failure' consent status received before the financial status check is performed ##
     Scenario: 'Failure' Status received before the financial status check is performed
 
-        Given the Barclays Consent API response returns
-            | status | "FAILURE |
-        When the financial status check is performed
-        Then The service displays the 'Consent has not been given' output page including the results and your search headers
+        And consent is sought for the following:
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222224   |
+        When caseworker submits the 'Get Consent' section of the form
+        And the Consent API is invoked
+        And the financial status check is performed with
+            | Application raised date         | 30/05/2016 |
+            | End Date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Accommodation fees already paid | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222225   |
+        Then The service displays the Failure output page including the results and your search headers
 
