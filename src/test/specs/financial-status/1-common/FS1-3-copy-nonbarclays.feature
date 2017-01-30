@@ -21,8 +21,6 @@ Feature: Copy results to paste buffer
 
 
 
-
-
     ## WARNING this test will only be exectuted in Firefox as PhantomJS and Chrome have proven unreliable
     ## although the actual functionality in the end product is expected to work in all modern browsers
     ## the methods available to test copy paste are poorly supported

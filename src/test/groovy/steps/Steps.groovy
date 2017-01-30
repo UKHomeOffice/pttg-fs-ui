@@ -428,6 +428,16 @@ class Steps {
         testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
     }
 
+    @Given("^consent is sought for the following:\$")
+    public void consent_is_sought_for_the_following(DataTable arg1){
+
+    }
+
+    @When("^caseworker submits the '(.*)' section of the form\$")
+    public void caseworker_submits_the_Get_Consent_section_of_the_form() {
+
+    }
+
     @When("^the student type choice is submitted\$")
     public void the_student_type_choice_is_submitted() {
         submitStudentTypeChoice()
@@ -505,26 +515,30 @@ class Steps {
 
 
     @When("^the new search button is clicked\$")
-    public void the_new_search_button_is_clicked() throws Throwable {
+    public void the_new_search_button_is_clicked() {
         driver.sleep(delay)
         driver.findElement(By.className("newsearch")).click()
         //assertTextFieldEqualityForTable(expectedResult)
     }
 
     @When("^the edit search button is clicked\$")
-    public void the_edit_search_button_is_clicked() throws Throwable {
+    public void the_edit_search_button_is_clicked() {
         driver.sleep(delay)
         driver.findElement(By.className("yoursearch--edit")).click()
     }
 
     @When("^the copy button is clicked\$")
-    public void the_copy_button_is_clicked() throws Throwable {
+    public void the_copy_button_is_clicked() {
         driver.sleep(delay)
         driver.findElement(By.className("button--copy")).click()
     }
+    @When("^the Consent API is invoked\$")
+    public void the_Consent_API_is_invoked() {
+
+    }
 
     @Then("^the service displays the following message\$")
-    public void the_service_displays_the_following_message(DataTable arg1) throws Throwable {
+    public void the_service_displays_the_following_message(DataTable arg1) {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
         assertTextFieldEqualityForMap(entries)
     }
@@ -702,5 +716,10 @@ class Steps {
         } else {
             println("\n\nSKIPPED: TESTING THE CONTENTS OF THE PASTE BUFFER\nONLY WORKS RELIABLY IN FIREFOX\nTest step: 'the copied text includes'\n\n")
         }
+    }
+
+    @Then("^the service displays the result page including the results and your search headers\$")
+    public void the_service_displays_the_result_page_including_the_results_and_your_search_headers(DataTable arg1) {
+
     }
 }
