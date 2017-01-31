@@ -29,7 +29,7 @@ Feature: Process 'pending' status and display the appropriate output page
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         When the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         Then the Consent Pending page is displayed
         And the service displays the following result
             | Total funds required       | £16,090.00               |
@@ -65,10 +65,10 @@ Feature: Process 'pending' status and display the appropriate output page
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         And the Consent API is invoked again to obtain the consent status
         And the Barclays Consent API provides the following response:
-            | status | "SUCCESS" |
+            | status | SUCCESS |
         When the Barclays Balances API is invoked
         Then the service receives balance data from Barclays
         And the service displays the appropriate 'result' page including the results and your search headers
@@ -88,10 +88,10 @@ Feature: Process 'pending' status and display the appropriate output page
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         And the Consent API is invoked at regular intervals
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         When 15 minutes have passed since the 'Initiated' status has been received
         Then the service displays the 'More than 15 minutes has passed' page including the results and your search headers
 
@@ -110,10 +110,10 @@ Feature: Process 'pending' status and display the appropriate output page
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         And the Consent API is invoked at regular intervals
         When the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         And  15 minutes have passed since the status "Initiated" has been received
         And the service displays the 'More than 15 minutes has passed' page including the results and your search headers
         Then The 'Check Again' link is not available selection
@@ -123,7 +123,7 @@ Feature: Process 'pending' status and display the appropriate output page
     Scenario:  The 'Consent pending' output page displays the timeout bar and uses the 'Initiated Status' to start timing
 
         Given the Barclays Consent API provides the following response:
-            | status | "INITIATED |
+            | status | INITIATED |
         And the financial status check is performed
         And the default details are
             | Application raised date         | 30/06/2016 |
@@ -144,7 +144,7 @@ Feature: Process 'pending' status and display the appropriate output page
 ## User clicks 'Check Again Now' on output page
 
         Given the Barclays Consent API provides the following response:
-            | status | "INITIATED |
+            | status | INITIATED |
         And the financial status check is performed
         And the default details are
             | Application raised date         | 30/06/2016 |
@@ -157,11 +157,11 @@ Feature: Process 'pending' status and display the appropriate output page
             | Account number                  | 22222223   |
         And the Consent API is invoked at regular intervals
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         And The service displays the 'Consent pending' output page
         When The user selects 'Check Again Now'
         And Less than 15 minutes have passed
         And the Barclays Consent API provides the following response:
-            | status | "PENDING" |
+            | status | PENDING |
         Then The page refreshes
         And I can view a timeout bar and it counts down for a period of 15 minutes starting from the time stamp of the receipt of the 'Initiated' status
