@@ -1,4 +1,4 @@
-    Feature: Process 'pending' status and display the appropriate output page
+Feature: Process 'pending' status and display the appropriate output page
 
     The Barclays Consent API response will return a consent 'status' (Initiated, Success, Failure, Invalid, Pending) when invoked.
 
@@ -7,9 +7,9 @@
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the caseworker selects the Yes, check Barclays radio button
         And caseworker submits the 'Get Consent' section of the form
-        And the Consent API is invoked
-        And the default details are
+        And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
@@ -20,16 +20,35 @@
 
         Given the financial status check is performed
         And the default details are
-            | End date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         When the Barclays Consent API provides the following response:
             | status | "PENDING" |
-        Then  The service displays the 'Consent pending' output page including the results and your search headers
+        Then the Consent Pending page is displayed
+        And the service displays the following result
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Calculator result received |                          |
+        And the result table contains the following
+            | Application raised date                 | 30/06/2016                                            |
+            | Last date of the 28-day period to check |                                                       |
+            | Dependants                              | 0                                                     |
+            | In London                               | Yes                                                   |
+            | Applicant type                          | Tier 4 (General) student (doctorate extension scheme) |
+            | Course start date                       | 01/05/2016                                            |
+            | Course end date                         | 25/09/2017                                            |
+            | Continuation Course                     | Yes                                                   |
+            | Original Course Start Date              | 30/10/2015                                            |
+            | Total tuition fees                      | £8,500.00                                             |
+            | Tuition fees already paid               | £0.00                                                 |
+            | Accommodation fees already paid         | £100.00                                               |
 
       ## Service receives a 'Pending' status then 'Success' Status - result page ##
 
@@ -37,13 +56,14 @@
 
         Given the financial status check is performed
         And the default details are
-            | End date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         And the Barclays Consent API provides the following response:
             | status | "PENDING" |
         And the Consent API is invoked again to obtain the consent status
@@ -59,13 +79,14 @@
 
         Given the financial status check is performed
         And the default details are
-            | End date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         And the Barclays Consent API provides the following response:
             | status | "PENDING" |
         And the Consent API is invoked at regular intervals
@@ -80,13 +101,14 @@
 
         Given the financial status check is performed
         And the default details are
-            | End date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         And the Barclays Consent API provides the following response:
             | status | "PENDING" |
         And the Consent API is invoked at regular intervals
@@ -104,13 +126,14 @@
             | status | "INITIATED |
         And the financial status check is performed
         And the default details are
-            | End date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
-            | Number of dependants            | 0          |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-            | DOB                             | 25/03/1987 |
         When the Consent API is invoked at regular intervals
         And the Barclays Consent API provides the following response:
             | status | "PENDING" |
@@ -118,3 +141,27 @@
         Then I can view a timeout bar and it counts down for a period of 15 minutes starting from the time stamp of the receipt of the 'Initiated' status
 
 
+## User clicks 'Check Again Now' on output page
+
+        Given the Barclays Consent API provides the following response:
+            | status | "INITIATED |
+        And the financial status check is performed
+        And the default details are
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 01/06/2016 |
+            | In London                       | Yes        |
+            | Accommodation fees already paid | 100        |
+            | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222223   |
+        And the Consent API is invoked at regular intervals
+        And the Barclays Consent API provides the following response:
+            | status | "PENDING" |
+        And The service displays the 'Consent pending' output page
+        When The user selects 'Check Again Now'
+        And Less than 15 minutes have passed
+        And the Barclays Consent API provides the following response:
+            | status | "PENDING" |
+        Then The page refreshes
+        And I can view a timeout bar and it counts down for a period of 15 minutes starting from the time stamp of the receipt of the 'Initiated' status
