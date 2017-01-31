@@ -25,7 +25,9 @@ Feature: Route selection screen inputs - All tiers
             | doctorate     | Doctorate extension scheme       |
             | pgdd          | Postgraduate doctor or dentist   |
             | sso           | Student union sabbatical officer |
-        Then the caseworker can select the Yes, check Barclays radio button or the No radio button
+        Then The service displays the following radio buttons
+            | Yes, check Barclays |
+            | No                  |
 
     Scenario Outline: Caseworker selects Tier 2 (General)
 
@@ -48,7 +50,9 @@ Feature: Route selection screen inputs - All tiers
             | student-type | page-title                                 |
             | t2main       | Main applicant (with & without dependants) |
             | t2dependant  | Dependant only                             |
-        Then the caseworker can select the Yes, check Barclays radio button or the No radio button
+        Then The service displays the following radio buttons
+            | Yes, check Barclays |
+            | No                  |
 
 
     Scenario Outline: Caseworker selects Tier 5 (Temporary)
@@ -72,4 +76,6 @@ Feature: Route selection screen inputs - All tiers
             | student-type | page-title                                 |
             | t5main       | Main applicant (with & without dependants) |
             | t5dependant  | Dependant only                             |
-        Then the caseworker can select the Yes, check Barclays radio button or the No radio button
+        Then The service displays the following radio buttons
+            | Yes, check Barclays |
+            | No                  |

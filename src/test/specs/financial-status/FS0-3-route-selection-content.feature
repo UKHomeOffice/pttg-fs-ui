@@ -8,7 +8,6 @@ Feature: Route selection screen content - Tiers 2, 4 or 5
         Then the service displays the following page content
             | Page title                        | Check financial status - A service to prove an applicant meets the financial status requirements using an api linked to their bank account. |
 
-
     Scenario: Input Page checks for application type selection
         Given the api health check response has status 200
         And the Tier 2 <student-type> student type is chosen
