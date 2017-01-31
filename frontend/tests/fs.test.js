@@ -97,6 +97,7 @@ describe('app: hod.proving', function () {
 
     describe('getResults', function () {
       var testObj = {
+        tier: 4,
         thresholdResponse: {
           responseTime: moment('2017-06-23T12:34:56'),
           data: {
