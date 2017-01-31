@@ -7,6 +7,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the caseworker selects the Yes, check Barclays radio button
 
             ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
 

@@ -435,6 +435,10 @@ class Steps {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
         makeEntries(entries)
     }
+    @Given("^the caseworker selects the (.*) radio button\$")
+    public void the_caseworker_selects_the_Yes_check_Barclays_radio_button() {
+
+    }
 
     @When("^caseworker submits the '(.*)' section of the form\$")
     public void caseworker_submits_the_Get_Consent_section_of_the_form(String consentButton) {
