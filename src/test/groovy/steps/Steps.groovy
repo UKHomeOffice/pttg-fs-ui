@@ -733,4 +733,9 @@ class Steps {
     public void the_service_displays_the_Consent_has_not_been_given_output_page_including_the_results_and_your_search_headers(String consent) {
        assert driver.findElement(By.id(consent)).getText()
     }
+
+    @Then("^the (.*) page is displayed\$")
+    public void the_Consent_Pending_page_is_displayed(String consentPending) {
+
+    }
 }

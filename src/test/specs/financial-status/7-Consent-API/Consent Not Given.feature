@@ -11,7 +11,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
 
             ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
 
-    Scenario: 'Pending' status received when the financial status check is performed
+    Scenario: Consent status is in 'Pending' status when the financial status check is performed
 
         And consent is sought for the following:
             | DOB                             | 25/03/1987 |
