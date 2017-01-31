@@ -24,7 +24,8 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222223   |
-        Then the service displays the following result
+        Then the Consent Pending page is displayed
+        And the service displays the following result
             | Outcome                         | Passed                                                |
             | Account holder name             | Laura Taylor                                          |
             | Total funds required            | £16,090.00                                            |
