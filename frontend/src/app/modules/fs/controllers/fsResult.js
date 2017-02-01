@@ -34,11 +34,73 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
   })
 }])
 
-fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService', 'FsInfoService', function ($scope, $state, $filter, FsService, FsInfoService) {
+fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, FsService, FsInfoService, FsBankService) {
+  console.log('CONTROLLER FsResultCtrl')
+
   var fs = FsService.getApplication()
   $scope.threshold = fs.thresholdResponse.data.threshold
   $scope.leaveEndDate = fs.thresholdResponse.data.leaveEndDate
-  $scope.hasBankInfo = FsService.hasBankInfo(fs)
   $scope.criteria = FsService.getCriteria(fs)
   $scope.results = FsService.getResults(fs)
+  $scope.seconds = 60
+  $scope.numTry = 0
+  $scope.numTryLimit = 5
+  $scope.timerScope = null
+  $scope.showConsentPending = FsBankService.hasBankInfo(fs) && !FsBankService.hasResult(fs)
+  $scope.showPassOrFail = FsBankService.hasResult(fs)
+
+  $scope.timerConf = {
+    duration: 5000,
+    onInit: function (timerScope) {
+      $scope.timerScope = timerScope
+      $scope.numTry = 0
+
+      timerScope.$on('FsTimerSTARTED', function (e) {
+
+      })
+
+      timerScope.$on('FsTimerUPDATED', function (e) {
+        // update the seconds countdown
+        $scope.seconds = Math.ceil((100 - e.targetScope.percent) * e.targetScope.config.duration / 100000)
+      })
+
+      timerScope.$on('FsTimerENDED', function (e) {
+        $scope.numTry++
+        if ($scope.numTry < $scope.numTryLimit) {
+          $scope.checkConsent()
+        } else {
+          console.log('ALL OVER')
+        }
+      })
+
+      // timerScope.startTimer()
+      $scope.checkConsent()
+    }
+  }
+
+  $scope.cancelTimer = function (e) {
+    $scope.timerScope.stopTimer()
+    $scope.timerScope.percent = 0
+    $scope.seconds = '-'
+    $scope.numTry = $scope.numTryLimit
+  }
+
+  $scope.tryAgainNow = function (e) {
+    $scope.checkConsent()
+  }
+
+  $scope.checkConsent = function () {
+    // reset the seconds countdown and progress bar
+    $scope.timerScope.percent = 0
+    $scope.seconds = '-'
+
+    // send the consent API request
+    FsBankService.sendConsentRequest(fs).then(function (data) {
+      // start the timer again
+      $scope.timerScope.startTimer()
+    }, function (err, data) {
+      // something went wrong
+      console.log('err', err)
+    })
+  }
 }])

@@ -43,31 +43,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
   }
 
-  // does the object supplied (_application) have complete bank info?
-  this.hasBankInfo = function (obj) {
-    if (obj.doCheck !== 'yes') {
-      // doCheck must be YES
-      return false
-    }
-
-    if (!obj.sortCode || obj.sortCode.length !== 6 || _.isNaN(Number(obj.sortCode))) {
-      // sortcode must be complete
-      return false
-    }
-
-    if (!obj.accountNumber || obj.accountNumber.length !== 8) {
-      // account number must be filled in
-      return false
-    }
-
-    if (!obj.dob || obj.dob.length !== 10) {
-      // dob must be completed
-      return false
-    }
-
-    return true
-  }
-
   // does the object (an _application) have result/calc properties
   this.hasResultInfo = function (obj) {
     if (!_.has(obj, 'thresholdResponse')) {
@@ -77,32 +52,12 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return true
   }
 
-  // get daily balance status url
-  this.getDailyBalanceStatusUrl = function (obj) {
-    if (!obj.tier || !obj.sortCode || !obj.accountNumber) {
-      return null
-    }
-    return 't' + obj.tier + '/accounts/' + obj.sortCode + '/' + obj.accountNumber + '/dailybalancestatus'
-  }
-
-  // get the consent url
-  this.getConsentUrl = function (obj) {
-    if (!obj.sortCode || !obj.accountNumber) {
-      return null
-    }
-    return 'accounts/' + obj.sortCode + '/' + obj.accountNumber + '/consent'
-  }
-
   // get the threshold url
   this.getThresholdUrl = function (obj) {
     if (!obj.tier) {
       return null
     }
     return 't' + obj.tier + '/threshold'
-  }
-
-  this.getConsentParams = function (obj) {
-    return {dob: obj.dob}
   }
 
   // get the required params for the threshold request
@@ -119,12 +74,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     params.applicantType = obj.applicantType
 
     return params
-  }
-
-  this.sendConsentRequest = function (obj) {
-    var u = me.getConsentUrl(obj)
-    var params = me.getConsentParams(obj)
-    return IOService.get(u, params)
   }
 
   this.sendThresholdRequest = function (obj) {
@@ -148,7 +97,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
 
     results.periodChecked = {
       label: tier.nDaysRequired + '-day period to check',
-      display: moment(obj.endDate).subtract(tier.nDaysRequired, 'days')
+      display: me.getPeriodChecked(obj)
     }
 
     if (obj.thresholdResponse && obj.thresholdResponse.data) {
@@ -169,14 +118,30 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return results
   }
 
+  this.getPeriodChecked = function (obj) {
+    var tier = FsInfoService.getTier(obj.tier)
+    var nDays = tier.nDaysRequired - 1
+    var endDate = moment(obj.endDate)
+    var startDate = endDate.clone().subtract(nDays, 'days')
+    return $filter('dateDisplay')(startDate) + ' - ' + $filter('dateDisplay')(endDate)
+  }
+
   this.getCriteria = function (obj) {
     // basics
     var tier = FsInfoService.getTier(obj.tier)
     var variant = _.findWhere(tier.variants, { value: obj.applicantType })
     var fields = FsInfoService.getFields(variant.fields)
 
+    if (obj.continuationCourse !== 'yes') {
+      // remove the original course start date from the results if its not a continuation course
+      fields = _.without(fields, 'originalCourseStartDate')
+    }
+
     var criteria = {}
     _.each(fields, function (f) {
+      if (!_.has(obj, f)) {
+        return
+      }
       var info = FsInfoService.getFieldInfo(f)
       var disp = ''
       switch (info.format) {

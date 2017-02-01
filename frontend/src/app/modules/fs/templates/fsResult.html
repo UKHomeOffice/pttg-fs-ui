@@ -1,27 +1,36 @@
 
-<div ng-if="hasBankInfo">
+<div ng-if="showConsentPending">
   <h1 class="heading-large">Consent pending</h1>
 
   <p>The applicant has not yet responded to the request.</p>
 
-  <p>We will automatically check for consent again in one minute.</p>
+  <p>We will automatically check for consent again in {{ seconds }}s.</p>
 
-  <div class="progress-wrap">
-    <div class="progress-bar" style="width: 25%;"></div>
-  </div>
+  <fs-timer config="timerConf"></fs-timer>
 
-  <p><a class="" href="please-wait">Check again now</a></p>
-  <p><a class="" href="cancelled">Cancel request</a></p>
+  <p><a class="" ng-click="tryAgainNow()">Check again now</a></p>
+  <p><a class="" ng-click="cancelTimer()">Cancel request</a></p>
 </div>
 
-<h1 id="account-holder" class="heading-large" ng-if="!hasBankInfo">Calculator results</h1>
+<div class="govuk-box-highlight" ng-if="showPassOrFail">
+  <h1 class="bold-large">Passed</h1>
+   <p>The applicant's daily closing balance was above the total funds required</p>
+</div>
+
 <h2 id="account-holder" class="heading-medium" ng-if="hasBankInfo">Calculator results</h2>
 
 <div class="govuk-box-highlight panel-fail">
   <h3 class="bold-large">{{ threshold | pounds }}</h3>
-  <p><strong class="heading-small">Total daily funds required</strong><br />1 November 2016 - 28 November 2016</p>
+  <p><strong class="heading-small">Total daily funds required</strong><br />{{ results.periodChecked.display }}</p>
 </div>
 
+<h2 class="heading-large">Things to do now</h2>
+<ol class="list list-number">
+  <li>Manually check the applicants evidence to make sure they have the total funds required.</li>
+  <li>Copy the calculator results into CID.</li>
+</ol>
+
+<h2 class="heading-medium">Results</h2>
 <table class="table-font-xsmall">
   <tr ng-repeat="(f, obj) in results">
     <th>{{ obj.label }}</th>
@@ -29,7 +38,7 @@
   </tr>
 </table>
 
-<h2 class="heading-medium">Your calculation <a class="font-small" href="barclays-general">Edit details</a></h2>
+<h2 class="heading-medium">Your calculation <a class="font-small" ui-sref="fsDetails">Edit details</a></h2>
 
 <table class="table-font-xsmall">
   <tr ng-repeat="(f, obj) in criteria">
@@ -45,5 +54,5 @@
 </div>
 
 <div class="form-group">
-  <a class="" href="index">Start new check</a>
+  <a class="" ui-sref="fsStart">Start new check</a>
 </div>

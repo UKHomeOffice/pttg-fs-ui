@@ -11,41 +11,6 @@ describe('app: hod.proving', function () {
       fs = FsService
     }))
 
-    describe('hasBankInfo', function () {
-      var testObj = {
-        doCheck: 'yes',
-        sortCode: '123456',
-        accountNumber: '12345678',
-        dob: '1974-05-13'
-      }
-      it('should return true when all properties are OK', function () {
-        expect(fs.hasBankInfo(testObj)).toBeTruthy()
-      })
-
-      it('should return false when doCheck is anything but yes', function () {
-        _.each(['Yes', 'yEs', 'no', '', 0, null], function (str) {
-          testObj.doCheck = str
-          expect(fs.hasBankInfo(testObj)).toBeFalsy()
-        })
-      })
-
-      it('should return false when sortCode fails very basic validation', function () {
-        testObj.doCheck = 'yes'
-        _.each(['', '01234x', 'abcdef', '0123456', 0, null], function (str) {
-          testObj.sortCode = str
-          expect(fs.hasBankInfo(testObj)).toBeFalsy()
-        })
-      })
-
-      it('should return false when accountNumber fails very basic validation', function () {
-        testObj.sortCode = '123456'
-        _.each(['', '01234x', 'abcdef', '012345678', 0, null], function (str) {
-          testObj.accountNumber = str
-          expect(fs.hasBankInfo(testObj)).toBeFalsy()
-        })
-      })
-    })
-
     describe('hasResultInfo', function () {
       var testObj = {}
       it('should return false when no result info is available', function () {
@@ -63,21 +28,6 @@ describe('app: hod.proving', function () {
       })
     })
 
-    describe('getDailyBalanceStatusUrl', function () {
-      var testObj = {}
-      it('should NOT return anything when basic data is missing', function () {
-        expect(fs.getDailyBalanceStatusUrl(testObj)).toEqual(null)
-        testObj.tier = 4
-        expect(fs.getDailyBalanceStatusUrl(testObj)).toEqual(null)
-        testObj.accountNumber = '12345678'
-        expect(fs.getDailyBalanceStatusUrl(testObj)).toEqual(null)
-      })
-      it('should return getDailyBalanceStatusUrl when v basic data is present', function () {
-        testObj.sortCode = '123456'
-        expect(fs.getDailyBalanceStatusUrl(testObj)).toEqual('t4/accounts/123456/12345678/dailybalancestatus')
-      })
-    })
-
     describe('getThresholdUrl', function () {
       it('should NOT return anything when tier is not defined', function () {
         expect(fs.getThresholdUrl({})).toEqual(null)
@@ -92,6 +42,35 @@ describe('app: hod.proving', function () {
       it('should return the appropriate parameters to send in a threshold request', function () {
         var result = fs.getThresholdParams(testObj)
         expect(_.has(result, 'studentType')).toBeTruthy()
+      })
+    })
+
+    describe('getCriteria', function () {
+      var testObj = {
+        tier: 4,
+        applicantType: 'nondoctorate',
+        endDate: '2016-05-13',
+        continuationCourse: 'yes',
+        courseType: 'main',
+        originalCourseStartDate: '2014-04-01'
+
+      }
+      it('should return an object with field labels and display values', function () {
+        var criteria = fs.getCriteria(testObj)
+        console.log(criteria)
+        expect(_.has(criteria, 'endDate')).toBeTruthy()
+        expect(_.has(criteria, 'continuationCourse')).toBeTruthy()
+        expect(_.has(criteria, 'courseType')).toBeTruthy()
+        expect(_.has(criteria, 'originalCourseStartDate')).toBeTruthy()
+
+        expect(criteria.endDate.display).toEqual('13 May 2016')
+        expect(criteria.originalCourseStartDate.display).toEqual('01 April 2014')
+      })
+
+      it('should not include originalCourseStartDate when continuationCourse is \'no\'', function () {
+        testObj.continuationCourse = 'no'
+        var criteria = fs.getCriteria(testObj)
+        expect(_.has(criteria, 'originalCourseStartDate')).toBeFalsy()
       })
     })
 
@@ -114,6 +93,18 @@ describe('app: hod.proving', function () {
         expect(result.leaveEndDate.display).toEqual('13 May 2016')
         expect(_.has(result, 'responseTime')).toBeTruthy()
         expect(result.responseTime.display).toEqual('12:34:56 23 June 2017')
+      })
+    })
+
+    describe('getPeriodChecked', function () {
+      var testObj = {
+        tier: 4,
+        endDate: '2016-06-30'
+      }
+      it('shoudld return a string with a date range nDays before the end date', function () {
+        expect(fs.getPeriodChecked(testObj)).toEqual('03 June 2016 - 30 June 2016')
+        testObj.tier = 2
+        expect(fs.getPeriodChecked(testObj)).toEqual('02 April 2016 - 30 June 2016')
       })
     })
   })

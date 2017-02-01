@@ -21,10 +21,10 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   })
 }])
 
-fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state, FsService) {
+fsModule.run(['$rootScope', '$state', 'FsService', 'FsBankService', function ($rootScope, $state, FsService, FsBankService) {
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
     var fs = FsService.getApplication()
-    if (toState.name === 'fsDetails' && toParams.calcOrBank === 'bank' && !FsService.hasBankInfo(fs)) {
+    if (toState.name === 'fsDetails' && toParams.calcOrBank === 'bank' && !FsBankService.hasBankInfo(fs)) {
       // you cannot be on the 'fsDetails' route/view if the bank details are not complete
       event.preventDefault()
       $state.go('fsGetConsent', toParams)
