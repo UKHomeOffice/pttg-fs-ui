@@ -15,7 +15,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
       doCheck: 'yes',
       dob: '1974-05-13',
       sortCode: '010616',
-      accountNumber: '00030000',
+      accountNumber: '00000502',
       inLondon: 'no',
       courseType: 'main',
       continuationCourse: 'no',

@@ -66,11 +66,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
 
       timerScope.$on('FsTimerENDED', function (e) {
         $scope.numTry++
-        if ($scope.numTry < $scope.numTryLimit) {
-          $scope.checkConsent()
-        } else {
-          console.log('ALL OVER')
-        }
+        $scope.checkConsent()
       })
 
       // timerScope.startTimer()
@@ -97,10 +93,25 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     // send the consent API request
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
-      $scope.timerScope.startTimer()
+      console.log(data.data.consent)
+      if (data.data.consent === 'SUCCESS') {
+        $scope.checkBalance()
+      } else if ($scope.numTry < $scope.numTryLimit) {
+        $scope.timerScope.startTimer()
+      } else {
+        console.log('ALL OVER')
+      }
     }, function (err, data) {
       // something went wrong
       console.log('err', err)
+    })
+  }
+
+  $scope.checkBalance = function () {
+    FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
+      console.log(data)
+    }, function (err, data) {
+      console.log(err, data)
     })
   }
 }])

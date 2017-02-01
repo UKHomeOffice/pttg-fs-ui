@@ -21,7 +21,7 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   })
 }])
 
-fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
+fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, FsService, FsInfoService, FsBankService) {
   var t = Number($state.params.tier)
   $scope.tier = FsInfoService.getTier(t)
   $scope.fs = FsService.getApplication()
@@ -47,7 +47,7 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
 
   $scope.submit = function (valid) {
     if (valid) {
-      FsService.sendConsentRequest($scope.fs).then(function (data) {
+      FsBankService.sendConsentRequest($scope.fs).then(function (data) {
         $scope.fs.consentResponse = data
         $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       }, function (err, data) {

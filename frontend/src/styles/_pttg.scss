@@ -81,3 +81,17 @@ table {
 th {
   width: 50%;
 }
+
+a[ng-click] {
+  cursor: pointer;
+}
+
+.debuglinks {
+  width: 100%;
+  overflow: hidden;
+  a {
+    float: left;
+    font-size: 10px;
+    padding: 10px;
+  }
+}

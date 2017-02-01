@@ -6,7 +6,7 @@
 
 var fsModule = angular.module('hod.fs')
 
-fsModule.factory('FsBankService', ['IOService', function (IOService) {
+fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOService, FsInfoService) {
   var me = this
 
   // does the object supplied (_application) have complete bank info?
@@ -38,14 +38,6 @@ fsModule.factory('FsBankService', ['IOService', function (IOService) {
     return false
   }
 
-  // get daily balance status url
-  this.getDailyBalanceStatusUrl = function (obj) {
-    if (!obj.tier || !obj.sortCode || !obj.accountNumber) {
-      return null
-    }
-    return 't' + obj.tier + '/accounts/' + obj.sortCode + '/' + obj.accountNumber + '/dailybalancestatus'
-  }
-
   // get the consent url
   this.getConsentUrl = function (obj) {
     if (!obj.sortCode || !obj.accountNumber) {
@@ -61,6 +53,42 @@ fsModule.factory('FsBankService', ['IOService', function (IOService) {
   this.sendConsentRequest = function (obj) {
     var u = me.getConsentUrl(obj)
     var params = me.getConsentParams(obj)
+    return IOService.get(u, params)
+  }
+
+  // get daily balance status url
+  this.getDailyBalanceStatusUrl = function (obj) {
+    if (!obj.tier || !obj.sortCode || !obj.accountNumber) {
+      return null
+    }
+    return 't' + obj.tier + '/accounts/' + obj.sortCode + '/' + obj.accountNumber + '/dailybalancestatus'
+  }
+
+  this.getDailyBalanceParams = function (obj) {
+    var tier = FsInfoService.getTier(obj.tier)
+    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+    var fields = FsInfoService.getFields(variant.fields)
+
+    if (obj.continuationCourse !== 'yes') {
+      // remove the original course start date from the results if its not a continuation course
+      fields = _.without(fields, 'originalCourseStartDate')
+    }
+
+    var params = {}
+    _.each(fields, function (f) {
+      if (!_.has(obj, f)) {
+        return
+      }
+
+      params[f] = obj[f]
+    })
+
+    return params
+  }
+
+  this.sendDailyBalanceRequest = function (obj) {
+    var u = me.getDailyBalanceStatusUrl(obj)
+    var params = me.getDailyBalanceParams(obj)
     return IOService.get(u, params)
   }
 
