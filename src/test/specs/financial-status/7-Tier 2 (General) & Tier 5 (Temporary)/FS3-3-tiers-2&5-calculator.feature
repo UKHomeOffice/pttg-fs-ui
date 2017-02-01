@@ -10,6 +10,7 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
         And the t2main student type is chosen
+        And the caseworker selects the Yes, Check Barclays  radio button
         And the default details are
             | Application raised date | 30/07/2016 |
             | End date                | 04/07/2016 |

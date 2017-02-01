@@ -10,14 +10,14 @@ Feature: Route selection screen content - Tiers 2, 4 or 5
 
     Scenario: Input Page checks for application type selection
         Given the api health check response has status 200
-        And the Tier 2 <student-type> student type is chosen
+        And the Tier 2 student-type is chosen
         Then the service displays the following page content|
             | applicant-type-t2main-label      | Main applicant (with & without dependants) |
             | applicant-type-t2dependant-label | Dependant only
 
     Scenario: Input Page checks for application type selection
         Given the api health check response has status 200
-        And the Tier 4 <student-type> student type is chosen
+        And the Tier 4 student-type is chosen
         Then the service displays the following page content|
             | applicant-type-nondoctorate-label | General student                  |
             | applicant-type-doctorate-label    | Doctorate extension scheme       |
@@ -26,7 +26,7 @@ Feature: Route selection screen content - Tiers 2, 4 or 5
 
     Scenario: Input Page checks for application type selection
         Given the api health check response has status 200
-        And the Tier 5 <student-type> student type is chosen
+        And the Tier 5 student-type is chosen
         Then the service displays the following page content|
             | Applicant-type-t5main-label      | Main applicant (with & without dependants) |
             | Applicant-type-t5dependant-label | Dependant only

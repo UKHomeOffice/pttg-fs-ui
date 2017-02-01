@@ -3,6 +3,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the non-doctorate student type is chosen
         And the default details are
             | Application raised date         | 05/06/2016 |

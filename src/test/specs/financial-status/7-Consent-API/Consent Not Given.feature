@@ -28,7 +28,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Dependants                      | 0          |
             | DOB                             | 25/03/1987 |
             | Sort code                       | 22-22-23   |
-            | Account number                  | 22222224   |
+            | Account number                  | 22222223   |
         Then The service displays the Consent has not been given output page including the results and your search headers
     Examples:
     | Tier      | Applicant     |

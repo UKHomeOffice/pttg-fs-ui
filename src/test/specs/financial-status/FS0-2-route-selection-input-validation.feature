@@ -6,7 +6,7 @@ Feature: Show clear error details when inputs are invalid - Tier 2, 4 or 5
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the Tier 2 <student-type> is chosen
+        And the Tier 2 student-type is chosen
         And the <page-title> is chosen
         And The service displays the following radio buttons
         | Yes, check Barclays |
@@ -21,7 +21,7 @@ Feature: Show clear error details when inputs are invalid - Tier 2, 4 or 5
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the Tier 4 <student-type> is chosen
+        And the Tier 4 student-type is chosen
         And the <page-title> is chosen
         And The service displays the following radio buttons
             | Yes, check Barclays |
@@ -36,7 +36,7 @@ Feature: Show clear error details when inputs are invalid - Tier 2, 4 or 5
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the Tier 5 <student-type> is chosen
+        And the Tier 5 student-type is chosen
         And the <page-title> is chosen
         And The service displays the following radio buttons
             | Yes, check Barclays |

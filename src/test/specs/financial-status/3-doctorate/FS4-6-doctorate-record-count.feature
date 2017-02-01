@@ -3,6 +3,7 @@ Feature: Insufficient Records
     Scenario: Not enough records found
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the doctorate student type is chosen
         Given the account does not have sufficient records
         When the financial status check is performed with

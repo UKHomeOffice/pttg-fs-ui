@@ -4,6 +4,7 @@ Feature: Insufficient Records
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
         And the t5dependant student type is chosen
+        And the caseworker selects the Yes, Check Barclays  radio button
         Given the account does not have sufficient records
         When the financial status check is performed with
             | Application raised date | 30/06/2016 |

@@ -3,6 +3,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the doctorate student type is chosen
 
 

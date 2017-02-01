@@ -6,13 +6,15 @@ Feature: Edit search button to return UI populated with current values (for all 
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status calculator service ui
+        And the Tier 4 student-type is chosen
         And the non-doctorate student type is chosen
+        And the No Barclays radio button is clicked
 
     Scenario: Caseworker needs to edit the information input into the UI after the API has been called and results displayed.
         Given the financial status check is performed with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |
@@ -26,7 +28,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         Then the inputs will be populated with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |

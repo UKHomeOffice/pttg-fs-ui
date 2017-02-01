@@ -13,6 +13,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the sso student type is chosen
 
 

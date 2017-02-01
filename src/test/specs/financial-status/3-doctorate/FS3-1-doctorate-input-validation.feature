@@ -18,6 +18,7 @@ Feature: Show clear error details when inputs are invalid
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the doctorate student type is chosen
         And the default details are
             | Application raised date         | 30/05/2016 |
@@ -37,7 +38,7 @@ Feature: Show clear error details when inputs are invalid
             | End Date                        |  |
             | In London                       |  |
             | Accommodation fees already paid |  |
-            | Dependants            |  |
+            | Dependants                      |  |
             | Sort code                       |  |
             | Account number                  |  |
             | DOB                             |  |

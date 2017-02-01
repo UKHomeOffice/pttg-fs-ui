@@ -5,6 +5,7 @@ Feature: Copy results to paste buffer
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
+        And the Tier 4 student-type is chosen
         And the non-doctorate student type is chosen
         And the default details are
             | Application raised date         | 31/05/2016 |
@@ -15,7 +16,7 @@ Feature: Copy results to paste buffer
             | Total tuition fees              | 8500.00    |
             | Tuition fees already paid       | 10         |
             | Accommodation fees already paid | 20         |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
             | DOB                             | 27/07/1981 |
@@ -37,13 +38,13 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Applicant type                    | Tier 4 (General) student                        |
+            | Applicant type                  | Tier 4 (General) student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |
             | Tuition fees already paid       | £10.00                                          |
             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
-            | Dependants            | 0                                               |
+            | Dependants                      | 0                                               |
             | Sort code                       | 11-11-11                                        |
             | Account number                  | ****1111                                        |
             | Date of birth                   | 27/07/1981                                      |
@@ -64,13 +65,13 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Applicant type                    | Tier 4 (General) student                        |
+            | Applicant type                  | Tier 4 (General) student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |
             | Tuition fees already paid       | £10.00                                          |
             | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
-            | Dependants            | 0                                               |
+            | Dependants                      | 0                                               |
             | Sort code                       | 11-11-11                                        |
             | Account number                  | ****111X                                        |
             | Date of birth                   | 27/07/1981                                      |
