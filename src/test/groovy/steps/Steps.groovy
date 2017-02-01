@@ -61,14 +61,30 @@ class Steps {
     def wiremockPort = 8080
 
     def pageUrls = [
+        'root'              : uiRoot + '#!/fs',
+        'tier2'             : uiRoot + '#!/fs/t2',
+        'tier4'             : uiRoot + '#!/fs/t4',
+        'tier5'             : uiRoot + '#!/fs/t5',
         'studentType'       : uiRoot,
-        'doctorate'         : uiRoot + '#!/financial-status/doctorate',
-        'non-doctorate'     : uiRoot + '#!/financial-status/non-doctorate',
+        'doctorate'         : uiRoot + '#!/fs/t4/doctorate',
+        'non-doctorate'     : uiRoot + '#!/fs/t4/non-doctorate',
         'pgdd'              : uiRoot + '#!/financial-status/pgdd',
         'sso'               : uiRoot + '#!/financial-status/sso',
         't2main'            : uiRoot + '#!/financial-status/t2main',
         't2dependant'       : uiRoot + '#!/financial-status/t2dependant',
         'studentTypeCalc'   : uiRoot + '#!/financial-status-calc',
+    ]
+
+     def applicantType = [
+            'mainApplicant'          : 'applicant-type-0-label',
+            'dependentOnly'         :  'applicant-type-1-label',
+            'nonDoctorate'           :  'applicant-type-0-label'
+    ]
+
+    def pageObjects = [
+            'continueButtonClass'       : 'button',
+            'yesCheckBarclays'          : 'doCheck-0-label',
+             'no'                       : 'doCheck-1-label'
     ]
 
 //    def pageLocations = [
@@ -284,6 +300,7 @@ class Steps {
 
                 }
                 else if(key == "accountNumber"){
+                    driver.findElement(By.id(key)).clear()
                     driver.findElement(By.id(key)).sendKeys(v)
                 }else if (key == "courseType") {
                     clickRadioButton(driver, courseTypeRadio, v)
@@ -333,9 +350,9 @@ class Steps {
             driver.navigate().refresh()
             assertCurrentPage('studentTypeCalc')
         } else if (service.trim() == 'financial status service') {
-            driver.get(pageUrls['studentType'])
+            driver.get(pageUrls['root'])
             driver.navigate().refresh()
-            assertCurrentPage('studentType')
+            assertCurrentPage('root')
         } else {
             assert false
         }
@@ -434,15 +451,55 @@ class Steps {
     public void consent_is_sought_for_the_following(DataTable arg1){
         Map<String, String> entries = arg1.asMap(String.class, String.class)
         makeEntries(entries)
+        driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+
     }
     @Given("^the caseworker selects the (.*) radio button\$")
-    public void the_caseworker_selects_the_Yes_check_Barclays_radio_button() {
+    public void the_caseworker_selects_the_Yes_check_Barclays_radio_button(String yesRadioButton) {
+
+        driver.findElement(By.id(pageObjects['yesCheckBarclays'])).click()
+        driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
 
     }
 
-    @When("^caseworker submits the '(.*)' section of the form\$")
-    public void caseworker_submits_the_Get_Consent_section_of_the_form(String consentButton) {
-    driver.findElement(By.id(toCamelCase(consentButton))).click()
+    @Given("^the caseworker selects (Tier.*)\$")
+    public void the_caseworker_selects_Tier(String tierType) throws Throwable {
+
+        if(tierType == "Tier two") {
+            driver.get(pageUrls['tier2'])
+        }
+
+        if(tierType == "Tier four"){
+            driver.get(pageUrls['tier4'])
+        }
+
+        if(tierType == "Tier five"){
+
+            driver.get(pageUrls['tier5'])
+        }
+
+    }
+
+    @Given("^(.*) type is selected\$")
+    public void main_type_is_selected(String applicant) throws Throwable {
+        if(applicant == "Main"){
+
+            driver.findElement(By.id(applicantType['mainApplicant'])).click()
+            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+
+        }
+        if(applicant == "Non Doctorate"){
+
+            driver.findElement(By.id(applicantType['nonDoctorate'])).click()
+            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+
+        }
+        if(applicant == "Dependent"){
+
+            driver.findElement(By.id(applicantType['dependentOnly'])).click()
+            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+
+        }
     }
 
     @When("^the student type choice is submitted\$")
