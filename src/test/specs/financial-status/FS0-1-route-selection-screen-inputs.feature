@@ -2,6 +2,7 @@ Feature: Route selection screen inputs - All tiers
     This screen allows caseworker to select Tier 2, 4 & 5 application type, which will direct to the right Financial status check form
 
     Scenario Outline: Caseworker selects the student type - Tier 4 (General)
+
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
         When the Tier 4 student type is chosen
@@ -13,7 +14,7 @@ Feature: Route selection screen inputs - All tiers
             | pgdd          | Postgraduate doctor or dentist   |
             | sso           | Student union sabbatical officer |
 
-    Scenario Outline: Caseworker selects student type - T4 (General) and page-title for Barclays radio button to appear
+    Scenario Outline: Caseworker selects student type - T4 (General) and Barclays radio buttons appear
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
@@ -40,7 +41,7 @@ Feature: Route selection screen inputs - All tiers
             | t2main       | Main applicant (with & without dependants) |
             | t2dependant  | Dependant only                             |
 
-    Scenario Outline: Caseworker selects student type - T2 and page-title for Barclays radio button to appear
+    Scenario Outline: Caseworker selects student type - T2 and and Barclays radio buttons appear
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
@@ -54,7 +55,6 @@ Feature: Route selection screen inputs - All tiers
             | Yes, check Barclays |
             | No                  |
 
-
     Scenario Outline: Caseworker selects Tier 5 (Temporary)
 
         Given the api health check response has status 200
@@ -66,7 +66,7 @@ Feature: Route selection screen inputs - All tiers
             | t5main       | Main applicant (with & without dependants) |
             | t5dependant  | Dependant only                             |
 
-    Scenario Outline: Caseworker selects student type - T5 and page-title for Barclays radio button to appear
+    Scenario Outline: Caseworker selects student type - T5 and and Barclays radio buttons appear
 
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
