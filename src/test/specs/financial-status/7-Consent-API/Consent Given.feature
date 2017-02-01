@@ -17,8 +17,8 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Account number | 22222223   |
         And the Consent API is invoked
         And the financial status check is performed with
-            | Application raised date         | 30/05/2016 |
-            | End Date                        | 30/05/2016 |
+            | Application raised date         | 30/06/2016 |
+            | End Date                        | 31/05/2016 |
             | Dependants                      | 0          |
         Then the Consent Pending page is displayed
         And the service displays the following result
@@ -37,5 +37,4 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Examples:
             | Tier      | Applicant     |
             | Tier two  | Main          |
-            | Tier four | Non Doctorate |
             | Tier five | Dependent     |
