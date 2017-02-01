@@ -60,7 +60,5 @@ describe('app: hod.proving', function () {
         expect(fsb.getDailyBalanceStatusUrl(testObj)).toEqual('t4/accounts/123456/12345678/dailybalancestatus')
       })
     })
-
-    describe('')
   })
 })

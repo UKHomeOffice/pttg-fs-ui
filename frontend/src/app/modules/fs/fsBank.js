@@ -83,6 +83,9 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
       params[f] = obj[f]
     })
 
+    // add the date of birth
+    params.dob = obj.dob
+
     return params
   }
 
