@@ -16,9 +16,9 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         And <Applicant> type is selected
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222224   |
+            | DOB            | 25/03/1987 |
+            | Sort code      | 22-22-23   |
+            | Account number | 22222224   |
         And the Consent API is invoked
         And the financial status check is performed with
             | Application raised date         | 30/05/2016 |
@@ -26,23 +26,31 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | In London                       | Yes        |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
+            | Course start date               | 20/05/2016 |
+            | Course end date                 | 30/11/2016 |
+            | Tuition fees already paid       | 300        |
+            | Total tuition fees              | 8500.00    |
+            | Continuation Course             | No         |
+            | Course type                     | Main       |
+          #  | DOB                             | 25/03/1987 |
+          #  | Sort code                       | 22-22-23   |
+          #  | Account number                  | 22222223   |
         Then The service displays the Consent has not been given output page including the results and your search headers
-    Examples:
-    | Tier      | Applicant     |
-    | Tier two  | Main          |
-    | Tier four | Non Doctorate |
-    | Tier five | Dependent     |
+        Examples:
+            | Tier      | Applicant     |
+            | Tier two  | Main          |
+            | Tier four | Non Doctorate |
+            | Tier five | Dependent     |
 
         ## 'Failure' consent status received before the financial status check is performed ##
-    Scenario: 'Failure' Status received before the financial status check is performed
-
+    Scenario Outline: 'Failure' Status received before the financial status check is performed
+        And the caseworker selects <Tier>
+        And <Applicant> type is selected
+        And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222224   |
+            | DOB            | 25/03/1987 |
+            | Sort code      | 22-22-23   |
+            | Account number | 22222225   |
         When caseworker submits the 'Get Consent' section of the form
         And the Consent API is invoked
         And the financial status check is performed with
@@ -55,4 +63,8 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Sort code                       | 22-22-23   |
             | Account number                  | 22222225   |
         Then The service displays the Failure output page including the results and your search headers
-
+    Examples:
+    | Tier      | Applicant     |
+    | Tier two  | Main          |
+    | Tier four | Non Doctorate |
+    | Tier five | Dependent     |
