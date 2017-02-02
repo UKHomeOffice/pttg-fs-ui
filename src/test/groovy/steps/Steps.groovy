@@ -76,15 +76,15 @@ class Steps {
     ]
 
      def applicantType = [
-            'mainApplicant'          : 'applicant-type-0-label',
-            'dependentOnly'         :  'applicant-type-1-label',
-            'nonDoctorate'           :  'applicant-type-0-label'
+            'mainApplicant'          : 'applicant-type-main-label',
+            'dependentOnly'         :  'applicant-type-dependant-label',
+            'nonDoctorate'           :  'applicant-type-nondoctorate-label'
     ]
 
     def pageObjects = [
             'continueButtonClass'       : 'button',
-            'yesCheckBarclays'          : 'doCheck-0-label',
-             'no'                       : 'doCheck-1-label'
+            'yesCheckBarclays'          : 'doCheck-yes-label',
+             'no'                       : 'doCheck-no-label'
     ]
 
 //    def pageLocations = [
@@ -108,26 +108,26 @@ class Steps {
     def dateDelimiter = "/"
 
     def inLondonRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'inLondon-yes')
-        .withOption('no', 'inLondon-no')
+        .withOption('yes', 'inLondon-yes-label')
+        .withOption('no', 'inLondon-no-label')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'applicant-type-nondoctorate')
-        .withOption('doctorate', 'applicant-type-doctorate')
-        .withOption('pgdd', 'applicant-type-pgdd')
-        .withOption('sso', 'applicant-type-sso')
+        .withOption('non-doctorate', 'applicant-type-nondoctorate-label')
+        .withOption('doctorate', 'applicant-type-doctorate-label')
+        .withOption('pgdd', 'applicant-type-pgdd-label')
+        .withOption('sso', 'applicant-type-sso-label')
         .withOption('t2main', 'applicant-type-t2main')
         .withOption('t2dependant', 'applicant-type-t2dependant')
         .withOption('t5main', 'applicant-type-t5main')
         .withOption('t5dependant', 'applicant-type-t5dependant')
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('pre-sessional', 'courseType-pre-sessional')
-        .withOption('main', 'courseType-main')
+        .withOption('pre-sessional', 'courseType-presessional-label')
+        .withOption('main', 'courseType-main-label')
 
     def continuationCourseRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('yes', 'continuationCourse-yes')
-        .withOption('no', 'continuationCourse-no')
+        .withOption('yes', 'continuationCourse-yes-label')
+        .withOption('no', 'continuationCourse-no-label')
 
     def studentType
 
@@ -177,7 +177,9 @@ class Steps {
         String[] parts = value.split(delimiter)
 
         parts.eachWithIndex { part, index ->
-            sendKeys(driver.findElement(By.id(key + partNames[index])), part)
+            if(driver.findElement(By.id(key + partNames[index])).isDisplayed()) {
+                sendKeys(driver.findElement(By.id(key + partNames[index])), part)
+            }
         }
     }
 
@@ -307,7 +309,9 @@ class Steps {
 
                 } else {
                     def element = driver.findElement(By.id(key))
-                    sendKeys(element, v)
+                    if(element.isDisplayed() == true) {
+                        sendKeys(element, v)
+                    }
                 }
             }
         }

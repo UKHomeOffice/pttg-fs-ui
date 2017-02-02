@@ -32,7 +32,7 @@ class UtilitySteps {
         def choice = value.toLowerCase()
 
         if (radioConfig.options.containsKey(choice)) {
-            String id = radioConfig.options.get(choice) + '-label'
+            String id = radioConfig.options.get(choice)// + '-label'
             println('\n\nRadio option ' + id)
             By byCss = By.cssSelector("[id='$id']")
             def btn = driver.findElement(byCss)
