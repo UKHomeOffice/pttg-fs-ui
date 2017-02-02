@@ -12,14 +12,16 @@
   <p><a class="" ng-click="cancelTimer()">Cancel request</a></p>
 </div>
 
+
 <div class="govuk-box-highlight" ng-if="showPassOrFail">
   <h1 class="bold-large">Passed</h1>
    <p>The applicant's daily closing balance was above the total funds required</p>
 </div>
 
+
 <h2 id="account-holder" class="heading-medium" ng-if="hasBankInfo">Calculator results</h2>
 
-<div class="govuk-box-highlight panel-fail">
+<div class="govuk-box-highlight panel-fail" ng-if="showThresholdBox">
   <h3 class="bold-large">{{ threshold | pounds }}</h3>
   <p><strong class="heading-small">Total daily funds required</strong><br />{{ results.periodChecked.display }}</p>
 </div>

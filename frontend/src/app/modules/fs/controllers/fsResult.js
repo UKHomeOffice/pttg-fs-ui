@@ -46,6 +46,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
   $scope.numTry = 0
   $scope.numTryLimit = 5
   $scope.timerScope = null
+  $scope.showThresholdBox = true
   $scope.showConsentPending = FsBankService.hasBankInfo(fs) && !FsBankService.hasResult(fs)
   $scope.showPassOrFail = FsBankService.hasResult(fs)
 
@@ -94,6 +95,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
       console.log(data.data.consent)
+      fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
         $scope.checkBalance()
       } else if ($scope.numTry < $scope.numTryLimit) {
@@ -110,6 +112,10 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
   $scope.checkBalance = function () {
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
       console.log(data)
+      fs.dailyBalanceRequest = data
+      $scope.showPassOrFail = FsBankService.hasResult(fs)
+      $scope.showConsentPending = !$scope.showPassOrFail
+      $scope.showThresholdBox = !$scope.showPassOrFail
     }, function (err, data) {
       console.log(err, data)
     })

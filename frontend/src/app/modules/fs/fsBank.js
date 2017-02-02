@@ -35,6 +35,9 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.hasResult = function (obj) {
+    if (_.has(obj, 'dailyBalanceRequest') && _.has(obj.dailyBalanceRequest, 'data') && _.has(obj.dailyBalanceRequest.data, 'fundingRequirementMet')) {
+      return true
+    }
     return false
   }
 
@@ -85,6 +88,12 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
 
     // add the date of birth
     params.dob = obj.dob
+
+    // add the applicant type
+    params.applicantType = obj.applicantType
+    params.studentType = obj.applicantType
+
+    params.toDate = obj.endDate
 
     return params
   }

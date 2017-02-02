@@ -146,7 +146,7 @@ fsModule.factory('FsInfoService', [ function () {
       },
       courseType: {
         summary: 'Course type',
-        options: [{ value: 'presessional', label: 'Pre-sessional' }, { value: 'main', label: 'Main course' }],
+        options: [{ value: 'pre-sessional', label: 'Pre-sessional' }, { value: 'main', label: 'Main course' }],
         format: 'radio'
       },
       courseStartDate: {
