@@ -792,7 +792,7 @@ class Steps {
 
     @Then("^the (.*) page is displayed\$")
     public void the_Consent_Pending_page_is_displayed(String consentPending) {
-     driver.findElement(By.className("button")).click()
-        assert driver.findElement(By.id(consent)).getText()
+     //driver.findElement(By.className("button")).click()
+        assert driver.findElement(By.id(consentPending)).getText()
     }
 }
