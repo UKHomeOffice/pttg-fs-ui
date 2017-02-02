@@ -9,11 +9,7 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import net.thucydides.core.annotations.Managed
-import org.openqa.selenium.By
-import org.openqa.selenium.Keys
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.Capabilities
+import org.openqa.selenium.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -28,7 +24,6 @@ import static com.jayway.restassured.RestAssured.given
 import static java.util.concurrent.TimeUnit.SECONDS
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
-
 /**
  * @Author Home Office Digital
  */
@@ -797,6 +792,7 @@ class Steps {
 
     @Then("^the (.*) page is displayed\$")
     public void the_Consent_Pending_page_is_displayed(String consentPending) {
-
+     driver.findElement(By.className("button")).click()
+        assert driver.findElement(By.id(consent)).getText()
     }
 }

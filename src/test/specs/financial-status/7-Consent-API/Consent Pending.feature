@@ -7,48 +7,37 @@ Feature: Process 'pending' status and display the appropriate output page
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the caseworker selects the Yes, check Barclays radio button
-        And caseworker submits the 'Get Consent' section of the form
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 22-22-23   |
-            | Account number | 22222223   |
 
     ## Service receives a 'Pending' status and displays the appropriate output page ##
 
-    Scenario: 'Pending' status received from the Barclays Consent API response
-
-        Given the financial status check is performed
-        And the default details are
-            | Application raised date         | 30/06/2016 |
-            | End Date                        | 01/06/2016 |
+    Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
+        And the caseworker selects <Tier>
+        And <Applicant> type is selected
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 22-22-23   |
+            | Account number | 22222226   |
+        And the Consent API is invoked
+        And the financial status check is performed with
+            | Application raised date         | 30/05/2016 |
+            | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Accommodation fees already paid | 100        |
+            | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
-        When the Barclays Consent API provides the following response:
-            | status | PENDING |
-        Then the Consent Pending page is displayed
-        And the service displays the following result
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 30/05/2016 |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Calculator result received |                          |
-        And the result table contains the following
-            | Application raised date                 | 30/06/2016                                            |
-            | Last date of the 28-day period to check |                                                       |
-            | Dependants                              | 0                                                     |
-            | In London                               | Yes                                                   |
-            | Applicant type                          | Tier 4 (General) student (doctorate extension scheme) |
-            | Course start date                       | 01/05/2016                                            |
-            | Course end date                         | 25/09/2017                                            |
-            | Continuation Course                     | Yes                                                   |
-            | Original Course Start Date              | 30/10/2015                                            |
-            | Total tuition fees                      | £8,500.00                                             |
-            | Tuition fees already paid               | £0.00                                                 |
-            | Accommodation fees already paid         | £100.00                                               |
+            | Course start date               | 20/05/2016 |
+            | Course end date                 | 30/11/2016 |
+            | Tuition fees already paid       | 300        |
+            | Total tuition fees              | 8500.00    |
+            | Continuation Course             | No         |
+            | Course type                     | Main       |
+
+        Then The service displays the Consent has not been given output page including the results and your search headers
+        Examples:
+            | Tier      | Applicant     |
+            | Tier two  | Main          |
+            | Tier four | Non Doctorate |
+            | Tier five | Dependent     |
 
       ## Service receives a 'Pending' status then 'Success' Status - result page ##
 

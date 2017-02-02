@@ -63,4 +63,4 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
-
+        Then the Consent Pending page is displayed

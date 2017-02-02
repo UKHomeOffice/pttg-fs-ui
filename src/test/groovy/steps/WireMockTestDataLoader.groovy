@@ -2,7 +2,6 @@ package steps
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.http.Fault
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -67,14 +66,15 @@ class WireMockTestDataLoader {
         println ''
         LOGGER.debug("Stubbing Response data with $fileName")
 
-        stubFor(get(urlPathMatching(url))
-            .willReturn(
-            aResponse()
-                .withBody(json)
-                .withHeader("Content-Type", "application/json")
-                .withStatus(200)));
+    stubFor(get(urlPathMatching(url))
+        .willReturn(
+        aResponse()
+            .withBody(json)
+            .withHeader("Content-Type", "application/json")
+            .withStatus(200)));
 
-        println ''
+    println ''
+
         LOGGER.debug("Completed Stubbing Response data with $fileName")
     }
 
