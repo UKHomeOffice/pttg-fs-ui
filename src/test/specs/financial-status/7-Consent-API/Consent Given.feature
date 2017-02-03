@@ -7,6 +7,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
     Scenario Outline: Main applicant - Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
+        And the correct test data for 22222223 is loaded
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
         And <Applicant> type is selected

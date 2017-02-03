@@ -445,6 +445,11 @@ class Steps {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
         testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
     }
+    @Given("^the correct test data for (\\d+) is loaded\$")
+    public void the_correct_test_data_for_is_loaded(String accountNumber) throws Throwable {
+        testDataLoader.stubTestData(accountNumber, thresholdUrlRegex)
+        testDataLoader.withResponseStatus(balanceCheckUrlRegex, 200)
+    }
 
     @Given("^consent is sought for the following:\$")
     public void consent_is_sought_for_the_following(DataTable arg1){
