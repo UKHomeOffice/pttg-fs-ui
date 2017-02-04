@@ -449,6 +449,7 @@ class Steps {
     public void the_correct_test_data_for_is_loaded(String accountNumber) throws Throwable {
         testDataLoader.stubTestData(accountNumber, thresholdUrlRegex)
         testDataLoader.withResponseStatus(balanceCheckUrlRegex, 200)
+        //testDataLoader.stubTestData("consentcheckresponse-sample", balanceCheckUrlRegex)
     }
 
     @Given("^consent is sought for the following:\$")
@@ -603,6 +604,17 @@ class Steps {
     @When("^the Consent API is invoked\$")
     public void the_Consent_API_is_invoked() {
 
+    }
+
+    @When("^consent (.*) is received from bank\$")
+    public void consent_success_is_received_from_bank(String consentResponse) throws Throwable {
+        //testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
+       // testDataLoader.stubTestData("threshold", thresholdUrlRegex)
+        testDataLoader.stubTestData("consentcheckresponse-sample", balanceCheckUrlRegex)
+    }
+    @When("^the progress bar is displayed\$")
+    public void the_progress_bar_is_displayed() throws Throwable {
+        assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/fs-timer/div")).isDisplayed()
     }
 
     @Then("^the service displays the following message\$")
@@ -792,12 +804,12 @@ class Steps {
     }
     @Then("^The service displays the (.*) output page including the results and your search headers\$")
     public void the_service_displays_the_Consent_has_not_been_given_output_page_including_the_results_and_your_search_headers(String consent) {
-       assert driver.findElement(By.id(consent)).getText()
+        assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/h1")).getText() == consent
     }
 
     @Then("^the (.*) page is displayed\$")
     public void the_Consent_Pending_page_is_displayed(String consentPending) {
-     //driver.findElement(By.className("button")).click()
-        assert driver.findElement(By.id(consentPending)).getText()
+
+        assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/h1")).getText() == consentPending
     }
 }

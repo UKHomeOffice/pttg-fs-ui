@@ -21,8 +21,8 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Application raised date         | 30/06/2016 |
             | End Date                        | 31/05/2016 |
             | Dependants                      | 0          |
-        Then the Consent Pending page is displayed
-        And the service displays the following result
+        Then the Consent granted page is displayed
+        And the result table contains the following
             | Outcome                         | Passed                                                |
             | Account holder name             | Laura Taylor                                          |
             | Total funds required            | £16,090.00                                            |
@@ -44,6 +44,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
     Scenario: Tier 4 Non-Doctorate - Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
+        And the correct test data for 22222223 is loaded
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen
@@ -64,4 +65,5 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
-        Then the Consent Pending page is displayed
+        Then the Consent granted page is displayed
+
