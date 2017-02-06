@@ -3,18 +3,21 @@ Feature: Edit search button to return UI populated with current values (for all 
 ########################################################################################################################
     Background:
         Given the api health check response has status 200
+        Given the account has sufficient funds
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 33-33-33   |
+            | Account number | 33333333   |
 
     Scenario: Caseworker needs to edit the information input into the UI after the API has been called and results displayed.
         Given the financial status check is performed with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | DOB                             | 29/07/1978 |
             | Dependants                      | 0          |
-            | Sort code                       | 33-33-33   |
-            | Account number                  | 33333333   |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |
