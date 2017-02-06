@@ -24,7 +24,7 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
 fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state, FsService) {
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
     var fs = FsService.getApplication()
-    if (toState.name === 'fsResult' && !FsService.hasResultInfo(fs)) {
+    if (toState.name === 'fsResult' && !FsService.hasThresholdInfo(fs)) {
       // you cannot be on the 'fsResult' route/view if the result info is not present
       console.log('No result info')
       event.preventDefault()
@@ -121,7 +121,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     // send the consent API request
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
-      console.log(data.data.consent)
+      // console.log(data.data.consent)
       fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
         $scope.checkBalance()
@@ -142,6 +142,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
       console.log(data)
       fs.dailyBalanceResponse = data
+      $scope.results = FsService.getResults(fs)
       var passed = FsBankService.passed(fs)
       if (passed) {
         $scope.render('PASSED')

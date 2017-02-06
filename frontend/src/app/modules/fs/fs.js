@@ -44,16 +44,16 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   }
 
   // does the object (an _application) have result/calc properties
-  this.hasResultInfo = function (obj) {
-    if (!_.has(obj, 'thresholdResponse')) {
-      return false
+  this.hasThresholdInfo = function (obj) {
+    if (_.has(obj, 'thresholdResponse') && _.has(obj.thresholdResponse, 'data')) {
+      return true
     }
 
-    return true
+    return false
   }
 
   this.clearThresholdResponse = function (obj) {
-    if (me.hasResultInfo) {
+    if (me.hasThresholdInfo) {
       delete obj.thresholdResponse
       return true
     }
@@ -97,12 +97,17 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var results = {}
     var tier = FsInfoService.getTier(obj.tier)
 
-    if (obj.thresholdResponse && obj.thresholdResponse.data) {
-      if (_.has(obj.thresholdResponse.data, 'threshold')) {
-        results.threshold = {
-          label: 'Total funds required',
-          display: $filter('pounds')(obj.thresholdResponse.data.threshold)
-        }
+    if (me.hasThresholdInfo(obj)) {
+      results.threshold = {
+        label: 'Total funds required',
+        display: $filter('pounds')(obj.thresholdResponse.data.threshold)
+      }
+    }
+
+    if (FsBankService.hasResult(obj) && _.has(obj.dailyBalanceResponse.data, 'accountHolderName')) {
+      results.accountHolderName = {
+        label: 'Account holder name',
+        display: obj.dailyBalanceResponse.data.accountHolderName
       }
     }
 
@@ -111,7 +116,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       display: me.getPeriodChecked(obj)
     }
 
-    if (obj.thresholdResponse && obj.thresholdResponse.data) {
+    if (me.hasThresholdInfo(obj)) {
       if (_.has(obj.thresholdResponse.data, 'leaveEndDate')) {
         results.leaveEndDate = {
           label: 'Estimated leave period if passes',

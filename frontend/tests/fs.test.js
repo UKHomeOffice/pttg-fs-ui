@@ -13,20 +13,20 @@ describe('app: hod.proving', function () {
       fsi = FsInfoService
     }))
 
-    describe('hasResultInfo', function () {
+    describe('hasThresholdInfo', function () {
       var testObj = {}
       it('should return false when no result info is available', function () {
-        expect(fs.hasResultInfo(testObj)).toBeFalsy()
+        expect(fs.hasThresholdInfo(testObj)).toBeFalsy()
       })
 
       it('should return false when result info does not have calc', function () {
-        testObj.result = {}
-        expect(fs.hasResultInfo(testObj)).toBeFalsy()
+        testObj.thresholdResponse = {}
+        expect(fs.hasThresholdInfo(testObj)).toBeFalsy()
       })
 
       it('should return true when result properties are present', function () {
-        testObj.thresholdResponse = {}
-        expect(fs.hasResultInfo(testObj)).toBeTruthy()
+        testObj.thresholdResponse.data = {}
+        expect(fs.hasThresholdInfo(testObj)).toBeTruthy()
       })
     })
 
