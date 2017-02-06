@@ -79,3 +79,10 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Entire course length       | 16                       |
