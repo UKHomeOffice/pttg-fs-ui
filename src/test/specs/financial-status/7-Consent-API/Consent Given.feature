@@ -21,20 +21,16 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Application raised date         | 30/06/2016 |
             | End Date                        | 31/05/2016 |
             | Dependants                      | 0          |
-        Then the Consent granted page is displayed
-        And the result table contains the following
-            | Outcome                         | Passed                                                |
-            | Account holder name             | Laura Taylor                                          |
-            | Total funds required            | £16,090.00                                            |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Applicant type                  | Tier 4 (General) student (doctorate extension scheme) |
-            | In London                       | Yes                                                   |
-            | Accommodation fees already paid | £100.00 (limited to £1,265.00)                        |
-            | Dependants                      | 0                                                     |
-            | Sort code                       | 22-22-23                                              |
-            | Account number                  | 22222223                                              |
-            | DOB                             | 25/03/1987                                            |
-            | Application raised date         | 30/05/2016                                            |
+        Then the service displays the following result
+            | Outcome                    | Passed                   |
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £945.00                  |
+            | Maintenance period checked | 06/04/2016 to 04/07/2016 |
+            | Dependants                 | 0                        |
+            | Sort code                  | 22-22-23                 |
+            | Account number             | 22222223                 |
+            | DOB                        | 25/03/1987               |
+
         Examples:
             | Tier      | Applicant     |
             | Tier two  | Main          |
@@ -65,5 +61,21 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
-        Then the Consent granted page is displayed
-
+        Then the service displays the following result
+            | Outcome                         | Passed                         |
+            | Application Raised Date         | 30/06/2016                     |
+            | Account holder name             | Laura Taylor                   |
+            | Total funds required            | £16,090.00                     |
+            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Course length                   | 9 (limited to 9)               |
+            | Applicant type                  | Tier 4 (General) student       |
+            | In London                       | Yes                            |
+            | Course dates checked            | 01/05/2016 to 30/01/2017       |
+            | Total tuition fees              | £9,755.50                      |
+            | Tuition fees already paid       | £500.00                        |
+            | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
+            | Dependants                      | 1                              |
+            | Entire course length            | 16                             |
+            | Continuation Course             | Yes                            |
+            | Original Course Start Date      | 30/10/2015                     |
+            | Estimated Leave End Date        | 22/10/2017                     |

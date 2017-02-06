@@ -23,20 +23,15 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Application raised date         | 30/06/2016 |
             | End Date                        | 31/05/2016 |
             | Dependants                      | 0          |
-        Then the Consent failure page is displayed
-        And the result table contains the following
-            | Outcome                         | Passed                                                |
-            | Account holder name             | Laura Taylor                                          |
-            | Total funds required            | £16,090.00                                            |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                              |
-            | Applicant type                  | Tier 4 (General) student (doctorate extension scheme) |
-            | In London                       | Yes                                                   |
-            | Accommodation fees already paid | £100.00 (limited to £1,265.00)                        |
-            | Dependants                      | 0                                                     |
-            | Sort code                       | 22-22-23                                              |
-            | Account number                  | 22222223                                              |
-            | DOB                             | 25/03/1987                                            |
-            | Application raised date         | 30/05/2016                                            |
+        Then the service displays the following result
+            | Outcome                    | Passed                   |
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £945.00                  |
+            | Maintenance period checked | 06/04/2016 to 04/07/2016 |
+            | Dependants                 | 0                        |
+            | Sort code                  | 22-22-23                 |
+            | Account number             | 22222229                 |
+            | DOB                        | 25/03/1987               |
         Examples:
             | Tier      | Applicant     |
             | Tier two  | Main          |
