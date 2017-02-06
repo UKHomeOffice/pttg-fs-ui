@@ -7,8 +7,10 @@ describe('app: hod.proving', function () {
 
   describe('FsService', function () {
     var fs
-    beforeEach(inject(function (FsService) {
+    var fsi
+    beforeEach(inject(function (FsService, FsInfoService) {
       fs = FsService
+      fsi = FsInfoService
     }))
 
     describe('hasResultInfo', function () {
@@ -105,6 +107,49 @@ describe('app: hod.proving', function () {
         expect(fs.getPeriodChecked(testObj)).toEqual('03 June 2016 - 30 June 2016')
         testObj.tier = 2
         expect(fs.getPeriodChecked(testObj)).toEqual('02 April 2016 - 30 June 2016')
+      })
+    })
+
+    describe('getThingsToDoNext', function () {
+      var testObj = {
+        doCheck: 'yes',
+        dailyBalanceResponse: {
+          data: {
+            fundingRequirementMet: true
+          }
+        },
+        consentResponse: {
+          data: {
+            consent: 'SUCCESS'
+          }
+        }
+      }
+      it('should say check account holder name & copy to CID when check passed', function () {
+        var doNext = fs.getThingsToDoNext(testObj)
+        expect(doNext[0]).toEqual(fsi.t('checkName'))
+        expect(doNext[1]).toEqual(fsi.t('copyToCid'))
+      })
+
+      it('should say check account holder name /check paper & copy to CID when check failed', function () {
+        testObj.dailyBalanceResponse.data.fundingRequirementMet = false
+        var doNext = fs.getThingsToDoNext(testObj)
+        expect(doNext[0]).toEqual(fsi.t('checkName'))
+        expect(doNext[1]).toEqual(fsi.t('checkPaper'))
+        expect(doNext[2]).toEqual(fsi.t('copyToCid'))
+      })
+
+      it('should say check entered, manually check and copy to CID when consent was denied', function () {
+        testObj.consentResponse.data.consent = 'FAILURE'
+        var doNext = fs.getThingsToDoNext(testObj)
+        expect(doNext[0]).toEqual(fsi.t('checkDataEntry'))
+        expect(doNext[1]).toEqual(fsi.t('manualCheck'))
+        expect(doNext[2]).toEqual(fsi.t('copyToCid'))
+      })
+
+      it('should say manual check and copy to CID', function () {
+        var doNext = fs.getThingsToDoNext({})
+        expect(doNext[0]).toEqual(fsi.t('manualCheck'))
+        expect(doNext[1]).toEqual(fsi.t('copyToCid'))
       })
     })
   })

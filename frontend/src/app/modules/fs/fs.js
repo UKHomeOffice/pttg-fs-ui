@@ -6,7 +6,7 @@
 
 var fsModule = angular.module('hod.fs', ['ui.router'])
 
-fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function ($filter, FsInfoService, IOService) {
+fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOService', function ($filter, FsInfoService, FsBankService, IOService) {
   var me = this
   var _application
 
@@ -52,6 +52,15 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return true
   }
 
+  this.clearThresholdResponse = function (obj) {
+    if (me.hasResultInfo) {
+      delete obj.thresholdResponse
+      return true
+    }
+
+    return false
+  }
+
   // get the threshold url
   this.getThresholdUrl = function (obj) {
     if (!obj.tier) {
@@ -76,12 +85,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return params
   }
 
+  // make the AJAX to the api for the threshold value
   this.sendThresholdRequest = function (obj) {
     var u = me.getThresholdUrl(obj)
     var params = me.getThresholdParams(obj)
     return IOService.get(u, params)
   }
 
+  // determine the result data to show on the results page
   this.getResults = function (obj) {
     var results = {}
     var tier = FsInfoService.getTier(obj.tier)
@@ -118,6 +129,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return results
   }
 
+  // determine the period that was/needs to be checked for lowest balance
   this.getPeriodChecked = function (obj) {
     var tier = FsInfoService.getTier(obj.tier)
     var nDays = tier.nDaysRequired - 1
@@ -126,6 +138,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     return $filter('dateDisplay')(startDate) + ' - ' + $filter('dateDisplay')(endDate)
   }
 
+  // return data that made up the search criteria
   this.getCriteria = function (obj) {
     // basics
     var tier = FsInfoService.getTier(obj.tier)
@@ -165,6 +178,36 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'IOService', function
     })
 
     return criteria
+  }
+
+  this.getThingsToDoNext = function (obj) {
+    var doNext = []
+    if (obj.doCheck !== 'yes') {
+      doNext.push(FsInfoService.t('manualCheck'))
+      doNext.push(FsInfoService.t('copyToCid'))
+      return doNext
+    }
+
+    if (FsBankService.consentDenied(obj)) {
+      doNext.push(FsInfoService.t('checkDataEntry'))
+      doNext.push(FsInfoService.t('manualCheck'))
+      doNext.push(FsInfoService.t('copyToCid'))
+      return doNext
+    }
+
+    if (FsBankService.hasResult(obj)) {
+      doNext.push(FsInfoService.t('checkName'))
+
+      if (!FsBankService.passed(obj)) {
+        doNext.push(FsInfoService.t('checkPaper'))
+      }
+
+      doNext.push(FsInfoService.t('copyToCid'))
+    } else {
+
+    }
+
+    return doNext
   }
 
   me.reset()

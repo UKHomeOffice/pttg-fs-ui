@@ -182,7 +182,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   $scope.submit = function (valid) {
     console.log('Valid', valid, $state)
     if (valid) {
-      fs.thresholdResponse = {}
+      FsService.clearThresholdResponse
       FsService.sendThresholdRequest(fs).then(function (data) {
         data.responseTime = moment()
         fs.thresholdResponse = data

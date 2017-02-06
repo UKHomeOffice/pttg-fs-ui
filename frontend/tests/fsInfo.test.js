@@ -122,5 +122,12 @@ describe('app: hod.proving', function () {
         expect(_.has(info, 'options')).toBeTruthy()
       })
     })
+
+    describe('t', function () {
+      it('should return a string of text when given a ref', function () {
+        expect(fsi.t('passed')).toEqual('Passed')
+        expect(fsi.t('notPassed')).toEqual('Financial status not met')
+      })
+    })
   })
 })

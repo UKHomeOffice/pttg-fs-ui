@@ -9,6 +9,20 @@ var fsModule = angular.module('hod.fs')
 fsModule.factory('FsInfoService', [ function () {
   var me = this
 
+  me.text = {
+    passed: 'Passed',
+    passedReason: 'The applicant\'s daily closing balance was above the total funds required',
+    notPassed: 'Financial status not met',
+    notPassedReason: 'One or more daily closing balances are below the total funds required',
+    checkName: 'Check that the account holder name matches the applicant\'s.',
+    copyToCid: 'Copy the information into CID',
+    checkPaper: 'Check paper evidence to see if the applicant can meet the criteria in some other way.',
+    manualCheck: 'Manually check the applicants evidence to make sure they have the total funds required.',
+    checkDataEntry: 'Check you have entered the correct information.',
+    consentDenied: 'Consent has not been given',
+    consentDeniedReason: 'The applicant has not given consent to check their financial status directly with their bank.'
+  }
+
   // get a specific tier based on it's tier number
   this.getTier = function (t) {
     var tier = _.findWhere(this.getTiers(), {tier: t})
@@ -189,6 +203,13 @@ fsModule.factory('FsInfoService', [ function () {
   this.getFieldInfo = function (f) {
     var fieldInfo = me.getAllFieldInfo()
     return fieldInfo[f] || null
+  }
+
+  this.t = function (ref) {
+    if (_.has(me.text, ref)) {
+      return me.text[ref]
+    }
+    return ''
   }
 
   return this
