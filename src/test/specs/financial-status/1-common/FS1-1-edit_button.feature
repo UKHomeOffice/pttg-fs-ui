@@ -3,7 +3,9 @@ Feature: Edit search button to return UI populated with current values (for all 
 ########################################################################################################################
     Background:
         Given the api health check response has status 200
-        Given the account has sufficient funds
+        And the api daily balance response will Pass
+        And the api consent response will be SUCCESS
+        And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen

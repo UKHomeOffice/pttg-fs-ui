@@ -4,10 +4,13 @@ Feature: Copy results to paste buffer
 
     Background:
         Given the api health check response has status 200
-        And caseworker is using the financial status calculator service ui
-        And the Tier 4 student-type is chosen
+        #And the api daily balance response will Pass
+        #And the api consent response will be SUCCESS
+        And the api threshold response will be t4
+        And caseworker is using the financial status service ui
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the No Barclays radio button is clicked
+        And the caseworker selects the No, check Barclays radio button
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
