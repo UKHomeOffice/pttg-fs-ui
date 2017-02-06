@@ -51,7 +51,7 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
         $scope.fs.consentResponse = data
         $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       }, function (err, data) {
-        console.log(err, data)
+        console.log('FsGetConsentCtrl $scope.submit err', err, data)
         $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       })
     }

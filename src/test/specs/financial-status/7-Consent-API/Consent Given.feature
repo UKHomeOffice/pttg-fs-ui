@@ -37,10 +37,13 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Tier five | Dependent     |
 
 
+
     Scenario: Tier 4 Non-Doctorate - Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
-        And the correct test data for 22222223 is loaded
+        And the api daily balance response will Pass
+        And the api consent response will be SUCCESS
+        And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen

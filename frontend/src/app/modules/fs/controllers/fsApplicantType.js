@@ -28,7 +28,6 @@ fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'Fs
   $scope.fs.tier = t
   $scope.submit = function (valid) {
     if (valid) {
-      console.log($scope.fs)
       $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
     }
   }

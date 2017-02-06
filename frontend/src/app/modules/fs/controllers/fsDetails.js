@@ -40,8 +40,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   // force application values from the url params
   FsService.setKnownParamsFromState(fs, $state.params)
 
-  console.log(fs)
-
   // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)
   $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
@@ -180,7 +178,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   })
 
   $scope.submit = function (valid) {
-    console.log('Valid', valid, $state)
     if (valid) {
       FsService.clearThresholdResponse
       FsService.sendThresholdRequest(fs).then(function (data) {
@@ -189,7 +186,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
         $state.go('fsResult', $state.params)
       }, function (err) {
-        console.log('err', err)
+        console.log('FsDetailsCtrl $scope.submit err', err)
       })
     }
   }

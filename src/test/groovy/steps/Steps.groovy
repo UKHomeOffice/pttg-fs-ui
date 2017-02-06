@@ -93,8 +93,11 @@ class Steps {
 //        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
 //    ]
 
-    def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
-    def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts.*"
+//                             /pttg/financialstatus/v1/t4/threshold?accommodationFeesAlreadyPaid=0&applicantType=nondoctorate&applicationRaisedDate=2016-06-05&continuationCourse=no&courseEndDate=2016-11-30&courseStartDate=2016-05-30&courseType=main&dependants=1&endDate=2016-05-30&inLondon=yes&originalCourseStartDate=&studentType=nondoctorate&totalTuitionFees=8500.00&tuitionFeesAlreadyPaid=0
+    def thresholdUrlRegex = "/pttg/financialstatus/v1/t4/maintenance/threshold*"
+    def consentCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/consent*"
+    def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/dailybalancestatus*"
+
 
     def sortCodeParts = ["Part1", "Part2", "Part3"]
     def sortCodeDelimiter = "-"
@@ -368,6 +371,26 @@ class Steps {
         defaultFields = arg1
     }
 
+
+
+    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING)\$")
+    public void the_api_consent_response_will_be(String consentValue) throws Throwable {
+        testDataLoader.stubTestData("consentcheckresponse-" + consentValue, consentCheckUrlRegex)
+    }
+
+    @Given("^the api daily balance response will(.+)\$")
+    public void the_api_daily_balance_reponse_will_be_for_account(String ref) throws Throwable {
+        testDataLoader.stubTestData('dailyBalance' + ref.trim(), balanceCheckUrlRegex)
+    }
+
+    @Given("^the api threshold response will be (.+)\$")
+    public void the_api_threshold_response_will_be(String ref) throws Throwable {
+        testDataLoader.stubTestData('threshold-' +ref, thresholdUrlRegex)
+    }
+
+
+
+
     @Given("^the account has sufficient funds for tier (\\d)\$")
     public void the_account_has_sufficient_funds_for_tier(int tier) {
         println "tier " + tier
@@ -398,6 +421,8 @@ class Steps {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
         testDataLoader.stubTestData("dailyBalanceFail-record-count", balanceCheckUrlRegex)
     }
+
+
 
     @Given("^the api response is delayed for (\\d+) seconds\$")
     public void the_api_response_is_delayed_for_seconds(int delay) throws Throwable {
@@ -444,12 +469,6 @@ class Steps {
     public void no_record_for_the_account() throws Throwable {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
         testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
-    }
-    @Given("^the correct test data for (\\d+) is loaded\$")
-    public void the_correct_test_data_for_is_loaded(String accountNumber) throws Throwable {
-        testDataLoader.stubTestData(accountNumber, thresholdUrlRegex)
-        testDataLoader.withResponseStatus(balanceCheckUrlRegex, 200)
-        //testDataLoader.stubTestData("consentcheckresponse-sample", balanceCheckUrlRegex)
     }
 
     @Given("^consent is sought for the following:\$")
@@ -606,12 +625,7 @@ class Steps {
 
     }
 
-    @When("^consent (.*) is received from bank\$")
-    public void consent_success_is_received_from_bank(String consentResponse) throws Throwable {
-        //testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
-       // testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-        testDataLoader.stubTestData("consentcheckresponse-sample", balanceCheckUrlRegex)
-    }
+
     @When("^the progress bar is displayed\$")
     public void the_progress_bar_is_displayed() throws Throwable {
         assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/fs-timer/div")).isDisplayed()

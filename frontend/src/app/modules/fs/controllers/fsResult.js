@@ -26,7 +26,6 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
     var fs = FsService.getApplication()
     if (toState.name === 'fsResult' && !FsService.hasThresholdInfo(fs)) {
       // you cannot be on the 'fsResult' route/view if the result info is not present
-      console.log('No result info')
       event.preventDefault()
       $state.go('fsDetails', toParams)
       return false
@@ -35,8 +34,6 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
 }])
 
 fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, FsService, FsInfoService, FsBankService) {
-  console.log('CONTROLLER FsResultCtrl')
-
   var fs = FsService.getApplication()
   FsBankService.clearDailyBalanceResponse(fs)
   $scope.threshold = fs.thresholdResponse.data.threshold
@@ -121,7 +118,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     // send the consent API request
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
-      // console.log(data.data.consent)
+      console.log('FsBankService.sendConsentRequest(fs)', data)
       fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
         $scope.checkBalance()
@@ -140,7 +137,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
 
   $scope.checkBalance = function () {
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
-      console.log(data)
+      console.log('FsBankService.sendDailyBalanceRequest(fs)', data)
       fs.dailyBalanceResponse = data
       $scope.results = FsService.getResults(fs)
       var passed = FsBankService.passed(fs)
@@ -152,7 +149,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
         $scope.showPassOrFail = false
       }
     }, function (err, data) {
-      console.log(err, data)
+      console.log('FsResultCtrl $scope.checkBalance err', err, data)
     })
   }
 }])
