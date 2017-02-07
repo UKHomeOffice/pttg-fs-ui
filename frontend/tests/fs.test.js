@@ -65,8 +65,8 @@ describe('app: hod.proving', function () {
         expect(_.has(criteria, 'courseType')).toBeTruthy()
         expect(_.has(criteria, 'originalCourseStartDate')).toBeTruthy()
 
-        expect(criteria.endDate.display).toEqual('13 May 2016')
-        expect(criteria.originalCourseStartDate.display).toEqual('01 April 2014')
+        expect(criteria.endDate.display).toEqual('13/05/2016')
+        expect(criteria.originalCourseStartDate.display).toEqual('01/04/2014')
       })
 
       it('should not include originalCourseStartDate when continuationCourse is \'no\'', function () {
@@ -92,9 +92,9 @@ describe('app: hod.proving', function () {
         expect(_.has(result, 'totalFundsRequired')).toBeTruthy()
         expect(result.totalFundsRequired.display).toEqual('£12,345.00')
         expect(_.has(result, 'estimatedLeaveEndDate')).toBeTruthy()
-        expect(result.estimatedLeaveEndDate.display).toEqual('13 May 2016')
+        expect(result.estimatedLeaveEndDate.display).toEqual('13/05/2016')
         expect(_.has(result, 'responseTime')).toBeTruthy()
-        expect(result.responseTime.display).toEqual('12:34:56 23 June 2017')
+        expect(result.responseTime.display).toEqual('12:34:56 23/06/2017')
       })
     })
 
@@ -104,9 +104,9 @@ describe('app: hod.proving', function () {
         endDate: '2016-06-30'
       }
       it('shoudld return a string with a date range nDays before the end date', function () {
-        expect(fs.getPeriodChecked(testObj)).toEqual('03 June 2016 - 30 June 2016')
+        expect(fs.getPeriodChecked(testObj)).toEqual('03/06/2016 - 30/06/2016')
         testObj.tier = 2
-        expect(fs.getPeriodChecked(testObj)).toEqual('02 April 2016 - 30 June 2016')
+        expect(fs.getPeriodChecked(testObj)).toEqual('02/04/2016 - 30/06/2016')
       })
     })
 
