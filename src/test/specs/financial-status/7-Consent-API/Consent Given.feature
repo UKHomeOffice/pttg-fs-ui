@@ -18,9 +18,9 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Account number | 22222223   |
         And the Consent API is invoked
         And the financial status check is performed with
-            | Application raised date         | 30/06/2016 |
-            | End Date                        | 31/05/2016 |
-            | Dependants                      | 0          |
+            | Application raised date | 30/06/2016 |
+            | End Date                | 31/05/2016 |
+            | Dependants              | 0          |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Account holder name        | Laura Taylor             |
@@ -32,10 +32,9 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | DOB                        | 25/03/1987               |
 
         Examples:
-            | Tier      | Applicant     |
-            | Tier two  | Main          |
-            | Tier five | Dependent     |
-
+            | Tier      | Applicant |
+            | Tier two  | Main      |
+            | Tier five | Dependent |
 
 
     Scenario: Tier 4 Non-Doctorate - Consent granted, balances API invoked and data received - display result page
@@ -65,27 +64,26 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Continuation Course             | No         |
             | Course type                     | Main       |
         Then the service displays the following result
-            | Outcome                         | Passed                         |
-            | Application Raised Date         | 30/06/2016                     |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
-            | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General) student       |
-            | In London                       | Yes                            |
-            | Course dates checked            | 01/05/2016 to 30/01/2017       |
-            | Total tuition fees              | £9,755.50                      |
-            | Tuition fees already paid       | £500.00                        |
-            | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Dependants                      | 1                              |
-            | Entire course length            | 16                             |
-            | Continuation Course             | Yes                            |
-            | Original Course Start Date      | 30/10/2015                     |
-            | Estimated Leave End Date        | 22/10/2017                     |
+            | Outcome | Passed |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Course length              | 9 (limited to 9)         |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Entire course length       | 16                       |
+            | Total funds required       | £16,090.00                |
+            | Account holder name        | Laura Taylor              |
+            | Maintenance period checked | 03 May 2016 - 30 May 2016 |
+            | Estimated leave end date   | 22 October 2017           |
+#            | Course length              | 9 (limited to 9)          |
+#            | Entire course length       | 16                        |
+#            | Calculator result received | <timestamp>                        |
+        And the service displays the following page content
+            | Application Raised Date         | 05 June 2016     |
+            | End date                        | 30 May 2016      |
+            | Dependants                      | 1                |
+            | In London                       | Yes, in London   |
+            | Accommodation fees already paid | £0.00            |
+            | Course start date               | 30 May 2016      |
+            | Course end date                 | 30 November 2016 |
+            | Continuation Course             | No               |
+            | Course type                     | Main course      |
+            | Total tuition fees              | £8,500.00        |
+            | Tuition fees already paid       | £0.00            |
+            | Tier                            | Tier 4 (General) |
+            | Applicant type                  | General student  |

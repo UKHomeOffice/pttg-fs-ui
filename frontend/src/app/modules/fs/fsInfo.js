@@ -185,7 +185,8 @@ fsModule.factory('FsInfoService', [ function () {
         format: 'pounds'
       },
       totalTuitionFees: {
-        summary: 'Total tuition fees for the first year'
+        summary: 'Total tuition fees for the first year',
+        format: 'pounds'
       },
       accommodationFeesAlreadyPaid: {
         summary: 'Accommodation fees already paid',

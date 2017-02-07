@@ -98,7 +98,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var tier = FsInfoService.getTier(obj.tier)
 
     if (me.hasThresholdInfo(obj)) {
-      results.threshold = {
+      results.totalFundsRequired = {
         label: 'Total funds required',
         display: $filter('pounds')(obj.thresholdResponse.data.threshold)
       }
@@ -111,14 +111,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       }
     }
 
-    results.periodChecked = {
+    results.maintenancePeriodChecked = {
       label: tier.nDaysRequired + '-day period to check',
       display: me.getPeriodChecked(obj)
     }
 
     if (me.hasThresholdInfo(obj)) {
       if (_.has(obj.thresholdResponse.data, 'leaveEndDate')) {
-        results.leaveEndDate = {
+        results.estimatedLeaveEndDate = {
           label: 'Estimated leave period if passes',
           display: $filter('dateDisplay')(obj.thresholdResponse.data.leaveEndDate)
         }
@@ -128,6 +128,13 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
           label: 'Calculator result received',
           display: obj.thresholdResponse.responseTime.format('HH:mm:ss DD MMMM YYYY')
         }
+      }
+    }
+
+    if (obj.courseStartDate && obj.courseEndDate) {
+      results.courseLength = {
+        label: 'Course length',
+        display: me.getCourseLength(obj) + ' months'
       }
     }
 
@@ -156,6 +163,17 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     var criteria = {}
+
+    criteria.tier = {
+      label: 'Tier',
+      display: tier.label
+    }
+
+    criteria.applicantType = {
+      label: 'Applicant type',
+      display: variant.label
+    }
+
     _.each(fields, function (f) {
       if (!_.has(obj, f)) {
         return
@@ -213,6 +231,20 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     return doNext
+  }
+
+  this.getCourseLength = function (obj) {
+    var start = moment(obj.courseStartDate, 'YYYY-MM-DD', true)
+    var end = moment(obj.courseEndDate, 'YYYY-MM-DD', true)
+    var months = end.diff(start, 'months', true)
+    if (start.date() === end.date() && !start.isSame(end)) {
+      // when using moment diff months, the same day in months being compared
+      // rounds down the months
+      // eg 1st June to 1st July equals 1 month, NOT 1 month and 1 day which is the result we want
+      // therefore if the start and end days are equal add a day onto the month.
+      months += 1 / 31
+    }
+    return Math.ceil(months)
   }
 
   me.reset()

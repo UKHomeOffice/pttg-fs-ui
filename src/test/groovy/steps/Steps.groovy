@@ -661,10 +661,10 @@ Thread.sleep(4000)
         assertTextFieldEqualityForMap(['page sub heading': pageSubHeading])
     }
 
-    @Then("^the service displays the following your search data\$")
-    public void the_service_displays_the_following_your_search_date(DataTable expectedResult) throws Throwable {
-        assertTextFieldEqualityForTable(expectedResult)
-    }
+//    @Then("^the service displays the following your search data\$")
+//    public void the_service_displays_the_following_your_search_date(DataTable expectedResult) throws Throwable {
+//        assertTextFieldEqualityForTable(expectedResult)
+//    }
 
     @Then("^the service displays the following result\$")
     public void the_service_displays_the_following_result(DataTable expectedResult) throws Throwable {
@@ -673,7 +673,6 @@ Thread.sleep(4000)
         assert actual.contains('result'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
         assertTextFieldEqualityForTable(expectedResult)
     }
-
 
 
     @Then("^the result table contains the following\$")

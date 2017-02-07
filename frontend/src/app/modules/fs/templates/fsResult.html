@@ -85,20 +85,20 @@
 
 
 
-<table class="table-font-xsmall">
+<table class="table-font-xsmall" id="result">
   <tr ng-repeat="(f, obj) in results">
     <th>{{ obj.label }}</th>
-    <td>{{ obj.display }}</td>
+    <td id="{{ f }}">{{ obj.display }}</td>
   </tr>
 </table>
 
 
 <h2 class="heading-medium">Your calculation <a class="font-small" ui-sref="fsDetails">Edit details</a></h2>
 
-<table class="table-font-xsmall">
+<table class="table-font-xsmall" id="criteria">
   <tr ng-repeat="(f, obj) in criteria">
     <th>{{ obj.label }}</th>
-    <td>{{ obj.display }}</td>
+    <td id="{{ f }}">{{ obj.display }}</td>
   </tr>
 </table>
 
