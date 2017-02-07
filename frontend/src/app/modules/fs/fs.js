@@ -247,6 +247,17 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return Math.ceil(months)
   }
 
+  this.getPlainTextResults = function (obj) {
+    var lineLength = function (str, len) {
+      while (str.length < len) {
+        str += ' '
+      }
+      return str
+    }
+
+    return lineLength('Plain text results', 40)
+  }
+
   me.reset()
 
   return me

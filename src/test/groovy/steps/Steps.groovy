@@ -625,7 +625,7 @@ Thread.sleep(4000)
     @When("^the copy button is clicked\$")
     public void the_copy_button_is_clicked() {
         driver.sleep(delay)
-        driver.findElement(By.className("button--copy")).click()
+        driver.findElement(By.id("copyBtn")).click()
     }
     @When("^the Consent API is invoked\$")
     public void the_Consent_API_is_invoked() {

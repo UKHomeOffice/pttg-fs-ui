@@ -1,4 +1,4 @@
-/* global angular moment _ ga */
+/* global angular moment _ ga Clipboard */
 
 'use strict'
 
@@ -33,7 +33,7 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
   })
 }])
 
-fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, FsService, FsInfoService, FsBankService) {
+fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, $timeout, FsService, FsInfoService, FsBankService) {
   var fs = FsService.getApplication()
   FsBankService.clearDailyBalanceResponse(fs)
   $scope.threshold = fs.thresholdResponse.data.threshold
@@ -152,4 +152,31 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
       console.log('FsResultCtrl $scope.checkBalance err', err, data)
     })
   }
+
+  // #### COPY AND PASTE ####
+  // init the clipboard object
+  var clipboard = new Clipboard('#copyBtn', {
+    text: function () {
+      return FsService.getPlainTextResults(fs)
+    }
+  })
+
+  var timeoutResetButtonText = function () {
+    $timeout(function () {
+      $scope.showCopied = false
+      $scope.$applyAsync()
+    }, 2000)
+  }
+
+  // $scope.showCopied = true
+  clipboard.on('success', function (e) {
+    $scope.showCopied = true
+    $scope.$applyAsync()
+    e.clearSelection()
+    timeoutResetButtonText()
+  })
+  clipboard.on('error', function (e) {
+    console.log('ClipBoard error', e)
+    $scope.$applyAsync()
+  })
 }])
