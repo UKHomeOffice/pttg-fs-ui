@@ -89,10 +89,10 @@ describe('app: hod.proving', function () {
       }
       it('should return the appropriate results', function () {
         var result = fs.getResults(testObj)
-        expect(_.has(result, 'threshold')).toBeTruthy()
-        expect(result.threshold.display).toEqual('£12,345.00')
-        expect(_.has(result, 'leaveEndDate')).toBeTruthy()
-        expect(result.leaveEndDate.display).toEqual('13 May 2016')
+        expect(_.has(result, 'totalFundsRequired')).toBeTruthy()
+        expect(result.totalFundsRequired.display).toEqual('£12,345.00')
+        expect(_.has(result, 'estimatedLeaveEndDate')).toBeTruthy()
+        expect(result.estimatedLeaveEndDate.display).toEqual('13 May 2016')
         expect(_.has(result, 'responseTime')).toBeTruthy()
         expect(result.responseTime.display).toEqual('12:34:56 23 June 2017')
       })
