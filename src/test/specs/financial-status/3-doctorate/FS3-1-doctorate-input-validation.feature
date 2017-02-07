@@ -36,9 +36,6 @@ Feature: Show clear error details when inputs are invalid
             | In London                       |  |
             | Accommodation fees already paid |  |
             | Dependants                      |  |
-            | Sort code                       |  |
-            | Account number                  |  |
-            | DOB                             |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
@@ -49,8 +46,8 @@ Feature: Show clear error details when inputs are invalid
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
             | The account number is invalid                  |
-            | The sort code is invalid                       |
-            | The date of birth is invalid                   |
+           # | The sort code is invalid                       |
+           # | The date of birth is invalid                   |
 
 ######################### Validation on the Sort Code Field #########################
 
