@@ -12,23 +12,23 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
   this.reset = function () {
     _application = {
-      doCheck: 'yes',
-      dob: '1974-05-13',
-      sortCode: '010616',
-      accountNumber: '00000502',
-      inLondon: 'no',
-      courseType: 'main',
-      continuationCourse: 'no',
-      applicationRaisedDate: '2016-06-02',
-      applicantType: 'nondoctorate',
-      endDate: '2016-06-01',
+      doCheck: '',
+      dob: '',
+      sortCode: '',
+      accountNumber: '',
+      inLondon: '',
+      courseType: '',
+      continuationCourse: '',
+      applicationRaisedDate: '',
+      applicantType: '',
+      endDate: '',
       originalCourseStartDate: '',
-      courseStartDate: '2016-06-01',
-      courseEndDate: '2018-01-01',
-      totalTuitionFees: '0',
-      tuitionFeesAlreadyPaid: '0',
-      accommodationFeesAlreadyPaid: '0',
-      dependants: '0'
+      courseStartDate: '',
+      courseEndDate: '',
+      totalTuitionFees: '',
+      tuitionFeesAlreadyPaid: '',
+      accommodationFeesAlreadyPaid: '',
+      dependants: ''
     }
   }
 
