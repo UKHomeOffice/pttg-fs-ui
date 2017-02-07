@@ -155,7 +155,10 @@ class Steps {
         String choice = v.toLowerCase()
         if (radioConfig.options.containsKey(choice)) {
             String id = radioConfig.options.get(choice)
-            WebElement element = driver.findElement(By.cssSelector("[id='$id'][type='radio']"))
+
+            String selector = '#' + id + " [type='radio']"
+//            println '\nassertRadioSelection ' + id + ' = ' + choice + '\n' + selector + '\n'
+            WebElement element = driver.findElement(By.cssSelector(selector))
             assert element.isSelected() == true
         }
     }
@@ -252,7 +255,8 @@ class Steps {
     private Map<String, String> assertInputValueEqualityForMap(Map<String, String> entries) {
 
         entries.each { k, v ->
-            String fieldName = toCamelCase(k);
+            String fieldName = toCamelCase(k)
+//            println '\nassertInputValueEqualityForMap' + k + '=' + v + '\n'
             if (fieldName.endsWith("Date") || fieldName.equals("dob")) {
                 assertDate(fieldName, v)
 
@@ -393,7 +397,7 @@ class Steps {
 
     @Given("^the account has sufficient funds for tier (\\d)\$")
     public void the_account_has_sufficient_funds_for_tier(int tier) {
-        println "tier " + tier
+//        println "tier " + tier
         testDataLoader.stubTestData("dailyBalancePass", balanceCheckUrlRegex)
         testDataLoader.stubTestData("threshold-t" + tier, thresholdUrlRegex)
     }
@@ -612,14 +616,14 @@ Thread.sleep(4000)
     @When("^the new search button is clicked\$")
     public void the_new_search_button_is_clicked() {
         driver.sleep(delay)
-        driver.findElement(By.className("newsearch")).click()
+        driver.findElement(By.id("newsearchBtn")).click()
         //assertTextFieldEqualityForTable(expectedResult)
     }
 
     @When("^the edit search button is clicked\$")
     public void the_edit_search_button_is_clicked() {
         driver.sleep(delay)
-        driver.findElement(By.className("yoursearch--edit")).click()
+        driver.findElement(By.id("editBtn")).click()
     }
 
     @When("^the copy button is clicked\$")
@@ -746,6 +750,10 @@ Thread.sleep(4000)
 
     @Then("^the inputs will be populated with\$")
     public void the_inputs_will_be_populated_with(DataTable expectedResult) {
+        driver.sleep(200)
+        def actual = driver.currentUrl
+        assert actual.contains('details') || actual.contains('consent'): "Expected current page location to be a result page but actual page location was '$actual' - Something probably went wrong earlier"
+
         assertInputValueEqualityForTable(expectedResult)
     }
 
