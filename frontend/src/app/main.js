@@ -56,7 +56,7 @@ app.filter('pounds', ['$filter', function ($filter) {
 
 app.filter('dateDisplay', function () {
   return function (date) {
-    return moment(date, 'YYYY-MM-DD').format('DD MMMM YYYY')
+    return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY')
   }
 })
 

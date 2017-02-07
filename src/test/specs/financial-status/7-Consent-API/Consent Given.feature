@@ -66,21 +66,21 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Then the service displays the following result
             | Outcome | Passed |
         And the result table contains the following
-            | Total funds required       | £16,090.00                |
-            | Account holder name        | Laura Taylor              |
-            | Maintenance period checked | 03 May 2016 - 30 May 2016 |
-            | Estimated leave end date   | 22 October 2017           |
+            | Total funds required       | £16,090.00              |
+            | Account holder name        | Laura Taylor            |
+            | Maintenance period checked | 03/05/2016 - 30/05/2016 |
+            | Estimated leave end date   | 22/10/2017              |
 #            | Course length              | 9 (limited to 9)          |
 #            | Entire course length       | 16                        |
 #            | Calculator result received | <timestamp>                        |
         And the service displays the following page content
-            | Application Raised Date         | 05 June 2016     |
-            | End date                        | 30 May 2016      |
+            | Application Raised Date         | 05/06/2016       |
+            | End date                        | 30/05/2016       |
             | Dependants                      | 1                |
             | In London                       | Yes, in London   |
             | Accommodation fees already paid | £0.00            |
-            | Course start date               | 30 May 2016      |
-            | Course end date                 | 30 November 2016 |
+            | Course start date               | 30/05/2016       |
+            | Course end date                 | 30/11/2016       |
             | Continuation Course             | No               |
             | Course type                     | Main course      |
             | Total tuition fees              | £8,500.00        |

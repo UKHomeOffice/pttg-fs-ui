@@ -126,7 +126,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       if (_.has(obj.thresholdResponse, 'responseTime')) {
         results.responseTime = {
           label: 'Calculator result received',
-          display: obj.thresholdResponse.responseTime.format('HH:mm:ss DD MMMM YYYY')
+          display: obj.thresholdResponse.responseTime.format('HH:mm:ss DD/MM/YYYY')
         }
       }
     }
