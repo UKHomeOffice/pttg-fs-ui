@@ -1,0 +1,13 @@
+{
+    "threshold": "16090.00",
+    "leaveEndDate" : "2017-10-22",
+    "cappedValues" : {
+        "accommodationFeesPaid": "1265.00",
+        "courseLength": 9
+    },
+    "status": {
+        "code": "200",
+        "message": "OK"
+    }
+}
+

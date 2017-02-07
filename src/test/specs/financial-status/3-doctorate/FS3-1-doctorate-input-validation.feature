@@ -17,18 +17,15 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given the api health check response has status 200
+        Given the account has sufficient funds
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the doctorate student type is chosen
-        And the default details are
-            | Application raised date         | 30/05/2016 |
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
-            | Sort code                       | 111111     |
-            | Account number                  | 11111111   |
-            | DOB                             | 27/07/1981 |
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 33-33-33   |
+            | Account number | 33333333   |
 
 ######################### General validation message display #########################
 

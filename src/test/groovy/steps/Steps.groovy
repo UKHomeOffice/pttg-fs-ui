@@ -140,7 +140,7 @@ class Steps {
 
     @After
     def tearDown() {
-        testDataLoader?.stop()
+        testDataLoader.stop()
     }
 
 
@@ -479,10 +479,17 @@ class Steps {
 
     }
     @Given("^the caseworker selects the (.*) radio button\$")
-    public void the_caseworker_selects_the_Yes_check_Barclays_radio_button(String yesRadioButton) {
+    public void the_caseworker_selects_the_Yes_check_Barclays_radio_button(String bankRadioButton) {
+Thread.sleep(4000)
+        if(bankRadioButton == "Yes, check Barclays") {
+            driver.findElement(By.id(pageObjects['yesCheckBarclays'])).click()
+            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+        }
 
-        driver.findElement(By.id(pageObjects['yesCheckBarclays'])).click()
-        driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+        if(bankRadioButton == "No, check Barclays") {
+            driver.findElement(By.id(pageObjects['no'])).click()
+            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
+        }
 
     }
 
