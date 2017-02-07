@@ -147,7 +147,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var nDays = tier.nDaysRequired - 1
     var endDate = moment(obj.endDate)
     var startDate = endDate.clone().subtract(nDays, 'days')
-    return $filter('dateDisplay')(startDate) + ' - ' + $filter('dateDisplay')(endDate)
+    return $filter('dateDisplay')(startDate) + ' to ' + $filter('dateDisplay')(endDate)
   }
 
   // return data that made up the search criteria

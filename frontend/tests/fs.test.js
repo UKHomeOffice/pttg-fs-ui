@@ -104,9 +104,9 @@ describe('app: hod.proving', function () {
         endDate: '2016-06-30'
       }
       it('shoudld return a string with a date range nDays before the end date', function () {
-        expect(fs.getPeriodChecked(testObj)).toEqual('03/06/2016 - 30/06/2016')
+        expect(fs.getPeriodChecked(testObj)).toEqual('03/06/2016 to 30/06/2016')
         testObj.tier = 2
-        expect(fs.getPeriodChecked(testObj)).toEqual('02/04/2016 - 30/06/2016')
+        expect(fs.getPeriodChecked(testObj)).toEqual('02/04/2016 to 30/06/2016')
       })
     })
 
