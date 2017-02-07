@@ -33,10 +33,10 @@ Feature: Edit search button to return UI populated with current values (for all 
         Then the inputs will be populated with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-            | DOB                             | 29/07/1978 |
+#            | DOB                             | 29/07/1978 |
             | Dependants                      | 0          |
-            | Sort code                       | 33-33-33   |
-            | Account number                  | 33333333   |
+#            | Sort code                       | 33-33-33   |
+#            | Account number                  | 33333333   |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |
