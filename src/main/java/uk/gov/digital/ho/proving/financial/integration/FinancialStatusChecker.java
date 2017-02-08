@@ -70,14 +70,14 @@ public class FinancialStatusChecker {
     private final String TIER_5 = "t5";
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
-    public ThresholdResponse checkThreshold(Course course, Maintenance maintenance, String accessToken) {
+    public ThresholdResponse checkThresholdTier4(Course course, Maintenance maintenance, String accessToken, Boolean dependantsOnly) {
 
         UUID eventId = AuditActions.nextId();
-        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(course, maintenance)));
+        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(course, maintenance, dependantsOnly)));
         LOGGER.debug("checkThreshold - Course: {}, Maintenance: {}", course, maintenance);
 
 
-        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken, dependantsOnly);
         ThresholdResponse thresholdResponse = new ThresholdResponse(thresholdResult);
 
         auditor.publishEvent(auditEvent(THRESHOLD_RESULT, eventId, checkThresholdAuditData(thresholdResponse)));
@@ -102,14 +102,15 @@ public class FinancialStatusChecker {
     }
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
-    public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, Course course, Maintenance maintenance, String accessToken) {
+    public FundingCheckResponse checkDailyBalanceStatusTier4(Account account, LocalDate toDate, Course course,
+                                                        Maintenance maintenance, String accessToken, Boolean dependantsOnly) {
 
         UUID eventId = AuditActions.nextId();
-        auditor.publishEvent(auditEvent(SEARCH, eventId, dailyBalanceAuditData(account, toDate, course, maintenance)));
+        auditor.publishEvent(auditEvent(SEARCH, eventId, dailyBalanceAuditData(account, toDate, course, maintenance, dependantsOnly)));
         LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, Course: {}, Maintenance: {}", account, toDate, course, maintenance);
 
-        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
-        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(tier, account, toDate, thresholdResult.getThreshold(), accessToken);
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken, dependantsOnly);
+        DailyBalanceStatusResult dailyBalanceStatus = getDailyBalanceStatus(TIER_4, account, toDate, thresholdResult.getThreshold(), accessToken);
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
 
@@ -190,9 +191,9 @@ public class FinancialStatusChecker {
         return thresholdResult;
     }
 
-    private ThresholdResult getThreshold(Course course, Maintenance maintenance, String accessToken) {
+    private ThresholdResult getThreshold(Course course, Maintenance maintenance, String accessToken, Boolean dependantsOnly) {
 
-        URI t4Uri = apiUrls.t4ThresholdUrlFor(course, maintenance);
+        URI t4Uri = apiUrls.t4ThresholdUrlFor(course, maintenance, dependantsOnly);
         ThresholdResult thresholdResult = getForObject(t4Uri, ThresholdResult.class, accessToken);
 
         LOGGER.debug("Threshold result: {}", value("thresholdResult", thresholdResult));
@@ -246,13 +247,14 @@ public class FinancialStatusChecker {
         return headers;
     }
 
-    private Map<String, Object> checkThresholdAuditData(Course course, Maintenance maintenance) {
+    private Map<String, Object> checkThresholdAuditData(Course course, Maintenance maintenance, Boolean dependantsOnly) {
 
         Map<String, Object> auditData = new HashMap<>();
 
         auditData.put("method", "check-threshold");
         auditData.put("course", course);
         auditData.put("maintenance", maintenance);
+        auditData.put("dependantsOnly", dependantsOnly);
 
         return auditData;
     }
@@ -279,7 +281,8 @@ public class FinancialStatusChecker {
         return auditData;
     }
 
-    private Map<String, Object> dailyBalanceAuditData(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
+    private Map<String, Object> dailyBalanceAuditData(Account account, LocalDate toDate, Course course,
+                                                      Maintenance maintenance, Boolean dependantsOnly) {
 
         Map<String, Object> auditData = new HashMap<>();
 
@@ -288,6 +291,7 @@ public class FinancialStatusChecker {
         auditData.put("toDate", toDate.format(DateTimeFormatter.ISO_DATE));
         auditData.put("course", course);
         auditData.put("maintenance", maintenance);
+        auditData.put("dependantsOnly", dependantsOnly);
 
         return auditData;
     }

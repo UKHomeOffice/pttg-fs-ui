@@ -40,7 +40,7 @@ public class ApiUrls {
     private String apiThresholdT5Endpoint;
 
 
-    public URI t4ThresholdUrlFor(Course course, Maintenance maintenance) {
+    public URI t4ThresholdUrlFor(Course course, Maintenance maintenance, Boolean dependantsOnly) {
 
         LOGGER.debug("root: {}, end: {}", apiRoot, apiThresholdT4Endpoint);
 
@@ -55,6 +55,7 @@ public class ApiUrls {
             .queryParam("accommodationFeesPaid", maintenance.getAccommodationFeesAlreadyPaid())
             .queryParam("dependants", maintenance.getDependants())
             .queryParam("courseType", course.getCourseType())
+            .queryParam("dependantsOnly", dependantsOnly)
             .build()
             .toUri();
 

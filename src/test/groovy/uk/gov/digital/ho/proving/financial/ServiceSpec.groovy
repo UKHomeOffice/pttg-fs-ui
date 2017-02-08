@@ -143,6 +143,7 @@ class ServiceSpec extends Specification {
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
                 .param('courseType', 'main')
+                .param('dependantsOnly', 'true')
 
         )
 
@@ -177,6 +178,7 @@ class ServiceSpec extends Specification {
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
                 .param('courseType', 'main')
+                .param('dependantsOnly', 'true')
         )
 
         then:
@@ -207,6 +209,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -289,6 +292,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -472,6 +476,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -504,6 +509,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -536,6 +542,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -568,6 +575,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -598,6 +606,7 @@ class ServiceSpec extends Specification {
                 .param('tuitionFeesAlreadyPaid', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
                 .param('dependants', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:
@@ -648,6 +657,7 @@ class ServiceSpec extends Specification {
                 .param('courseType', 'main')
                 .param('dependants', '1')
                 .param('accommodationFeesAlreadyPaid', '1')
+                .param('dependantsOnly', 'false')
         )
 
         then:

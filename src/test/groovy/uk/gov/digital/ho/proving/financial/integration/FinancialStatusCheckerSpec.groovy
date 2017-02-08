@@ -64,7 +64,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, "token", true)
 
         then:
         1 * urls.t4ThresholdUrlFor(*_)
@@ -79,7 +79,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, "token", true)
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, 123.45, _, _)
@@ -94,7 +94,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, "token", true)
 
         then:
         1 * urls.dailyBalanceStatusUrlFor(_, _, { DAYS.between(it, toDate) == between }, toDate)
@@ -114,7 +114,7 @@ class FinancialStatusCheckerSpec extends Specification {
         template.exchange(_, _, _, DailyBalanceStatusResult.class) >> dailyBalanceResponse
 
         when:
-        def response = checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
+        def response = checker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, "token", true)
 
         then:
         response.minimum == 123.45
@@ -133,7 +133,7 @@ class FinancialStatusCheckerSpec extends Specification {
         1 * auditor.publishEvent(_) >> {args -> event2 = args[0].auditEvent}
 
         when:
-        checker.checkDailyBalanceStatus(tier, account, toDate, course, maintenance,"token")
+        checker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, "token", true)
 
         then:
 

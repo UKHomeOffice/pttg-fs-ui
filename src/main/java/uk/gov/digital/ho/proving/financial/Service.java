@@ -41,10 +41,11 @@ public class Service {
     public ResponseEntity threshold(
         @Valid Course course,
         @Valid Maintenance maintenance,
+        @RequestParam Boolean dependantsOnly,
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Threshold for course: {}, maintenance: {}", course, maintenance);
-        ThresholdResponse result = financialStatusChecker.checkThreshold(course, maintenance, accessToken);
+        ThresholdResponse result = financialStatusChecker.checkThresholdTier4(course, maintenance, accessToken, dependantsOnly);
         return ResponseEntity.ok(result);
     }
 
@@ -65,11 +66,12 @@ public class Service {
         @Valid Account account,
         @Valid Course course,
         @Valid Maintenance maintenance,
+        @RequestParam Boolean dependantsOnly,
         @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Status for: account: {}, course: {}, maintenance: {}, toDate: {}, dependants: {}", account, course, maintenance, toDate);
-        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatus(TIER_4, account, toDate, course, maintenance, accessToken);
+        FundingCheckResponse result = financialStatusChecker.checkDailyBalanceStatusTier4(account, toDate, course, maintenance, accessToken, dependantsOnly);
         return ResponseEntity.ok(result);
     }
 
