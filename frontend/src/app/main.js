@@ -5,7 +5,7 @@
 var app = angular.module('hod.proving', [
   'ui.router',
   'ngAria',
-  'hod.financialstatus',
+  // 'hod.financialstatus',
   'hod.fs',
   'hod.forms',
   'hod.io',

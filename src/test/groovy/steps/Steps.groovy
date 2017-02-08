@@ -484,7 +484,7 @@ class Steps {
     }
     @Given("^the caseworker selects the (.*) radio button\$")
     public void the_caseworker_selects_the_Yes_check_Barclays_radio_button(String bankRadioButton) {
-Thread.sleep(4000)
+//Thread.sleep(4000)
         if(bankRadioButton == "Yes, check Barclays") {
             driver.findElement(By.id(pageObjects['yesCheckBarclays'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()

@@ -143,7 +143,7 @@ fsModule.factory('FsInfoService', [ function () {
   this.getAllFieldInfo = function () {
     var fieldInfo = {
       applicationRaisedDate: {
-        summary: 'Date application received',
+        summary: 'Application raised date',
         format: 'date'
       },
       endDate: {
@@ -154,7 +154,7 @@ fsModule.factory('FsInfoService', [ function () {
         summary: 'Number of dependants'
       },
       inLondon: {
-        summary: 'Does the applicant live/reside in London?',
+        summary: 'In London',
         options: [{ value: 'yes', label: 'Yes, in London' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },

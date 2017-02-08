@@ -45,7 +45,7 @@ Feature: Show clear error details when inputs are invalid
             | The in London option is invalid                |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
-            | The account number is invalid                  |
+#            | The account number is invalid                  |
            # | The sort code is invalid                       |
            # | The date of birth is invalid                   |
 

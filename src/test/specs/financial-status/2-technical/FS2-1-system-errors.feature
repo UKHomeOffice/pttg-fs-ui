@@ -4,7 +4,7 @@ Feature: System errors - specify messages shown in response to (simulated) conne
     Background:
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the doctorate student type is chosen
 
     Scenario: Sensible connection timeout

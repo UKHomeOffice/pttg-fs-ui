@@ -4,13 +4,13 @@
 
 <hod-form name="finStatusDetails" submit="submit">
 
-  <hod-date name="applicationRaisedDate" label="Date application received" field="fs.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
+  <hod-date name="applicationRaisedDate" label="Application raised date" field="fs.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
 
   <hod-date name="endDate" label="Last date of the {{ tier.nDaysRequired }}-day period to check" field="fs.endDate" hint="Includes the date entered, must be within 31 days prior to and including the application raised date" config="conf.endDate"></hod-date>
 
   <hod-number name="dependants" label="Number of dependants" field="fs.dependants" config="conf.dependants"></hod-number>
 
-  <hod-radio name="inLondon" label="Does the applicant live/reside in London?" field="fs.inLondon" config="conf.inLondon" options="inLondonOptions"></hod-radio>
+  <hod-radio name="inLondon" label="In London" field="fs.inLondon" config="conf.inLondon" options="inLondonOptions"></hod-radio>
 
   <hod-radio name="courseType" label="Course type" field="fs.courseType" config="conf.courseType"></hod-radio>
 
