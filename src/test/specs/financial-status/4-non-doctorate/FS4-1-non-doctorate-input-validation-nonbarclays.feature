@@ -13,53 +13,47 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given the api health check response has status 200
-        And caseworker is using the financial status calculator service ui
-        And the Tier 4 student-type is chosen
+        And the api consent response will be SUCCESS
+        And caseworker is using the financial status service ui
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the default details are
-            | Application raised date         | 30/06/2016 |
-            | End Date                        | 31/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
-            | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
 
 
 ######################### General validation message display #########################
 
-    Scenario: Error summary details are shown when a validation error occurs
-        When the financial status check is performed with
-            | Application raised date         |  |
-            | End Date                        |  |
-            | In London                       |  |
-            | Course start date               |  |
-            | Course end date                 |  |
-            | Total tuition fees              |  |
-            | Tuition fees already paid       |  |
-            | Accommodation fees already paid |  |
-            | Dependants                      |  |
-            | Continuation Course             |  |
-            | Course type                     |  |
-        Then the service displays the following message
-            | validation-error-summary-heading | There's some invalid information                  |
-            | validation-error-summary-text    | Make sure that all the fields have been completed |
-        And the error summary list contains the text
-            | The application raised date is invalid         |
-            | The end date is invalid                        |
-            | The in London option is invalid                |
-            | The start date of course is invalid            |
-            | The end date of course is invalid              |
-            | The total tuition fees is invalid              |
-            | The tuition fees already paid is invalid       |
-            | The accommodation fees already paid is invalid |
-            | The number of dependants is invalid            |
-            | The course continuation option is invalid      |
-            | The course type option is invalid              |
+#    Scenario: Error summary details are shown when a validation error occurs
+#        When the financial status check is performed with
+#            | Application raised date         |  |
+#            | End Date                        |  |
+#            | In London                       |  |
+#            | Course start date               |  |
+#            | Course end date                 |  |
+#            | Total tuition fees              |  |
+#            | Tuition fees already paid       |  |
+#            | Accommodation fees already paid |  |
+#            | Dependants                      |  |
+#            | Continuation Course             |  |
+#            | Course type                     |  |
+#        Then the service displays the following message
+#            | validation-error-summary-heading | There's some invalid information                  |
+#            | validation-error-summary-text    | Make sure that all the fields have been completed |
+#        And the error summary list contains the text
+#            | The application raised date is invalid         |
+#            | The end date is invalid                        |
+#            | The in London option is invalid                |
+#            | The start date of course is invalid            |
+#            | The end date of course is invalid              |
+#            | The total tuition fees is invalid              |
+#            | The tuition fees already paid is invalid       |
+#            | The accommodation fees already paid is invalid |
+#            | The number of dependants is invalid            |
+#            | The course continuation option is invalid      |
+#            | The course type option is invalid              |
 
 
 ######################### Validation on the Application Raised Date Field #########################
@@ -73,7 +67,7 @@ Feature: Show clear error details when inputs are invalid
         When the financial status check is performed with
             | Application raised Date | 30/05/2099 |
         Then the service displays the following error message
-            | Application raised Date-error | Enter a valid application raised date |
+            | Application raised Date-error | Date is after the max date |
 
     Scenario: Case Worker enters invalid Application Raised Date: not numbers
         When the financial status check is performed with
