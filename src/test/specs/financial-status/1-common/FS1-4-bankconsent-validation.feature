@@ -1,5 +1,8 @@
-Feature: Edit search button to return UI populated with current values (for all routes on all output pages - pass & non passed)
+Feature: Validation on the fields required for consent from the bank to be obtained
 
+    Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
+    Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
+    Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
 ########################################################################################################################
     Background:
         Given caseworker is on page t4/nondoctorate/consent

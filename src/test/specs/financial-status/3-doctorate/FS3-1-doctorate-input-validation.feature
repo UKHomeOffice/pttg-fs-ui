@@ -7,25 +7,13 @@ Feature: Show clear error details when inputs are invalid
     Fields mandatory to fill in:
     Application Raised Date - numbers only
     End Date - Format should be dd/mm/yyyy and the End date has to be less than 32 days before the application raised date
-    Date of birth - should be dd/mm/yyyy (always 8 numbers, 0-9, no letters, cannot be all 0's)
     Dependants - should always be 0 for courses of six months or less ####
-    Sort code - Format should be three pairs of digits 13-56-09 (always numbers 0-9, no letters and cannot be all 0's)
-    Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
     In London - Yes or No options (mandatory)
     Accommodation fees already paid - numbers only. Highest amount £1,265. Format should not contain commas or currency symbols
     Continuation Course - Yes or No
 
     Background:
-        Given the api health check response has status 200
-        Given the account has sufficient funds
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 33-33-33   |
-            | Account number | 33333333   |
+        Given caseworker is on page t4/doctorate/calc/details
 
 ######################### General validation message display #########################
 
@@ -45,9 +33,6 @@ Feature: Show clear error details when inputs are invalid
             | The in London option is invalid                |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
-#            | The account number is invalid                  |
-           # | The sort code is invalid                       |
-           # | The date of birth is invalid                   |
 
 
 

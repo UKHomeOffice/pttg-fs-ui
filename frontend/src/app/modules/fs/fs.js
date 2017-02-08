@@ -97,13 +97,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var results = {}
     var tier = FsInfoService.getTier(obj.tier)
 
-    if (me.hasThresholdInfo(obj)) {
-      results.totalFundsRequired = {
-        label: 'Total funds required',
-        display: $filter('pounds')(obj.thresholdResponse.data.threshold)
-      }
-    }
-
     if (FsBankService.hasResult(obj) && _.has(obj.dailyBalanceResponse.data, 'accountHolderName')) {
       results.accountHolderName = {
         label: 'Account holder name',
@@ -111,21 +104,35 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       }
     }
 
+    if (me.hasThresholdInfo(obj)) {
+      results.totalFundsRequired = {
+        label: 'Total funds required',
+        display: $filter('pounds')(obj.thresholdResponse.data.threshold)
+      }
+    }
+
     results.maintenancePeriodChecked = {
-      label: tier.nDaysRequired + '-day period to check',
+      label: tier.nDaysRequired + '-day period checked',
       display: me.getPeriodChecked(obj)
+    }
+
+    if (FsBankService.hasResult(obj) && !FsBankService.passed(obj)) {
+      results.lowestBalance = {
+        label: 'Lowest balance',
+        value: $filter('pounds')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceDate)
+      }
     }
 
     if (me.hasThresholdInfo(obj)) {
       if (_.has(obj.thresholdResponse.data, 'leaveEndDate')) {
         results.estimatedLeaveEndDate = {
-          label: 'Estimated leave period if passes',
+          label: 'Estimated leave end date',
           display: $filter('dateDisplay')(obj.thresholdResponse.data.leaveEndDate)
         }
       }
       if (_.has(obj.thresholdResponse, 'responseTime')) {
         results.responseTime = {
-          label: 'Calculator result received',
+          label: 'Result timestamp',
           display: obj.thresholdResponse.responseTime.format('HH:mm:ss DD/MM/YYYY')
         }
       }
@@ -181,6 +188,12 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     criteria.applicantType = {
       label: 'Applicant type',
       display: variant.label
+    }
+
+    if (FsBankService.hasBankInfo(obj)) {
+      criteria.sortCode = { label: 'Sort code', display: $filter('sortDisplay')(obj.sortCode) }
+      criteria.accountNumber = { label: 'Account number', display: obj.accountNumber }
+      criteria.dob = { label: 'date of birth', display: $filter('dateDisplay')(obj.dob) }
     }
 
     _.each(fields, function (f) {

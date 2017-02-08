@@ -12,7 +12,7 @@ fsModule.factory('FsInfoService', [ function () {
   me.text = {
     passed: 'Passed',
     passedReason: 'The applicant\'s daily closing balance was above the total funds required',
-    notPassed: 'Financial status not met',
+    notPassed: 'Not passed', // 'Financial status not met',
     notPassedReason: 'One or more daily closing balances are below the total funds required',
     checkName: 'Check that the account holder name matches the applicant\'s.',
     copyToCid: 'Copy the information into CID',

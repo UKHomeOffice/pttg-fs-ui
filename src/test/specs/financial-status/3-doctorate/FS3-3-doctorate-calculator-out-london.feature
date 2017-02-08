@@ -12,9 +12,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
 
     Background:
         Given the api health check response has status 200
-        Given the account has sufficient funds
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
+        And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the doctorate student type is chosen
@@ -26,7 +26,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
 
 #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Laura is a Doctorate not in London student and has sufficient funds
-       # Given the account has sufficient funds
         When the financial status check is performed with
             | Application raised date         | 20/06/2016 |
             | End date                        | 30/05/2016 |
@@ -46,7 +45,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Dependants                      | 0                              |
             | Sort code                       | 22-22-23                       |
             | Account number                  | 22222223                       |
-            | DOB                             | 02/12/1985                     |
+            | DOB                             | 25/03/1987                     |
             | Application raised date         | 20/06/2016                     |
 
 

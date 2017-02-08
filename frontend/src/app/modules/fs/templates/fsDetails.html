@@ -14,11 +14,11 @@
 
   <hod-radio name="courseType" label="Course type" field="fs.courseType" config="conf.courseType"></hod-radio>
 
-  <hod-date name="courseStartDate" label="Course start date" field="fs.courseStartDate" config="conf.courseStartDate"></hod-date>
+  <hod-date name="courseStartDate" label="Start date of course" field="fs.courseStartDate" config="conf.courseStartDate"></hod-date>
 
-  <hod-date name="courseEndDate" label="Course end date" field="fs.courseEndDate" config="conf.courseEndDate"></hod-date>
+  <hod-date name="courseEndDate" label="End date of course" field="fs.courseEndDate" config="conf.courseEndDate"></hod-date>
 
-  <hod-radio name="continuationCourse" label="Is the course a continuation?" field="fs.continuationCourse" config="conf.continuationCourse"></hod-radio>
+  <hod-radio name="continuationCourse" label="Course continuation" field="fs.continuationCourse" config="conf.continuationCourse"></hod-radio>
   
   <div class="panel panel-border-wide text" ng-show="(fs.continuationCourse=='yes' && !conf.originalCourseStartDate.hidden)">
     <hod-date name="originalCourseStartDate" label="Original course start date" field="fs.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>

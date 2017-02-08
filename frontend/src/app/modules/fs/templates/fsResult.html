@@ -23,7 +23,7 @@
 <div ng-if="state === 'PASSED'">
   <div class="govuk-box-highlight">
     <h1 class="bold-large" id="outcome">{{ passedTitle }}</h1>
-     <p>{{ passedReason }}</p>
+     <p id="outcomeDetail">{{ passedReason }}</p>
   </div>
 
   <h2 class="heading-large">Things to do now</h2>
@@ -38,8 +38,8 @@
 
 <div ng-if="state === 'NOTPASSED'">
   <div class="govuk-box-highlight panel-fail">
-    <h1 class="bold-large">{{ passedTitle }}</h1>
-     <p>{{ passedReason }}</p>
+    <h1 class="bold-large" id="outcome">{{ passedTitle }}</h1>
+     <p id="outcomeDetail">{{ passedReason }}</p>
   </div>
 
   <h2 class="heading-large">Things to do now</h2>

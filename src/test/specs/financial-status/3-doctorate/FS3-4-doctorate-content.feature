@@ -26,16 +26,16 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Accommodation fees already paid | 100        |
             | Dependants                      | 0          |
         Then the service displays the following page content
-            | Page dynamic heading | Not passed                                                            |
-            | Page dynamic detail  | One or more daily closing balances are below the total funds required |
-        And the service displays the following results headers in order
+            | Outcome | Not passed                                                            |
+            | Outcome detail  | One or more daily closing balances are below the total funds required |
+        And the service displays the following result headers in order
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |
-        And the service displays the following your search headers in order
+        And the service displays the following criteria headers in order
             | Application raised date         |
             | Applicant type                  |
             | In London                       |
