@@ -16,25 +16,15 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the default details are
-            | Application raised date         | 30/06/2016 |
-            | End Date                        | 31/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
-            | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-            | DOB                             | 27/07/1981 |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
-
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
 
 ######################### General validation message display #########################
 
@@ -49,9 +39,9 @@ Feature: Show clear error details when inputs are invalid
             | Tuition fees already paid       |  |
             | Accommodation fees already paid |  |
             | Dependants                      |  |
-            | Sort code                       |  |
-            | Account number                  |  |
-            | DOB                             |  |
+           # | Sort code                       |  |
+           # | Account number                  |  |
+           # | DOB                             |  |
             | Continuation Course             |  |
             | Course type                     |  |
         Then the service displays the following message
