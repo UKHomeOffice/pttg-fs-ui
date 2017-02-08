@@ -92,7 +92,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General) student       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -119,7 +120,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Applicant type                  | Tier 4 (General) student     |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student     |
             | In London                       | Yes                          |
             | Course dates checked            | 01/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -148,7 +150,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 17 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General) student       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 25/09/2017       |
             | Total tuition fees              | £9,755.50                      |

@@ -30,36 +30,50 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
     Background:
         Given the api health check response has status 200
+        #And caseworker is using the financial status service ui
+        And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the default details are
-            | Application raised date         | 30/06/2016 |
-            | End date                        | 01/06/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 01/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
-            | Accommodation fees already paid | 0          |
-            | Dependants                      | 1          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-            | DOB                             | 21/09/1981 |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
-            | Course type                     | Main       |
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
+#        And the default details are
+#            | Application raised date         | 30/06/2016 |
+#            | End date                        | 01/06/2016 |
+#            | In London                       | Yes        |
+#            | Course start date               | 01/05/2016 |
+#            | Course end date                 | 30/11/2016 |
+#            | Total tuition fees              | 8500.00    |
+#            | Tuition fees already paid       | 0          |
+#            | Accommodation fees already paid | 0          |
+#            | Dependants                      | 1          |
+#            | Sort code                       | 11-11-11   |
+#            | Account number                  | 11111111   |
+#            | DOB                             | 21/09/1981 |
+#            | Continuation Course             | Yes        |
+#            | Original Course Start Date      | 30/10/2015 |
+#            | Course type                     | Main       |
 
  ######### Overall course <12 months In London #############
 
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
+    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds 1
         Given the account has sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 30/06/2016 |
+            | End date                        | 01/06/2016 |
+            | In London                       | Yes        |
             | Course end date                 | 30/01/2017 |
+            | Course start date               | 01/05/2016 |
+            | Dependants                      | 1          |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
-            | DOB                             | 06/04/1989 |
+            | Continuation Course             | Yes        |
+            | Original Course Start Date      | 30/10/2015 |
+            | Course type                     | Main       |
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 30/06/2016                     |
@@ -67,7 +81,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
             | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General) student       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -119,25 +134,33 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
+            | Application raised date         | 30/06/2016 |
+            | End date                        | 01/06/2016 |
+            | In London                       | No         |
+            | Dependants                      | 0          |
+            | Continuation Course             | Yes        |
+            | Course start date               | 01/05/2016 |
             | Course end date                 | 25/09/2017 |
             | Original Course Start Date      | 30/10/2015 |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
-            | DOB                             | 06/04/1989 |
+            | Course type                     | Main       |
+           # | DOB                             | 06/04/1989 |
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | Course length                   | 17 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General) student       |
-            | In London                       | Yes                            |
+            | In London                       | No                             |
             | Course dates checked            | 01/05/2016 to 25/09/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Dependants                      | 1                              |
+            | Dependants                      | 0                              |
             | Entire course length            | 23                             |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
