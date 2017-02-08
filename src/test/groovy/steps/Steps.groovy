@@ -622,7 +622,6 @@ class Steps {
     public void the_new_search_button_is_clicked() {
         driver.sleep(delay)
         driver.findElement(By.id("newsearchBtn")).click()
-        //assertTextFieldEqualityForTable(expectedResult)
     }
 
     @When("^the edit search button is clicked\$")
@@ -729,7 +728,7 @@ class Steps {
 
     @Then("^the service displays the following (.*) headers in order\$")
     public void the_service_displays_the_following_your_search_headers_in_order(String tableName, DataTable expectedResult) throws Throwable {
-        def tableId = toCamelCase(tableName) + "Table"
+        def tableId = toCamelCase(tableName)
         verifyTableRowHeadersInOrder(expectedResult, tableId)
     }
 

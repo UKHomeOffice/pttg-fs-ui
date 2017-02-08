@@ -48,7 +48,20 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   // config for all fields
   $scope.conf = {
     applicationRaisedDate: {
-      max: moment().format('YYYY-MM-DD')
+      max: moment().format('YYYY-MM-DD'),
+      errors: {
+        max: {
+          msg: 'Enter a valid application raised date'
+        },
+        invalid: {
+          summary: 'The application raised date is invalid',
+          msg: 'Enter a valid application raised date'
+        },
+        required: {
+          msg: 'Enter a valid application raised date',
+          summary: 'The application raised date is invalid'
+        }
+      }
     },
     endDate: {
       validate: function (v, sc) {
@@ -130,13 +143,43 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       }
     },
     totalTuitionFees: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The total tuition fees is invalid',
+          msg: 'Enter a valid total tuition fees'
+        },
+        numeric: {
+          summary: 'The total tuition fees is invalid',
+          msg: 'Enter a valid total tuition fees'
+        }
+      }
     },
     tuitionFeesAlreadyPaid: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The tuition fees already paid is invalid',
+          msg: 'Enter a valid tuition fees already paid'
+        },
+        numeric: {
+          summary: 'The tuition fees already paid is invalid',
+          msg: 'Enter a valid tuition fees already paid'
+        }
+      }
     },
     accommodationFeesAlreadyPaid: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The accommodation fees already paid is invalid',
+          msg: 'Enter a valid accommodation fees already paid'
+        },
+        numeric: {
+          summary: 'The accommodation fees already paid is invalid',
+          msg: 'Enter a valid accommodation fees already paid'
+        }
+      }
     },
     dependants: {
       classes: { 'form-control-1-8': true },

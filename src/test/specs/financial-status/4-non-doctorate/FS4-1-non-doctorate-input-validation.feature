@@ -15,16 +15,7 @@ Feature: Show clear error details when inputs are invalid
     Original Course Start Date - numbers only (if Continuation Course is selected as Yes)
 
     Background:
-        Given the api health check response has status 200
-        And the api consent response will be SUCCESS
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        Given caseworker is on page t4/nondoctorate/calc/details
 
 ######################### General validation message display #########################
 
@@ -39,9 +30,6 @@ Feature: Show clear error details when inputs are invalid
             | Tuition fees already paid       |  |
             | Accommodation fees already paid |  |
             | Dependants                      |  |
-           # | Sort code                       |  |
-           # | Account number                  |  |
-           # | DOB                             |  |
             | Continuation Course             |  |
             | Course type                     |  |
         Then the service displays the following message
@@ -57,9 +45,6 @@ Feature: Show clear error details when inputs are invalid
             | The tuition fees already paid is invalid       |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
-            | The account number is invalid                  |
-            | The sort code is invalid                       |
-            | The date of birth is invalid                   |
             | The course continuation option is invalid      |
             | The course type option is invalid              |
 
@@ -113,6 +98,7 @@ Feature: Show clear error details when inputs are invalid
     Scenario: Case Worker enters invalid End date - within 31 days of application raised date
         When the financial status check is performed with
             | End Date | 30/05/2016 |
+            | Application raised date | 31/01/2016 |
         Then the service displays the following error message
             | End Date-error | Enter a valid end date |
 
@@ -129,60 +115,6 @@ Feature: Show clear error details when inputs are invalid
             | Application raised date | 31/01/2016 |
         Then the service displays the following error message
             | End Date-error | Enter a valid end date |
-
-
-######################### Validation on the Sort Code Field #########################
-
-    Scenario: Case Worker does NOT enter Sort Code
-        When the financial status check is performed with
-            | Sort code |  |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - mising digits
-        When the financial status check is performed with
-            | Sort code | 11-11-1 |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - all 0's
-        When the financial status check is performed with
-            | Sort code | 00-00-00 |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
-        When the financial status check is performed with
-            | Sort code | 11-11-1q |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-
-######################### Validation on the Account Number Field #########################
-
-    Scenario: Case Worker does NOT enter Account Number
-        When the financial status check is performed with
-            | Account number |  |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - too short
-        When the financial status check is performed with
-            | Account number | 1111111 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - all 0's
-        When the financial status check is performed with
-            | Account number | 00000000 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - not numbers 0-9
-        When the financial status check is performed with
-            | Account number | 111a1111 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
 
 
 ######################### Validation on the In London Field #########################
@@ -309,25 +241,7 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following page content
             | Page dynamic heading | Invalid or inaccessible account |
 
-           ######################### Validation on the Date of birth Field #########################
 
-    Scenario: Case Worker does NOT enter Date of birth
-        When the financial status check is performed with
-            | DOB |  |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |
-
-    Scenario: Case Worker enters invalid Date of birth - in the future
-        When the financial status check is performed with
-            | DOB | 25/08/2099 |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |
-
-    Scenario: Case Worker enters invalid Date og birth - not numbers 0-9
-        When the financial status check is performed with
-            | DOB | 25/0@/1986 |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |
 
         ######################### Validation on the Application Raised Date Field #########################
 
