@@ -16,16 +16,14 @@ Feature: Insufficient Information
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
-        #Given no record for the account
+
         When the financial status check is performed with
             | Application raised date         | 30/06/2016 |
             | End date                        | 10/06/2016 |
             | In London                       | No         |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-           # | Sort code                       | 99-99-99   |
-           # | Account number                  | 99999999   |
-           # | DOB                             | 27/05/1986 |
+
         Then the service displays the following page content
             | Page dynamic heading | Invalid or inaccessible account                                                  |
             | Page Dynamic detail  | One or more of the following conditions prevented us from accessing the account: |
