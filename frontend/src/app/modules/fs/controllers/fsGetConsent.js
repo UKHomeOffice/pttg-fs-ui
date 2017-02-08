@@ -37,11 +37,19 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
       errors: {
         numeric: {
           msg: 'Enter a valid account number'
+        },
+        min: {
+          msg: 'Enter a valid account number'
         }
       }
     },
     dob: {
-      max: moment().subtract(10, 'years').format('YYYY-MM-DD')
+      max: moment().subtract(10, 'years').format('YYYY-MM-DD'),
+      errors: {
+        max: {
+          msg: 'Enter a valid date of birth'
+        }
+      }
     }
   }
 
