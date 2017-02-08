@@ -134,7 +134,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     if (obj.courseStartDate && obj.courseEndDate) {
       results.courseLength = {
         label: 'Course length',
-        display: me.getCourseLength(obj) + ' months'
+        display: me.getCourseLength(obj) + ' (limited to ' + obj.thresholdResponse.data.cappedValues.courseLength + ')'
+      }
+
+      if (obj.continuationCourse === 'yes') {
+        results.entireCourseLength = {
+          label: 'Entire course length',
+          display: me.getEntireCourseLength(obj)
+        }
       }
     }
 
@@ -161,6 +168,8 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       // remove the original course start date from the results if its not a continuation course
       fields = _.without(fields, 'originalCourseStartDate')
     }
+
+    fields = _.without(fields, 'courseEndDate')
 
     var criteria = {}
 
@@ -197,7 +206,16 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
           disp = obj[f]
       }
 
-      criteria[f] = { label: info.summary.replace(/({{nDaysRequired}})/, tier.nDaysRequired), value: obj[f], display: disp }
+      if (f === 'courseStartDate') {
+        f = 'courseDatesChecked'
+        disp += ' to ' + $filter('dateDisplay')(obj.courseEndDate)
+      }
+
+      if (f === 'accommodationFeesAlreadyPaid') {
+        disp += ' (limited to ' + $filter('pounds')(obj.thresholdResponse.data.cappedValues.accommodationFeesPaid) + ')'
+      }
+
+      criteria[f] = { label: info.summary.replace(/({{nDaysRequired}})/, tier.nDaysRequired), display: disp }
     })
 
     return criteria
@@ -233,9 +251,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return doNext
   }
 
-  this.getCourseLength = function (obj) {
-    var start = moment(obj.courseStartDate, 'YYYY-MM-DD', true)
-    var end = moment(obj.courseEndDate, 'YYYY-MM-DD', true)
+  this.getMonths = function (start, end) {
+    start = moment(start, 'YYYY-MM-DD', true)
+    end = moment(end, 'YYYY-MM-DD', true)
     var months = end.diff(start, 'months', true)
     if (start.date() === end.date() && !start.isSame(end)) {
       // when using moment diff months, the same day in months being compared
@@ -245,6 +263,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       months += 1 / 31
     }
     return Math.ceil(months)
+  }
+
+  this.getCourseLength = function (obj) {
+    return me.getMonths(obj.courseStartDate, obj.courseEndDate)
+  }
+
+  this.getEntireCourseLength = function (obj) {
+    return me.getMonths(obj.originalCourseStartDate, obj.courseEndDate)
   }
 
   this.getPlainTextResults = function (obj) {

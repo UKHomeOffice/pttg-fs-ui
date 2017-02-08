@@ -495,7 +495,7 @@ class Steps {
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
 
-        if(bankRadioButton == "No, check Barclays") {
+        if(bankRadioButton == "No") {
             driver.findElement(By.id(pageObjects['no'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }

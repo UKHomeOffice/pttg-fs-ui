@@ -66,12 +66,12 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Then the service displays the following result
             | Outcome | Passed |
         And the result table contains the following
-            | Total funds required       | £16,090.00              |
-            | Account holder name        | Laura Taylor            |
-            | Maintenance period checked | 03/05/2016 - 30/05/2016 |
-            | Estimated leave end date   | 22/10/2017              |
-#            | Course length              | 9 (limited to 9)          |
-#            | Entire course length       | 16                        |
+            | Total funds required       | £16,090.00               |
+            | Account holder name        | Laura Taylor             |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated leave end date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+#            | Entire course length       | 16                       |
 #            | Calculator result received | <timestamp>                        |
         And the service displays the following page content
             | Application Raised Date         | 05/06/2016       |

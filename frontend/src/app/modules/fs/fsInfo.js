@@ -155,7 +155,7 @@ fsModule.factory('FsInfoService', [ function () {
       },
       inLondon: {
         summary: 'In London',
-        options: [{ value: 'yes', label: 'Yes, in London' }, { value: 'no', label: 'No' }],
+        options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },
       courseType: {
@@ -173,7 +173,7 @@ fsModule.factory('FsInfoService', [ function () {
       },
       continuationCourse: {
         summary: 'Is the course a continuation?',
-        options: [{ value: 'yes', label: 'Yes, continuation' }, { value: 'no', label: 'No' }],
+        options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },
       originalCourseStartDate: {

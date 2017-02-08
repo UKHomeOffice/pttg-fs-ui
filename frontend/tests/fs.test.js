@@ -152,5 +152,24 @@ describe('app: hod.proving', function () {
         expect(doNext[1]).toEqual(fsi.t('copyToCid'))
       })
     })
+
+    describe('getMonths', function () {
+      it('is expected to return the rounded up months calculations from date strings', function () {
+        var testCases = [
+          { start: '2016-01-01', end: '2016-01-01', result: 0 },
+          { start: '2016-01-01', end: '2016-01-29', result: 1 },
+          { start: '2016-01-01', end: '2016-02-29', result: 2 },
+          { start: '2016-01-15', end: '2016-03-14', result: 2 },
+          { start: '2016-01-15', end: '2016-03-15', result: 3 },
+          { start: '2016-01-15', end: '2016-03-16', result: 3 },
+          { start: '2016-01-15', end: '2016-04-14', result: 3 },
+          { start: '2016-01-15', end: '2016-04-15', result: 4 }
+        ]
+        _.each(testCases, function (data) {
+          var months = fs.getMonths(data.start, data.end)
+          expect(months).toEqual(data.result)
+        })
+      })
+    })
   })
 })
