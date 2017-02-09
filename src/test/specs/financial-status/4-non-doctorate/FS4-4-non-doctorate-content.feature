@@ -2,9 +2,16 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         And the default details are
             | Application raised date         | 05/06/2016 |
             | End date                        | 30/05/2016 |
@@ -17,9 +24,9 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-            | DOB                             | 21/09/1981 |
+           # | Sort code                       | 11-11-11   |
+            #| Account number                  | 11111111   |
+            #| DOB                             | 21/09/1981 |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -28,8 +35,8 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         Given the account has sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Passed                                          |
-            | Page dynamic detail  | This applicant meets the financial requirements |
+            | Outcome        | Passed                                          |
+            | Outcome detail | This applicant meets the financial requirements |
         And the service displays the following results headers in order
             | Account holder name      |
             | Total funds required     |
