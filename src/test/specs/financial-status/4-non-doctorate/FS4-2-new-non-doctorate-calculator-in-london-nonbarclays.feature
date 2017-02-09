@@ -30,7 +30,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-       # And caseworker is using the financial status calculator service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen
         And the caseworker selects the No radio button
