@@ -26,12 +26,8 @@ Feature: Insufficient Information
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-            #| Sort code                       | 99-99-99   |
-            #| Account number                  | 99999999   |
-            #| DOB                             | 29/07/1978 |
             | Course type                     | Main       |
             | Continuation course             | No         |
-        #Then the service displays the account not found page
         And the service displays the following page content
             | Page dynamic heading | Invalid or inaccessible account                                                  |
             | Page Dynamic detail  | One or more of the following conditions prevented us from accessing the account: |
