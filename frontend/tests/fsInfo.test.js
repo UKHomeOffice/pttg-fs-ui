@@ -72,8 +72,8 @@ describe('app: hod.proving', function () {
     describe('getFieldGroup', function () {
       it('should have 3 fields in *default', function () {
         var fields = fsi.getFieldGroup('*default')
-        expect(fields.length).toEqual(3)
-        expect(fields.join()).toEqual('applicationRaisedDate,endDate,dependants')
+        expect(fields.length).toEqual(2)
+        expect(fields.join()).toEqual('applicationRaisedDate,endDate')
       })
 
       it('should have 4 fields in *courses', function () {
@@ -91,9 +91,9 @@ describe('app: hod.proving', function () {
 
     describe('getFields', function () {
       it('should return the actual fields when given a field group name/s', function () {
-        expect(fsi.getFields(['*default']).length).toEqual(3)
-        expect(fsi.getFields(['*default', '*courses']).length).toEqual(7)
-        expect(fsi.getFields(['*default', '*courses', '*t4all']).length).toEqual(9)
+        expect(fsi.getFields(['*default']).length).toEqual(2)
+        expect(fsi.getFields(['*default', '*courses']).length).toEqual(6)
+        expect(fsi.getFields(['*default', '*courses', '*t4all']).length).toEqual(8)
       })
 
       it('should return resolved field groups and individual fields', function () {
@@ -126,7 +126,7 @@ describe('app: hod.proving', function () {
     describe('t', function () {
       it('should return a string of text when given a ref', function () {
         expect(fsi.t('passed')).toEqual('Passed')
-        expect(fsi.t('notPassed')).toEqual('Financial status not met')
+        expect(fsi.t('notPassed')).toEqual('Not passed')
       })
     })
   })
