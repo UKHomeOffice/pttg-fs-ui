@@ -5,9 +5,16 @@ Feature: Insufficient Information
 
     Scenario: No records exist within the period stated
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         Given no record for the account
         When the financial status check is performed with
             | Application raised date         | 30/06/2016 |
@@ -19,9 +26,9 @@ Feature: Insufficient Information
             | Tuition fees already paid       | 0          |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-            | Sort code                       | 99-99-99   |
-            | Account number                  | 99999999   |
-            | DOB                             | 29/07/1978 |
+            #| Sort code                       | 99-99-99   |
+            #| Account number                  | 99999999   |
+            #| DOB                             | 29/07/1978 |
             | Course type                     | Main       |
             | Continuation course             | No         |
         #Then the service displays the account not found page
