@@ -76,7 +76,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Course type                     | Main       |
         Then the service displays the following result
             | Outcome                         | Passed                         |
-            | Application Raised Date         | 30/06/2016                     |
+            | Application Raised Date         | 29/06/2016                     |
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 05/05/2016 to 01/06/2016       |
@@ -107,10 +107,10 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                         | Not passed                   |
-            | Application Raised Date         | 30/06/2016                   |
+            | Application Raised Date         | 29/06/2016                   |
             | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 05/05/2016 to 01/06/2016     |
-            | Course length                   | 7 (limited to 9)             |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
+            | Course length                   | 2 (limited to 9)             |
             | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Applicant type                  | Tier 4 (General) student     |
             | In London                       | Yes                          |
@@ -125,7 +125,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
         And the result table contains the following
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Course length              | 7 (limited to 9)         |
             | Lowest Balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
