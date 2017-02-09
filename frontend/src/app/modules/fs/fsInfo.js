@@ -68,25 +68,25 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'nondoctorate',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
       {
         value: 'doctorate',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
-        fields: ['*default', '*t4all']
+        fields: ['*default', '*t4all', 'dependants']
       },
       {
         value: 'pgdd',
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
-        fields: ['*default', '*courses', '*t4all']
+        fields: ['*default', '*courses', '*t4all', 'dependants']
       },
       {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        fields: ['*default', '*courses', '*t4all']
+        fields: ['*default', '*courses', '*t4all', 'dependants']
       }]
     },
     {
@@ -113,7 +113,7 @@ fsModule.factory('FsInfoService', [ function () {
     switch (groupName) {
       case '*default':
         // all routes have these fields
-        return ['applicationRaisedDate', 'endDate', 'dependants']
+        return ['applicationRaisedDate', 'endDate']
       case '*courses':
         // the t4 student routes need course start and end dates
         return ['courseStartDate', 'courseEndDate', 'continuationCourse', 'originalCourseStartDate']

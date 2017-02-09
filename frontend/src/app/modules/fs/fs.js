@@ -176,7 +176,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       fields = _.without(fields, 'originalCourseStartDate')
     }
 
-    fields = _.without(fields, 'courseEndDate')
+    fields = _.without(fields, 'courseEndDate', 'endDate')
 
     var criteria = {}
 
@@ -190,18 +190,13 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       display: variant.label
     }
 
-    if (FsBankService.hasBankInfo(obj)) {
-      criteria.sortCode = { label: 'Sort code', display: $filter('sortDisplay')(obj.sortCode) }
-      criteria.accountNumber = { label: 'Account number', display: obj.accountNumber }
-      criteria.dob = { label: 'date of birth', display: $filter('dateDisplay')(obj.dob) }
-    }
-
     _.each(fields, function (f) {
       if (!_.has(obj, f)) {
         return
       }
       var info = FsInfoService.getFieldInfo(f)
       var disp = ''
+      var lab = info.summary.replace(/({{nDaysRequired}})/, tier.nDaysRequired)
       switch (info.format) {
         case 'date':
           disp = $filter('dateDisplay')(obj[f])
@@ -221,6 +216,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
       if (f === 'courseStartDate') {
         f = 'courseDatesChecked'
+        lab = 'courseDatesChecked'
         disp += ' to ' + $filter('dateDisplay')(obj.courseEndDate)
       }
 
@@ -228,8 +224,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
         disp += ' (limited to ' + $filter('pounds')(obj.thresholdResponse.data.cappedValues.accommodationFeesPaid) + ')'
       }
 
-      criteria[f] = { label: info.summary.replace(/({{nDaysRequired}})/, tier.nDaysRequired), display: disp }
+      criteria[f] = { label: lab, display: disp }
     })
+
+    if (FsBankService.hasBankInfo(obj)) {
+      criteria.sortCode = { label: 'Sort code', display: $filter('sortDisplay')(obj.sortCode) }
+      criteria.accountNumber = { label: 'Account number', display: obj.accountNumber }
+      criteria.dob = { label: 'Date of birth', display: $filter('dateDisplay')(obj.dob) }
+    }
 
     return criteria
   }
