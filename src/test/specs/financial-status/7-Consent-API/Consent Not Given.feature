@@ -6,10 +6,10 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
 
 
             ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
-
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
         Given the api health check response has status 200
-        And the correct test data for 22222229 is loaded
+        And the api consent response will be FAILURE
+        And the api threshold response will be t2
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
         And <Applicant> type is selected

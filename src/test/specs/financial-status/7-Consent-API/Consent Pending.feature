@@ -6,12 +6,14 @@ Feature: Process 'pending' status and display the appropriate output page
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be PENDING
+        And the api threshold response will be t2
         And caseworker is using the financial status service ui
 
     ## Service receives a 'Pending' status and displays the appropriate output page ##
 
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
-        And the correct test data for 22222226 is loaded
+
         And the caseworker selects <Tier>
         And <Applicant> type is selected
         And the caseworker selects the Yes, check Barclays radio button
@@ -38,14 +40,15 @@ Feature: Process 'pending' status and display the appropriate output page
             | Tier      | Applicant     |
             | Tier two  | Main          |
             | Tier four | Non Doctorate |
-            | Tier five | Dependent     |
+            | Tier five | Dependant     |
 
       ## Service receives a 'Pending' status then 'Success' Status - result page ##
 
     Scenario: 'Pending' status received from the Consent API followed by 'Success' status
 
         Given the api health check response has status 200
-        And the correct test data for 22222227 is loaded
+        And the api consent response will be PENDING
+        And the api threshold response will be t2
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen

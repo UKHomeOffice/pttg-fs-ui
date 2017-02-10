@@ -72,7 +72,7 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
         $scope.fs.consentResponse = data
         $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       }, function (err, data) {
-        // console.log('FsGetConsentCtrl $scope.submit err', err, data)
+        console.log('FsGetConsentCtrl $scope.submit err', err, data)
         $scope.fs.consentResponse = {}
         $state.go('fsConsentError', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       })
@@ -84,8 +84,8 @@ fsModule.controller('FsConsentErrorCtrl', ['$scope', '$state', 'FsService', 'FsI
   var t = Number($state.params.tier)
   var fs = FsService.getApplication()
   $scope.tier = FsInfoService.getTier(t)
-  $scope.outcome = 'Invalid or inaccessible account'
-  $scope.outcomeDetail = 'One or more of the following conditions prevented us from accessing the account'
+  $scope.outcome = FsInfoService.t('inaccessibleaccount')
+  $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
   $scope.criteria = FsService.getConsentCriteria(fs)
 
   var reasons = {}

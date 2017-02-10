@@ -9,7 +9,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the caseworker selects the No, check Barclays radio button
+        And the caseworker selects the No radio button
 
     Scenario: Caseworker needs to edit the information input into the UI after the API has been called and results displayed.
         Given the financial status check is performed with

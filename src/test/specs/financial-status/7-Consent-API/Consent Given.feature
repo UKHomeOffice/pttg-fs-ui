@@ -9,6 +9,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Given the api health check response has status 200
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
+        And the api threshold response will be t2
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
         And <Applicant> type is selected
@@ -26,7 +27,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Outcome                    | Passed                   |
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £945.00                  |
-            | Maintenance period checked | 06/04/2016 to 04/07/2016 |
+            | Maintenance period checked | 03/03/2016 to 31/05/2016 |
             | Dependants                 | 0                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
@@ -35,7 +36,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Examples:
             | Tier      | Applicant |
             | Tier two  | Main      |
-            | Tier five | Dependent |
+            | Tier five | Dependant |
 
 
     Scenario: Tier 4 Non-Doctorate - Consent granted, balances API invoked and data received - display result page
@@ -72,19 +73,15 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Estimated leave end date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
-#            | Entire course length       | 16                       |
-#            | Calculator result received | <timestamp>                        |
         And the service displays the following page content
-            | Application Raised Date         | 05/06/2016       |
-            | End date                        | 30/05/2016       |
-            | Dependants                      | 1                |
-            | In London                       | Yes, in London   |
-            | Accommodation fees already paid | £0.00            |
-            | Course start date               | 30/05/2016       |
-            | Course end date                 | 30/11/2016       |
-            | Continuation Course             | No               |
-            | Course type                     | Main course      |
-            | Total tuition fees              | £8,500.00        |
-            | Tuition fees already paid       | £0.00            |
-            | Tier                            | Tier 4 (General) |
-            | Applicant type                  | General student  |
+            | Application Raised Date         | 05/06/2016                   |
+            | Dependants                      | 1                            |
+            | In London                       | Yes                          |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
+            | Course dates checked            | 30/05/2016 to 30/11/2016     |
+            | Continuation Course             | No                           |
+            | Course type                     | Main course                  |
+            | Total tuition fees              | £8,500.00                    |
+            | Tuition fees already paid       | £0.00                        |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student              |

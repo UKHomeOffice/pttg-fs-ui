@@ -79,7 +79,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.getThresholdParams = function (obj) {
     var variant = FsInfoService.getVariant(obj.tier, obj.applicantType)
     var fields = FsInfoService.getFields(variant.fields)
-    var params = {}
+    var params = {dependants: 0}
     _.each(fields, function (f) {
       params[f] = obj[f]
     })

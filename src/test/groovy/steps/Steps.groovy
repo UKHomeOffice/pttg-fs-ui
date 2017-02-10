@@ -94,7 +94,7 @@ class Steps {
 //    ]
 
 //                             /pttg/financialstatus/v1/t4/threshold?accommodationFeesAlreadyPaid=0&applicantType=nondoctorate&applicationRaisedDate=2016-06-05&continuationCourse=no&courseEndDate=2016-11-30&courseStartDate=2016-05-30&courseType=main&dependants=1&endDate=2016-05-30&inLondon=yes&originalCourseStartDate=&studentType=nondoctorate&totalTuitionFees=8500.00&tuitionFeesAlreadyPaid=0
-    def thresholdUrlRegex = "/pttg/financialstatus/v1/t4/maintenance/threshold*"
+    def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
     def consentCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/consent*"
     def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/dailybalancestatus*"
 
@@ -235,32 +235,11 @@ class Steps {
     }
 
     private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
-
-int count = 1;
-        ArrayList<String> key = new ArrayList<>()
-        ArrayList<String> guiFieldName = new ArrayList<>()
         entries.each { k, v ->
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
             assert element.getText() == v
-           key.add(k)
-            try {
-                if (driver.findElement(By.xpath('//*[@id="criteria"]/tbody/tr[' + count + ']/th'))) {
-                    guiFieldName.add(driver.findElement(By.xpath('//*[@id="criteria"]/tbody/tr[' + count + ']/th')).getText())
-                }
-            }catch(Exception e){
-                e.printStackTrace()
-            }
-            count++
         }
-        for(int i=0; i<key.size();i++){
-            if((key.get(i)!="Outcome")&&(key.get(i)!="Outcome detail")) {
-                if(guiFieldName.size()>0) {
-                    assert guiFieldName.contains(key.get(i))
-                }
-            }
-        }
-
     }
 
     private void assertInputValueEqualityForTable(DataTable expectedResult) {
@@ -553,19 +532,16 @@ int count = 1;
 
             driver.findElement(By.id(applicantType['mainApplicant'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
-
         }
-        if(applicant == "Non Doctorate"){
 
+        if(applicant == "Non Doctorate"){
             driver.findElement(By.id(applicantType['nonDoctorate'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
-
         }
-        if(applicant == "Dependent"){
 
+        if(applicant == "Dependant"){
             driver.findElement(By.id(applicantType['dependentOnly'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
-
         }
     }
 

@@ -21,6 +21,8 @@ fsModule.factory('FsInfoService', [ function () {
     checkDataEntry: 'Check you have entered the correct information.',
     consentDenied: 'Consent has not been given',
     consentDeniedReason: 'The applicant has not given consent to check their financial status directly with their bank.',
+    inaccessibleaccount: 'Invalid or inaccessible account',
+    conditionspreventedus: 'One or more of the following conditions prevented us from accessing the account:',
     datamismatch: 'the account number, sort code and date of birth do not match a Barclays account',
     notbarclays: 'it is not a Barclays account',
     frozen: 'it is frozen',
@@ -56,13 +58,13 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'main',
         label: 'Main applicant (with & without dependants)',
         full: 'Main applicant (with & without dependants)',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       },
       {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       }]
     },
     {
@@ -102,13 +104,13 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'main',
         label: 'Main applicant (with & without dependants)',
         full: 'Main applicant (with & without dependants)',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       },
       {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       }]
     }]
   }
