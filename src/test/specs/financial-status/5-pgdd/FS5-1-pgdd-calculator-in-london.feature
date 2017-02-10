@@ -69,14 +69,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Original Course Start Date      | 30/10/2015 |
         Then the service displays the following result
             | Outcome                         | Passed                         |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
             | Course dates checked            | 30/05/2016 to 30/06/2016       |
             | Tier                            | Tier 4 (General)               |
             | Applicant type                  | Postgraduate doctor or dentist |
             | In London                       | Yes                            |
-            | Course length                   | 2 (limited to 9)               |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
             | Dependants                      | 0                              |
             | Sort code                       | 11-11-11                       |
@@ -84,3 +80,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | DOB                             | 25/03/1987                     |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 04/04/2016 to 01/05/2016 |
+            | Course length              | 9 (limited to 9)         |
+            | Estimated Leave End Date   | 22/10/2017               |
+
