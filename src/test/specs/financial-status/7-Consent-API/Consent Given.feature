@@ -7,7 +7,8 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
     Scenario Outline: Main applicant - Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
-        And the correct test data for 22222223 is loaded
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
         And <Applicant> type is selected
@@ -16,7 +17,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
-        And the Consent API is invoked
+       # And the Consent API is invoked
         And the financial status check is performed with
             | Application raised date | 30/06/2016 |
             | End Date                | 31/05/2016 |
