@@ -236,15 +236,31 @@ class Steps {
 
     private Map<String, String> assertTextFieldEqualityForMap(Map<String, String> entries) {
 
-
-
+int count = 1;
+        ArrayList<String> key = new ArrayList<>()
+        ArrayList<String> guiFieldName = new ArrayList<>()
         entries.each { k, v ->
             String fieldName = toCamelCase(k);
             WebElement element = driver.findElement(By.id(fieldName))
             assert element.getText() == v
-
-
+           key.add(k)
+            try {
+                if (driver.findElement(By.xpath('//*[@id="criteria"]/tbody/tr[' + count + ']/th'))) {
+                    guiFieldName.add(driver.findElement(By.xpath('//*[@id="criteria"]/tbody/tr[' + count + ']/th')).getText())
+                }
+            }catch(Exception e){
+                e.printStackTrace()
+            }
+            count++
         }
+        for(int i=0; i<key.size();i++){
+            if((key.get(i)!="Outcome")&&(key.get(i)!="Outcome detail")) {
+                if(guiFieldName.size()>0) {
+                    assert guiFieldName.contains(key.get(i))
+                }
+            }
+        }
+
     }
 
     private void assertInputValueEqualityForTable(DataTable expectedResult) {
@@ -477,7 +493,9 @@ class Steps {
     @Given("^no record for the account\$")
     public void no_record_for_the_account() throws Throwable {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
-        testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
+        //testDataLoader.withResponseStatus(balanceCheckUrlRegex, 404)
+        //testDataLoader.stubTestData("threshold-t6", balanceCheckUrlRegex)
+        testDataLoader.withEmptyResponse(balanceCheckUrlRegex)
     }
 
     @Given("^consent is sought for the following:\$")
@@ -559,10 +577,8 @@ class Steps {
                 'In London'                      : 'Yes',
                 'Accommodation fees already paid': '0',
                 'Dependants'                     : '1',
-                'Sort code'                      : '11-11-11',
-                'Account number'                 : '11111111',
-                'dob'                            : '29/07/1978',
-                'Continuation course'            : 'No'
+                'Continuation course'            : 'No',
+                'Course type'                   :  'Main'
             ]
 
             if (studentType.equalsIgnoreCase('non-doctorate')) {
@@ -699,18 +715,18 @@ class Steps {
         }
 
 
-        int numRows = driver.findElements(By.xpath('//*[@id="resultsTable"]/tbody/tr')).size()
+        int numRows = driver.findElements(By.xpath('//*[@id="result"]/tbody/tr')).size()
 
         for(int i=1; i <= numRows; i++) {
 
-//            if (tr) {
-                if (driver.findElement(By.id("resultTimestamp")).getText() != driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText()) {
-                    if (driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText() == null) {
+
+                if (driver.findElement(By.id("responseTime")).getText() != driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText()) {
+                    if (driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText() == null) {
                         break;
                     }
-                    assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="resultsTable"]/tbody/tr[' + i + ']/td')).getText())
+                    assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText())
                 }
-//            }
+
         }
     }
 
