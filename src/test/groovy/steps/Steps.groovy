@@ -340,8 +340,9 @@ int count = 1;
     private void submitEntries(Map<String, String> entries) {
         makeEntries(entries)
 
-        driver.sleep(delay)
+//        driver.sleep(delay)
         driver.findElement(By.className("button")).click()
+        driver.sleep(delay)
     }
 
     public void chooseAndSubmitStudentType(String type) {
@@ -398,14 +399,22 @@ int count = 1;
 
 
 
-    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING)\$")
-    public void the_api_consent_response_will_be(String consentValue) throws Throwable {
-        testDataLoader.stubTestData("consentcheckresponse-" + consentValue, consentCheckUrlRegex)
+    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|404)\$")
+    public void the_api_consent_response_will_be(String ref) throws Throwable {
+        if (ref.isInteger()) {
+            testDataLoader.withResponseStatus(balanceCheckUrlRegex, ref.toInteger())
+        } else {
+            testDataLoader.stubTestData('consentcheckresponse-' + ref.trim(), consentCheckUrlRegex)
+        }
     }
 
     @Given("^the api daily balance response will(.+)\$")
     public void the_api_daily_balance_reponse_will_be_for_account(String ref) throws Throwable {
-        testDataLoader.stubTestData('dailyBalance' + ref.trim(), balanceCheckUrlRegex)
+        if (ref.isInteger()) {
+            testDataLoader.withResponseStatus(balanceCheckUrlRegex, ref.toInteger())
+        } else {
+            testDataLoader.stubTestData('dailyBalance' + ref.trim(), balanceCheckUrlRegex)
+        }
     }
 
     @Given("^the api threshold response will be (.+)\$")

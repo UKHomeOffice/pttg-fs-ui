@@ -51,20 +51,23 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
     console.log('render', state)
     switch (state) {
       case 'PASSED':
-        $scope.passedTitle = FsInfoService.t('passed')
-        $scope.passedReason = FsInfoService.t('passedReason')
+        $scope.stateTitle = FsInfoService.t('passed')
+        $scope.stateReason = FsInfoService.t('passedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'NOTPASSED':
-        $scope.passedTitle = FsInfoService.t('notPassed')
-        $scope.passedReason = FsInfoService.t('notPassedReason')
+        $scope.stateTitle = FsInfoService.t('notPassed')
+        $scope.stateReason = FsInfoService.t('notPassedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'CONSENTDENIED':
-        $scope.passedTitle = FsInfoService.t('consentDenied')
-        $scope.passedReason = FsInfoService.t('consentDeniedReason')
+        $scope.stateTitle = FsInfoService.t('consentDenied')
+        $scope.stateReason = FsInfoService.t('consentDeniedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
+      case 'ERROR':
+        $scope.stateTitle = 'Error'
+        $scope.stateReason = 'Something went wrong, please try again later.'
     }
   }
 

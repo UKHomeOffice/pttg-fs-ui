@@ -20,7 +20,12 @@ fsModule.factory('FsInfoService', [ function () {
     manualCheck: 'Manually check the applicants evidence to make sure they have the total funds required.',
     checkDataEntry: 'Check you have entered the correct information.',
     consentDenied: 'Consent has not been given',
-    consentDeniedReason: 'The applicant has not given consent to check their financial status directly with their bank.'
+    consentDeniedReason: 'The applicant has not given consent to check their financial status directly with their bank.',
+    datamismatch: 'the account number, sort code and date of birth do not match a Barclays account',
+    notbarclays: 'it is not a Barclays account',
+    frozen: 'it is frozen',
+    businessacc: 'it is a business account',
+    accountclosed: 'the account is closed'
   }
 
   // get a specific tier based on it's tier number
