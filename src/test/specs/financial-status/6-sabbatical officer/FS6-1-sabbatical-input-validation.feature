@@ -19,9 +19,16 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the sso student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         And the default details are
             | Application raised date         | 01/06/2016 |
             | End Date                        | 30/05/2016 |
@@ -30,9 +37,6 @@ Feature: Show clear error details when inputs are invalid
             | Course end date                 | 20/04/2016 |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-            | DOB                             | 27/07/1981 |
             | Continuation Course             | Yes        |
 
 ######################### General validation message display #########################
@@ -45,9 +49,6 @@ Feature: Show clear error details when inputs are invalid
             | Course end date                 |  |
             | Accommodation fees already paid |  |
             | Dependants                      |  |
-            | Sort code                       |  |
-            | Account number                  |  |
-            | DOB                             |  |
             | Continuation Course             |  |
         Then the service displays the following error message
             | validation-error-summary-text | Make sure that all the fields have been completed |
@@ -58,9 +59,6 @@ Feature: Show clear error details when inputs are invalid
             | The end date of course is invalid              |
             | The accommodation fees already paid is invalid |
             | The number of dependants is invalid            |
-            | The account number is invalid                  |
-            | The sort code is invalid                       |
-            | The date of birth is invalid                   |
             | The course continuation option is invalid             |
 
 ######################### Validation on the End Date Field #########################
