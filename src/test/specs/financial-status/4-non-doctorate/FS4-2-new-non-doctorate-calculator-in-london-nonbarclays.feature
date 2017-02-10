@@ -27,12 +27,9 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 
     Background:
         Given the api health check response has status 200
-        And the api consent response will be SUCCESS
+        And caseworker is on page t4/nondoctorate/calc/details
+        And the api threshold response will be t4
         And the api daily balance response will Pass
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
-        And the caseworker selects the No radio button
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -75,7 +72,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Applicant type                  | Tier 4 (General) student     |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -100,7 +98,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General) student       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student       |
             | In London                       | Yes                            |
             | Course dates checked            | 30/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -125,7 +124,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Application Raised Date         | 31/05/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 9 (limited to 9)             |
-            | Applicant type                  | Tier 4 (General) student     |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student     |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/01/2017     |
             | Total tuition fees              | £8,500.00                    |
@@ -151,7 +151,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total funds required            | £16,090.00                     |
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
             | Course length                   | 13 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General) student       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student       |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |

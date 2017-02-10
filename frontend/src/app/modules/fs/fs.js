@@ -41,6 +41,12 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     obj.tier = Number(stateParams.tier) // tier 4
     obj.applicantType = stateParams.applicantType || null // nondoctorate, sso
     obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
+
+    if (obj.doCheck !== 'yes') {
+      obj.sortCode = ''
+      obj.accountNumber = ''
+      obj.dob = ''
+    }
   }
 
   // does the object (an _application) have result/calc properties
@@ -96,6 +102,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.getResults = function (obj) {
     var results = {}
     var tier = FsInfoService.getTier(obj.tier)
+    var capped = me.getThresholdCappedValues(obj)
 
     if (FsBankService.hasResult(obj) && _.has(obj.dailyBalanceResponse.data, 'accountHolderName')) {
       results.accountHolderName = {
@@ -119,7 +126,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     if (FsBankService.hasResult(obj) && !FsBankService.passed(obj)) {
       results.lowestBalance = {
         label: 'Lowest balance',
-        value: $filter('pounds')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceDate)
+        display: $filter('pounds')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceDate)
       }
     }
 
@@ -141,7 +148,11 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     if (obj.courseStartDate && obj.courseEndDate) {
       results.courseLength = {
         label: 'Course length',
-        display: me.getCourseLength(obj) + ' (limited to ' + obj.thresholdResponse.data.cappedValues.courseLength + ')'
+        display: me.getCourseLength(obj)
+      }
+
+      if (_.has(capped, 'courseLength')) {
+        results.courseLength.display += ' (limited to ' + capped.courseLength + ')'
       }
 
       if (obj.continuationCourse === 'yes') {
@@ -164,12 +175,20 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return $filter('dateDisplay')(startDate) + ' to ' + $filter('dateDisplay')(endDate)
   }
 
+  this.getThresholdCappedValues = function (obj) {
+    if (_.has(obj, 'thresholdResponse') && _.has(obj.thresholdResponse, 'data') && _.has(obj.thresholdResponse.data, 'cappedValues')) {
+      return obj.thresholdResponse.data.cappedValues
+    }
+    return null
+  }
+
   // return data that made up the search criteria
   this.getCriteria = function (obj) {
     // basics
     var tier = FsInfoService.getTier(obj.tier)
     var variant = _.findWhere(tier.variants, { value: obj.applicantType })
     var fields = FsInfoService.getFields(variant.fields)
+    var capped = me.getThresholdCappedValues(obj)
 
     if (obj.continuationCourse !== 'yes') {
       // remove the original course start date from the results if its not a continuation course
@@ -216,23 +235,30 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
       if (f === 'courseStartDate') {
         f = 'courseDatesChecked'
-        lab = 'courseDatesChecked'
+        lab = 'Course dates checked'
         disp += ' to ' + $filter('dateDisplay')(obj.courseEndDate)
       }
 
-      if (f === 'accommodationFeesAlreadyPaid') {
-        disp += ' (limited to ' + $filter('pounds')(obj.thresholdResponse.data.cappedValues.accommodationFeesPaid) + ')'
+      if (f === 'accommodationFeesAlreadyPaid' && capped.accommodationFeesPaid) {
+        disp += ' (limited to ' + $filter('pounds')(capped.accommodationFeesPaid) + ')'
       }
 
       criteria[f] = { label: lab, display: disp }
     })
 
-    if (FsBankService.hasBankInfo(obj)) {
-      criteria.sortCode = { label: 'Sort code', display: $filter('sortDisplay')(obj.sortCode) }
-      criteria.accountNumber = { label: 'Account number', display: obj.accountNumber }
-      criteria.dob = { label: 'Date of birth', display: $filter('dateDisplay')(obj.dob) }
-    }
+    criteria = angular.merge(criteria, me.getConsentCriteria(obj))
 
+    return criteria
+  }
+
+  this.getConsentCriteria = function (obj) {
+    var criteria = {}
+    if (!FsBankService.hasBankInfo(obj)) {
+      return {}
+    }
+    criteria.sortCode = { label: 'Sort code', display: $filter('sortDisplay')(obj.sortCode) }
+    criteria.accountNumber = { label: 'Account number', display: obj.accountNumber }
+    criteria.dob = { label: 'Date of birth', display: $filter('dateDisplay')(obj.dob) }
     return criteria
   }
 

@@ -19,6 +19,19 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
       }
     }
   })
+
+  $stateProvider.state({
+    name: 'fsConsentError',
+    url: '/problem',
+    title: 'Financial Status : Consent problem',
+    parent: 'fsGetConsent',
+    views: {
+      'content@': {
+        templateUrl: 'modules/fs/templates/fsConsentError.html',
+        controller: 'FsConsentErrorCtrl'
+      }
+    }
+  })
 }])
 
 fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, FsService, FsInfoService, FsBankService) {
@@ -59,9 +72,25 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
         $scope.fs.consentResponse = data
         $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       }, function (err, data) {
-        console.log('FsGetConsentCtrl $scope.submit err', err, data)
-        $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
+        // console.log('FsGetConsentCtrl $scope.submit err', err, data)
+        $scope.fs.consentResponse = {}
+        $state.go('fsConsentError', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
       })
     }
   }
+}])
+
+fsModule.controller('FsConsentErrorCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
+  var t = Number($state.params.tier)
+  var fs = FsService.getApplication()
+  $scope.tier = FsInfoService.getTier(t)
+  $scope.outcome = 'Invalid or inaccessible account'
+  $scope.outcomeDetail = 'One or more of the following conditions prevented us from accessing the account'
+  $scope.criteria = FsService.getConsentCriteria(fs)
+
+  var reasons = {}
+  _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
+    reasons[f] = FsInfoService.t(f)
+  })
+  $scope.reasons = reasons
 }])
