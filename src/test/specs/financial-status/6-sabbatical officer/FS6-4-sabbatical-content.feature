@@ -2,9 +2,16 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        And the caseworker selects Tier four
         And the sso student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -13,18 +20,18 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         Given the account has sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Passed                                          |
-            | Page dynamic detail  | This applicant meets the financial requirements |
+            | Outcome        | Passed                                          |
+            | Outcome detail | This applicant meets the financial requirements |
         And the service displays the following results headers in order
-            | Account holder name   |
-            | Total funds required  |
-            | 28-day period checked |
-            | Course length         |
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Course length            |
             | Estimated leave end date |
-            | Result timestamp      |
+            | Result timestamp         |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | In London                       |
             | Course dates                    |
             | Continuation course             |
@@ -43,17 +50,17 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         Given the account does not have sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
-            | Page dynamic heading | Not passed                                                            |
-            | Page dynamic detail  | One or more daily closing balances are below the total funds required |
-        And the service displays the following results headers in order
+            | Outcome        | Not passed                                                            |
+            | Outcome detail | One or more daily closing balances are below the total funds required |
+        And the service displays the following result headers in order
             | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
-            | Course length         |
             | Lowest balance        |
+            | Course length         |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | In London                       |
             | Course dates                    |
             | Continuation course             |
@@ -76,7 +83,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | 28-day period checked |
         And the service displays the following your search headers in order
             | Application raised date         |
-            | Applicant type                    |
+            | Applicant type                  |
             | In London                       |
             | Course dates                    |
             | Continuation course             |
