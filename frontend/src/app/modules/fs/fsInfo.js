@@ -11,7 +11,7 @@ fsModule.factory('FsInfoService', [ function () {
 
   me.text = {
     passed: 'Passed',
-    passedReason: 'The applicant\'s daily closing balance was above the total funds required',
+    passedReason: 'This applicant meets the financial requirements',
     notPassed: 'Not passed', // 'Financial status not met',
     notPassedReason: 'One or more daily closing balances are below the total funds required',
     checkName: 'Check that the account holder name matches the applicant\'s.',
@@ -27,7 +27,8 @@ fsModule.factory('FsInfoService', [ function () {
     notbarclays: 'it is not a Barclays account',
     frozen: 'it is frozen',
     businessacc: 'it is a business account',
-    accountclosed: 'the account is closed'
+    accountclosed: 'the account is closed',
+    notEnoughRecords: 'The records for this account does not cover the whole {{ nDaysRequired }} day period'
   }
 
   // get a specific tier based on it's tier number
@@ -179,7 +180,7 @@ fsModule.factory('FsInfoService', [ function () {
         format: 'date'
       },
       continuationCourse: {
-        summary: 'Is the course a continuation?',
+        summary: 'Continuation course',
         options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },

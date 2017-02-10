@@ -123,7 +123,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       display: me.getPeriodChecked(obj)
     }
 
-    if (FsBankService.hasResult(obj) && !FsBankService.passed(obj)) {
+    if (FsBankService.hasResult(obj) && !FsBankService.passed(obj) && obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) {
       results.lowestBalance = {
         label: 'Lowest balance',
         display: $filter('pounds')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceDate)

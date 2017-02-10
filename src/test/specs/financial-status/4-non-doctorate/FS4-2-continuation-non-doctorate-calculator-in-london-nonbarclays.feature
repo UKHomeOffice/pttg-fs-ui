@@ -75,10 +75,11 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 16               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
 
 
     Scenario: Shelly is a Non Doctorate in London 1
@@ -105,10 +106,11 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 16               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
 
 
  ###### overall course length 12+ months In London #######
@@ -121,7 +123,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
             | Tier                            | Tier 4 (General)             |
-            | Applicant type                  | General student     |
+            | Applicant type                  | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 01/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -132,10 +134,11 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 7 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 14               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+            | Entire course length       | 14                       |
 
 
     Scenario: Shelly is a Non Doctorate in London student 3
@@ -162,8 +165,9 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00        |
-            | Course length            | 17 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017        |
-            | Entire course length     | 23                |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 17 (limited to 9)        |
+            | Entire course length       | 23                       |
 

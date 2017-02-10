@@ -35,6 +35,7 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
 
 fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, $timeout, FsService, FsInfoService, FsBankService) {
   var fs = FsService.getApplication()
+  var tier = FsInfoService.getTier(fs.tier)
   FsBankService.clearDailyBalanceResponse(fs)
   $scope.threshold = fs.thresholdResponse.data.threshold
   $scope.leaveEndDate = fs.thresholdResponse.data.leaveEndDate
@@ -57,7 +58,12 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
         break
       case 'NOTPASSED':
         $scope.stateTitle = FsInfoService.t('notPassed')
-        $scope.stateReason = FsInfoService.t('notPassedReason')
+        if (fs.dailyBalanceResponse.data.failureReason && fs.dailyBalanceResponse.data.failureReason.recordCount) {
+          $scope.stateReason = FsInfoService.t('notEnoughRecords').replace('{{ nDaysRequired }}', tier.nDaysRequired)
+        } else {
+          $scope.stateReason = FsInfoService.t('notPassedReason')
+        }
+
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'CONSENTDENIED':

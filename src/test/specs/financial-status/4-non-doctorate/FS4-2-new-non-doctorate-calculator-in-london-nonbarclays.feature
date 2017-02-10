@@ -60,10 +60,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Dependants                      | 1                            |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 7 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-          #  | Entire course length       | 14                       |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -73,7 +74,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
             | Tier                            | Tier 4 (General)             |
-            | Applicant type                  | General student     |
+            | Applicant type                  | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -82,10 +83,10 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Dependants                      | 1                            |
             | Continuation Course             | No                           |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 7 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            #| Entire course length       | 14                       |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -99,7 +100,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
             | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | General student       |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 30/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -109,10 +110,10 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            #| Entire course length       | 14                       |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
 
  ###### overall course length 12+ months In London #######
 
@@ -125,7 +126,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total funds required            | £16,090.00                   |
             | Course length                   | 9 (limited to 9)             |
             | Tier                            | Tier 4 (General)             |
-            | Applicant type                  | General student     |
+            | Applicant type                  | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/01/2017     |
             | Total tuition fees              | £8,500.00                    |
@@ -134,10 +135,11 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Dependants                      | 1                            |
             | Continuation Course             | No                           |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            #| Entire course length       | 14                       |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+
 
     Scenario: Shelly is a Non Doctorate in London student
         Given the account has sufficient funds
@@ -152,7 +154,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Course dates checked            | 30/05/2016 to 30/05/2017       |
             | Course length                   | 13 (limited to 9)              |
             | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | General student       |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
@@ -162,6 +164,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
             | Total funds required     | £16,090.00        |
-            | Course length            | 13 (limited to 9) |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Estimated Leave End Date | 22/10/2017        |
-            #| Entire course length       | 14                       |
+            | Course length            | 13 (limited to 9) |
+

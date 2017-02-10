@@ -60,29 +60,28 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                         | Not passed                   |
-            | Application Raised Date         | 29/06/2016                   |
-            | Applicant type                  | General student              |
-            | Tier                            | Tier 4 (General)             |
             | Application Raised Date         | 31/05/2016                   |
             | Tier                            | Tier 4 (General)             |
             | Applicant type                  | General student              |
             | In London                       | Yes                          |
-            | Course dates checked            | 30/05/2016 to 30/06/2016     |
-            | Total tuition fees              | £1.00                    |
+            | Course dates checked            | 30/05/2016 to 30/11/2016     |
+            | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Dependants                      | 1                            |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
-            | DOB                             |25/03/1987                   |
+            | DOB                             | 21/09/1981                   |
             | Continuation Course             | No                           |
         And the result table contains the following
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Course length              | 2 (limited to 9)         |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Lowest balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+
+
 
    # //*[@id="resultsTable"]/tbody/tr[1]/td
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
@@ -112,16 +111,15 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Dependants                      | 1                              |
-           # | Sort code                       | 11-11-11                       |
-            #| Account number                  | 11111111                       |
-            #| DOB                             | 06/04/1989                     |
             | Continuation Course             | Yes                            |
         And the result table contains the following
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 04/04/2016 to 01/05/2016 |
-            | Course length              | 9 (limited to 9)         |
             | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
+
 
  ###### overall course length 12+ months In London #######
 
@@ -160,14 +158,16 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
             | DOB                             | 21/09/1981                   |
-            | Continuation Course             | Yes                           |
+            | Continuation Course             | Yes                          |
         And the result table contains the following
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Course length              | 9 (limited to 9)         |
-            | Estimated Leave End Date   | 22/10/2017               |
             | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
+
 
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds1
