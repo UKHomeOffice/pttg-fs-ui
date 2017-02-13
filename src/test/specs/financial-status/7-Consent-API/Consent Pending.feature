@@ -34,8 +34,9 @@ Feature: Process 'pending' status and display the appropriate output page
             | Continuation Course             | No         |
             | Course type                     | Main       |
         Then the service displays the following page content
-            | Outcome        | Consent pending                                     |
-            | Outcome detail | The applicant has not yet responded to the request. |
+            | Outcome        | Consent pending                                             |
+            | Outcome detail | The applicant has not yet responded to the request.         |
+            | Consent check  | We will automatically check for consent again in 10 Seconds |
         Examples:
             | Tier      | Applicant     |
             | Tier two  | Main          |
