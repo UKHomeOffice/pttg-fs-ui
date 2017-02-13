@@ -1,4 +1,4 @@
-Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current account including dependants)
+Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current account including dependants) and dependant only applicants
 
     Acceptance criteria
 
@@ -84,15 +84,15 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
 
-##### pass for dependant only applicant - Tier 2 #####
+##### PASS for dependant only applicant - Tier 2 #####
 
-    Scenario: Donald is a Tier 2 (General) dependant and sufficient funds
+    Scenario: Donald and Hilary are Tier 2 (General) dependant only applicants and have sufficient funds
         Given the account has sufficient funds for tier 2
         When the financial status check is performed with
             | Dependants | 2 |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Account holder name        | Donald Taylor            |
+            | Account holder name        | Ronald Taylor            |
             | Total funds required       | £1260.00                 |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 1                        |
@@ -100,16 +100,16 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
 
-##### not pass for dependant only applicant - Tier 5 #####
+##### NOT PASS for dependant only applicant - Tier 5 #####
 
-    Scenario: Barack is a Tier 5 (Temporary) dependant and has insufficient funds
+    Scenario: Simon, Alvin and Theodore are Tier 5 (Temporary) dependant only applicants and have insufficient funds
         Given the account does not have sufficient funds for tier 5
         When the financial status check is performed with
-            | Dependants | 2 |
+            | Dependants | 3 |
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Account holder name        | Shelly Smith             |
-            | Total funds required       | £1260.00                 |
+            | Total funds required       | £1890.00                 |
             | Lowest Balance             | £1,160.00 on 01/06/2016  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 1                        |
