@@ -19,17 +19,9 @@ Feature: Insufficient Records
             | In London                       | No         |
             | Accommodation fees already paid | 0          |
             | Dependants                      | 0          |
-           # | Sort code                       | 11-11-11   |
-           # | Account number                  | 11111111   |
-           # | DOB                             | 27/05/1986 |
         Then the service displays the following page content
-            | Page dynamic heading | Not passed                                                          |
-            | Page Dynamic detail  | The records for this account does not cover the whole 28 day period |
-        And the service displays the following your search data
-            | Sort Code      | 11-11-11   |
-            | Account Number | 11111111   |
-            | DOB            | 27/05/1986 |
-
+            | Outcome | Not passed                                                          |
+            | Outcome detail  | The records for this account does not cover the whole 28 day period |
 
 
 
