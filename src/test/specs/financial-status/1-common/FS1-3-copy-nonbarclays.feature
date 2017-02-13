@@ -10,7 +10,7 @@ Feature: Copy results to paste buffer
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the non-doctorate student type is chosen
-        And the caseworker selects the No, check Barclays radio button
+        And the caseworker selects the No radio button
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
