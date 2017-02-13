@@ -130,14 +130,14 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
 
 ###################################### Section - Check for text on Output  - Insufficient Information ######################################
 
-    Scenario: No records exist within the period stated
-        Given no record for the account
-        When the financial status check is performed
-        Then the service displays the following page content
-            | Page dynamic heading | Invalid or inaccessible account                                                  |
-            | Page Dynamic detail  | One or more of the following conditions prevented us from accessing the account: |
-        And the service displays the following your search headers in order
-            | Sort code      |
-            | Account number |
+#    Scenario: No records exist within the period stated
+#        Given no record for the account
+#        When the financial status check is performed
+#        Then the service displays the following page content
+#            | Outcome | Invalid or inaccessible account                                                  |
+#            | Outcome detail  | One or more of the following conditions prevented us from accessing the account: |
+#        And the service displays the following your search headers in order
+#            | Sort code      |
+#            | Account number |
 
 
