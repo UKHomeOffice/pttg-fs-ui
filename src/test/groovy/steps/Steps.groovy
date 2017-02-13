@@ -508,37 +508,29 @@ class Steps {
 
     }
 
-    @Given("^the caseworker selects (Tier.*)\$")
+    @Given("^the caseworker selects Tier (two|four|five)\$")
     public void the_caseworker_selects_Tier(String tierType) throws Throwable {
 
-        if(tierType == "Tier two") {
+        if(tierType == "two") {
             driver.get(pageUrls['tier2'])
         }
 
-        if(tierType == "Tier four"){
+        if(tierType == "four"){
             driver.get(pageUrls['tier4'])
         }
 
-        if(tierType == "Tier five"){
-
+        if(tierType == "five"){
             driver.get(pageUrls['tier5'])
         }
 
     }
 
-    @Given("^(.*) type is selected\$")
-    public void main_type_is_selected(String applicant) throws Throwable {
+    @Given("^(Main|Dependant) applicant type is selected\$")
+    public void applicant_type_is_selected(String applicant) throws Throwable {
         if(applicant == "Main"){
-
             driver.findElement(By.id(applicantType['mainApplicant'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
-
-        if(applicant == "Non Doctorate"){
-            driver.findElement(By.id(applicantType['nonDoctorate'])).click()
-            driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
-        }
-
         if(applicant == "Dependant"){
             driver.findElement(By.id(applicantType['dependentOnly'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()

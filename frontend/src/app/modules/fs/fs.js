@@ -131,7 +131,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     if (me.hasThresholdInfo(obj)) {
-      if (_.has(obj.thresholdResponse.data, 'leaveEndDate')) {
+      if (_.has(obj.thresholdResponse.data, 'leaveEndDate') && obj.thresholdResponse.data.leaveEndDate) {
         results.estimatedLeaveEndDate = {
           label: 'Estimated leave end date',
           display: $filter('dateDisplay')(obj.thresholdResponse.data.leaveEndDate)
