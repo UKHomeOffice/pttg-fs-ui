@@ -636,9 +636,11 @@ class Steps {
         driver.sleep(delay)
         driver.findElement(By.id("copyBtn")).click()
     }
-    @When("^the Consent API is invoked\$")
-    public void the_Consent_API_is_invoked() {
 
+    @When ("^the (.+) button is clicked\$")
+    public void the_button_is_clicked(String btn) {
+        driver.sleep(delay)
+        driver.findElement(By.id(toCamelCase(btn) + "Btn")).click()
     }
 
 
