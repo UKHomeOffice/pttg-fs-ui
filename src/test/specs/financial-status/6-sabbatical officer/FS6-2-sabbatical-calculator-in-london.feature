@@ -41,7 +41,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required            | £16,090.00                                          |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016                            |
             | Lowest Balance                  | £100.00 on 03/10/2016                               |
-            | Applicant type                  | Tier 4 (General) student union (sabbatical officer) |
+            | Tier                            | Tier 4 (General)                                    |
+            | Applicant type                  | Student union sabbatical officer |
             | In London                       | Yes                                                 |
             | Course length                   | 2 (limited to 9)                                    |
             | Accommodation fees already paid | £0.00 (limited to £1,265.00)                        |
@@ -72,8 +73,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Outcome                         | Passed                             |
             | Total funds required            | £16,090.00                         |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016           |
-            | Tier                            | Tier 4 (General)                   |
-            | Applicant type                  | Student union (sabbatical officer) |
+            | Tier                            | Tier 4 (General)                                    |
+            | Applicant type                  | Student union sabbatical officer |
             | In London                       | Yes                                |
             | Course length                   | 1 (limited to 9)                   |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00)     |

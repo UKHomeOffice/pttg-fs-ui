@@ -24,7 +24,6 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account number | 11111111   |
 
 
-
     Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
         When the financial status check is performed with
@@ -34,24 +33,25 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 0          |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | Not passed                                          |
-            | Total funds required            | £16,090.00                                          |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                            |
-            | Lowest Balance                  | £100.00 on 03/10/2016                               |
-            | Student type                    | Tier 4 (General) student union (sabbatical officer) |
-            | In London                       | No                                                  |
-            | Course length                   | 7 (limited to 9)                                    |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00)                        |
-            | Dependants            | 0                                                   |
-            | Sort code                       | 11-11-14                                            |
-            | Account number                  | 11111114                                            |
-            | DOB                             | 27/07/1981                                          |
-            | Continuation Course             | Yes                                                 |
-            | Original Course Start Date      | 30/10/2015                                          |
+            | Outcome                         | Not passed                       |
+            | Total funds required            | £16,090.00                       |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
+            | Lowest Balance                  | £100.00 on 03/10/2016            |
+            | Tier                            | Tier 4 (General)                 |
+            | Applicant type                  | Student union sabbatical officer |
+            | In London                       | No                               |
+            | Course length                   | 7 (limited to 9)                 |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00)     |
+            | Dependants                      | 0                                |
+            | Sort code                       | 11-11-11                         |
+            | Account number                  | 11111111                         |
+            | DOB                             | 25/03/1987                       |
+            | Continuation Course             | Yes                              |
+            | Original Course Start Date      | 30/10/2015                       |
         And the result table contains the following
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
@@ -71,29 +71,30 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Accommodation fees already paid | 265        |
-            | Dependants            | 0          |
+            | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | Passed                                              |
-            | Total funds required            | £16,090.00                                          |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                            |
-            | Tier                                |Tier 4 (General)                                                     |
-            | Applicant type                    | Student union (sabbatical officer) |
-            | In London                       | No                                                  |
-            | Course length                   | 7 (limited to 9)                                    |
-            | Accommodation fees already paid | £265.00 (limited to £1,265.00)                      |
-            | Dependants            | 0                                                   |
-            | Sort code                       | 22-22-23                                            |
-            | Account number                  | 22222223                                            |
-            | DOB                             | 25/10/1982                                          |
-            | Continuation Course             | Yes                                                 |
-            | Original Course Start Date      | 30/10/2015                                          |
+            | Outcome                         | Passed                             |
+            | Total funds required            | £16,090.00                         |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016           |
+            | Tier                            | Tier 4 (General)                   |
+            | Applicant type                  | Student union sabbatical officer |
+            | In London                       | No                                 |
+            | Course length                   | 7 (limited to 9)                   |
+            | Accommodation fees already paid | £265.00 (limited to £1,265.00)     |
+            | Dependants                      | 0                                  |
+            | Sort code                       | 11-11-11                           |
+            | Account number                  | 11111111                           |
+            | DOB                             | 25/03/1987                         |
+            | Continuation Course             | Yes                                |
+            | Original Course Start Date      | 30/10/2015                         |
         And the result table contains the following
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
-            | Estimated Leave End Date   | 22/10/2017               |
+
 
