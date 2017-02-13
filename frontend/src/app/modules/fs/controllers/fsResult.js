@@ -95,7 +95,12 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
 
       timerScope.$on('FsTimerUPDATED', function (e) {
         // update the seconds countdown
-        $scope.seconds = Math.ceil((100 - e.targetScope.percent) * e.targetScope.config.duration / 100000)
+        var s = Math.ceil((100 - e.targetScope.percent) * e.targetScope.config.duration / 100000)
+        if (s) {
+          $scope.consentCheck = 'We will automatically check for consent again in ' + s + 's.'
+        } else {
+          $scope.consentCheck = 'We will no longer check automatically for consent'
+        }
       })
 
       timerScope.$on('FsTimerENDED', function (e) {
