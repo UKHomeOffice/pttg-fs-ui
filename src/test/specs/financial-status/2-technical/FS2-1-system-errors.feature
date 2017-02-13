@@ -3,9 +3,16 @@ Feature: System errors - specify messages shown in response to (simulated) conne
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
         And the doctorate student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
 
     Scenario: Sensible connection timeout
         Given the api response is delayed for 10 seconds
