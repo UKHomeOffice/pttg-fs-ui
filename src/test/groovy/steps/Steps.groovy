@@ -71,9 +71,9 @@ class Steps {
     ]
 
      def applicantType = [
-            'mainApplicant'          : 'applicant-type-main-label',
-            'dependentOnly'         :  'applicant-type-dependant-label',
-            'nonDoctorate'           :  'applicant-type-nondoctorate-label'
+            'mainApplicant'          : 'applicantType-main-label',
+            'dependentOnly'         :  'applicantType-dependant-label',
+            'nonDoctorate'           :  'applicantType-nondoctorate-label'
     ]
 
     def pageObjects = [
@@ -110,14 +110,11 @@ class Steps {
         .withOption('no', 'inLondon-no-label')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'applicant-type-nondoctorate-label')
-        .withOption('doctorate', 'applicant-type-doctorate-label')
-        .withOption('pgdd', 'applicant-type-pgdd-label')
-        .withOption('sso', 'applicant-type-sso-label')
-        .withOption('t2main', 'applicant-type-t2main')
-        .withOption('t2dependant', 'applicant-type-t2dependant')
-        .withOption('t5main', 'applicant-type-t5main')
-        .withOption('t5dependant', 'applicant-type-t5dependant')
+        .withOption('non-doctorate', 'applicantType-nondoctorate-label')
+        .withOption('doctorate', 'applicantType-doctorate-label')
+        .withOption('pgdd', 'applicantType-pgdd-label')
+        .withOption('sso', 'applicantType-sso-label')
+
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('pre-sessional', 'courseType-presessional-label')

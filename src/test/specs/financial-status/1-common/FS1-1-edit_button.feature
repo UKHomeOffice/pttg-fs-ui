@@ -6,10 +6,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/nondoctorate/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 33-33-33   |
@@ -33,10 +30,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         Then the inputs will be populated with
             | Application raised date         | 02/05/2016 |
             | End Date                        | 01/05/2016 |
-#            | DOB                             | 29/07/1978 |
             | Dependants                      | 0          |
-#            | Sort code                       | 33-33-33   |
-#            | Account number                  | 33333333   |
             | In London                       | No         |
             | Course Start Date               | 30/05/2016 |
             | Course End Date                 | 29/07/2016 |
