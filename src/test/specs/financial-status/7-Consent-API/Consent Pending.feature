@@ -15,7 +15,7 @@ Feature: Process 'pending' status and display the appropriate output page
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
 
         And the caseworker selects <Tier>
-        And <Applicant> type is selected
+        And <Applicant> applicant type is selected
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
@@ -36,11 +36,10 @@ Feature: Process 'pending' status and display the appropriate output page
         Then the service displays the following page content
             | Outcome        | Consent pending                                             |
             | Outcome detail | The applicant has not yet responded to the request.         |
-            | Consent check  | We will automatically check for consent again in 10 Seconds |
+#            | Consent check  | We will automatically check for consent again in 10 Seconds |
         Examples:
             | Tier      | Applicant     |
             | Tier two  | Main          |
-            | Tier four | Non Doctorate |
             | Tier five | Dependant     |
 
 
@@ -51,7 +50,7 @@ Feature: Process 'pending' status and display the appropriate output page
         And the api threshold response will be t2
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
-        And <Applicant> type is selected
+        And <Applicant> applicant type is selected
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
             | DOB            | 25/03/1987 |

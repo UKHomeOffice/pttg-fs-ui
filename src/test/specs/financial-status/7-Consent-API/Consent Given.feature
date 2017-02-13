@@ -12,7 +12,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         And the api threshold response will be t2
         And caseworker is using the financial status service ui
         And the caseworker selects <Tier>
-        And <Applicant> type is selected
+        And <Applicant> applicant type is selected
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
