@@ -4,8 +4,8 @@ Feature: Copy results to paste buffer
 
     Background:
         Given the api health check response has status 200
-        #And the api daily balance response will Pass
-        #And the api consent response will be SUCCESS
+        And the api daily balance response will Pass
+        And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
@@ -30,7 +30,7 @@ Feature: Copy results to paste buffer
     ## although the actual functionality in the end product is expected to work in all modern browsers
     ## the methods available to test copy paste are poorly supported
     Scenario: copy results
-        Given the account has sufficient funds
+        Given caseworker is on page t4/nondoctorate/calc/details
         And the financial status check is performed
         When the copy button is clicked
         Then the copied text includes
@@ -50,7 +50,7 @@ Feature: Copy results to paste buffer
             | Date Received                   |                               |
 
     Scenario: copy results when continuation course is selected as yes
-        Given the account has sufficient funds
+        Given caseworker is on page t4/nondoctorate/calc/details
         And the financial status check is performed with
             | Continuation course        | Yes      |
             | Original course start date | 1/1/2014 |

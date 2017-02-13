@@ -604,31 +604,6 @@ class Steps {
         }
     }
 
-    @When("^the submit button is clicked\$")
-    public void the_submit_button_is_clicked() throws Throwable {
-        driver.sleep(delay)
-        driver.findElement(By.className("button")).click()
-    }
-
-
-    @When("^the new search button is clicked\$")
-    public void the_new_search_button_is_clicked() {
-        driver.sleep(delay)
-        driver.findElement(By.id("newsearchBtn")).click()
-    }
-
-    @When("^the edit search button is clicked\$")
-    public void the_edit_search_button_is_clicked() {
-        driver.sleep(delay)
-        driver.findElement(By.id("editBtn")).click()
-    }
-
-    @When("^the copy button is clicked\$")
-    public void the_copy_button_is_clicked() {
-        driver.sleep(delay)
-        driver.findElement(By.id("copyBtn")).click()
-    }
-
     @When ("^the (.+) button is clicked\$")
     public void the_button_is_clicked(String btn) {
         driver.sleep(delay)
@@ -838,5 +813,14 @@ class Steps {
     public void the_Consent_Pending_page_is_displayed(String consentPending) {
 
         assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/h1")).getText() == consentPending
+    }
+
+    @Then ("^(.+)should have the following options\$")
+    public void should_have_the_following_options (String radioId, DataTable options) {
+        Map<String, String> entries = options.asMap(String.class, String.class)
+        entries.each { k, v ->
+            assert (driver.findElement(By.id( toCamelCase(radioId.trim()) + '-' + k + '-label')).getText() == v)
+
+        }
     }
 }
