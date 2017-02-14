@@ -1,4 +1,4 @@
-wFeature: Tier 2 & Tier 5
+Feature: Tier 2 & Tier 5
 
     Background:
         Given the api health check response has status 200

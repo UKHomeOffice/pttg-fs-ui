@@ -95,7 +95,7 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account holder name        | Ronald Taylor            |
             | Total funds required       | £1260.00                 |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Dependants                 | 1                        |
+            | Dependants                 | 2                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
@@ -112,7 +112,7 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Total funds required       | £1890.00                 |
             | Lowest Balance             | £1,160.00 on 01/06/2016  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Dependants                 | 1                        |
+            | Dependants                 | 3                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
