@@ -322,7 +322,27 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       return str
     }
 
-    return lineLength('Plain text results', 40)
+    var plain = ''
+    var results = me.getResults(obj)
+    var criteria = angular.merge(me.getCriteria(obj), me.getConsentCriteria(obj))
+    var passed = FsBankService.passed(obj)
+    if (passed) {
+      plain += 'PASSED\n\n'
+    } else if (passed === false) {
+      plain += 'NOT PASSED\n\n'
+    }
+
+    plain += '## Results ##\n'
+    _.each(results, function (r, k) {
+      plain += lineLength(r.label, 40) + r.display + '\n'
+    })
+
+    plain += '\n\n## Your calculation ##\n'
+    _.each(criteria, function (c, k) {
+      plain += lineLength(c.label, 40) + c.display + '\n'
+    })
+
+    return plain
   }
 
   me.reset()
