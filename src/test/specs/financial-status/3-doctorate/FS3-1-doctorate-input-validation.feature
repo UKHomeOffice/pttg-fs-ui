@@ -13,7 +13,9 @@ Feature: Show clear error details when inputs are invalid
     Continuation Course - Yes or No
 
     Background:
-        Given caseworker is on page t4/doctorate/calc/details
+        Given the api health check response has status 200
+        And caseworker is using the financial status service ui
+        And caseworker is on page t4/doctorate/calc/details
 
 ######################### General validation message display #########################
 

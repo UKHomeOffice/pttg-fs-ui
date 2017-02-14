@@ -15,7 +15,8 @@ Feature: Show clear error details when inputs are invalid
     Original Course Start Date - numbers only (if Continuation Course is selected as Yes)
 
     Background:
-        Given caseworker is on page t4/nondoctorate/calc/details
+        Given caseworker is using the financial status service ui
+        And caseworker is on page t4/nondoctorate/calc/details
 
 ######################### General validation message display #########################
 

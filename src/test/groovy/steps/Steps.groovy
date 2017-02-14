@@ -344,7 +344,8 @@ class Steps {
 
     @Given("^caseworker is on page (.+)\$")
     public void caseworker_is_on_page(String url) throws Throwable {
-        driver.get(pageUrls['root'] + '/' + url)
+        def u = pageUrls['root'] + '/' + url
+        driver.get(u)
     }
 
     @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
