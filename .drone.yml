@@ -108,10 +108,10 @@ pipeline:
       - KUBE_NAMESPACE=pt-i-prod
       - ENVIRONMENT=prod
       - VERSION=${DRONE_COMMIT_SHA}
-      - KUBE_SERVER_DEV=https://kube.dsp.digital.homeoffice.gov.uk
+      - KUBE_SERVER_PROD=https://kube.dsp.digital.homeoffice.gov.uk
     commands:
       - cd kube-pttg-fs-ui
-      - ./deploy.sh
+      - ./deploy-prod.sh
     when:
       event: deployment
       environment: prod
