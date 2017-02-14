@@ -33,7 +33,7 @@ fsModule.run(['$rootScope', function ($rootScope) {
 
 fsModule.controller('FsNavCtrl', ['$rootScope', '$scope', '$state', 'FsService', 'FsInfoService', function ($rootScope, $scope, $state, FsService, FsInfoService) {
   $scope.tiers = FsInfoService.getTiers()
-
+  FsService.reset()
   $scope.setBank = function (accountNumber) {
     var fs = FsService.getApplication()
     fs.accountNumber = accountNumber

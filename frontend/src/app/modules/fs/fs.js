@@ -239,7 +239,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
         disp += ' to ' + $filter('dateDisplay')(obj.courseEndDate)
       }
 
-      if (f === 'accommodationFeesAlreadyPaid' && capped.accommodationFeesPaid) {
+      if (f === 'accommodationFeesAlreadyPaid' && capped && capped.accommodationFeesPaid) {
         disp += ' (limited to ' + $filter('pounds')(capped.accommodationFeesPaid) + ')'
       }
 
