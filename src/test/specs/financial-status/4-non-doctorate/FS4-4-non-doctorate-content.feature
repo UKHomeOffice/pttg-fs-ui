@@ -43,20 +43,20 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Result timestamp         |
             | Course length            |
         And the service displays the following criteria headers in order
-            | Tier                            |
-            | Applicant type                  |
-            | Application raised date         |
-            | In London                       |
-            | Accommodation fees already paid |
-            | Number of dependants            |
-            | Course dates                    |
-            | Continuation course             |
-            | Course type                     |
-            | Total tuition fees              |
-            | Tuition fees already paid       |
-            | Sort code                       |
-            | Account number                  |
-            | Date of birth                   |
+            | Tier                                  |
+            | Applicant type                        |
+            | Application raised date               |
+            | In London                             |
+            | Accommodation fees already paid       |
+            | Number of dependants                  |
+            | Course dates checked                  |
+            | Continuation course                   |
+            | Course type                           |
+            | Total tuition fees for the first year |
+            | Tuition fees already paid             |
+            | Sort code                             |
+            | Account number                        |
+            | Date of birth                         |
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
