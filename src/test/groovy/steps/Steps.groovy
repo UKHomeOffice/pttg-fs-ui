@@ -221,7 +221,7 @@ class Steps {
 
         entriesAsList.eachWithIndex { v, index ->
             def oneBasedIndex = index + 1;
-            def result = tableElement.findElements(By.xpath(".//tbody/tr[$oneBasedIndex]/th[contains(., '$v')]"))
+            def result = tableElement.findElement(By.xpath(".//tbody/tr[$oneBasedIndex]/th")).getText() == v
             assert result: "Could not find header [$v] for $tableId table row, [$oneBasedIndex] "
         }
     }
