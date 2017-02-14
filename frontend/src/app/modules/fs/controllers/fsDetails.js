@@ -226,10 +226,9 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       FsService.sendThresholdRequest(fs).then(function (data) {
         data.responseTime = moment()
         fs.thresholdResponse = data
-
         $state.go('fsResult', $state.params)
-      }, function (err) {
-        console.log('FsDetailsCtrl $scope.submit err', err)
+      }, function (err, data) {
+        $state.go('fsError', $state.params)
       })
     }
   }

@@ -76,10 +76,14 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
         } else {
           $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
         }
-      }, function (err, data) {
-        console.log('FsGetConsentCtrl $scope.submit err', err, data)
+      }, function (data) {
+        console.log('FsGetConsentCtrl $scope.submit err', data)
         $scope.fs.consentResponse = {}
-        $state.go('fsConsentError', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
+        if (data.status === 500) {
+          $state.go('fsError', $state.params)
+        } else {
+          $state.go('fsConsentError', $state.params)
+        }
       })
     }
   }

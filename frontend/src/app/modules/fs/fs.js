@@ -6,7 +6,7 @@
 
 var fsModule = angular.module('hod.fs', ['ui.router'])
 
-fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOService', function ($filter, FsInfoService, FsBankService, IOService) {
+fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOService', 'CONFIG', function ($filter, FsInfoService, FsBankService, IOService, CONFIG) {
   var me = this
   var _application
 
@@ -95,7 +95,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.sendThresholdRequest = function (obj) {
     var u = me.getThresholdUrl(obj)
     var params = me.getThresholdParams(obj)
-    return IOService.get(u, params)
+    return IOService.get(u, params, { timeout: CONFIG.timeout })
   }
 
   // determine the result data to show on the results page

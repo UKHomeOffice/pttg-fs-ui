@@ -28,7 +28,9 @@ fsModule.factory('FsInfoService', [ function () {
     frozen: 'it is frozen',
     businessacc: 'it is a business account',
     accountclosed: 'the account is closed',
-    notEnoughRecords: 'The records for this account does not cover the whole {{ nDaysRequired }} day period'
+    notEnoughRecords: 'The records for this account does not cover the whole {{ nDaysRequired }} day period',
+    notnow: 'You can’t use this service just now. The problem will be fixed as soon as possible',
+    trylater: 'Please try again later.'
   }
 
   // get a specific tier based on it's tier number
