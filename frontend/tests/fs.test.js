@@ -2,7 +2,7 @@
 
 describe('app: hod.proving', function () {
   beforeEach(module('hod.proving'))
-  beforeEach(module('hod.financialstatus'))
+  beforeEach(module('hod.fs'))
   beforeEach(module('hod.io'))
 
   describe('FsService', function () {
