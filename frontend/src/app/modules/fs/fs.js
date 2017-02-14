@@ -339,6 +339,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
     plain += '\n\n## Your calculation ##\n'
     _.each(criteria, function (c, k) {
+      c.display = (k === 'accountNumber') ? 'XXXX' + c.display.substr(4) : c.display
       plain += lineLength(c.label, 40) + c.display + '\n'
     })
 
