@@ -25,9 +25,6 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
-           # | Sort code                       | 11-11-11   |
-            #| Account number                  | 11111111   |
-            #| DOB                             | 21/09/1981 |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
