@@ -87,12 +87,14 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
         if (eDate.isAfter(aDate)) {
             // end date cannot be after the application raised date
+          err.msg = 'End date cannot be after application raised date'
           return err
         }
 
         if (eDate.isBefore(aDate.subtract(30, 'days'))) {
             // end date cannot be earlier than 31 days prior
             // to the application raised date
+          err.msg = 'End date is not within 31 days of application raised date'
           return err
         }
 
