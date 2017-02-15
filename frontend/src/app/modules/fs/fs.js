@@ -346,6 +346,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return plain
   }
 
+  this.track = function (category, action, label) {
+    if (label) {
+      ga('send', 'event', category, action, label)
+    } else {
+      ga('send', 'event', category, action)
+    }
+  }
+
   me.reset()
 
   return me

@@ -1,4 +1,4 @@
-/* global angular _ moment */
+/* global angular _ moment ga */
 var formsModule = angular.module('hod.forms', ['ui.validate'])
 
 /**
@@ -257,6 +257,27 @@ formsModule.factory('FormsService', ['$rootScope', 'FormValidatorsService', func
     }
   }
 
+  this.trackFormSubmission = function (formScope) {
+    var errcount = 0
+    var errcountstring = ''
+    _.each(formScope.objs, function (o) {
+      if (o.config.hidden) {
+        return
+      }
+      if (o.error && o.error.msg) {
+        // console.log('ERROR', o.error)
+        errcount++
+        ga('send', 'event', formScope.name, 'validation', o.config.id)
+      }
+    })
+    errcountstring = '' + errcount
+    while (errcountstring.length < 3) {
+      errcountstring = '0' + errcountstring
+    }
+
+    ga('send', 'event', formScope.name, 'errorcount', errcountstring)
+  }
+
   return this
 }])
 
@@ -363,6 +384,9 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
       $scope.submitForm = function () {
         var isValid = (me.validateForm() === 0)
+        // console.log('submitForm', $scope)
+        FormsService.trackFormSubmission($scope)
+
         if (isValid) {
           $scope.showErrors = !isValid
           $timeout(function () {

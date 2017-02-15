@@ -1,4 +1,4 @@
-/* global angular moment */
+/* global angular moment ga */
 
 // git update-index --skip-worktree serenity.properties
 
@@ -34,6 +34,11 @@ app.run(['$location', '$rootScope', '$window', '$timeout', '$state', 'Availabili
   // see http://simplyaccessible.com/article/spangular-accessibility/
 
   AvailabilityService.setURL('availability')
+
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    ga('set', 'page', $state.href(toState.name, toParams))
+    ga('send', 'pageview')
+  })
 
   $rootScope.$on('$viewContentLoaded', function (e) {
     // http://stackoverflow.com/questions/25596399/set-element-focus-in-angular-way

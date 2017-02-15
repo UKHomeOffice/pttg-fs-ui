@@ -63,11 +63,7 @@ class Steps {
         'studentType'       : uiRoot,
         'doctorate'         : uiRoot + '#!/fs/t4/doctorate',
         'non-doctorate'     : uiRoot + '#!/fs/t4/non-doctorate',
-        'pgdd'              : uiRoot + '#!/financial-status/pgdd',
-        'sso'               : uiRoot + '#!/financial-status/sso',
-        't2main'            : uiRoot + '#!/financial-status/t2main',
-        't2dependant'       : uiRoot + '#!/financial-status/t2dependant',
-        'studentTypeCalc'   : uiRoot + '#!/financial-status-calc',
+
     ]
 
      def applicantType = [

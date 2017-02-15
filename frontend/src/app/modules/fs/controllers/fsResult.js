@@ -50,13 +50,16 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
   $scope.render = function (state) {
     $scope.state = state
     console.log('render', state)
+
     switch (state) {
       case 'PASSED':
+        FsService.track('result', 'passed')
         $scope.stateTitle = FsInfoService.t('passed')
         $scope.stateReason = FsInfoService.t('passedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'NOTPASSED':
+        FsService.track('result', 'notpassed')
         $scope.stateTitle = FsInfoService.t('notPassed')
         if (fs.dailyBalanceResponse.data.failureReason && fs.dailyBalanceResponse.data.failureReason.recordCount) {
           $scope.stateReason = FsInfoService.t('notEnoughRecords').replace('{{ nDaysRequired }}', tier.nDaysRequired)
@@ -67,13 +70,19 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'CONSENTDENIED':
+        FsService.track('result', 'consentdenied')
         $scope.stateTitle = FsInfoService.t('consentDenied')
         $scope.stateReason = FsInfoService.t('consentDeniedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'ERROR':
+        FsService.track('result', 'consenterror')
         $scope.stateTitle = 'Error'
         $scope.stateReason = 'Something went wrong, please try again later.'
+        break
+      case 'CALCULATOR':
+        FsService.track('result', 'calculator')
+        break
     }
   }
 
@@ -135,8 +144,10 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
       console.log('FsBankService.sendConsentRequest(fs)', data)
       fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
+        $scope.cancelTimer()
         $scope.checkBalance()
       } else if (data.data.consent === 'FAILURE') {
+        $scope.cancelTimer()
         $scope.render('CONSENTDENIED')
       } else if ($scope.numTry < $scope.numTryLimit) {
         $scope.timerScope.startTimer()
