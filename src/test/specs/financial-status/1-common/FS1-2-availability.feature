@@ -44,10 +44,6 @@ Feature: Availability message
         Then the availability warning box should not be shown
 
 
-
-
-
-
     Scenario: Out of order message disappears when availability changes to OK
         Given the api health check response has status 503
         And caseworker is using the financial status service ui
