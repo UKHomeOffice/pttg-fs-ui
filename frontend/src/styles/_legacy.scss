@@ -1,0 +1,217 @@
+
+.parsley-error, .has-errors {
+  border-left:4px solid $error-colour;
+  padding:$gutter-half;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.parsley-error input[type="text"]{
+    border: 4px solid $error-colour;
+}
+.parsley-error textarea{
+    border: 4px solid $error-colour;
+}
+
+.form-error{
+  @include core-19;
+  font-weight: bold;
+  color: $error-colour;
+}
+
+.form-body {
+  padding-top: 15px;
+}
+
+
+@media (min-width: 769px) {
+    #global-header.with-proposition .header-wrapper .header-proposition
+    {
+      width: 100%;
+    }
+}
+
+#main {
+  font-size: 19px;
+}
+
+.highlighted {
+  background: #28A197;
+  color: #FFF;
+  text-align: center;
+  margin: 2.5em 0 2.5em 0;
+  padding: 1.5em 40px 2em 40px;
+  font-weight: bold;
+  h1{
+    margin: 0.5em 0;
+  }
+  h2{
+    margin: 0.5em 0;
+  }
+}
+
+/* declaration */
+
+.help-notice {
+  width: 100%;
+  float: left;
+  clear: both;
+  padding: 0.1em 0 0.1em 1em;
+  background: url(https://assets.digital.cabinet-office.gov.uk/static/icon-important-187bcc8d8a6d56498c4ac26cadad102d.png) no-repeat scroll 0 0.5em;
+  p {
+    padding: 0 1em 0 2em;
+    font-weight: 600;
+  }
+}
+
+/* IE 8, 9, 10 specific styles  */
+@media screen\0 {
+    .block-label input {
+      top: 12px;
+    }
+}
+
+
+
+/* form elements */
+.clearfix {
+  clear:both;
+}
+
+.block-label {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* fix for large radio buttons in firefox  */
+.block-label input {
+  width: 15px;
+  left: 20px;
+}
+
+/* close gap between heading and subtitle */
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.increase-top-margin {
+    margin-top: 40px;
+}
+
+.logo-banner {
+  padding: 20px 0 0;
+}
+
+@media (max-width: 640px) {
+    #global-header-bar .inner-block .header-bar {
+
+    }
+}
+
+#global-header-bar {
+  height: 10px;
+  background-color: #005ea5;
+}
+
+
+.confirmation {
+  padding-left:15px;
+}
+
+.transaction-id-detail {
+  font-weight: bold;
+}
+
+.organisation-logo {
+  font-size: 18px;
+  line-height: 22px;
+  padding: 3px 0 2px 44px;
+  background-image: url(https://assets.digital.cabinet-office.gov.uk/government/assets/crests/org_crest_27px-916806dcf065e7273830577de490d5c7c42f36ddec83e907efe62086785f24fb.png);
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: auto 25px;
+  border-left: 2px solid #009390;
+}
+
+.declaration {
+    background-position: 10px 15px;
+    background-color: #eeeeee;
+    padding-left: 55px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.declaration ul {
+  margin-top: 10px;
+  margin-left: 35px;
+  margin-right: 35px;
+  list-style-type: disc;
+}
+
+.start-button {
+  background-image: url(https://assets.digital.cabinet-office.gov.uk/static/icon-pointer-2x-8e9c31a486acd2de3aca823392c6d8667b60110cc8369ab1c9e03360b0d91dae.png);
+  background-size: 30px 19px;
+  background-position: 100% 50%;
+  background-repeat: no-repeat;
+  padding: 0.60em 2em 0.4em 0.67em;
+}
+
+.cookie-table {
+    margin-bottom: 1.5em;
+}
+
+.ogl-footer {
+  font-size: 14px!important;
+}
+
+.parsley-error, .has-errors {
+  border-left:4px solid $error-colour;
+  padding:$gutter-half;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.parsley-error input[type="text"]{
+    border: 4px solid $error-colour;
+}
+.parsley-error textarea{
+    border: 4px solid $error-colour;
+}
+
+.form-error{
+  @include core-19;
+  font-weight: bold;
+  color: $error-colour;
+}
+
+.form-body {
+  padding-top: 15px;
+}
+
+.form-group {
+  float: none;
+}
+
+@media (min-width: 769px) {
+    #global-header.with-proposition .header-wrapper .header-proposition
+    {
+      width: 66%;
+    }
+}
+
+
+tbody tr:first-child {
+  border-top: 1px solid $border-colour;
+}
+
+
+.panel-fail {
+  background-color: #dee0e2;
+  color: #000;
+}
+h1,
+#pageTitle,
+#pageDynamicHeading {
+  outline: 0;
+}

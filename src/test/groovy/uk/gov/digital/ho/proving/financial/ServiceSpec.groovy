@@ -12,6 +12,8 @@ import org.springframework.web.context.WebApplicationContext
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
+import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse
+import uk.gov.digital.ho.proving.financial.api.ConsentStatus
 import uk.gov.digital.ho.proving.financial.exception.ServiceExceptionHandler
 import uk.gov.digital.ho.proving.financial.integration.*
 import uk.gov.digital.ho.proving.financial.model.CappedValues
@@ -69,7 +71,10 @@ class ServiceSpec extends Specification {
 
         apiUrls.apiRoot = ''
         apiUrls.apiDailyBalanceEndpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/dailybalancestatus"
+        apiUrls.apiConsentEndpoint = "/pttg/financialstatus/v1/t4/accounts/{sortCode}/{accountNumber}/consent"
+        apiUrls.apiThresholdT2Endpoint = "/pttg/financialstatus/v1/t2/maintenance/threshold"
         apiUrls.apiThresholdT4Endpoint = "/pttg/financialstatus/v1/t4/maintenance/threshold"
+        apiUrls.apiThresholdT5Endpoint = "/pttg/financialstatus/v1/t5/maintenance/threshold"
 
         RestTemplate restTemplate = new RestTemplate()
         restTemplate.errorHandler = new RestServiceErrorHandler();
@@ -605,4 +610,110 @@ class ServiceSpec extends Specification {
     }
 
 
+    def 'processes valid request and response - consent'() {
+        given:
+        String consentCheckResponseJson = mapper.writeValueAsString(new ConsentCheckResponse("SUCCESS", new ConsentStatus("200", "OK")))
+        mockServer.expect(method(HttpMethod.GET))
+            .andRespond(withSuccess(consentCheckResponseJson, APPLICATION_JSON))
+
+        when:
+        def consentUiApiEndpoint = "/pttg/financialstatus/v1/accounts/{sortCode}/{accountNumber}/consent"
+        def response = mockMvc.perform(
+            get(consentUiApiEndpoint, SORT_CODE, ACCOUNT_NUMBER)
+                .param('dob', DOB))
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            andExpect(jsonPath("consent", is("SUCCESS")))
+        }
+    }
+
+    def 'process valid request and response - threshold for tier 4'() {
+        given:
+        mockServer.expect(requestTo(containsString("maintenance")))
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(thresholdResponseJson, APPLICATION_JSON))
+
+        when:
+        def thresholdUiApiEndpoint = "/pttg/financialstatus/v1/t4/threshold"
+        def response = mockMvc.perform(
+            get(thresholdUiApiEndpoint)
+                .param('inLondon', 'true')
+                .param('studentType', 'non-doctorate')
+                .param('courseStartDate', COURSE_START_DATE)
+                .param('courseEndDate', COURSE_END_DATE)
+                .param('originalCourseStartDate', ORIGINAL_COURSE_START_DATE)
+                .param('courseType', 'main')
+                .param('dependants', '1')
+                .param('accommodationFeesAlreadyPaid', '1')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            andExpect(jsonPath("threshold", is(1)))
+            andExpect(jsonPath("leaveEndDate", is("2000-01-01")))
+            andExpect(jsonPath("cappedValues.accommodationFeesPaid", is(100)))
+            andExpect(jsonPath("cappedValues.courseLength", is(9)))
+        }
+    }
+
+    def 'process valid request and response - threshold for tier 2'() {
+
+        given:
+        mockServer.expect(requestTo(containsString("maintenance")))
+            .andExpect(requestTo(containsString("applicantType=placeholder-applicant-type")))
+            .andExpect(requestTo(containsString("dependants=2")))
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(thresholdResponseJson, APPLICATION_JSON))
+
+        when:
+        def thresholdUiApiEndpoint = "/pttg/financialstatus/v1/t2/threshold"
+        def response = mockMvc.perform(
+            get(thresholdUiApiEndpoint)
+                .param('applicantType', 'placeholder-applicant-type')
+                .param('dependants', '2')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            andExpect(jsonPath("threshold", is(1)))
+            andExpect(jsonPath("leaveEndDate", is("2000-01-01")))
+            andExpect(jsonPath("cappedValues.accommodationFeesPaid", is(100)))
+            andExpect(jsonPath("cappedValues.courseLength", is(9)))
+        }
+    }
+
+    def 'process valid request and response - threshold for tier 5'() {
+
+        given:
+        mockServer.expect(requestTo(containsString("maintenance")))
+            .andExpect(requestTo(containsString("applicantType=placeholder-applicant-type")))
+            .andExpect(requestTo(containsString("dependants=2")))
+            .andExpect(method(HttpMethod.GET))
+            .andRespond(withSuccess(thresholdResponseJson, APPLICATION_JSON))
+
+        when:
+        def thresholdUiApiEndpoint = "/pttg/financialstatus/v1/t5/threshold"
+        def response = mockMvc.perform(
+            get(thresholdUiApiEndpoint)
+                .param('applicantType', 'placeholder-applicant-type')
+                .param('dependants', '2')
+        )
+
+        then:
+        response.with {
+            andExpect(status().isOk())
+            andExpect(content().contentType(APPLICATION_JSON_UTF8_VALUE))
+            andExpect(jsonPath("threshold", is(1)))
+            andExpect(jsonPath("leaveEndDate", is("2000-01-01")))
+            andExpect(jsonPath("cappedValues.accommodationFeesPaid", is(100)))
+            andExpect(jsonPath("cappedValues.courseLength", is(9)))
+        }
+    }
 }

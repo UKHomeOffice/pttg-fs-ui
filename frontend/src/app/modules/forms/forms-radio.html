@@ -1,17 +1,13 @@
 <div id="{{ name }}-form-group" class="form-group"  ng-class="{error: displayError}" ng-hide="config.hidden">
   <fieldset ng-class="{inline: config.inline}">
     <legend class="form-label-bold" id="{{ config.id }}">{{ label }}</legend>
-    <div class="form-hint" ng-if="hint">{{ hint }}</div>
+    <div class="form-hint">{{ hint }}</div>
     <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
-
-    <div class="radio-group" ng-repeat="(j, g) in options.groups">
-      <legend class="form-label-bold" ng-if="g.label">{{ g.label }}</legend>  
-      <div class="radio-opt" ng-repeat="(i, opt) in g.options">
-        <label class="block-label selection-button-radio" for="{{ config.id }}-{{ opt.value }}" id="{{ config.id }}-{{ opt.value }}-label" ng-class="{focused: focused, selected: isSelected(opt)}">
-          <input id="{{ config.id }}-{{ opt.value }}" type="radio" name="{{ name }}" ng-model="field" value="{{ opt.value }}" ng-click="radioClick(opt)" ng-required="config.required" ui-validate="'validfunc($value)'" ng-focus="focused=true" ng-blur="focused=false" />
-          {{ opt.label }}
-        </label>
-      </div>
+    <div class="radio-group">
+      <label class="block-label selection-button-radio" for="{{ config.id }}-{{ opt.value }}" id="{{ config.id }}-{{ opt.value }}-label" ng-class="{focused: focused, selected: isSelected(opt)}" ng-repeat="(i, opt) in options">
+        <input id="{{ config.id }}-{{ opt.value }}" type="radio" name="{{ name }}" ng-model="field" value="{{ opt.value }}" ng-click="radioClick(opt)" ng-required="config.required" ui-validate="'validfunc($value)'" ng-focus="focused=true" ng-blur="focused=false" />
+        {{ opt.label }}
+      </label>
     </div>
   </fieldset>
 </div>

@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
+import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse
+import uk.gov.digital.ho.proving.financial.api.ConsentStatus
 import uk.gov.digital.ho.proving.financial.audit.AuditEventType
 import uk.gov.digital.ho.proving.financial.model.*
 
@@ -146,5 +148,21 @@ class FinancialStatusCheckerSpec extends Specification {
         event1.data['maintenance'] == maintenance
 
         event2.data['response'].failureReason == recordCountFailure
+    }
+
+    def 'passes through the details retrieved from the API when checking consent'() {
+
+        given:
+        def account = new Account("12-34-56", "123456789", LocalDate.of(1984, 1, 1))
+        def stubbedResponseBody = new ConsentCheckResponse("SUCCESS", new ConsentStatus("200", "OK"))
+        def stubbedConsentCheckerResponseEntity = new ResponseEntity<>(stubbedResponseBody, OK)
+        template.exchange(_, _, _, ConsentCheckResponse.class) >> stubbedConsentCheckerResponseEntity
+
+        when:
+        ConsentCheckResponse response = checker.checkConsent(account, "token")
+
+        then:
+        response == stubbedResponseBody
+
     }
 }

@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
+import uk.gov.digital.ho.proving.financial.api.ThresholdResponse;
 import uk.gov.digital.ho.proving.financial.audit.AuditActions;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
@@ -30,8 +32,12 @@ import static java.util.Arrays.asList;
 import static net.logstash.logback.argument.StructuredArguments.value;
 import static org.springframework.http.HttpMethod.GET;
 import static uk.gov.digital.ho.proving.financial.audit.AuditActions.auditEvent;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.CONSENT;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.CONSENT_RESULT;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH;
 import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.SEARCH_RESULT;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.THRESHOLD;
+import static uk.gov.digital.ho.proving.financial.audit.AuditEventType.THRESHOLD_RESULT;
 
 /**
  * @Author Home Office Digital
@@ -64,10 +70,42 @@ public class FinancialStatusChecker {
     private final String TIER_5 = "t5";
 
     @Retryable(interceptor = "connectionExceptionInterceptor")
+    public ThresholdResponse checkThreshold(Course course, Maintenance maintenance, String accessToken) {
+
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(course, maintenance)));
+        LOGGER.debug("checkThreshold - Course: {}, Maintenance: {}", course, maintenance);
+
+
+        ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
+        ThresholdResponse thresholdResponse = new ThresholdResponse(thresholdResult);
+
+        auditor.publishEvent(auditEvent(THRESHOLD_RESULT, eventId, checkThresholdAuditData(thresholdResponse)));
+
+        return thresholdResponse;
+    }
+
+    @Retryable(interceptor = "connectionExceptionInterceptor")
+    public ThresholdResponse checkThreshold(String tier, String applicantType, Integer dependants, String accessToken) {
+
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(THRESHOLD, eventId, checkThresholdAuditData(tier, applicantType, dependants)));
+        LOGGER.debug("checkThreshold - applicantType: {}, dependants: {}", applicantType, dependants);
+
+
+        ThresholdResult thresholdResult = getThreshold(tier, applicantType, dependants, accessToken);
+        ThresholdResponse thresholdResponse = new ThresholdResponse(thresholdResult);
+
+        auditor.publishEvent(auditEvent(THRESHOLD_RESULT, eventId, checkThresholdAuditData(thresholdResponse)));
+
+        return thresholdResponse;
+    }
+
+    @Retryable(interceptor = "connectionExceptionInterceptor")
     public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, Course course, Maintenance maintenance, String accessToken) {
 
         UUID eventId = AuditActions.nextId();
-        auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, course, maintenance)));
+        auditor.publishEvent(auditEvent(SEARCH, eventId, dailyBalanceAuditData(account, toDate, course, maintenance)));
         LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, Course: {}, Maintenance: {}", account, toDate, course, maintenance);
 
         ThresholdResult thresholdResult = getThreshold(course, maintenance, accessToken);
@@ -75,7 +113,7 @@ public class FinancialStatusChecker {
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
 
-        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, auditData(fundingCheckResponse)));
+        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, dailyBalanceAuditData(fundingCheckResponse)));
 
         return fundingCheckResponse;
     }
@@ -84,7 +122,7 @@ public class FinancialStatusChecker {
     public FundingCheckResponse checkDailyBalanceStatus(String tier, Account account, LocalDate toDate, String applicantType, Integer dependants, String accessToken) {
 
         UUID eventId = AuditActions.nextId();
-        auditor.publishEvent(auditEvent(SEARCH, eventId, auditData(account, toDate, applicantType, dependants)));
+        auditor.publishEvent(auditEvent(SEARCH, eventId, dailyBalanceAuditData(account, toDate, applicantType, dependants)));
         LOGGER.debug("checkDailyBalanceStatus search - account: {}, LocalDate: {}, String: {}, Integer: {}", account, toDate, applicantType, dependants);
 
         ThresholdResult thresholdResult = getThreshold(tier, applicantType, dependants, accessToken);
@@ -92,9 +130,43 @@ public class FinancialStatusChecker {
 
         FundingCheckResponse fundingCheckResponse = new FundingCheckResponse(dailyBalanceStatus, thresholdResult);
 
-        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, auditData(fundingCheckResponse)));
+        auditor.publishEvent(auditEvent(SEARCH_RESULT, eventId, dailyBalanceAuditData(fundingCheckResponse)));
 
         return fundingCheckResponse;
+    }
+
+    @Retryable(interceptor = "connectionExceptionInterceptor")
+    public ConsentCheckResponse checkConsent(Account account, String accessToken) {
+        UUID eventId = AuditActions.nextId();
+        auditor.publishEvent(auditEvent(CONSENT, eventId, consentAuditData(account)));
+        LOGGER.debug("checkConsent - account: {}", account);
+
+        ConsentCheckResponse consentResult = getConsent(account, accessToken);
+        Map<String, Object> responseAuditData = consentAuditData(consentResult);
+        auditor.publishEvent(auditEvent(CONSENT_RESULT, eventId, responseAuditData));
+        return consentResult;
+    }
+
+    private Map<String, Object> consentAuditData(ConsentCheckResponse consentResult) {
+        Map<String, Object> responseAuditData = new HashMap<>();
+
+        responseAuditData.put("method", "check-consent");
+        responseAuditData.put("response", consentResult);
+        return responseAuditData;
+    }
+
+    private Map<String, Object> consentAuditData(Account account) {
+        Map<String, Object> auditData = new HashMap<>();
+        auditData.put("method", "check-consent");
+        auditData.put("account", account);
+        return auditData;
+    }
+
+    private ConsentCheckResponse getConsent(Account account, String accessToken) {
+        URI consentUri = apiUrls.consentUrlFor(account);
+        ConsentCheckResponse consentCheckResult = getForObject(consentUri, ConsentCheckResponse.class, accessToken);
+        LOGGER.debug("Consent result: {}", value("consentResult", consentCheckResult));
+        return consentCheckResult;
     }
 
 
@@ -174,7 +246,40 @@ public class FinancialStatusChecker {
         return headers;
     }
 
-    private Map<String, Object> auditData(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
+    private Map<String, Object> checkThresholdAuditData(Course course, Maintenance maintenance) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("course", course);
+        auditData.put("maintenance", maintenance);
+
+        return auditData;
+    }
+
+    private Map<String, Object> checkThresholdAuditData(String tier, String applicantType, Integer dependants) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("tier", tier);
+        auditData.put("dependants", dependants);
+        auditData.put("applicantType", applicantType);
+
+        return auditData;
+    }
+
+    private Map<String, Object> checkThresholdAuditData(ThresholdResponse response) {
+
+        Map<String, Object> auditData = new HashMap<>();
+
+        auditData.put("method", "check-threshold");
+        auditData.put("response", response);
+
+        return auditData;
+    }
+
+    private Map<String, Object> dailyBalanceAuditData(Account account, LocalDate toDate, Course course, Maintenance maintenance) {
 
         Map<String, Object> auditData = new HashMap<>();
 
@@ -187,7 +292,7 @@ public class FinancialStatusChecker {
         return auditData;
     }
 
-    private Map<String, Object> auditData(Account account, LocalDate toDate, String applicantType, Integer dependants) {
+    private Map<String, Object> dailyBalanceAuditData(Account account, LocalDate toDate, String applicantType, Integer dependants) {
 
         Map<String, Object> auditData = new HashMap<>();
 
@@ -201,7 +306,7 @@ public class FinancialStatusChecker {
     }
 
 
-    private Map<String, Object> auditData(FundingCheckResponse response) {
+    private Map<String, Object> dailyBalanceAuditData(FundingCheckResponse response) {
 
         Map<String, Object> auditData = new HashMap<>();
 

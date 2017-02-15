@@ -4,7 +4,7 @@ var sourcePath = 'frontend/src/'
 var gulp = require('gulp')
 var async = require('async')
 var run = require('run-sequence')
-var karma = require('karma').server
+var karma = require('karma')
 var minifyHTML = require('gulp-html-minifier')
 // var imagemin = require('gulp-imagemin');
 // var imageminJpegRecompress = require('imagemin-jpeg-recompress');
@@ -143,9 +143,8 @@ gulp.task('startwatch', function () {
 })
 
 gulp.task('test', function (done) {
-  // karma.start({
-    // configFile: __dirname + '/karma.conf.js'
- // }, done);
+  var server = new karma.Server({ configFile: __dirname + '/karma.conf.js' }, done)
+  server.start()
 })
 
 gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify'])

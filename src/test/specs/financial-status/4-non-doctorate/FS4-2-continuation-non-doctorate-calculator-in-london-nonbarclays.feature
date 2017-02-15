@@ -30,8 +30,12 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
     Background:
         Given the api health check response has status 200
-        And caseworker is using the financial status calculator service ui
+        And the api daily balance response will Pass
+        And the api threshold response will be t4
+        And caseworker is using the financial status service ui
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
+        And the caseworker selects the No radio button
         And the default details are
             | Application raised date         | 30/06/2016 |
             | End date                        | 01/06/2016 |
@@ -49,32 +53,33 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
  ######### Overall course <12 months In London #############
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
-        Given the account has sufficient funds
         When the financial status check is performed with
             | Course end date                 | 30/01/2017 |
             | Total tuition fees              | 9755.50    |
             | Tuition fees already paid       | 500        |
             | Accommodation fees already paid | 250.50     |
         Then the service displays the following result
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General)       |
+            | Entire course length            | 16                             |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Dependants                      | 1                              |
-            | Entire course length            | 16                             |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 16               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
 
 
     Scenario: Shelly is a Non Doctorate in London 1
@@ -88,7 +93,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 9 (limited to 9)               |
-            | Applicant type                  | Tier 4 (General)       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -100,10 +106,11 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Original Course Start Date      | 30/10/2015                     |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 9 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 16               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
 
 
  ###### overall course length 12+ months In London #######
@@ -115,7 +122,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                   |
             | Total funds required            | £16,090.00                   |
             | Course length                   | 7 (limited to 9)             |
-            | Applicant type                  | Tier 4 (General)     |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 01/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -126,10 +134,11 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
         And the result table contains the following
-            | Total funds required     | £16,090.00       |
-            | Course length            | 7 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017       |
-            | Entire course length     | 14               |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+            | Entire course length       | 14                       |
 
 
     Scenario: Shelly is a Non Doctorate in London student 3
@@ -144,7 +153,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Application Raised Date         | 30/06/2016                     |
             | Total funds required            | £16,090.00                     |
             | Course length                   | 17 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General)       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 25/09/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -155,8 +165,9 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |
         And the result table contains the following
-            | Total funds required     | £16,090.00        |
-            | Course length            | 17 (limited to 9) |
-            | Estimated Leave End Date | 22/10/2017        |
-            | Entire course length     | 23                |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 17 (limited to 9)        |
+            | Entire course length       | 23                       |
 

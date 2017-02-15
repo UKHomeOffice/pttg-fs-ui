@@ -5,7 +5,11 @@ package uk.gov.digital.ho.proving.financial.audit;
  */
 public enum AuditEventType {
     SEARCH,
-    SEARCH_RESULT
+    SEARCH_RESULT,
+    CONSENT,
+    CONSENT_RESULT,
+    THRESHOLD,
+    THRESHOLD_RESULT
 
     // LOGIN, LOGOUT, etc
 }

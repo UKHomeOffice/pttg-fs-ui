@@ -312,6 +312,9 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
           }
 
           obj.validfunc(inp.$viewValue)
+          if (obj.type === 'radio') {
+
+          }
 
           if (inp.$valid) {
             // clear the components error message
@@ -397,10 +400,10 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
       hint: '@hint',
       name: '@name',
       label: '@label',
-      options: '=',
-      config: '=?'
+      config: '=?',
+      options: '=?'
     },
-    transclude: true,
+    // transclude: true,
     templateUrl: 'modules/forms/forms-radio.html',
     compile: function (element, attrs) {
       defaultAttrs(attrs, {hint: '', label: '', inline: false})
@@ -408,14 +411,12 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
         scope.type = 'radio'
         scope.displayError = ''
 
-        if (scope.options[0] && scope.options[0].value) {
-          scope.options = {groups: [{ label: '', options: scope.options }]}
-        }
-
-        // console.log(scope.options)
-
         if (!scope.config) {
           scope.config = {}
+        }
+
+        if (_.isArray(scope.config.options) && !_.isArray(attrs.options)) {
+          scope.options = scope.config.options
         }
 
         if (typeof attrs.required === 'string') {
@@ -428,6 +429,7 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
           hidden: false,
           inline: false,
           required: true,
+          // options: [{label: 'Please select', value: 0}],
           errors: {
             required: {
               summary: 'The ' + lcFirst(scope.label) + ' option is invalid',
@@ -440,9 +442,7 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
         formCtrl.addObj(scope)
 
         scope.getSelectedOption = function () {
-          return _.find(scope.options.groups, function (g) {
-            return _.findWhere(g.options, {value: scope.field})
-          })
+          return _.findWhere(scope.options, {value: scope.field})
         }
 
         scope.validfunc = function (val) {
@@ -450,9 +450,13 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
           var validate = function () {
             if (scope.config.required && _.isUndefined(selected)) {
               // it is required (do this test before val is still a string)
+              scope.getInput().$valid = false
+              scope.getInput().$invalid = true
               return FormsService.getError('required', scope)
             }
 
+            scope.getInput().$valid = true
+            scope.getInput().$invalid = false
             return true
           }
 
@@ -739,7 +743,7 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
         }
 
         scope.isBlank = function () {
-          return (scope.field.length === 0)
+          return (scope.field && scope.field.length === 0)
         }
 
         scope.validfunc = function () {

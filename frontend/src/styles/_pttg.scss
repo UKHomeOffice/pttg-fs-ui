@@ -1,0 +1,97 @@
+.block-label {    
+  margin-bottom: 10px;
+}
+
+.button-info {
+  background-color: #dee0e2!important;
+  position: relative;
+  display: inline-block;
+
+  border: none;
+  box-shadow: 0 2px 0 #b5babe!important;
+  font-size: 1em;
+  line-height: 1.25;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  color: #0b0c0c!important;
+}
+
+.button-after, .button-after:hover {
+  background: none;
+  border-color: transparent;
+  color: $black !important;
+  text-decoration: none;
+  box-shadow: none;
+  cursor: default;
+  top: 0;
+}
+
+.button:not(.button-start) {
+  padding-bottom: 8px !important;
+}
+
+.button {
+  border-radius: 4px !important;
+}
+
+.error {
+  border-width: 0 0 0 4px;
+  border-style: solid;
+  border-color: #b10e1e;
+  @media (min-width: 641px) {
+    border-width: 0 0 0 5px;
+  }
+
+  .form-control {
+    border: 4px solid #b10e1e;
+  }
+}
+
+.form-date {
+  width: 100%;
+  overflow: hidden;
+}
+
+form legend{
+  float: left;
+  width: 100%;
+}
+
+.govuk-box-highlight.panel-fail {
+  background-color: #dee0e2;
+  color: #000;
+}
+
+.progress-wrap {
+  background: #dee0e2;
+  overflow: hidden;
+  position: relative;
+  margin: 15px 0;
+}
+.progress-bar {
+  height: 15px;
+  background: #005ea5;
+}
+
+table {
+  margin-bottom: 30px;
+}
+
+th {
+  width: 50%;
+}
+
+a[ng-click] {
+  cursor: pointer;
+}
+
+.debuglinks {
+  width: 100%;
+  overflow: hidden;
+  a {
+    float: left;
+    font-size: 10px;
+    padding: 10px;
+  }
+}

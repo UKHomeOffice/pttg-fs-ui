@@ -1,34 +1,31 @@
 Feature: Route selection screen inputs - All tiers
     This screen allows caseworker to select Tier 2, 4 & 5 application type, which will direct to the right Financial status check form
 
-    Scenario Outline: Caseworker selects the student type - Tier 4 (General) student (non-doctorate)
+    Background:
         Given the api health check response has status 200
-        And caseworker is using the financial status service ui
-        When the <student-type> student type is chosen
-        Then the service displays the <page-title> page sub heading
-        Examples:
-            | student-type  | page-title                       |
-            | non-doctorate | General student                  |
-            | doctorate     | General doctorate extension scheme       |
-            | pgdd          | General postgraduate doctor or dentist   |
-            | sso           | General student union sabbatical officer |
 
-    Scenario Outline: Caseworker selects Tier 2 (General)
-        Given the api health check response has status 200
-        And caseworker is using the financial status service ui
-        When the <student-type> student type is chosen
-        Then the service displays the <page-title> page sub heading
-        Examples:
-            | student-type | page-title                                 |
-            | t2main       | Main applicant (with & without dependants) |
-            | t2dependant  | Dependant only                             |
+    Scenario: Caseworker selects the student type - Tier 4 (General)
+        Given caseworker is on page t4
+        Then applicant type should have the following options
+            | nondoctorate | General student                  |
+            | doctorate    | Doctorate extension scheme       |
+            | pgdd         | Postgraduate doctor or dentist   |
+            | sso          | Student union sabbatical officer |
 
-    Scenario Outline: Caseworker selects Tier 5 (Temporary)
-        Given the api health check response has status 200
-        And caseworker is using the financial status service ui
-        When the <student-type> student type is chosen
-        Then the service displays the <page-title> page sub heading
-        Examples:
-            | student-type | page-title                                 |
-            | t5main       | Main applicant (with & without dependants) |
-            | t5dependant  | Dependant only                             |
+    Scenario: Caseworker selects Tier 2 (General)
+        Given caseworker is on page t2
+        Then applicant type should have the following options
+            | main      | Main applicant (with & without dependants) |
+            | dependant | Dependant only                             |
+
+    Scenario: Caseworker selects Tier 5
+        Given caseworker is on page t5
+        Then applicant type should have the following options
+            | main      | Main applicant (with & without dependants) |
+            | dependant | Dependant only                             |
+
+    Scenario: Caseworker selects Tier 5
+        Given caseworker is on page t5/main
+        Then do check should have the following options
+            | yes | Yes, check Barclays |
+            | no  | No                  |

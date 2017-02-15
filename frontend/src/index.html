@@ -66,17 +66,10 @@
 
     <header role="banner" id="global-header" class="with-proposition">
       <div class="header-wrapper">
-        <div class="header-global">
-          <div class="header-logo">
-            <a href="https://hodigital.blog.gov.uk/" title="Go to the Home Office Digital blog" id="logo" class="content">
-              <img src="/assets/images/gov.uk_logotype_crown_invert_trans.png?0.17.3" width="35" height="31" alt="Home Office crest" /> Home Office
-            </a>
-          </div>
-        </div>
-        <div class="header-proposition">
+         <div class="header-proposition">
           <div class="content">
             <nav id="proposition-menu">
-              <span class="home" id="proposition-name">Financial Status Check</span>
+              <a ui-sref="fsStart" id="proposition-name">Check financial status</a>
             </nav>
           </div>
         </div>
@@ -84,16 +77,8 @@
     </header>
 
     <main id="content" role="main">
-      <div id="global-header-bar"></div>
-      <div class="phase-banner-alpha">
-        <p>
-          <strong class="phase-tag">ALPHA</strong>
-          <span>This is a new service – your <a href="mailto:userresearchsheffield@digital.homeoffice.gov.uk">feedback</a> will help us to improve it.</span>
-        </p>
-      </div>
+      <div ui-view="nav"></div>
 
-
-      <!-- MAIN CONTENT -->
       <div ui-view="content"></div>
 
     </main>
