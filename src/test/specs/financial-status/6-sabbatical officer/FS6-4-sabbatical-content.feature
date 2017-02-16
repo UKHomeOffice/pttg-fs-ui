@@ -109,3 +109,61 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account number                  |
             | Date of birth                   |
 
+###################################### Dependant Only - Check for text on Output meets minimum financial requirement - Pass page ######################################
+
+    Scenario: Page checks for Passed text write up
+    This is a scenario to check if applicant meets minimum financial requirement text write up
+        Given the account has sufficient funds
+        When the financial status check is performed
+        And Caseworker selects applicant type of dependant
+        Then the service displays the following page content
+            | Outcome        | Passed                                          |
+            | Outcome detail | This applicant meets the financial requirements |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Course length            |
+        And the service displays the following criteria headers in order
+            | Tier                            |
+            | Applicant type                  |
+            | Application raised date         |
+            | Course dates checked            |
+            | Continuation course             |
+            | In London                       |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
+            | Date of birth                   |
+
+###################################### Dependant Only - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
+
+    Scenario: Page checks for Not Passed due to low balance text write up
+    This is a scenario to check if Applicant does not meet minimum financial requirement text write up
+        Given the api daily balance response will Fail-low-balance
+        When the financial status check is performed
+        And Caseworker selects applicant type of dependant
+        Then the service displays the following page content
+            | Outcome        | Not passed                                                            |
+            | Outcome detail | One or more daily closing balances are below the total funds required |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Lowest balance           |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Course length            |
+        And the service displays the following criteria headers in order
+            | Tier                            |
+            | Applicant type                  |
+            | Application raised date         |
+            | Course dates checked            |
+            | Continuation course             |
+            | In London                       |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
+            | Date of birth                   |

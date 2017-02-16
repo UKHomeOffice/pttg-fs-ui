@@ -315,7 +315,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 
     ###### overall course length 12+ months In London - dependant only - pass #######
 
-    Scenario: Alexis and Arsene are a is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
+    Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
         Given the account has sufficient funds
         And Caseworker selects applicant type of dependant
         When the financial status check is performed with
