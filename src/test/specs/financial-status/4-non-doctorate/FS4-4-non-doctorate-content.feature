@@ -138,3 +138,98 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
 #            | Account number |
 
 
+###################################### Dependant Only - Check for text on Output meets minimum financial requirement - Pass page ######################################
+
+    Scenario: Page checks for Passed text write up
+    This is a scenario to check if applicant meets minimum financial requirement text write up
+
+        Given the account has sufficient funds
+        And Caseworker selects applicant type of dependant
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Outcome        | Passed                                          |
+            | Outcome detail | This applicant meets the financial requirements |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Course length            |
+        And the service displays the following criteria headers in order
+            | Tier                                  |
+            | Applicant type                        |
+            | Application raised date               |
+            | In London                             |
+            | Number of dependants                  |
+            | Course dates checked                  |
+            | Continuation course                   |
+            | Course type                           |
+            | Sort code                             |
+            | Account number                        |
+            | Date of birth                         |
+
+
+
+        ###################################### Dependant Only - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
+
+    Scenario: Page checks for Not Passed text write up 1
+    This is a scenario to check if Applicant does not meet minimum financial requirement text write up
+        Given the account does not have sufficient funds
+        And Caseworker selects applicant type of dependant
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Outcome        | Not passed                                                            |
+            | Outcome detail | One or more daily closing balances are below the total funds required |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Lowest balance           |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Course length            |
+        And the service displays the following criteria headers in order
+            | Tier                                  |
+            | Applicant type                        |
+            | Application raised date               |
+            | In London                             |
+            | Number of dependants                  |
+            | Course dates checked                  |
+            | Continuation course                   |
+            | Course type                           |
+            | Sort code                             |
+            | Account number                        |
+            | Date of birth                         |
+
+
+
+   ## Dependant Only - Not Passed
+    Scenario: Page checks for Not Passed text write up
+    This is a scenario to check if Applicant has less than 28 days funds text write up
+
+        Given the api consent response will be SUCCESS
+        And the api daily balance response will Fail-record-count
+        When the financial status check is performed
+        Then the service displays the following page content
+            | Outcome        | Not passed                                                          |
+            | Outcome detail | The records for this account does not cover the whole 28 day period |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Estimated leave end date |
+            | Result timestamp         |
+            | Course length            |
+        And the service displays the following criteria headers in order
+            | Tier                                  |
+            | Applicant type                        |
+            | Application raised date               |
+            | In London                             |
+            | Number of dependants                  |
+            | Course dates checked                  |
+            | Continuation course                   |
+            | Course type                           |
+            | Sort code                             |
+            | Account number                        |
+            | Date of birth                         |

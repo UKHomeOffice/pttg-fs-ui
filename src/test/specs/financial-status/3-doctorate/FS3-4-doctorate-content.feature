@@ -47,7 +47,35 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Date of birth                   |
 
 
+###################################### Dependant Only - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
+    Scenario: Page checks for Not Passed text write up
 
+    This is a scenario to check if Applicant does not meet minimum financial requirement text write up for dependants only
 
+        Given the account does not have sufficient funds
+        When the financial status check is performed with
+            | Application raised date         | 29/06/2016 |
+            | End date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Dependants                      | 1          |
+        Then the service displays the following page content
+            | Outcome        | Not passed                                                            |
+            | Outcome detail | One or more daily closing balances are below the total funds required |
+        And the service displays the following result headers in order
+            | Account holder name      |
+            | Total funds required     |
+            | 28-day period checked    |
+            | Lowest balance           |
+            | Estimated leave end date |
+            | Result timestamp         |
+        And the service displays the following criteria headers in order
+            | Tier                            |
+            | Applicant type                  |
+            | Application raised date         |
+            | In London                       |
+            | Number of dependants            |
+            | Sort code                       |
+            | Account number                  |
+            | Date of birth                   |
 

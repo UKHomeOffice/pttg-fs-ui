@@ -6,6 +6,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
 
     In London - The applicant must show evidence of funds to cover £1,265 per month for 2 months (£2,530)
 
+    Dependants Required Maintenance threshold: In London - £845
+
     Required Maintenance threshold calculation to pass this feature file
     Maintenance threshold amount =  (Required Maintenance funds doctorate in London
     (£1265) * 2) -  Accommodation fees already paid
@@ -56,3 +58,20 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Page title | Check financial status |
 
 
+    Scenario: Rhianna is dependant only doctorate application and has sufficient funds
+
+        Given Caseworker selects applicant type of dependant
+        When the financial status check is performed
+        Then the service displays the following result
+            | Outcome                         | Passed                         |
+            | Account holder name             | Laura Taylor                   |
+            | Total funds required            | £16,090.00                     |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
+            | Applicant type                  | Doctorate extension scheme     |
+            | Tier                            | Tier 4 (General)               |
+            | In London                       | Yes                            |
+            | Dependants                      | 1                              |
+            | Sort code                       | 33-33-33                       |
+            | Account number                  | 33333333                       |
+            | DOB                             | 25/03/1987                     |
+            | Application raised date         | 29/06/2016                     |
