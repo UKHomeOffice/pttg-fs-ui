@@ -4,8 +4,16 @@ Feature: Route selection screen inputs - All tiers
     Background:
         Given the api health check response has status 200
 
+
+    Scenario:  Caseworker selects Tier 4
+        When caseworker is on page t4
+        Then  applicant type should have the following options
+            | main      | Main applicant (with & without dependants) |
+            | dependant | Dependant only                             |
+
+
     Scenario: Caseworker selects the student type - Tier 4 (General)
-        Given caseworker is on page t4
+        When caseworker is on page t4
         Then applicant type should have the following options
             | nondoctorate | General student                  |
             | doctorate    | Doctorate extension scheme       |
@@ -13,19 +21,19 @@ Feature: Route selection screen inputs - All tiers
             | sso          | Student union sabbatical officer |
 
     Scenario: Caseworker selects Tier 2 (General)
-        Given caseworker is on page t2
+        When caseworker is on page t2
         Then applicant type should have the following options
             | main      | Main applicant (with & without dependants) |
             | dependant | Dependant only                             |
 
     Scenario: Caseworker selects Tier 5
-        Given caseworker is on page t5
+        When caseworker is on page t5
         Then applicant type should have the following options
             | main      | Main applicant (with & without dependants) |
             | dependant | Dependant only                             |
 
     Scenario: Caseworker selects Tier 5
-        Given caseworker is on page t5/main
+        When caseworker is on page t5/main
         Then do check should have the following options
             | yes | Yes, check Barclays |
             | no  | No                  |
