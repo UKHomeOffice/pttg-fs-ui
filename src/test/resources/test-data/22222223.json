@@ -1,0 +1,15 @@
+{
+  "threshold": 700,
+  "leaveEndDate": "2000-01-01",
+  "consent" : "SUCCESS",
+    "cappedValues" : {
+        "accommodationFeesPaid": 1265.00,
+        "courseLength": 9
+    },
+  "status" : {
+    "code" : "200",
+    "message" : "OK"
+  }
+}
+
+

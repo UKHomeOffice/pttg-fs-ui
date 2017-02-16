@@ -23,12 +23,12 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
 
 fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
   var t = Number($state.params.tier)
+  FsService.reset()
   $scope.tier = FsInfoService.getTier(t)
   $scope.fs = FsService.getApplication()
   $scope.fs.tier = t
   $scope.submit = function (valid) {
     if (valid) {
-      console.log($scope.fs)
       $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
     }
   }

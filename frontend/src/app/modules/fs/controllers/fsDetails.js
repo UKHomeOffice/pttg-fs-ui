@@ -40,8 +40,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   // force application values from the url params
   FsService.setKnownParamsFromState(fs, $state.params)
 
-  console.log(fs)
-
   // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)
   $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
@@ -50,7 +48,20 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   // config for all fields
   $scope.conf = {
     applicationRaisedDate: {
-      max: moment().format('YYYY-MM-DD')
+      max: moment().format('YYYY-MM-DD'),
+      errors: {
+        max: {
+          msg: 'Enter a valid application raised date'
+        },
+        invalid: {
+          summary: 'The application raised date is invalid',
+          msg: 'Enter a valid application raised date'
+        },
+        required: {
+          msg: 'Enter a valid application raised date',
+          summary: 'The application raised date is invalid'
+        }
+      }
     },
     endDate: {
       validate: function (v, sc) {
@@ -76,12 +87,14 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
         if (eDate.isAfter(aDate)) {
             // end date cannot be after the application raised date
+          err.msg = 'End date cannot be after application raised date'
           return err
         }
 
         if (eDate.isBefore(aDate.subtract(30, 'days'))) {
             // end date cannot be earlier than 31 days prior
             // to the application raised date
+          err.msg = 'End date is not within 31 days of application raised date'
           return err
         }
 
@@ -132,13 +145,43 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       }
     },
     totalTuitionFees: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The total tuition fees is invalid',
+          msg: 'Enter a valid total tuition fees'
+        },
+        numeric: {
+          summary: 'The total tuition fees is invalid',
+          msg: 'Enter a valid total tuition fees'
+        }
+      }
     },
     tuitionFeesAlreadyPaid: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The tuition fees already paid is invalid',
+          msg: 'Enter a valid tuition fees already paid'
+        },
+        numeric: {
+          summary: 'The tuition fees already paid is invalid',
+          msg: 'Enter a valid tuition fees already paid'
+        }
+      }
     },
     accommodationFeesAlreadyPaid: {
-      prefix: '£ '
+      prefix: '£ ',
+      errors: {
+        required: {
+          summary: 'The accommodation fees already paid is invalid',
+          msg: 'Enter a valid accommodation fees already paid'
+        },
+        numeric: {
+          summary: 'The accommodation fees already paid is invalid',
+          msg: 'Enter a valid accommodation fees already paid'
+        }
+      }
     },
     dependants: {
       classes: { 'form-control-1-8': true },
@@ -180,16 +223,14 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   })
 
   $scope.submit = function (valid) {
-    console.log('Valid', valid, $state)
     if (valid) {
-      fs.thresholdResponse = {}
+      FsService.clearThresholdResponse
       FsService.sendThresholdRequest(fs).then(function (data) {
         data.responseTime = moment()
         fs.thresholdResponse = data
-
         $state.go('fsResult', $state.params)
-      }, function (err) {
-        console.log('err', err)
+      }, function (err, data) {
+        $state.go('fsError', $state.params)
       })
     }
   }

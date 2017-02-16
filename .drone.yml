@@ -86,6 +86,35 @@ pipeline:
       event: deployment
       environment: test
 
+  deploy_to_preprod:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.3
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - KUBE_NAMESPACE=pt-i-preprod
+      - ENVIRONMENT=preprod
+      - VERSION=${DRONE_COMMIT_SHA}
+      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+    commands:
+      - cd kube-pttg-fs-ui
+      - ./deploy.sh
+    when:
+      event: deployment
+      environment: preprod
+
+  deploy_to_prod:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.3
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - KUBE_NAMESPACE=pt-i-prod
+      - ENVIRONMENT=prod
+      - VERSION=${DRONE_COMMIT_SHA}
+      - KUBE_SERVER_PROD=https://kube.dsp.digital.homeoffice.gov.uk
+    commands:
+      - cd kube-pttg-fs-ui
+      - ./deploy-prod.sh
+    when:
+      event: deployment
+      environment: prod
 
 services:
   dind:

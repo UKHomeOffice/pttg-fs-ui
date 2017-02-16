@@ -1,4 +1,4 @@
-/* global angular moment _ ga */
+/* global angular moment _ ga Clipboard */
 
 'use strict'
 
@@ -24,9 +24,8 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
 fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state, FsService) {
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
     var fs = FsService.getApplication()
-    if (toState.name === 'fsResult' && !FsService.hasResultInfo(fs)) {
+    if (toState.name === 'fsResult' && !FsService.hasThresholdInfo(fs)) {
       // you cannot be on the 'fsResult' route/view if the result info is not present
-      console.log('No result info')
       event.preventDefault()
       $state.go('fsDetails', toParams)
       return false
@@ -34,10 +33,10 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
   })
 }])
 
-fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, FsService, FsInfoService, FsBankService) {
-  console.log('CONTROLLER FsResultCtrl')
-
+fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, $timeout, FsService, FsInfoService, FsBankService) {
   var fs = FsService.getApplication()
+  var tier = FsInfoService.getTier(fs.tier)
+  FsBankService.clearDailyBalanceResponse(fs)
   $scope.threshold = fs.thresholdResponse.data.threshold
   $scope.leaveEndDate = fs.thresholdResponse.data.leaveEndDate
   $scope.criteria = FsService.getCriteria(fs)
@@ -46,8 +45,52 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
   $scope.numTry = 0
   $scope.numTryLimit = 5
   $scope.timerScope = null
-  $scope.showConsentPending = FsBankService.hasBankInfo(fs) && !FsBankService.hasResult(fs)
-  $scope.showPassOrFail = FsBankService.hasResult(fs)
+  $scope.doNext = []
+
+  $scope.render = function (state) {
+    $scope.state = state
+    console.log('render', state)
+
+    switch (state) {
+      case 'PASSED':
+        FsService.track('result', 'passed')
+        $scope.stateTitle = FsInfoService.t('passed')
+        $scope.stateReason = FsInfoService.t('passedReason')
+        $scope.doNext = FsService.getThingsToDoNext(fs)
+        break
+      case 'NOTPASSED':
+        FsService.track('result', 'notpassed')
+        $scope.stateTitle = FsInfoService.t('notPassed')
+        if (fs.dailyBalanceResponse.data.failureReason && fs.dailyBalanceResponse.data.failureReason.recordCount) {
+          $scope.stateReason = FsInfoService.t('notEnoughRecords').replace('{{ nDaysRequired }}', tier.nDaysRequired)
+        } else {
+          $scope.stateReason = FsInfoService.t('notPassedReason')
+        }
+
+        $scope.doNext = FsService.getThingsToDoNext(fs)
+        break
+      case 'CONSENTDENIED':
+        FsService.track('result', 'consentdenied')
+        $scope.stateTitle = FsInfoService.t('consentDenied')
+        $scope.stateReason = FsInfoService.t('consentDeniedReason')
+        $scope.doNext = FsService.getThingsToDoNext(fs)
+        break
+      case 'ERROR':
+        FsService.track('result', 'consenterror')
+        $scope.stateTitle = 'Error'
+        $scope.stateReason = 'Something went wrong, please try again later.'
+        break
+      case 'CALCULATOR':
+        FsService.track('result', 'calculator')
+        break
+    }
+  }
+
+  if (FsBankService.hasBankInfo(fs)) {
+    $scope.render('PENDING')
+  } else {
+    $scope.render('CALCULATOR')
+  }
 
   $scope.timerConf = {
     duration: 5000,
@@ -61,7 +104,12 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
 
       timerScope.$on('FsTimerUPDATED', function (e) {
         // update the seconds countdown
-        $scope.seconds = Math.ceil((100 - e.targetScope.percent) * e.targetScope.config.duration / 100000)
+        var s = Math.ceil((100 - e.targetScope.percent) * e.targetScope.config.duration / 100000)
+        if (s) {
+          $scope.consentCheck = 'We will automatically check for consent again in ' + s + 's.'
+        } else {
+          $scope.consentCheck = 'We will no longer check automatically for consent'
+        }
       })
 
       timerScope.$on('FsTimerENDED', function (e) {
@@ -93,9 +141,14 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
     // send the consent API request
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
-      console.log(data.data.consent)
+      console.log('FsBankService.sendConsentRequest(fs)', data)
+      fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
+        $scope.cancelTimer()
         $scope.checkBalance()
+      } else if (data.data.consent === 'FAILURE') {
+        $scope.cancelTimer()
+        $scope.render('CONSENTDENIED')
       } else if ($scope.numTry < $scope.numTryLimit) {
         $scope.timerScope.startTimer()
       } else {
@@ -109,9 +162,46 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', 'FsService',
 
   $scope.checkBalance = function () {
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
-      console.log(data)
+      console.log('FsBankService.sendDailyBalanceRequest(fs)', data)
+      fs.dailyBalanceResponse = data
+      $scope.results = FsService.getResults(fs)
+      var passed = FsBankService.passed(fs)
+      if (passed) {
+        $scope.render('PASSED')
+      } else if (passed === false) {
+        $scope.render('NOTPASSED')
+      } else {
+        $scope.showPassOrFail = false
+      }
     }, function (err, data) {
-      console.log(err, data)
+      console.log('FsResultCtrl $scope.checkBalance err', err, data)
     })
   }
+
+  // #### COPY AND PASTE ####
+  // init the clipboard object
+  var clipboard = new Clipboard('#copyBtn', {
+    text: function () {
+      return FsService.getPlainTextResults(fs)
+    }
+  })
+
+  var timeoutResetButtonText = function () {
+    $timeout(function () {
+      $scope.showCopied = false
+      $scope.$applyAsync()
+    }, 2000)
+  }
+
+  // $scope.showCopied = true
+  clipboard.on('success', function (e) {
+    $scope.showCopied = true
+    $scope.$applyAsync()
+    e.clearSelection()
+    timeoutResetButtonText()
+  })
+  clipboard.on('error', function (e) {
+    console.log('ClipBoard error', e)
+    $scope.$applyAsync()
+  })
 }])

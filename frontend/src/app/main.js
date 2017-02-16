@@ -1,11 +1,11 @@
-/* global angular moment */
+/* global angular moment ga */
 
 // git update-index --skip-worktree serenity.properties
 
 var app = angular.module('hod.proving', [
   'ui.router',
   'ngAria',
-  'hod.financialstatus',
+  // 'hod.financialstatus',
   'hod.fs',
   'hod.forms',
   'hod.io',
@@ -35,6 +35,11 @@ app.run(['$location', '$rootScope', '$window', '$timeout', '$state', 'Availabili
 
   AvailabilityService.setURL('availability')
 
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    ga('set', 'page', $state.href(toState.name, toParams))
+    ga('send', 'pageview')
+  })
+
   $rootScope.$on('$viewContentLoaded', function (e) {
     // http://stackoverflow.com/questions/25596399/set-element-focus-in-angular-way
 
@@ -56,7 +61,7 @@ app.filter('pounds', ['$filter', function ($filter) {
 
 app.filter('dateDisplay', function () {
   return function (date) {
-    return moment(date, 'YYYY-MM-DD').format('DD MMMM YYYY')
+    return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY')
   }
 })
 

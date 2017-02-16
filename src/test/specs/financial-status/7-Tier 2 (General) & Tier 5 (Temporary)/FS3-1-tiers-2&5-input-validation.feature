@@ -11,86 +11,31 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given the api health check response has status 200
+        And the api consent response will be PENDING
+        And the api threshold response will be t2
         And caseworker is using the financial status service ui
-        And the t2main student type is chosen
-        And the caseworker selects the Yes, Check Barclays  radio button
-        And the default details are
-            | Dependants     | 0          |
-            | Sort code      | 111111     |
+        And the caseworker selects Tier two
+        And Main applicant type is selected
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | Sort code      | 11-11-11   |
             | Account number | 11111111   |
             | DOB            | 27/07/1981 |
-            | End Date       | 30/05/2016 |
+        And the default details are
+            | Dependants | 0          |
+            | End Date   | 30/05/2016 |
 
 
 ######################### General validation message display #########################
 
     Scenario: Error summary details are shown when a validation error occurs
         When the financial status check is performed with
-            | Dependants     |  |
-            | Sort code      |  |
-            | Account number |  |
-            | DOB            |  |
+            | Dependants |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
         And the error summary list contains the text
             | The number of dependants is invalid |
-            | The account number is invalid       |
-            | The sort code is invalid            |
-            | The date of birth is invalid        |
-
-######################### Validation on the Sort Code Field #########################
-
-    Scenario: Case Worker does NOT enter Sort Code
-        When the financial status check is performed with
-            | Sort code |  |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - mising digits
-        When the financial status check is performed with
-            | Sort code | 11-11-1 |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - all 0's
-        When the financial status check is performed with
-            | Sort code | 00-00-00 |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-    Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
-        When the financial status check is performed with
-            | Sort code | 11-11-1q |
-        Then the service displays the following error message
-            | sort Code-error | Enter a valid sort code |
-
-
-######################### Validation on the Account Number Field #########################
-
-    Scenario: Case Worker does NOT enter Account Number
-        When the financial status check is performed with
-            | Account number |  |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - too short
-        When the financial status check is performed with
-            | Account number | 1111111 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - all 0's
-        When the financial status check is performed with
-            | Account number | 00000000 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
-
-    Scenario: Case Worker enters invalid Account Number - not numbers 0-9
-        When the financial status check is performed with
-            | Account number | 111a1111 |
-        Then the service displays the following error message
-            | account number-error | Enter a valid account number |
 
  ######################### Validation on the Dependants Field #########################
 
@@ -118,22 +63,3 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | Dependants-error | Enter a valid number of dependants |
 
-        ######################### Validation on the Date of birth Field #########################
-
-    Scenario: Case Worker does NOT enter Date of birth
-        When the financial status check is performed with
-            | DOB |  |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |
-
-    Scenario: Case Worker enters invalid Date of birth - in the future
-        When the financial status check is performed with
-            | DOB | 25/09/2099 |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |
-
-    Scenario: Case Worker enters invalid Date of birth - not numbers 0-9
-        When the financial status check is performed with
-            | DOB | 25/08/198x |
-        Then the service displays the following error message
-            | dob-error | Enter a valid date of birth |

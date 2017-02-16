@@ -9,6 +9,30 @@ var fsModule = angular.module('hod.fs')
 fsModule.factory('FsInfoService', [ function () {
   var me = this
 
+  me.text = {
+    passed: 'Passed',
+    passedReason: 'This applicant meets the financial requirements',
+    notPassed: 'Not passed', // 'Financial status not met',
+    notPassedReason: 'One or more daily closing balances are below the total funds required',
+    checkName: 'Check that the account holder name matches the applicant\'s.',
+    copyToCid: 'Copy the information into CID',
+    checkPaper: 'Check paper evidence to see if the applicant can meet the criteria in some other way.',
+    manualCheck: 'Manually check the applicants evidence to make sure they have the total funds required.',
+    checkDataEntry: 'Check you have entered the correct information.',
+    consentDenied: 'Consent has not been given',
+    consentDeniedReason: 'The applicant has not given consent to check their financial status directly with their bank.',
+    inaccessibleaccount: 'Invalid or inaccessible account',
+    conditionspreventedus: 'One or more of the following conditions prevented us from accessing the account:',
+    datamismatch: 'the account number, sort code and date of birth do not match a Barclays account',
+    notbarclays: 'it is not a Barclays account',
+    frozen: 'it is frozen',
+    businessacc: 'it is a business account',
+    accountclosed: 'the account is closed',
+    notEnoughRecords: 'The records for this account does not cover the whole {{ nDaysRequired }} day period',
+    notnow: 'You can’t use this service just now. The problem will be fixed as soon as possible',
+    trylater: 'Please try again later.'
+  }
+
   // get a specific tier based on it's tier number
   this.getTier = function (t) {
     var tier = _.findWhere(this.getTiers(), {tier: t})
@@ -37,13 +61,13 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'main',
         label: 'Main applicant (with & without dependants)',
         full: 'Main applicant (with & without dependants)',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       },
       {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       }]
     },
     {
@@ -54,25 +78,25 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'nondoctorate',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
       {
         value: 'doctorate',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
-        fields: ['*default', '*t4all']
+        fields: ['*default', '*t4all', 'dependants']
       },
       {
         value: 'pgdd',
         label: 'Postgraduate doctor or dentist',
         full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
-        fields: ['*default', '*courses', '*t4all']
+        fields: ['*default', '*courses', '*t4all', 'dependants']
       },
       {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        fields: ['*default', '*courses', '*t4all']
+        fields: ['*default', '*courses', '*t4all', 'dependants']
       }]
     },
     {
@@ -83,13 +107,13 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'main',
         label: 'Main applicant (with & without dependants)',
         full: 'Main applicant (with & without dependants)',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       },
       {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default']
+        fields: ['*default', 'dependants']
       }]
     }]
   }
@@ -99,7 +123,7 @@ fsModule.factory('FsInfoService', [ function () {
     switch (groupName) {
       case '*default':
         // all routes have these fields
-        return ['applicationRaisedDate', 'endDate', 'dependants']
+        return ['applicationRaisedDate', 'endDate']
       case '*courses':
         // the t4 student routes need course start and end dates
         return ['courseStartDate', 'courseEndDate', 'continuationCourse', 'originalCourseStartDate']
@@ -129,7 +153,7 @@ fsModule.factory('FsInfoService', [ function () {
   this.getAllFieldInfo = function () {
     var fieldInfo = {
       applicationRaisedDate: {
-        summary: 'Date application received',
+        summary: 'Application raised date',
         format: 'date'
       },
       endDate: {
@@ -140,13 +164,13 @@ fsModule.factory('FsInfoService', [ function () {
         summary: 'Number of dependants'
       },
       inLondon: {
-        summary: 'Does the applicant live/reside in London?',
-        options: [{ value: 'yes', label: 'Yes, in London' }, { value: 'no', label: 'No' }],
+        summary: 'In London',
+        options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },
       courseType: {
         summary: 'Course type',
-        options: [{ value: 'presessional', label: 'Pre-sessional' }, { value: 'main', label: 'Main course' }],
+        options: [{ value: 'pre-sessional', label: 'Pre-sessional' }, { value: 'main', label: 'Main course' }],
         format: 'radio'
       },
       courseStartDate: {
@@ -158,8 +182,8 @@ fsModule.factory('FsInfoService', [ function () {
         format: 'date'
       },
       continuationCourse: {
-        summary: 'Is the course a continuation?',
-        options: [{ value: 'yes', label: 'Yes, continuation' }, { value: 'no', label: 'No' }],
+        summary: 'Continuation course',
+        options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
         format: 'radio'
       },
       originalCourseStartDate: {
@@ -171,7 +195,8 @@ fsModule.factory('FsInfoService', [ function () {
         format: 'pounds'
       },
       totalTuitionFees: {
-        summary: 'Total tuition fees for the first year'
+        summary: 'Total tuition fees for the first year',
+        format: 'pounds'
       },
       accommodationFeesAlreadyPaid: {
         summary: 'Accommodation fees already paid',
@@ -189,6 +214,13 @@ fsModule.factory('FsInfoService', [ function () {
   this.getFieldInfo = function (f) {
     var fieldInfo = me.getAllFieldInfo()
     return fieldInfo[f] || null
+  }
+
+  this.t = function (ref) {
+    if (_.has(me.text, ref)) {
+      return me.text[ref]
+    }
+    return ''
   }
 
   return this

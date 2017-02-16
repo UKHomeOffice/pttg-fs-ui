@@ -35,6 +35,9 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.hasResult = function (obj) {
+    if (_.has(obj, 'dailyBalanceResponse') && _.has(obj.dailyBalanceResponse, 'data') && _.has(obj.dailyBalanceResponse.data, 'fundingRequirementMet')) {
+      return true
+    }
     return false
   }
 
@@ -48,6 +51,21 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
 
   this.getConsentParams = function (obj) {
     return {dob: obj.dob}
+  }
+
+  this.getConsentStatus = function (obj) {
+    if (_.has(obj, 'consentResponse') && _.has(obj.consentResponse, 'data') && _.has(obj.consentResponse.data, 'consent')) {
+      return obj.consentResponse.data.consent
+    }
+    return null
+  }
+
+  this.consentGiven = function (obj) {
+    return me.getConsentStatus(obj) === 'SUCCESS'
+  }
+
+  this.consentDenied = function (obj) {
+    return me.getConsentStatus(obj) === 'FAILURE'
   }
 
   this.sendConsentRequest = function (obj) {
@@ -86,6 +104,12 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     // add the date of birth
     params.dob = obj.dob
 
+    // add the applicant type
+    params.applicantType = obj.applicantType
+    params.studentType = obj.applicantType
+
+    params.toDate = obj.endDate
+
     return params
   }
 
@@ -93,6 +117,22 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     var u = me.getDailyBalanceStatusUrl(obj)
     var params = me.getDailyBalanceParams(obj)
     return IOService.get(u, params)
+  }
+
+  this.clearDailyBalanceResponse = function (obj) {
+    if (me.hasResult(obj)) {
+      delete obj.dailyBalanceResponse
+      return true
+    }
+    return false
+  }
+
+  this.passed = function (obj) {
+    if (me.hasResult(obj)) {
+      return obj.dailyBalanceResponse.data.fundingRequirementMet
+    }
+
+    return null
   }
 
   return me

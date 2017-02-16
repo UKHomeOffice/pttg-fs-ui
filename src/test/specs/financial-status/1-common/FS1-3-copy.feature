@@ -4,9 +4,18 @@ Feature: Copy results to paste buffer
 
     Background:
         Given the api health check response has status 200
+        And the api daily balance response will Pass
+        And the api consent response will be SUCCESS
+        And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And the Tier 4 student-type is chosen
+        #And the api threshold response will be t4
+        And the caseworker selects Tier four
         And the non-doctorate student type is chosen
+        And the caseworker selects the Yes, check Barclays radio button
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 33-33-33   |
+            | Account number | 33333333   |
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
@@ -17,9 +26,9 @@ Feature: Copy results to paste buffer
             | Tuition fees already paid       | 10         |
             | Accommodation fees already paid | 20         |
             | Dependants                      | 0          |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
-            | DOB                             | 27/07/1981 |
+            #| Sort code                       | 11-11-11   |
+            #| Account number                  | 11111111   |
+            #| DOB                             | 27/07/1981 |
             | Continuation Course             | No         |
             | Course type                     | Main       |
 
