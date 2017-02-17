@@ -17,10 +17,10 @@ Feature: Insufficient Records
             | End date                        | 10/06/2016 |
             | In London                       | No         |
             | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
+            | Dependants                      | 1          |
         Then the service displays the following page content
-            | Outcome | Not passed                                                          |
-            | Outcome detail  | The records for this account does not cover the whole 90 day period |
+            | Outcome        | Not passed                                                          |
+            | Outcome detail | The records for this account does not cover the whole 90 day period |
 
 
 

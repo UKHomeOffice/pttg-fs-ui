@@ -15,7 +15,7 @@ Feature: Route selection screen inputs - All tiers
     Scenario: Caseworker selects the student type - Tier 4 (General)
         When caseworker is on page t4
         Then applicant type should have the following options
-            | nondoctorate | General student                  |
+            | general | General student                  |
             | doctorate    | Doctorate extension scheme       |
             | pgdd         | Postgraduate doctor or dentist   |
             | sso          | Student union sabbatical officer |

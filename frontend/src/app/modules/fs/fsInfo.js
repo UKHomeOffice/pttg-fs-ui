@@ -67,7 +67,8 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default', 'dependants']
+        fields: ['*default', 'dependants'],
+        dependantsOnly: true
       }]
     },
     {
@@ -75,7 +76,7 @@ fsModule.factory('FsInfoService', [ function () {
       label: 'Tier 4 (General)',
       nDaysRequired: 28,
       variants: [{
-        value: 'nondoctorate',
+        value: 'general',
         label: 'General student',
         full: 'Tier 4 (General) student',
         fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
@@ -113,7 +114,8 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'dependant',
         label: 'Dependant only',
         full: 'Dependant only',
-        fields: ['*default', 'dependants']
+        fields: ['*default', 'dependants'],
+        dependantsOnly: true
       }]
     }]
   }

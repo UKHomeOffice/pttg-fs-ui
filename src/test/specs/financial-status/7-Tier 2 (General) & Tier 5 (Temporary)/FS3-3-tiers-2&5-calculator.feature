@@ -60,7 +60,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
 
     Scenario: Lizzie is a Tier 2 (General) and sufficient funds
         Given caseworker is on page t2/dependant/bank/details
-        When the financial status check is performed
+        When the financial status check is performed with
+            | Dependants | 1 |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Account holder name        | Laura Taylor             |
@@ -75,7 +76,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
     Scenario: Karen is a Tier 5 (Temporary) and has insufficient funds
         Given caseworker is on page t2/dependant/bank/details
         And the api daily balance response will Fail-low-balance
-        When the financial status check is performed
+        When the financial status check is performed with
+            | Dependants | 1 |
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Account holder name        | Shelly Smith             |
@@ -94,8 +96,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Dependants | 2 |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Account holder name        | Ronald Taylor            |
-            | Total funds required       | £1260.00                 |
+            | Account holder name        | Laura Taylor            |
+            | Total funds required       | £945.00                 |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 2                        |
             | Sort code                  | 22-22-23                 |
@@ -111,8 +113,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Account holder name        | Shelly Smith             |
-            | Total funds required       | £1890.00                 |
-            | Lowest Balance             | £1,160.00 on 01/06/2016  |
+            | Total funds required       | £1,575.00                 |
+            | Lowest Balance             | £600.90 on 01/06/2016  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 3                        |
             | Sort code                  | 22-22-23                 |

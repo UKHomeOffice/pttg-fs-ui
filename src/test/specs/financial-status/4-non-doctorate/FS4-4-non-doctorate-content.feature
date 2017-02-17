@@ -7,7 +7,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
+        And the general student type is chosen
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
             | DOB            | 25/03/1987 |

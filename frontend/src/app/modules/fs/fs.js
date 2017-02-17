@@ -39,7 +39,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
-    obj.applicantType = stateParams.applicantType || null // nondoctorate, sso
+    obj.applicantType = stateParams.applicantType || null // general, sso
     obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
 
     if (obj.doCheck !== 'yes') {
@@ -83,6 +83,10 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     _.each(fields, function (f) {
       params[f] = obj[f]
     })
+
+    if (!_.has(params, 'dependantsOnly')) {
+      params.dependantsOnly = variant.dependantsOnly || false
+    }
 
     // [TODO]
     params.studentType = obj.applicantType

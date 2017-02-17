@@ -21,7 +21,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         And the financial status check is performed with
             | Application raised date | 30/07/2016 |
             | End Date                | 04/07/2016 |
-            | Dependants              | 0          |
+            | Dependants              | 1          |
         And after at least 5 seconds
         And the api consent response will be FAILURE
         And the check again button is clicked
@@ -30,7 +30,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Outcome detail             | The applicant has not given consent to check their financial status directly with their bank. |
             | Total funds required       | £945.00                                                                                       |
             | Maintenance period checked | 06/04/2016 to 04/07/2016                                                                      |
-            | Dependants                 | 0                                                                                             |
+            | Dependants                 | 1                                                                                             |
             | Sort code                  | 22-22-23                                                                                      |
             | Account number             | 22222229                                                                                      |
             | DOB                        | 25/03/1987                                                                                    |

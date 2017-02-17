@@ -22,13 +22,13 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         And the financial status check is performed with
             | Application raised date | 30/06/2016 |
             | End Date                | 31/05/2016 |
-            | Dependants              | 0          |
+            | Dependants              | 1          |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £945.00                  |
             | Maintenance period checked | 03/03/2016 to 31/05/2016 |
-            | Dependants                 | 0                        |
+            | Dependants                 | 1                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
@@ -39,7 +39,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Tier five | Dependant |
 
 
-    Scenario: Tier 4 Non-Doctorate - Consent granted, balances API invoked and data received - display result page
+    Scenario: Tier 4 general - Consent granted, balances API invoked and data received - display result page
 
         Given the api health check response has status 200
         And the api daily balance response will Pass
@@ -47,7 +47,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
+        And the general student type is chosen
         And the caseworker selects the Yes, check Barclays radio button
         And consent is sought for the following:
             | DOB            | 25/03/1987 |

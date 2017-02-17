@@ -16,7 +16,7 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given caseworker is using the financial status service ui
-        And caseworker is on page t4/nondoctorate/calc/details
+        And caseworker is on page t4/general/calc/details
 
 ######################### General validation message display #########################
 
@@ -101,7 +101,7 @@ Feature: Show clear error details when inputs are invalid
             | End Date | 30/05/2016 |
             | Application raised date | 31/01/2016 |
         Then the service displays the following error message
-            | End Date-error | End date is not within 31 days of application raised date |
+            | End Date-error | End date cannot be after application raised date |
 
     Scenario: Caseworker enters end date after the Application Raised Date
         When the financial status check is performed with

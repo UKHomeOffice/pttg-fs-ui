@@ -6,7 +6,7 @@ Feature: Edit search button to return UI populated with current values (for all 
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
-        And caseworker is on page t4/nondoctorate/consent
+        And caseworker is on page t4/general/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 33-33-33   |

@@ -200,6 +200,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
           ok = false
         }
 
+        if ($scope.variant.dependantsOnly && n < 1) {
+          ok = false
+        }
+
         if (ok) {
           return true
         }

@@ -101,6 +101,10 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
       params[f] = obj[f]
     })
 
+    if (!_.has(params, 'dependantsOnly')) {
+      params.dependantsOnly = variant.dependantsOnly || false
+    }
+
     // add the date of birth
     params.dob = obj.dob
 
