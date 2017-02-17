@@ -28,7 +28,8 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       totalTuitionFees: '',
       tuitionFeesAlreadyPaid: '',
       accommodationFeesAlreadyPaid: '',
-      dependants: ''
+      dependants: '',
+      dependantsOnly: null
     }
   }
 
@@ -37,9 +38,40 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return _application
   }
 
+  this.splitApplicantType = function (str) {
+    var results = {
+      applicantType: null,
+      dependantsOnly: false
+    }
+
+    if (!_.isString(str)) {
+      return results
+    }
+
+    var split = str.split('-')
+    if (split.length >= 1) {
+      results.applicantType = split[0]
+    }
+
+    if (split.length >= 2 && split[1] === 'dependants') {
+      results.dependantsOnly = true
+    }
+
+    return results
+  }
+
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
-    obj.applicantType = stateParams.applicantType || null // general, sso
+    var tier = FsInfoService.getTier(obj.tier)
+    var split = me.splitApplicantType(stateParams.applicantType)
+    obj.applicantType = split.applicantType // general, sso
+    obj.dependantsOnly = split.dependantsOnly
+
+    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+    if (variant.dependantsOnly) {
+      obj.dependantsOnly = true
+    }
+
     obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
 
     if (obj.doCheck !== 'yes') {
@@ -84,9 +116,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       params[f] = obj[f]
     })
 
-    if (!_.has(params, 'dependantsOnly')) {
-      params.dependantsOnly = variant.dependantsOnly || false
-    }
+    params.dependantsOnly = obj.dependantsOnly
 
     // [TODO]
     params.studentType = obj.applicantType

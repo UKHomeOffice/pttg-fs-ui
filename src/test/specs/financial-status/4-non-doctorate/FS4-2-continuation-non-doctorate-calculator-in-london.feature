@@ -250,7 +250,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
     Scenario: Manuel is a dependant only applicant (Non Doctorate in London student and has sufficient funds)
 
         Given the account has sufficient funds
-        And Caseworker selects applicant type of dependant
+#        And Caseworker selects applicant type of dependant
         When the financial status check is performed with
             | Application raised date         | 30/06/2016 |
             | End date                        | 01/06/2016 |
@@ -261,7 +261,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Course end date                 | 25/09/2017 |
             | Original Course Start Date      | 30/10/2015 |
             | Course type                     | Main       |
-            | DOB                             | 06/04/1989 |
+#            | DOB                             | 06/04/1989 |
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 30/06/2016                     |

@@ -79,7 +79,8 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'general',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid'],
+        dependantsOnlyOption: true
       },
       {
         value: 'doctorate',
@@ -97,7 +98,8 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        fields: ['*default', '*courses', '*t4all', 'dependants']
+        fields: ['*default', '*courses', '*t4all', 'dependants'],
+        dependantsOnlyOption: true
       }]
     },
     {
@@ -207,6 +209,10 @@ fsModule.factory('FsInfoService', [ function () {
       doCheck: {
         summary: '',
         options: [{ value: 'yes', label: 'Yes, check Barclays' }, { value: 'no', label: 'No' }]
+      },
+      dependantsOnly: {
+        summary: '',
+        options: [{ value: 'no', label: 'Main applicant (with & without dependants)' }, { value: 'yes', label: 'Dependants only' }]
       }
     }
 

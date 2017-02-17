@@ -40,17 +40,17 @@ describe('app: hod.proving', function () {
     })
 
     describe('getThresholdParams', function () {
-      var testObj = { tier: 4, applicantType: 'nondoctorate' }
+      var testObj = { tier: 4, applicantType: 'general' }
       it('should return the appropriate parameters to send in a threshold request', function () {
         var result = fs.getThresholdParams(testObj)
-        expect(_.has(result, 'studentType')).toBeTruthy()
+        expect(_.has(result, 'applicantType')).toBeTruthy()
       })
     })
 
     describe('getCriteria', function () {
       var testObj = {
         tier: 4,
-        applicantType: 'nondoctorate',
+        applicantType: 'general',
         endDate: '2016-05-13',
         continuationCourse: 'yes',
         courseType: 'main',
@@ -169,6 +169,68 @@ describe('app: hod.proving', function () {
           var months = fs.getMonths(data.start, data.end)
           expect(months).toEqual(data.result)
         })
+      })
+    })
+
+    describe('splitApplicantType', function () {
+      it('is expected to correctly split the applicantType url parameter into applicantType and dependantsOnly boolean', function () {
+        var testCases = [
+          {str: null, result: { applicantType: null, dependantsOnly: false }},
+          {str: 'general-dependants', result: { applicantType: 'general', dependantsOnly: true }},
+          {str: 'sso-dependants', result: { applicantType: 'sso', dependantsOnly: true }},
+          {str: 'general', result: { applicantType: 'general', dependantsOnly: false }},
+          {str: 'general-dependantzzz', result: { applicantType: 'general', dependantsOnly: false }}
+        ]
+
+        _.each(testCases, function (data) {
+          var split = fs.splitApplicantType(data.str)
+          expect(split.applicantType).toEqual(data.result.applicantType)
+          expect(split.dependantsOnly).toEqual(data.result.dependantsOnly)
+        })
+      })
+    })
+
+    describe('setKnownParamsFromState', function () {
+      it('is expected to be able to set tier, variant, and dependantOnly values from the url state params', function () {
+        // setKnownParamsFromState
+        var testCases = [
+          {source: { tier: 4, applicantType: 'general' }, result: { tier: 4, applicantType: 'general', dependantsOnly: false }},
+          {source: { tier: 2, applicantType: 'main' }, result: { tier: 2, applicantType: 'main', dependantsOnly: false }},
+          {source: { tier: 4, applicantType: 'general-dependants' }, result: { tier: 4, applicantType: 'general', dependantsOnly: true }},
+          {source: { tier: 5, applicantType: 'dependant' }, result: { tier: 5, applicantType: 'dependant', dependantsOnly: true }}
+        ]
+
+        _.each(testCases, function (data) {
+          var obj = {}
+          fs.setKnownParamsFromState(obj, data.source)
+          expect(obj.tier).toEqual(data.result.tier)
+          expect(obj.applicantType).toEqual(data.result.applicantType)
+          expect(obj.dependantsOnly).toEqual(data.result.dependantsOnly)
+          expect(obj.doCheck).toEqual('no')
+        })
+      })
+
+      it('should clear bank details when not a bank route', function () {
+        var testParams = {
+          tier: 4,
+          applicantType: 'general',
+          calcOrBank: 'bank'
+        }
+        var obj = {
+          sortCode: '01-06-16',
+          accountNumber: '00030000',
+          doCheck: 'yes'
+        }
+
+        fs.setKnownParamsFromState(obj, testParams)
+        expect(obj.doCheck).toEqual('yes')
+
+        testParams.calcOrBank = 'calc'
+        fs.setKnownParamsFromState(obj, testParams)
+        expect(obj.doCheck).toEqual('no')
+        expect(obj.sortCode).toEqual('')
+        expect(obj.accountNumber).toEqual('')
+        expect(obj.dob).toEqual('')
       })
     })
   })

@@ -39,6 +39,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
   // force application values from the url params
   FsService.setKnownParamsFromState(fs, $state.params)
+  console.log(fs, $state.params)
 
   // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)

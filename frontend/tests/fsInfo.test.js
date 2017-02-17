@@ -59,7 +59,7 @@ describe('app: hod.proving', function () {
       it('each variant should have properties value, label, full', function () {
         _.each(tiers, function (t) {
           _.each(t.variants, function (v) {
-            expect(_.keys(v).length).toEqual(4)
+            expect(_.keys(v).length >= 4).toBeTruthy()
             expect(_.has(v, 'label')).toBeTruthy()
             expect(_.has(v, 'value')).toBeTruthy()
             expect(_.has(v, 'full')).toBeTruthy()
@@ -110,7 +110,7 @@ describe('app: hod.proving', function () {
     describe('getAllFieldInfo', function () {
       it('should return a list of all available fields', function () {
         var fieldInfo = fsi.getAllFieldInfo()
-        expect(_.keys(fieldInfo).length).toEqual(13)
+        expect(_.keys(fieldInfo).length).toEqual(14)
         expect(_.has(fieldInfo, 'applicationRaisedDate')).toBeTruthy()
       })
     })
