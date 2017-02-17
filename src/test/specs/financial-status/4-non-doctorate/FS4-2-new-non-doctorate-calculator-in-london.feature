@@ -210,6 +210,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 ######### Overall course <12 months In London - dependant only - not pass #############
 
     Scenario: Luiz is a dependant only application (Non Doctorate in London student and does not have sufficient funds)
+
         Given the api daily balance response will Fail-low-balance
         And Caseworker selects applicant type of dependant
         When the financial status check is performed
@@ -236,6 +237,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 ######### Overall course <12 months In London - dependant only - pass #############
 
     Scenario: Deigo and Edin is a dependant only application (x2) Non Doctorate in London student and has sufficient funds
+
         Given the account has sufficient funds
         And Caseworker selects applicant type of dependant
         When the financial status check is performed with
@@ -269,7 +271,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 
  ###### overall course length 12+ months In London - dependant only - not pass #######
 
-    Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds2
+    Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds
+
         Given the account does not have sufficient funds
         And Caseworker selects applicant type of dependant
         When the financial status check is performed with
@@ -295,9 +298,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Applicant type                  | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 01/05/2016 to 30/01/2017     |
-            | Total tuition fees              | £9,755.50                    |
-            | Tuition fees already paid       | £0.00                        |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Dependants                      | 1                            |
             | Sort code                       | 11-11-11                     |
             | Account number                  | 11111111                     |
@@ -316,6 +316,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     ###### overall course length 12+ months In London - dependant only - pass #######
 
     Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
+
         Given the account has sufficient funds
         And Caseworker selects applicant type of dependant
         When the financial status check is performed with

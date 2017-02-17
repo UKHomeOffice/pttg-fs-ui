@@ -245,7 +245,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Entire course length       | 14                       |
 
 
-
+###### overall course length 12+ months In London - dependant only - pass #######
 
     Scenario: Manuel is a dependant only applicant (Non Doctorate in London student and has sufficient funds)
 
@@ -273,10 +273,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | In London                       | No                             |
             | Course dates checked            | 01/05/2016 to 25/09/2017       |
             | Dependants                      | 1                              |
-            | Total tuition fees              | £9,755.50                      |
-            | Tuition fees already paid       | £500.00                        |
-            | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
-            | Dependants                      | 0                              |
             | Entire course length            | 23                             |
             | Continuation Course             | Yes                            |
             | Original Course Start Date      | 30/10/2015                     |

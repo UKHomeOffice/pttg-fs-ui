@@ -51,7 +51,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
             | Application raised date         | 20/06/2016                     |
 
 
-    Scenario: Latoya and Janet are a dependant only (x2) application for a Doctorate not in London main applicant and has sufficient funds
+    Scenario: Latoya and Janet are a dependant only (x2) application for a Doctorate not in London and has sufficient funds
 
         Given Caseworker selects applicant type of dependant
         When the financial status check is performed with
