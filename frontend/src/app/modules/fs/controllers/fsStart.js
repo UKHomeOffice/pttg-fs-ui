@@ -31,8 +31,9 @@ fsModule.run(['$rootScope', function ($rootScope) {
   })
 }])
 
-fsModule.controller('FsNavCtrl', ['$rootScope', '$scope', '$state', 'FsService', 'FsInfoService', function ($rootScope, $scope, $state, FsService, FsInfoService) {
+fsModule.controller('FsNavCtrl', ['$rootScope', '$scope', '$state', '$location', 'FsService', 'FsInfoService', function ($rootScope, $scope, $state, $location, FsService, FsInfoService) {
   $scope.tiers = FsInfoService.getTiers()
+  $scope.showDebug = ($location.host() === '127.0.0.1')
   FsService.reset()
   $scope.setBank = function (accountNumber) {
     var fs = FsService.getApplication()
