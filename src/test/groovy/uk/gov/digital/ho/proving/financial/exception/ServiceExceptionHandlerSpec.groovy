@@ -1,6 +1,5 @@
 package uk.gov.digital.ho.proving.financial.exception
 
-import org.spockframework.mock.ZeroOrNullResponse
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -114,7 +113,7 @@ class ServiceExceptionHandlerSpec extends Specification {
         HttpStatus.NOT_FOUND             | HttpStatus.NOT_FOUND             | '{}'
         HttpStatus.INTERNAL_SERVER_ERROR | HttpStatus.INTERNAL_SERVER_ERROR | 'Error at FSS API server'
         HttpStatus.BAD_GATEWAY           | HttpStatus.INTERNAL_SERVER_ERROR | 'API response status: 502'
-        HttpStatus.BAD_REQUEST           | HttpStatus.INTERNAL_SERVER_ERROR | 'Bad request to FSS API server'
+        HttpStatus.BAD_REQUEST           | HttpStatus.BAD_REQUEST           | 'Bad request to FSS API server'
     }
 
 
