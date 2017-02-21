@@ -117,7 +117,6 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | End Date-error | End date is not within 31 days of application raised date |
 
-
 ######################### Validation on the In London Field #########################
     Scenario: Case Worker does NOT enter In London
         When the financial status check is performed with
