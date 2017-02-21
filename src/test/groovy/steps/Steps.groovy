@@ -372,14 +372,20 @@ class Steps {
 
 
 
-    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|404)\$")
+    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|\\d+)\$")
     public void the_api_consent_response_will_be(String ref) throws Throwable {
         if (ref.isInteger()) {
-            testDataLoader.withResponseStatus(balanceCheckUrlRegex, ref.toInteger())
+            println ('testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger()) = ' + ref)
+            testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger())
         } else {
             testDataLoader.stubTestData('consentcheckresponse-' + ref.trim(), consentCheckUrlRegex)
         }
     }
+
+//    @Given("^the api consent response has status (\d+)\$")
+//    public void the_api_consent_response_has_status(String status) throws Throwable {
+//
+//    }
 
     @Given("^the api daily balance response will(.+)\$")
     public void the_api_daily_balance_reponse_will_be_for_account(String ref) throws Throwable {

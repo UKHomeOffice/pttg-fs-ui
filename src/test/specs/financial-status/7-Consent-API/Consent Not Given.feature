@@ -60,3 +60,4 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Tier      | Applicant     |
             | Tier two  | Main          |
             | Tier five | Dependant     |
+
