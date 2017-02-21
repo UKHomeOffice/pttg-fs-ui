@@ -5,10 +5,8 @@ Feature: Insufficient Information
 
     Scenario: No records exist within the period stated
         Given the api health check response has status 200
-        And the api threshold response will be t4
         And the api consent response will be 404
         And caseworker is on page t4/doctorate/consent
-        Given no record for the account
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |

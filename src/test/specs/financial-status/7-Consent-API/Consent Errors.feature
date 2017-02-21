@@ -10,3 +10,6 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
+        Then the service displays the following page content
+            | Outcome        | Invalid or inaccessible account                                                  |
+            | Outcome detail | One or more of the following conditions prevented us from accessing the account: |
