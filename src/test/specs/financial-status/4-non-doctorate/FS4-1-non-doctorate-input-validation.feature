@@ -96,13 +96,6 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | End Date-error | Enter a valid end date |
 
-    Scenario: Case Worker enters invalid End date - within 31 days of application raised date
-        When the financial status check is performed with
-            | End Date | 30/05/2016 |
-            | Application raised date | 31/01/2016 |
-        Then the service displays the following error message
-            | End Date-error | End date is not within 31 days of application raised date |
-
     Scenario: Caseworker enters end date after the Application Raised Date
         When the financial status check is performed with
             | End Date                | 01/02/2016 |
