@@ -18,9 +18,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/doctorate/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 33-33-33   |
@@ -58,20 +56,4 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Page title | Check financial status |
 
 
-    Scenario: Rhianna is dependant only doctorate application and has sufficient funds
 
-        Given Caseworker selects applicant type of dependant
-        When the financial status check is performed
-        Then the service displays the following result
-            | Outcome                         | Passed                         |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Applicant type                  | Doctorate extension scheme     |
-            | Tier                            | Tier 4 (General)               |
-            | In London                       | Yes                            |
-            | Dependants                      | 1                              |
-            | Sort code                       | 33-33-33                       |
-            | Account number                  | 33333333                       |
-            | DOB                             | 25/03/1987                     |
-            | Application raised date         | 29/06/2016                     |

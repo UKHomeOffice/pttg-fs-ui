@@ -32,9 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api threshold response will be t4
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the general student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/general/consent
         And consent is sought for the following:
             | DOB            | 21/09/1981 |
             | Sort code      | 11-11-11   |
@@ -212,7 +210,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Luiz is a dependant only application (Non Doctorate in London student and does not have sufficient funds)
 
         Given the api daily balance response will Fail-low-balance
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/general-dependants/bank/details
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                         | Not passed                   |
@@ -239,7 +237,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Deigo and Edin is a dependant only application (x2) Non Doctorate in London student and has sufficient funds
 
         Given the account has sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/general-dependants/bank/details
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016 |
             | In London                       | Yes        |
@@ -274,7 +272,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds
 
         Given the account does not have sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/general-dependants/bank/details
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016 |
             | In London                       | Yes        |
@@ -318,7 +316,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
 
         Given the account has sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/general-dependants/bank/details
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016 |
             | In London                       | Yes        |

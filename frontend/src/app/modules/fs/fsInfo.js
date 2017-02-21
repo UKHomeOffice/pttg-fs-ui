@@ -65,8 +65,8 @@ fsModule.factory('FsInfoService', [ function () {
       },
       {
         value: 'dependant',
-        label: 'Dependant only',
-        full: 'Dependant only',
+        label: 'Dependants only',
+        full: 'Dependants only',
         fields: ['*default', 'dependants'],
         dependantsOnly: true
       }]
@@ -75,12 +75,12 @@ fsModule.factory('FsInfoService', [ function () {
       tier: 4,
       label: 'Tier 4 (General)',
       nDaysRequired: 28,
+      dependantsOnlyOption: true,
       variants: [{
         value: 'general',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid'],
-        dependantsOnlyOption: true
+        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
       {
         value: 'doctorate',
@@ -98,8 +98,7 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'sso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
-        fields: ['*default', '*courses', '*t4all', 'dependants'],
-        dependantsOnlyOption: true
+        fields: ['*default', '*courses', '*t4all', 'dependants']
       }]
     },
     {
@@ -114,8 +113,8 @@ fsModule.factory('FsInfoService', [ function () {
       },
       {
         value: 'dependant',
-        label: 'Dependant only',
-        full: 'Dependant only',
+        label: 'Dependants only',
+        full: 'Dependants only',
         fields: ['*default', 'dependants'],
         dependantsOnly: true
       }]

@@ -121,6 +121,17 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     // [TODO]
     params.studentType = obj.applicantType
     params.applicantType = obj.applicantType
+    if (obj.dependantsOnly) {
+      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
+        params.accommodationFeesAlreadyPaid = 0
+      }
+      if (!_.has(fields.totalTuitionFees)) {
+        params.totalTuitionFees = 0
+      }
+      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
+        params.tuitionFeesAlreadyPaid = 0
+      }
+    }
 
     return params
   }
@@ -223,10 +234,15 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var variant = _.findWhere(tier.variants, { value: obj.applicantType })
     var fields = FsInfoService.getFields(variant.fields)
     var capped = me.getThresholdCappedValues(obj)
+    var dependantsOnlyOptions = FsInfoService.getFieldInfo('dependantsOnly')
 
     if (obj.continuationCourse !== 'yes') {
       // remove the original course start date from the results if its not a continuation course
       fields = _.without(fields, 'originalCourseStartDate')
+    }
+
+    if (obj.dependantsOnly) {
+      fields = _.without(fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
     }
 
     fields = _.without(fields, 'courseEndDate', 'endDate')
@@ -241,6 +257,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     criteria.applicantType = {
       label: 'Applicant type',
       display: variant.label
+    }
+
+    if (tier.dependantsOnlyOption) {
+      var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'yes' : 'no'})
+      criteria.dependantsOnly = {
+        label: 'Dependant/Main applicant',
+        display: opt.label
+      }
     }
 
     _.each(fields, function (f) {

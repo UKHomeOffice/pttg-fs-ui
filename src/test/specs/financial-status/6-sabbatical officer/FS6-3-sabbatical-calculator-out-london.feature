@@ -15,17 +15,16 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the sso student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+
 
 
     Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
+        And caseworker is on page t4/sso/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 01/06/2016 |
             | End date                        | 30/05/2016 |
@@ -64,6 +63,11 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Laura is a sabbatical officer not in London student and has sufficient funds
         Given the account has sufficient funds
+        And caseworker is on page t4/sso/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 19/06/2016 |
             | End date                        | 30/05/2016 |
@@ -102,7 +106,11 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Alex is a dependant only application - sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/sso-dependants/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 01/06/2016 |
             | End date                        | 30/05/2016 |
@@ -142,7 +150,11 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Jamelia and Alicia are a dependant only (x2) application - sabbatical officer not in London student and has sufficient funds
 
         Given the account has sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is on page t4/sso-dependants/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 19/06/2016 |
             | End date                        | 30/05/2016 |

@@ -29,32 +29,35 @@ fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'Fs
   $scope.fs.tier = t
   $scope.conf = {
     applicantType: {
-      options: $scope.tier.variants
+      options: $scope.tier.variants,
+      hidden: $scope.tier.dependantsOnlyOption
     },
     dependantsOnly: {
       options: FsInfoService.getFieldInfo('dependantsOnly').options,
-      hidden: true
+      hidden: !$scope.tier.dependantsOnlyOption
+
     }
   }
   $scope.submit = function (valid) {
     if (valid) {
       $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
 
-      if (!$scope.variant.dependantsOnlyOption) {
-        return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
-      }
+      if ($scope.variant) {
+        if (!$scope.tier.dependantsOnlyOption) {
+          return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
+        }
 
-      if ($scope.fs.dependantsOnly === 'no') {
-        return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
-      }
+        if ($scope.fs.dependantsOnly === 'no') {
+          return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
+        }
 
-      if ($scope.fs.dependantsOnly === 'yes') {
-        return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType + '-dependants' })
+        if ($scope.fs.dependantsOnly === 'yes') {
+          return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType + '-dependants' })
+        }
       }
-
       // show the dependant only route choice
-      $scope.conf.applicantType.hidden = true
-      $scope.conf.dependantsOnly.hidden = false
+      $scope.conf.applicantType.hidden = false
+      $scope.conf.dependantsOnly.hidden = true
     }
   }
 }])

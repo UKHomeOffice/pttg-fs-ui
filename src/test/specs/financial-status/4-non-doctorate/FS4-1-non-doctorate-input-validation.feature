@@ -223,6 +223,13 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | Dependants-error | Enter a valid number of dependants |
 
+    Scenario: Case Worker enters invalid Dependants - CANNOT be zero on a dependants only route
+        Given caseworker is on page t4/general-dependants/calc/details
+        When the financial status check is performed with
+            | Dependants | 0 |
+        Then the service displays the following error message
+            | Dependants-error | Enter a valid number of dependants |
+
 
         ######################### Validation on the Application Raised Date Field #########################
 

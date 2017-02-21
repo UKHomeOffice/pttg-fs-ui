@@ -111,6 +111,17 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     // add the applicant type
     params.applicantType = obj.applicantType
     params.studentType = obj.applicantType
+    if (obj.dependantsOnly) {
+      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
+        params.accommodationFeesAlreadyPaid = 0
+      }
+      if (!_.has(fields.totalTuitionFees)) {
+        params.totalTuitionFees = 0
+      }
+      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
+        params.tuitionFeesAlreadyPaid = 0
+      }
+    }
 
     params.toDate = obj.endDate
 

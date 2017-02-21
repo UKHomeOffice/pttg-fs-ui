@@ -329,6 +329,7 @@ class Steps {
     public void caseworker_is_on_page(String url) throws Throwable {
         def u = pageUrls['root'] + '/' + url
         driver.get(u)
+        driver.sleep(100)
     }
 
     @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
@@ -536,14 +537,16 @@ class Steps {
                 'Course type'                    : 'Main'
             ]
 
-            if (studentType.equalsIgnoreCase('general')) {
-                validDefaultEntries['Total tuition fees'] = '1';
-                validDefaultEntries['Tuition fees already paid'] = '0';
-            }
+            if (studentType) {
+                if (studentType.equalsIgnoreCase('general')) {
+                    validDefaultEntries['Total tuition fees'] = '1';
+                    validDefaultEntries['Tuition fees already paid'] = '0';
+                }
 
-            if (!studentType.equalsIgnoreCase('doctorate')) {
-                validDefaultEntries['Course start date'] = '30/05/2016';
-                validDefaultEntries['Course end date'] = '30/06/2016';
+                if (!studentType.equalsIgnoreCase('doctorate')) {
+                    validDefaultEntries['Course start date'] = '30/05/2016';
+                    validDefaultEntries['Course end date'] = '30/06/2016';
+                }
             }
         }
         submitEntries(validDefaultEntries)
@@ -586,6 +589,11 @@ class Steps {
     public void the_button_is_clicked(String btn) {
         driver.sleep(delay)
         driver.findElement(By.id(toCamelCase(btn) + "Btn")).click()
+    }
+
+    @When("^the (.+) option of the (.+) radio is selected")
+    public void the_options_of_the_radio_is_selected(String optValue, String radioId) throws Throwable {
+        driver.findElement(By.id(toCamelCase(radioId) + '-' + toCamelCase(optValue) + '-label')).click()
     }
 
 

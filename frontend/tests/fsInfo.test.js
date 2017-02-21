@@ -21,7 +21,7 @@ describe('app: hod.proving', function () {
       describe('tier properties', function () {
         it('each tier shoud have properties tier, label and variants', function () {
           _.each(tiers, function (t) {
-            expect(_.keys(t).length).toEqual(4)
+            expect(_.keys(t).length >= 4).toBeTruthy()
             expect(_.has(t, 'label')).toBeTruthy()
             expect(_.has(t, 'tier')).toBeTruthy()
             expect(_.has(t, 'variants')).toBeTruthy()

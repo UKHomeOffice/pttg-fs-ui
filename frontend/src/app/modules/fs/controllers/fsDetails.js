@@ -39,12 +39,15 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
   // force application values from the url params
   FsService.setKnownParamsFromState(fs, $state.params)
-  console.log(fs, $state.params)
 
   // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)
   $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
   $scope.fields = FsInfoService.getFields($scope.variant.fields)
+
+  if (fs.dependantsOnly) {
+    $scope.fields = _.without($scope.fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
+  }
 
   // config for all fields
   $scope.conf = {
@@ -201,7 +204,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
           ok = false
         }
 
-        if ($scope.variant.dependantsOnly && n < 1) {
+        if (($scope.variant.dependantsOnly || fs.dependantsOnly) && n < 1) {
           ok = false
         }
 

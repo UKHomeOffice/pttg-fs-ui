@@ -14,18 +14,17 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the api health check response has status 200
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the pgdd student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Raj is a postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
+        And caseworker is using the financial status service ui
+        And caseworker is on page t4/pgdd/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
@@ -58,6 +57,12 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
         Given the account has sufficient funds
+        And caseworker is using the financial status service ui
+        And caseworker is on page t4/pgdd/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -93,7 +98,12 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
 
     Scenario: Josie and Esther are a dependant only application (x2) - postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is using the financial status service ui
+        And caseworker is on page t4/pgdd-dependants/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
@@ -126,7 +136,12 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
 
     Scenario: Ander is a a dependant only application (postgraduate doctor or dentist in London student and has sufficient funds)
         Given the account has sufficient funds
-        And Caseworker selects applicant type of dependant
+        And caseworker is using the financial status service ui
+        And caseworker is on page t4/pgdd-dependants/consent
+        And consent is sought for the following:
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         When the financial status check is performed with
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
