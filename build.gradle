@@ -42,15 +42,13 @@ mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by 
 setProperty('sourceCompatibility', '1.8')
 setProperty('targetCompatibility', '1.8')
 
-plugins.withType(GulpPlugin) {
+build_build.dependsOn gulp_build, gulp_test
 
-    build.dependsOn gulp_build, gulp_test
-
-    task("gulpTest") {
-        dependsOn gulp_test
-        group 'verification'
-    }
+task("gulpTest") {
+    dependsOn gulp_test
+    group 'verification'
 }
+
 
 if (System.getenv('VERSION')) {
     version = System.getenv('VERSION')
