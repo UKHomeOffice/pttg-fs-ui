@@ -29,10 +29,12 @@ fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'Fs
   $scope.fs.tier = t
   $scope.conf = {
     applicantType: {
+      id: $scope.tier.dependantsOnlyOption ? 'studentType' : 'applicantType',
       options: $scope.tier.variants,
       hidden: $scope.tier.dependantsOnlyOption
     },
     dependantsOnly: {
+      id: $scope.tier.dependantsOnlyOption ? 'applicantType' : 'studentType',
       options: FsInfoService.getFieldInfo('dependantsOnly').options,
       hidden: !$scope.tier.dependantsOnlyOption
 
@@ -47,11 +49,11 @@ fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'Fs
           return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
         }
 
-        if ($scope.fs.dependantsOnly === 'no') {
+        if ($scope.fs.dependantsOnly === 'main') {
           return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType })
         }
 
-        if ($scope.fs.dependantsOnly === 'yes') {
+        if ($scope.fs.dependantsOnly === 'dependant') {
           return $state.go('fsDoCheck', { tier: t, applicantType: $scope.fs.applicantType + '-dependants' })
         }
       }

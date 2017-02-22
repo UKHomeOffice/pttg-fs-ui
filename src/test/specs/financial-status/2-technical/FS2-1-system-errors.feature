@@ -8,7 +8,7 @@ Feature: System errors - specify messages shown in response to (simulated) conne
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the no option of the dependants only radio is selected
+        And the main option of the applicant type radio is selected
         And the submit button is clicked
         And the doctorate student type is chosen
         And the caseworker selects the Yes, check Barclays radio button

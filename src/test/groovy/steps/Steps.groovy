@@ -95,10 +95,10 @@ class Steps {
         .withOption('no', 'inLondon-no-label')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('general', 'applicantType-general-label')
-        .withOption('doctorate', 'applicantType-doctorate-label')
-        .withOption('pgdd', 'applicantType-pgdd-label')
-        .withOption('sso', 'applicantType-sso-label')
+        .withOption('general', 'studentType-general-label')
+        .withOption('doctorate', 'studentType-doctorate-label')
+        .withOption('pgdd', 'studentType-pgdd-label')
+        .withOption('sso', 'studentType-sso-label')
 
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()

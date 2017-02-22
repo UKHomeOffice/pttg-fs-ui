@@ -232,6 +232,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     // basics
     var tier = FsInfoService.getTier(obj.tier)
     var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+
     var fields = FsInfoService.getFields(variant.fields)
     var capped = me.getThresholdCappedValues(obj)
     var dependantsOnlyOptions = FsInfoService.getFieldInfo('dependantsOnly')
@@ -260,7 +261,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     if (tier.dependantsOnlyOption) {
-      var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'yes' : 'no'})
+      var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
       criteria.dependantsOnly = {
         label: 'Dependant/Main applicant',
         display: opt.label

@@ -9,7 +9,7 @@ Feature: Copy results to paste buffer
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the no option of the dependants only radio is selected
+        And the main option of the applicant type radio is selected
         And the submit button is clicked
         And the general student type is chosen
         And the caseworker selects the No radio button

@@ -211,7 +211,7 @@ fsModule.factory('FsInfoService', [ function () {
       },
       dependantsOnly: {
         summary: '',
-        options: [{ value: 'no', label: 'Main applicant (with & without dependants)' }, { value: 'yes', label: 'Dependants only' }]
+        options: [{ value: 'main', label: 'Main applicant (with & without dependants)' }, { value: 'dependant', label: 'Dependants only' }]
       }
     }
 
