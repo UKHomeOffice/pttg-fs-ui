@@ -42,7 +42,7 @@ mainClassName = "uk.gov.digital.ho.proving.financial.ServiceRunner"  // used by 
 setProperty('sourceCompatibility', '1.8')
 setProperty('targetCompatibility', '1.8')
 
-build_build.dependsOn gulp_build, gulp_test
+gulp_build.dependsOn gulp_build, gulp_test
 
 task("gulpTest") {
     dependsOn gulp_test
