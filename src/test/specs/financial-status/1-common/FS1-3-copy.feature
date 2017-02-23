@@ -19,20 +19,21 @@ Feature: Copy results to paste buffer
             | Sort code      | 33-33-33   |
             | Account number | 33333333   |
         And the default details are
-            | Application raised date         | 31/05/2016 |
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 10         |
-            | Accommodation fees already paid | 20         |
-            | Dependants                      | 0          |
+            | Application raised date         | 31/05/2016                   |
+            | End Date                        | 30/05/2016                   |
+            | In London                       | Yes                          |
+            | Course start date               | 30/05/2016                   |
+            | Course end date                 | 30/11/2016                   |
+            | Total tuition fees              | 8500.00                      |
+            | Tuition fees already paid       | 10                           |
+            | Accommodation fees already paid | 20                           |
+            | Dependants                      | 0                            |
             #| Sort code                       | 11-11-11   |
             #| Account number                  | 11111111   |
             #| DOB                             | 27/07/1981 |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
+            | Continuation Course             | No                           |
+            | Course type                     | Main course degree or higher |
+            | Course institution              | Recognised body or HEI       |
 
 
 
@@ -63,6 +64,7 @@ Feature: Copy results to paste buffer
             | Continuation Course             | No                                              |
             | Leave End Date                  |                                                 |
             | Date Received                   |                                                 |
+            | Condition code                  |                                                 |
 
     Scenario: copy results when continuation course is selected as yes
         Given the account has sufficient funds
@@ -90,4 +92,5 @@ Feature: Copy results to paste buffer
             | Continuation Course             | Yes                                             |
             | Original Course Start Date      |                                                 |
             | Leave End Date                  |                                                 |
+            | Condition code                  |                                                 |
             | Result timestamp                |                                                 |

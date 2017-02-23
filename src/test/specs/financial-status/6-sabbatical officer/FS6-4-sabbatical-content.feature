@@ -34,6 +34,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition Code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -71,6 +72,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition Code           |
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |
@@ -114,6 +116,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
+            | Condition Code        |
         And the service displays the following criteria headers in order
             | Tier                            |
             | Applicant type                  |
@@ -147,6 +150,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition Code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -181,6 +185,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition Code           |
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |

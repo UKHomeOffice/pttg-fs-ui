@@ -39,6 +39,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Account holder name             | Laura Taylor                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
+            | Condition Code                  | 2 - Applicant                  |
             | Applicant type                  | Doctorate extension scheme     |
             | Tier                            | Tier 4 (General)               |
             | In London                       | Yes                            |

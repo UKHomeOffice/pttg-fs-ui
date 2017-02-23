@@ -55,6 +55,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             |                          |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
             | Lowest Balance             | £100.00 on 03/10/2016    |
@@ -97,6 +98,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             |                          |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
@@ -139,6 +141,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             |                          |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
             | Lowest Balance             | £100.00 on 03/10/2016    |
@@ -183,6 +186,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             |                          |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |

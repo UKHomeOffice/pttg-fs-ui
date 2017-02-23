@@ -25,6 +25,7 @@ Feature: Dependant only stuff
             | Account holder name        | Laura Taylor               |
             | Total funds required       | £16,090.00                 |
             | Maintenance period checked | 03/05/2016 to 30/05/2016   |
+            | Condition code             |                            |
             | Applicant type             | Doctorate extension scheme |
             | Tier                       | Tier 4 (General)           |
             | In London                  | Yes                        |
@@ -46,6 +47,7 @@ Feature: Dependant only stuff
             | Account holder name        | Laura Taylor               |
             | Total funds required       | £16,090.00                 |
             | Maintenance period checked | 03/05/2016 to 30/05/2016   |
+            | Condition code             |                            |
             | Tier                       | Tier 4 (General)           |
             | Applicant type             | Doctorate extension scheme |
             | In London                  | No                         |
@@ -74,8 +76,10 @@ Feature: Dependant only stuff
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition code           |
             | Lowest balance           |
             | Estimated leave end date |
+            | Condition code           |
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                     |

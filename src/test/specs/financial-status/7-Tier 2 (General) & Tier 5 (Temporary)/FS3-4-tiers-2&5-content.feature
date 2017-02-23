@@ -32,6 +32,7 @@ Feature: Tier 2 & Tier 5
             | Account holder name   |
             | Total funds required  |
             | 90-day period checked |
+            | Condition code        |
             | Lowest balance        |
             | Result timestamp      |
         And the service displays the following criteria headers in order

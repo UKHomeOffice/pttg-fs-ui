@@ -32,6 +32,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | 28-day period checked    |
             | Lowest balance           |
             | Estimated leave end date |
+            | Condition code           |
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                            |

@@ -12,14 +12,15 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
             | Sort code      | 11-11-11   |
             | Account number | 11111111   |
         And the default details are
-            | Application raised date         | 05/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Dependants                      | 1          |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
+            | Application raised date | 05/06/2016                   |
+            | End date                | 30/05/2016                   |
+            | In London               | Yes                          |
+            | Course start date       | 30/05/2016                   |
+            | Course end date         | 30/11/2016                   |
+            | Dependants              | 1                            |
+            | Continuation Course     | No                           |
+            | Course type             | Main course degree or higher |
+            | Course institution      | Recognised body or HEI       |
 
 
 ###################################### Dependant Only - Check for text on Output meets minimum financial requirement - Pass page ######################################
@@ -35,6 +36,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
