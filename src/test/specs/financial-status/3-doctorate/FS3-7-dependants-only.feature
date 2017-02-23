@@ -79,7 +79,6 @@ Feature: Dependant only stuff
             | Condition code           |
             | Lowest balance           |
             | Estimated leave end date |
-            | Condition code           |
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                     |

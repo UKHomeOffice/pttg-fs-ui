@@ -48,7 +48,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | 0                            |
             | Dependants                      | 1                            |
             | Continuation Course             | No                           |
-#            | Original Course Start Date      | 30/10/2015 |
+            | Original Course Start Date      | 30/10/2015                   |
             | Course type                     | Main course degree or higher |
             | Course institution              | Recognised body or HEI       |
 
@@ -73,13 +73,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | DOB                             | 21/09/1981                   |
             | Continuation Course             | No                           |
         And the result table contains the following
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             |                          |
-            | Lowest balance             | £100.00 on 03/10/2016    |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 7 (limited to 9)         |
+            | Account holder name        | Shelly Smith                          |
+            | Total funds required       | £16,090.00                            |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016              |
+            | Condition Code             | 2 - Applicant, 3 - Partner, 1 - Child |
+            | Lowest balance             | £100.00 on 03/10/2016                 |
+            | Estimated Leave End Date   | 22/10/2017                            |
+            | Course length              | 7 (limited to 9)                      |
 
 
 
@@ -87,19 +87,19 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
-            | Application Raised Date         | 31/05/2016                   |
-            | In London                       | Yes                          |
-            | Dependants                      | 1                            |
-            | End date                        | 01/05/2016                   |
-            | Course end date                 | 30/01/2017                   |
-            | Total tuition fees              | 9755.50                      |
-            | Tuition fees already paid       | 500                          |
-            | Course start date               | 01/05/2016                   |
-            | Accommodation fees already paid | 250.50                       |
-            | Continuation Course             | Yes                          |
-            | Original Course Start Date      | 30/10/2015                   |
-            | Course type                     | Main course degree or higher |
-            | Course institution              | Recognised body or HEI       |
+            | Application Raised Date         | 31/05/2016               |
+            | In London                       | Yes                      |
+            | Dependants                      | 1                        |
+            | End date                        | 01/05/2016               |
+            | Course end date                 | 30/01/2017               |
+            | Total tuition fees              | 9755.50                  |
+            | Tuition fees already paid       | 500                      |
+            | Course start date               | 01/05/2016               |
+            | Accommodation fees already paid | 250.50                   |
+            | Continuation Course             | Yes                      |
+            | Original Course Start Date      | 30/10/2015               |
+            | Course type                     | Main course below degree |
+            | Course institution              | Recognised body or HEI   |
 
         Then the service displays the following result
             | Outcome                         | Passed                         |
@@ -114,13 +114,13 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Dependants                      | 1                              |
             | Continuation Course             | Yes                            |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 04/04/2016 to 01/05/2016 |
-            | Condition Code             |                          |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 9 (limited to 9)         |
-            | Entire course length       | 16                       |
+            | Account holder name        | Laura Taylor                           |
+            | Total funds required       | £16,090.00                             |
+            | Maintenance period checked | 04/04/2016 to 01/05/2016               |
+            | Condition Code             | 2A - Applicant, 3 - Partner, 1 - Child |
+            | Estimated Leave End Date   | 22/10/2017                             |
+            | Course length              | 9 (limited to 9)                       |
+            | Entire course length       | 16                                     |
 
 
  ###### overall course length 12+ months In London #######
@@ -163,17 +163,17 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | DOB                             | 21/09/1981                   |
             | Continuation Course             | Yes                          |
         And the result table contains the following
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition code             |                          |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 9 (limited to 9)         |
-            | Entire course length       | 16                       |
+            | Account holder name        | Shelly Smith                           |
+            | Total funds required       | £16,090.00                             |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016               |
+            | Condition code             | 2 - Applicant, 4B - Partner, 1 - Child |
+            | Lowest Balance             | £100.00 on 03/10/2016                  |
+            | Estimated Leave End Date   | 22/10/2017                             |
+            | Course length              | 9 (limited to 9)                       |
+            | Entire course length       | 16                                     |
 
 
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds1
+    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016                   |
@@ -185,7 +185,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Total tuition fees              | 9755.50                      |
             | Tuition fees already paid       | 500                          |
             | Course type                     | Main course degree or higher |
-            | Course institution              | Recognised body or HEI       |
+            | Course institution              | Other institution            |
             | Continuation Course             | No                           |
             | Accommodation fees already paid | 250.50                       |
         Then the service displays the following result
@@ -205,12 +205,12 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Continuation Course             | No                             |
             | Estimated Leave End Date        | 22/10/2017                     |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 04/04/2016 to 01/05/2016 |
-            | Condition Code             |                          |
-            | Course length              | 13 (limited to 9)        |
-            | Estimated Leave End Date   | 22/10/2017               |
+            | Account holder name        | Laura Taylor                          |
+            | Total funds required       | £16,090.00                            |
+            | Maintenance period checked | 04/04/2016 to 01/05/2016              |
+            | Condition Code             | 3 - Applicant, 3 - Partner, 1 - Child |
+            | Course length              | 13 (limited to 9)                     |
+            | Estimated Leave End Date   | 22/10/2017                            |
 
 ######### Overall course <12 months In London - dependant only - not pass #############
 
@@ -235,7 +235,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             |                          |
+            | Condition Code             | 3 - Partner, 1 - Child   |
             | Lowest balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
@@ -271,7 +271,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 04/04/2016 to 01/05/2016 |
-            | Condition Code             |                          |
+            | Condition Code             | 3 - Partner, 1 - Child   |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 9 (limited to 9)         |
             | Entire course length       | 16                       |
@@ -316,7 +316,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition code             |                          |
+            | Condition code             | 3 - Partner, 1 - Child   |
             | Lowest Balance             | £100.00 on 03/10/2016    |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 9 (limited to 9)         |
@@ -356,6 +356,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 04/04/2016 to 01/05/2016 |
-            | Condition Code             |                          |
+            | Condition Code             | 3 - Partner, 1 - Child   |
             | Course length              | 13 (limited to 9)        |
             | Estimated Leave End Date   | 22/10/2017               |

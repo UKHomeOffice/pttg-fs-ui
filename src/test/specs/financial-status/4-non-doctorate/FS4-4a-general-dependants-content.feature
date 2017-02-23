@@ -69,6 +69,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition Code           |
             | Lowest balance           |
             | Estimated leave end date |
             | Result timestamp         |
@@ -103,6 +104,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
