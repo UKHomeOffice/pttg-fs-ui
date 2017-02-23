@@ -21,7 +21,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
     Scenario: Page checks for Passed text write up
     This is a scenario to check if applicant meets minimum financial requirement text write up
         Given the account has sufficient funds
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -58,7 +58,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
     Scenario: Page checks for Not Passed due to low balance text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the api daily balance response will Fail-low-balance
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -92,7 +92,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
     Scenario: Page checks for Not Passed due to record count text write up
     This is a scenario to check if Applicant has less than 28 days funds text write up
         Given the api daily balance response will Fail-record-count
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -134,7 +134,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
     Scenario: Page checks for Passed text write up - dependants only
     This is a scenario to check if applicant meets minimum financial requirement text write up
         Given the account has sufficient funds
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -168,7 +168,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
     Scenario: Page checks for Not Passed due to low balance text write up - dependants only
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the api daily balance response will Fail-low-balance
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |

@@ -98,7 +98,7 @@ class Steps {
         .withOption('general', 'studentType-general-label')
         .withOption('doctorate', 'studentType-doctorate-label')
         .withOption('pgdd', 'studentType-pgdd-label')
-        .withOption('sso', 'studentType-sso-label')
+        .withOption('suso', 'studentType-suso-label')
 
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()

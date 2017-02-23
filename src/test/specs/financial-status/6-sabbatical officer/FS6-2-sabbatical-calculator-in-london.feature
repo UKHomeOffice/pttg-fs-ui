@@ -19,7 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Raj is a sabbatical officer in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -57,7 +57,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Shelly is a sabbatical officer in London student and has sufficient funds
         Given the account has sufficient funds
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -98,7 +98,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Hugo is a dependant only application - sabbatical officer in London student and does not have sufficient funds
 
         Given the account does not have sufficient funds
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -136,7 +136,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Adele and Grace are a dependant only application - sabbatical officer in London student and has sufficient funds
         Given the account has sufficient funds
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |

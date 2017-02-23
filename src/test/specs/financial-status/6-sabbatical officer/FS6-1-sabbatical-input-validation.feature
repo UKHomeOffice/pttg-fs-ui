@@ -22,7 +22,7 @@ Feature: Show clear error details when inputs are invalid
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
