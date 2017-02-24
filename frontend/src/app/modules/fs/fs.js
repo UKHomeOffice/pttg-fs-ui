@@ -64,6 +64,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     obj.tier = Number(stateParams.tier) // tier 4
     var tier = FsInfoService.getTier(obj.tier)
     var split = me.splitApplicantType(stateParams.applicantType)
+    console.log(split)
     obj.applicantType = split.applicantType // general, sso
     obj.dependantsOnly = split.dependantsOnly
 
@@ -411,6 +412,50 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     } else {
       ga('send', 'event', category, action)
     }
+  }
+
+  this.clearConditionCode = function (fs) {
+    fs.conditionCodeResponse = {}
+  }
+
+  this.getConditionCodeUrl = function (obj) {
+    if (!obj.tier === 4) {
+      return null
+    }
+
+    return 't' + obj.tier + '/conditioncodes'
+  }
+
+  this.getConditionCodeParams = function (obj) {
+    if (obj.applicantType !== 'general') {
+      return {
+        studentType: obj.applicantType,
+        dependants: obj.dependants
+      }
+    }
+
+    var params = {
+      studentType: obj.applicantType,
+      dependants: obj.dependants,
+      courseType: obj.courseType,
+      recognisedBodyOrHEI: obj.courseInstitution
+    }
+
+    if (obj.courseEndDate) {
+      params.courseEndDate = obj.courseEndDate
+    }
+
+    if (obj.courseStartDate) {
+      params.courseStartDate = obj.courseStartDate
+    }
+
+    return params
+  }
+
+  this.sendConditionCodeRequest = function (obj) {
+    var u = me.getConditionCodeUrl(obj)
+    var params = me.getConditionCodeParams(obj)
+    return IOService.get(u, params, { timeout: CONFIG.timeout })
   }
 
   me.reset()

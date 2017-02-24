@@ -80,7 +80,7 @@ fsModule.factory('FsInfoService', [ function () {
         value: 'general',
         label: 'General student',
         full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'courseInstitution', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
       {
         value: 'doctorate',
@@ -173,7 +173,19 @@ fsModule.factory('FsInfoService', [ function () {
       },
       courseType: {
         summary: 'Course type',
-        options: [{ value: 'pre-sessional', label: 'Pre-sessional' }, { value: 'main', label: 'Main course' }],
+        options: [
+          { value: 'pre-sessional', label: 'Pre-sessional' },
+          { value: 'main', label: 'Main course degree or higher' },
+          { value: 'below-degree', label: 'Main course below degree' }
+        ],
+        format: 'radio'
+      },
+      courseInstitution: {
+        summary: 'Course institution',
+        options: [
+          { value: 'true', label: 'Recognised body or HEI (higher education institution)' },
+          { value: 'false', label: 'Other institution' }
+        ],
         format: 'radio'
       },
       courseStartDate: {
@@ -209,6 +221,7 @@ fsModule.factory('FsInfoService', [ function () {
         summary: '',
         options: [{ value: 'yes', label: 'Yes, check Barclays' }, { value: 'no', label: 'No' }]
       },
+
       dependantsOnly: {
         summary: '',
         options: [{ value: 'main', label: 'Main applicant (with & without dependants)' }, { value: 'dependant', label: 'Dependants only' }]

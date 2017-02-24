@@ -107,6 +107,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
     },
     inLondon: FsInfoService.getFieldInfo('inLondon'),
     courseType: FsInfoService.getFieldInfo('courseType'),
+    courseInstitution: FsInfoService.getFieldInfo('courseInstitution'),
     continuationCourse: angular.extend(FsInfoService.getFieldInfo('continuationCourse'), {
       onClick: function (opt, scope) {
         if (opt.value !== 'yes') {
@@ -232,14 +233,28 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
 
   $scope.submit = function (valid) {
     if (valid) {
-      FsService.clearThresholdResponse
-      FsService.sendThresholdRequest(fs).then(function (data) {
-        data.responseTime = moment()
-        fs.thresholdResponse = data
-        $state.go('fsResult', $state.params)
-      }, function (err, data) {
-        $state.go('fsError', $state.params)
-      })
+      var doThresholdStuff = function () {
+        FsService.clearThresholdResponse(fs)
+        FsService.sendThresholdRequest(fs).then(function (data) {
+          data.responseTime = moment()
+          fs.thresholdResponse = data
+          $state.go('fsResult', $state.params)
+        }, function (err, data) {
+          $state.go('fsError', $state.params)
+        })
+      }
+
+      if (fs.tier === 4) {
+        FsService.clearConditionCode(fs)
+        FsService.sendConditionCodeRequest(fs).then(function (data) {
+          fs.conditionCodeResponse = data
+          doThresholdStuff()
+        }, function (err, data) {
+          doThresholdStuff()
+        })
+      } else {
+        doThresholdStuff()
+      }
     }
   }
 }])
