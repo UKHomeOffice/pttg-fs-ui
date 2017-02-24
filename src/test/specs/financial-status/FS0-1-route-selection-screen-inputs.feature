@@ -20,7 +20,7 @@ Feature: Route selection screen inputs - All tiers
             | general   | General student                  |
             | doctorate | Doctorate extension scheme       |
             | pgdd      | Postgraduate doctor or dentist   |
-            | sso       | Student union sabbatical officer |
+            | suso       | Student union sabbatical officer |
 
     Scenario: Caseworker selects Tier 2 (General)
         When caseworker is on page t2

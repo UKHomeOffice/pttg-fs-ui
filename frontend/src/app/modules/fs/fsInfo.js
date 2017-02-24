@@ -95,7 +95,7 @@ fsModule.factory('FsInfoService', [ function () {
         fields: ['*default', '*courses', '*t4all', 'dependants']
       },
       {
-        value: 'sso',
+        value: 'suso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
         fields: ['*default', '*courses', '*t4all', 'dependants']

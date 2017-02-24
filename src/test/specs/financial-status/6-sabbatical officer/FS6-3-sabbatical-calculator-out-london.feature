@@ -19,7 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -63,7 +63,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Laura is a sabbatical officer not in London student and has sufficient funds
         Given the account has sufficient funds
-        And caseworker is on page t4/sso/consent
+        And caseworker is on page t4/suso/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -107,7 +107,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Alex is a dependant only application - sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -152,7 +152,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Jamelia and Alicia are a dependant only (x2) application - sabbatical officer not in London student and has sufficient funds
 
         Given the account has sufficient funds
-        And caseworker is on page t4/sso-dependants/consent
+        And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |

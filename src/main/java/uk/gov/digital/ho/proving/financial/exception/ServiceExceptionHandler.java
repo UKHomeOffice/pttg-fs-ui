@@ -22,6 +22,7 @@ import java.net.ConnectException;
 import java.util.stream.Collectors;
 
 import static net.logstash.logback.marker.Markers.append;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static uk.gov.digital.ho.proving.financial.model.ErrorCode.*;
 
@@ -34,7 +35,7 @@ public class ServiceExceptionHandler {
     private Logger LOGGER = LoggerFactory.getLogger(ServiceExceptionHandler.class);
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = BAD_REQUEST)
     @ResponseBody
     public ResponseDetails missingParameterHandler(MissingServletRequestParameterException exception) {
         String name = exception.getParameterName();
@@ -43,7 +44,7 @@ public class ServiceExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = BAD_REQUEST)
     @ResponseBody
     public ResponseDetails unbindableParameterHandler(MethodArgumentTypeMismatchException exception) {
         LOGGER.debug(append("errorCode", "0002"), "Unbindable parameter: " + exception.getMessage());
@@ -51,7 +52,7 @@ public class ServiceExceptionHandler {
     }
 
     @ExceptionHandler(InvalidRequestParameterException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = BAD_REQUEST)
     @ResponseBody
     public ResponseDetails invalidParameterFormatHandler(InvalidRequestParameterException exception) {
         LOGGER.debug(append("errorCode", "0003"), "Invalid parameter format: " + exception.getMessage());
@@ -59,7 +60,7 @@ public class ServiceExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     @ResponseBody
     public ResponseDetails constraintValidationHandler(ConstraintViolationException exception) {
         LOGGER.debug(append("errorCode", "0004"), "Constraint violation: " + exception.getMessage());
@@ -86,7 +87,7 @@ public class ServiceExceptionHandler {
 
             case BAD_REQUEST:
                 LOGGER.error(append("errorCode", "0007"), "Rest service exception - bad request, which means that there may be a mismatch between UI and API");
-                return new ResponseEntity<>(new ResponseDetails(API_CLIENT_ERROR), INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(new ResponseDetails(API_CLIENT_ERROR), BAD_REQUEST);
 
             case INTERNAL_SERVER_ERROR:
                 LOGGER.error(append("errorCode", "0006"), "Rest service exception - internal server error");
@@ -108,7 +109,7 @@ public class ServiceExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = BAD_REQUEST)
     @ResponseBody
     public ResponseDetails bindException(BindException exception) {
         LOGGER.debug(append("errorCode", "0003"), "Binding exception: " + exception.getMessage());
