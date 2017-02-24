@@ -40,7 +40,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name             | Shelly Smith                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Condition Code                  |                                |
+            | Condition Code                  | 2 - Applicant                  |
             | Course dates checked            | 30/05/2016 to 30/07/2016       |
             | Lowest Balance                  | £100.00 on 03/10/2016          |
             | Tier                            | Tier 4 (General)               |
@@ -91,7 +91,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             |                          |
+            | Condition Code             | 2 - Applicant            |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 2 (limited to 9)         |
             | Entire course length       | 9                        |
@@ -120,7 +120,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name        | Shelly Smith                   |
             | Total funds required       | £16,090.00                     |
             | Maintenance period checked | 03/05/2016 to 30/05/2016       |
-            | Condition Code             |                                |
+            | Condition Code             | 4B - Partner, 1 - Child        |
             | Course dates checked       | 30/05/2016 to 30/07/2016       |
             | Lowest Balance             | £100.00 on 03/10/2016          |
             | Tier                       | Tier 4 (General)               |
@@ -170,7 +170,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             |                          |
+            | Condition Code             | 4B - Partner, 1 - Child  |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 2 (limited to 9)         |
             | Entire course length       | 9                        |

@@ -34,7 +34,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £945.00                  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Dependants                 | 0                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
@@ -52,7 +51,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Total funds required       | £945.00                  |
             | Lowest Balance             | £1,574.90 on 01/06/2016  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Dependants                 | 1                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
@@ -69,7 +67,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £945.00                  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
@@ -87,7 +84,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Total funds required       | £945.00                  |
             | Lowest Balance             | £100.00 on 03/10/2016    |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
             | DOB                        | 25/03/1987               |
@@ -103,7 +99,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £945.00                  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Dependants                 | 2                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
@@ -121,7 +116,6 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Total funds required       | £1,575.00                |
             | Lowest Balance             | £600.90 on 01/06/2016    |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
-            | Condition code             |                          |
             | Dependants                 | 3                        |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |

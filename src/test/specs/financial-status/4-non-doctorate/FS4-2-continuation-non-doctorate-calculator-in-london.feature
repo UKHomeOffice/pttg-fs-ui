@@ -192,6 +192,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course        | Yes                          |
             | Original Course Start Date | 30/10/2015                   |
             | Course type                | Main course degree or higher |
+            | Course institution         | Recognised body or HEI       |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Application Raised Date    | 30/06/2016               |
@@ -288,7 +289,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Condition Code             | 4B - Partner, 1 - Child   |
+            | Condition Code             | 4B - Partner, 1 - Child  |
             | Course length              | 17 (limited to 9)        |
             | Estimated Leave End Date   | 22/10/2017               |
             | Entire course length       | 23                       |
