@@ -5,9 +5,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
        # Given the account has sufficient funds
         And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/doctorate/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
@@ -38,6 +36,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the service displays the following criteria headers in order
             | Tier                            |
             | Applicant type                  |
+            | Dependant/Main applicant        |
             | Application raised date         |
             | In London                       |
             | Accommodation fees already paid |
@@ -45,9 +44,6 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Sort code                       |
             | Account number                  |
             | Date of birth                   |
-
-
-
 
 
 

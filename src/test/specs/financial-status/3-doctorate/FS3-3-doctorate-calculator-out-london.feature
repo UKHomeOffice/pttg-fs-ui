@@ -6,6 +6,8 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
 
     Not In London - The applicant must show evidence of funds to cover £1,015 for each month for 2 months (£2,030)
 
+    Dependants Required Maintenance threshold: Out of London - £680
+
     Required Maintenance threshold calculation to pass this feature file
     Maintenance threshold amount =  (Required Maintenance funds doctorate not in London
     (£1015) * 2) -  Accommodation fees already paid
@@ -16,9 +18,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/doctorate/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |

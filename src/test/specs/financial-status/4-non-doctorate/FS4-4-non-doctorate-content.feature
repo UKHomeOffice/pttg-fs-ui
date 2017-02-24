@@ -6,9 +6,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the api daily balance response will Pass
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/general/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
@@ -30,7 +28,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
 
     Scenario: Page checks for Passed text write up
     This is a scenario to check if applicant meets minimum financial requirement text write up
-        Given the account has sufficient funds
+#        Given the account has sufficient funds
         When the financial status check is performed
         Then the service displays the following page content
             | Outcome        | Passed                                          |
@@ -45,6 +43,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
+            | Dependant/Main applicant              |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |
@@ -79,6 +78,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
+            | Dependant/Main applicant              |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |
@@ -111,6 +111,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
+            | Dependant/Main applicant              |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |

@@ -28,7 +28,8 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       totalTuitionFees: '',
       tuitionFeesAlreadyPaid: '',
       accommodationFeesAlreadyPaid: '',
-      dependants: ''
+      dependants: '',
+      dependantsOnly: null
     }
   }
 
@@ -37,9 +38,40 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return _application
   }
 
+  this.splitApplicantType = function (str) {
+    var results = {
+      applicantType: null,
+      dependantsOnly: false
+    }
+
+    if (!_.isString(str)) {
+      return results
+    }
+
+    var split = str.split('-')
+    if (split.length >= 1) {
+      results.applicantType = split[0]
+    }
+
+    if (split.length >= 2 && split[1] === 'dependants') {
+      results.dependantsOnly = true
+    }
+
+    return results
+  }
+
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
-    obj.applicantType = stateParams.applicantType || null // nondoctorate, sso
+    var tier = FsInfoService.getTier(obj.tier)
+    var split = me.splitApplicantType(stateParams.applicantType)
+    obj.applicantType = split.applicantType // general, sso
+    obj.dependantsOnly = split.dependantsOnly
+
+    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+    if (variant.dependantsOnly) {
+      obj.dependantsOnly = true
+    }
+
     obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
 
     if (obj.doCheck !== 'yes') {
@@ -84,9 +116,22 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       params[f] = obj[f]
     })
 
+    params.dependantsOnly = obj.dependantsOnly
+
     // [TODO]
     params.studentType = obj.applicantType
     params.applicantType = obj.applicantType
+    if (obj.dependantsOnly) {
+      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
+        params.accommodationFeesAlreadyPaid = 0
+      }
+      if (!_.has(fields.totalTuitionFees)) {
+        params.totalTuitionFees = 0
+      }
+      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
+        params.tuitionFeesAlreadyPaid = 0
+      }
+    }
 
     return params
   }
@@ -187,12 +232,18 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     // basics
     var tier = FsInfoService.getTier(obj.tier)
     var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+
     var fields = FsInfoService.getFields(variant.fields)
     var capped = me.getThresholdCappedValues(obj)
+    var dependantsOnlyOptions = FsInfoService.getFieldInfo('dependantsOnly')
 
     if (obj.continuationCourse !== 'yes') {
       // remove the original course start date from the results if its not a continuation course
       fields = _.without(fields, 'originalCourseStartDate')
+    }
+
+    if (obj.dependantsOnly) {
+      fields = _.without(fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
     }
 
     fields = _.without(fields, 'courseEndDate', 'endDate')
@@ -207,6 +258,14 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     criteria.applicantType = {
       label: 'Applicant type',
       display: variant.label
+    }
+
+    if (tier.dependantsOnlyOption) {
+      var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
+      criteria.dependantsOnly = {
+        label: 'Dependant/Main applicant',
+        display: opt.label
+      }
     }
 
     _.each(fields, function (f) {

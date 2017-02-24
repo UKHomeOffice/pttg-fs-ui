@@ -39,9 +39,10 @@ class ApiUrlsSpec extends Specification {
         given:
         def course = new Course(true, aDate, aDate, "doctorate", "main")
         def maintenance = new Maintenance(ONE, ONE, ONE, 1)
+        def dependantsOnly = false
 
         when:
-        def url = apiUrls.t4ThresholdUrlFor(course, maintenance)
+        def url = apiUrls.t4ThresholdUrlFor(course, maintenance, dependantsOnly)
 
         then:
         url.host == 'localhost'
@@ -49,7 +50,7 @@ class ApiUrlsSpec extends Specification {
 
         url.path == thresholdEndpoint
 
-        url.query == 'inLondon=true&studentType=doctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1&courseType=main'
+        url.query == 'inLondon=true&studentType=doctorate&courseStartDate=2016-01-01&courseEndDate=2016-01-01&originalCourseStartDate&tuitionFees=1&tuitionFeesPaid=1&accommodationFeesPaid=1&dependants=1&courseType=main&dependantsOnly=false'
     }
 
     def "generates daily balance url"() {

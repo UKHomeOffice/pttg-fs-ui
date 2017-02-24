@@ -45,6 +45,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
   $scope.fields = FsInfoService.getFields($scope.variant.fields)
 
+  if (fs.dependantsOnly) {
+    $scope.fields = _.without($scope.fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
+  }
+
   // config for all fields
   $scope.conf = {
     applicationRaisedDate: {
@@ -197,6 +201,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         }
 
         if (Math.ceil(n) !== Math.floor(n)) {
+          ok = false
+        }
+
+        if (($scope.variant.dependantsOnly || fs.dependantsOnly) && n < 1) {
           ok = false
         }
 

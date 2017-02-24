@@ -5,7 +5,7 @@
     </ul>
   </div>
 </nav>
-<div class="debuglinks">
+<div class="debuglinks" ng-if="showDebug">
   <a ng-click="setBank('00000500')">SUCCESS - Not Passed</a>
   <a ng-click="setBank('00030000')">SUCCESS - Passed</a>
   <a ng-click="setBank('00000501')">INITIATED</a>

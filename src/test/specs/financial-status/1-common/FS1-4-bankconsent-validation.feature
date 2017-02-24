@@ -5,7 +5,7 @@ Feature: Validation on the fields required for consent from the bank to be obtai
     Account Number - Format should be 12345678 (always 8 numbers, 0-9, no letters, cannot be all 0's)
 ########################################################################################################################
     Background:
-        Given caseworker is on page t4/nondoctorate/consent
+        Given caseworker is on page t4/general/consent
 
 
 ######################### Validation on the Sort Code Field #########################

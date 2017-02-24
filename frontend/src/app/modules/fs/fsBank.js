@@ -101,12 +101,27 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
       params[f] = obj[f]
     })
 
+    if (!_.has(params, 'dependantsOnly')) {
+      params.dependantsOnly = variant.dependantsOnly || false
+    }
+
     // add the date of birth
     params.dob = obj.dob
 
     // add the applicant type
     params.applicantType = obj.applicantType
     params.studentType = obj.applicantType
+    if (obj.dependantsOnly) {
+      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
+        params.accommodationFeesAlreadyPaid = 0
+      }
+      if (!_.has(fields.totalTuitionFees)) {
+        params.totalTuitionFees = 0
+      }
+      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
+        params.tuitionFeesAlreadyPaid = 0
+      }
+    }
 
     params.toDate = obj.endDate
 

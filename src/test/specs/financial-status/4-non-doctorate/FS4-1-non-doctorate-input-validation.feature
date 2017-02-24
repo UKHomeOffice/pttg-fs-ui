@@ -16,7 +16,7 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given caseworker is using the financial status service ui
-        And caseworker is on page t4/nondoctorate/calc/details
+        And caseworker is on page t4/general/calc/details
 
 ######################### General validation message display #########################
 
@@ -95,6 +95,13 @@ Feature: Show clear error details when inputs are invalid
             | End Date | 31/06/2016 |
         Then the service displays the following error message
             | End Date-error | Enter a valid end date |
+
+    Scenario: Case Worker enters invalid End date - within 31 days of application raised date
+        When the financial status check is performed with
+            | End Date | 30/05/2016 |
+            | Application raised date | 31/01/2016 |
+        Then the service displays the following error message
+            | End Date-error | End date cannot be after application raised date |
 
     Scenario: Caseworker enters end date after the Application Raised Date
         When the financial status check is performed with
@@ -212,6 +219,13 @@ Feature: Show clear error details when inputs are invalid
     Scenario: Case Worker enters invalid Dependants - fractional
         When the financial status check is performed with
             | Dependants | 1.1 |
+        Then the service displays the following error message
+            | Dependants-error | Enter a valid number of dependants |
+
+    Scenario: Case Worker enters invalid Dependants - CANNOT be zero on a dependants only route
+        Given caseworker is on page t4/general-dependants/calc/details
+        When the financial status check is performed with
+            | Dependants | 0 |
         Then the service displays the following error message
             | Dependants-error | Enter a valid number of dependants |
 

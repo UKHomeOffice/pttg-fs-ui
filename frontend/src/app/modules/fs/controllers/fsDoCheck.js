@@ -10,6 +10,12 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   $stateProvider.state({
     name: 'fsDoCheck',
     url: '/:applicantType',
+    params: {
+      dependantsOnly: {
+        value: null,
+        squash: true
+      }
+    },
     title: 'Financial Status : Query',
     parent: 'fsApplicantType',
     views: {

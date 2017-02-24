@@ -65,17 +65,19 @@ fsModule.factory('FsInfoService', [ function () {
       },
       {
         value: 'dependant',
-        label: 'Dependant only',
-        full: 'Dependant only',
-        fields: ['*default', 'dependants']
+        label: 'Dependants only',
+        full: 'Dependants only',
+        fields: ['*default', 'dependants'],
+        dependantsOnly: true
       }]
     },
     {
       tier: 4,
       label: 'Tier 4 (General)',
       nDaysRequired: 28,
+      dependantsOnlyOption: true,
       variants: [{
-        value: 'nondoctorate',
+        value: 'general',
         label: 'General student',
         full: 'Tier 4 (General) student',
         fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
@@ -93,7 +95,7 @@ fsModule.factory('FsInfoService', [ function () {
         fields: ['*default', '*courses', '*t4all', 'dependants']
       },
       {
-        value: 'sso',
+        value: 'suso',
         label: 'Student union sabbatical officer',
         full: 'Tier 4 (General) student union (sabbatical officer)',
         fields: ['*default', '*courses', '*t4all', 'dependants']
@@ -111,9 +113,10 @@ fsModule.factory('FsInfoService', [ function () {
       },
       {
         value: 'dependant',
-        label: 'Dependant only',
-        full: 'Dependant only',
-        fields: ['*default', 'dependants']
+        label: 'Dependants only',
+        full: 'Dependants only',
+        fields: ['*default', 'dependants'],
+        dependantsOnly: true
       }]
     }]
   }
@@ -205,6 +208,10 @@ fsModule.factory('FsInfoService', [ function () {
       doCheck: {
         summary: '',
         options: [{ value: 'yes', label: 'Yes, check Barclays' }, { value: 'no', label: 'No' }]
+      },
+      dependantsOnly: {
+        summary: '',
+        options: [{ value: 'main', label: 'Main applicant (with & without dependants)' }, { value: 'dependant', label: 'Dependants only' }]
       }
     }
 

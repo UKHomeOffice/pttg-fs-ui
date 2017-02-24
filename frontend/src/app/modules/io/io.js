@@ -18,6 +18,11 @@ ioModule.factory('IOService', ['$http', '$state', 'CONFIG', function ($http, $st
     if (data) {
       conf.params = data
     }
+    console.log('\nIO.get')
+    console.log(url)
+    console.log(data)
+    console.log(conf)
+    console.log('')
 
     var req = $http.get(CONFIG.api + url, conf)
     return req

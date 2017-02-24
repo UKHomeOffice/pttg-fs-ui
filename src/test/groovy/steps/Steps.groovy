@@ -24,6 +24,7 @@ import static com.jayway.restassured.RestAssured.given
 import static java.util.concurrent.TimeUnit.SECONDS
 import static steps.UtilitySteps.clickRadioButton
 import static steps.UtilitySteps.toCamelCase
+
 /**
  * @Author Home Office Digital
  */
@@ -56,40 +57,28 @@ class Steps {
     def wiremockPort = 8080
 
     def pageUrls = [
-        'root'              : uiRoot + '#!/fs',
-        'tier2'             : uiRoot + '#!/fs/t2',
-        'tier4'             : uiRoot + '#!/fs/t4',
-        'tier5'             : uiRoot + '#!/fs/t5',
-        'studentType'       : uiRoot,
-        'doctorate'         : uiRoot + '#!/fs/t4/doctorate',
-        'non-doctorate'     : uiRoot + '#!/fs/t4/non-doctorate',
+        'root'       : uiRoot + '#!/fs',
+        'tier2'      : uiRoot + '#!/fs/t2',
+        'tier4'      : uiRoot + '#!/fs/t4',
+        'tier5'      : uiRoot + '#!/fs/t5',
+        'studentType': uiRoot,
+        'doctorate'  : uiRoot + '#!/fs/t4/doctorate',
+        'general'    : uiRoot + '#!/fs/t4/general',
 
     ]
 
-     def applicantType = [
-            'mainApplicant'          : 'applicantType-main-label',
-            'dependentOnly'         :  'applicantType-dependant-label',
-            'nonDoctorate'           :  'applicantType-nondoctorate-label'
+    def applicantType = [
+        'mainApplicant': 'applicantType-main-label',
+        'dependentOnly': 'applicantType-dependant-label',
+        'general'      : 'applicantType-general-label'
     ]
 
     def pageObjects = [
-            'continueButtonClass'       : 'button',
-            'yesCheckBarclays'          : 'doCheck-yes-label',
-             'no'                       : 'doCheck-no-label'
+        'continueButtonClass': 'button',
+        'yesCheckBarclays'   : 'doCheck-yes-label',
+        'no'                 : 'doCheck-no-label'
     ]
 
-//    def pageLocations = [
-//        'studentType'       : '#!/financial-status',
-//        'doctorateQuery'    : '#!/financial-status/doctorate',
-//        'pgddQuery'         : '#!/financial-status/pgdd',
-//        'ssoQuery'          : '#!/financial-status/sso',
-//        'non-doctorateQuery': '#!/financial-status/non-doctorate',
-//        'accountNotFound'   : '#!/financial-status/no-record',
-//
-//        'studentTypeCalc'       : '#!/financial-status-calc-student-type',
-//    ]
-
-//                             /pttg/financialstatus/v1/t4/threshold?accommodationFeesAlreadyPaid=0&applicantType=nondoctorate&applicationRaisedDate=2016-06-05&continuationCourse=no&courseEndDate=2016-11-30&courseStartDate=2016-05-30&courseType=main&dependants=1&endDate=2016-05-30&inLondon=yes&originalCourseStartDate=&studentType=nondoctorate&totalTuitionFees=8500.00&tuitionFeesAlreadyPaid=0
     def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
     def consentCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/consent*"
     def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/dailybalancestatus*"
@@ -106,10 +95,10 @@ class Steps {
         .withOption('no', 'inLondon-no-label')
 
     def studentTypeRadio = new UtilitySteps.RadioButtonConfig()
-        .withOption('non-doctorate', 'applicantType-nondoctorate-label')
-        .withOption('doctorate', 'applicantType-doctorate-label')
-        .withOption('pgdd', 'applicantType-pgdd-label')
-        .withOption('sso', 'applicantType-sso-label')
+        .withOption('general', 'studentType-general-label')
+        .withOption('doctorate', 'studentType-doctorate-label')
+        .withOption('pgdd', 'studentType-pgdd-label')
+        .withOption('suso', 'studentType-suso-label')
 
 
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
@@ -171,7 +160,7 @@ class Steps {
         String[] parts = value.split(delimiter)
 
         parts.eachWithIndex { part, index ->
-            if(driver.findElement(By.id(key + partNames[index])).isDisplayed()) {
+            if (driver.findElement(By.id(key + partNames[index])).isDisplayed()) {
                 sendKeys(driver.findElement(By.id(key + partNames[index])), part)
             }
         }
@@ -290,23 +279,21 @@ class Steps {
                 } else if (key == "continuationCourse") {
                     clickRadioButton(driver, continuationCourseRadio, v)
 
-                }
-                else if(key == "accountNumber"){
+                } else if (key == "accountNumber") {
                     driver.findElement(By.id(key)).clear()
                     driver.findElement(By.id(key)).sendKeys(v)
-                }else if (key == "courseType") {
+                } else if (key == "courseType") {
                     clickRadioButton(driver, courseTypeRadio, v)
 
                 } else {
                     def element = driver.findElement(By.id(key))
-                    if(element.isDisplayed() == true) {
+                    if (element.isDisplayed() == true) {
                         sendKeys(element, v)
                     }
                 }
             }
         }
     }
-
 
 
     private void submitEntries(Map<String, String> entries) {
@@ -342,6 +329,7 @@ class Steps {
     public void caseworker_is_on_page(String url) throws Throwable {
         def u = pageUrls['root'] + '/' + url
         driver.get(u)
+        driver.sleep(100)
     }
 
     @Given("^(?:caseworker|user) is using the ([a-zA-Z ]*)ui\$")
@@ -371,7 +359,6 @@ class Steps {
     }
 
 
-
     @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|\\d+)\$")
     public void the_api_consent_response_will_be(String ref) throws Throwable {
         if (ref.isInteger()) {
@@ -398,10 +385,8 @@ class Steps {
 
     @Given("^the api threshold response will be (.+)\$")
     public void the_api_threshold_response_will_be(String ref) throws Throwable {
-        testDataLoader.stubTestData('threshold-' +ref, thresholdUrlRegex)
+        testDataLoader.stubTestData('threshold-' + ref, thresholdUrlRegex)
     }
-
-
 
 
     @Given("^the account has sufficient funds for tier (\\d)\$")
@@ -434,7 +419,6 @@ class Steps {
         testDataLoader.stubTestData("threshold", thresholdUrlRegex)
         testDataLoader.stubTestData("dailyBalanceFail-record-count", balanceCheckUrlRegex)
     }
-
 
 
     @Given("^the api response is delayed for (\\d+) seconds\$")
@@ -487,21 +471,22 @@ class Steps {
     }
 
     @Given("^consent is sought for the following:\$")
-    public void consent_is_sought_for_the_following(DataTable arg1){
+    public void consent_is_sought_for_the_following(DataTable arg1) {
         Map<String, String> entries = arg1.asMap(String.class, String.class)
         makeEntries(entries)
         driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
 
     }
+
     @Given("^the caseworker selects the (.*) radio button\$")
     public void the_caseworker_selects_the_Yes_check_Barclays_radio_button(String bankRadioButton) {
 //Thread.sleep(4000)
-        if(bankRadioButton == "Yes, check Barclays") {
+        if (bankRadioButton == "Yes, check Barclays") {
             driver.findElement(By.id(pageObjects['yesCheckBarclays'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
 
-        if(bankRadioButton == "No") {
+        if (bankRadioButton == "No") {
             driver.findElement(By.id(pageObjects['no'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
@@ -511,15 +496,15 @@ class Steps {
     @Given("^the caseworker selects Tier (two|four|five)\$")
     public void the_caseworker_selects_Tier(String tierType) throws Throwable {
 
-        if(tierType == "two") {
+        if (tierType == "two") {
             driver.get(pageUrls['tier2'])
         }
 
-        if(tierType == "four"){
+        if (tierType == "four") {
             driver.get(pageUrls['tier4'])
         }
 
-        if(tierType == "five"){
+        if (tierType == "five") {
             driver.get(pageUrls['tier5'])
         }
 
@@ -527,11 +512,11 @@ class Steps {
 
     @Given("^(Main|Dependant) applicant type is selected\$")
     public void applicant_type_is_selected(String applicant) throws Throwable {
-        if(applicant == "Main"){
+        if (applicant == "Main") {
             driver.findElement(By.id(applicantType['mainApplicant'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
-        if(applicant == "Dependant"){
+        if (applicant == "Dependant") {
             driver.findElement(By.id(applicantType['dependentOnly'])).click()
             driver.findElement(By.className(pageObjects['continueButtonClass'])).click()
         }
@@ -555,17 +540,19 @@ class Steps {
                 'Accommodation fees already paid': '0',
                 'Dependants'                     : '1',
                 'Continuation course'            : 'No',
-                'Course type'                   :  'Main'
+                'Course type'                    : 'Main'
             ]
 
-            if (studentType.equalsIgnoreCase('non-doctorate')) {
-                validDefaultEntries['Total tuition fees'] = '1';
-                validDefaultEntries['Tuition fees already paid'] = '0';
-            }
+            if (studentType) {
+                if (studentType.equalsIgnoreCase('general')) {
+                    validDefaultEntries['Total tuition fees'] = '1';
+                    validDefaultEntries['Tuition fees already paid'] = '0';
+                }
 
-            if (!studentType.equalsIgnoreCase('doctorate')) {
-                validDefaultEntries['Course start date'] = '30/05/2016';
-                validDefaultEntries['Course end date'] = '30/06/2016';
+                if (!studentType.equalsIgnoreCase('doctorate')) {
+                    validDefaultEntries['Course start date'] = '30/05/2016';
+                    validDefaultEntries['Course end date'] = '30/06/2016';
+                }
             }
         }
         submitEntries(validDefaultEntries)
@@ -604,10 +591,15 @@ class Steps {
         }
     }
 
-    @When ("^the (.+) button is clicked\$")
+    @When("^the (.+) button is clicked\$")
     public void the_button_is_clicked(String btn) {
         driver.sleep(delay)
         driver.findElement(By.id(toCamelCase(btn) + "Btn")).click()
+    }
+
+    @When("^the (.+) option of the (.+) radio is selected")
+    public void the_options_of_the_radio_is_selected(String optValue, String radioId) throws Throwable {
+        driver.findElement(By.id(toCamelCase(radioId) + '-' + toCamelCase(optValue) + '-label')).click()
     }
 
 
@@ -655,12 +647,12 @@ class Steps {
 
     @Then("^the result table contains the following\$")
     public void the_result_table_contains_the_following(DataTable arg1) throws Throwable {
-        Map<String,String> entries = arg1.asMap(String.class,String.class)
+        Map<String, String> entries = arg1.asMap(String.class, String.class)
 
         ArrayList<String> scenarioTable = new ArrayList<>()
         String[] resultTable = entries.keySet()
 
-        for(String s:resultTable){
+        for (String s : resultTable) {
             scenarioTable.add(entries.get(s))
         }
 
@@ -671,15 +663,15 @@ class Steps {
 
         int numRows = driver.findElements(By.xpath('//*[@id="result"]/tbody/tr')).size()
 
-        for(int i=1; i <= numRows; i++) {
+        for (int i = 1; i <= numRows; i++) {
 
 
-                if (driver.findElement(By.id("responseTime")).getText() != driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText()) {
-                    if (driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText() == null) {
-                        break;
-                    }
-                    assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText())
+            if (driver.findElement(By.id("responseTime")).getText() != driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText()) {
+                if (driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText() == null) {
+                    break;
                 }
+                assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText())
+            }
 
         }
     }
@@ -718,7 +710,7 @@ class Steps {
     @Then("^the availability warning box should not be shown\$")
     public void the_availability_warning_box_should_not_be_shown() throws Throwable {
         driver.manage().timeouts().implicitlyWait(1, SECONDS)
-        assert(driver.findElements(By.cssSelector(".availability")).isEmpty())
+        assert (driver.findElements(By.cssSelector(".availability")).isEmpty())
         driver.manage().timeouts().implicitlyWait(defaultTimeout, SECONDS)
     }
 
@@ -746,7 +738,7 @@ class Steps {
         assertStatusMatchFor("ping", expected)
     }
 
-    def assertStatusMatchFor(String endpoint, int expected){
+    def assertStatusMatchFor(String endpoint, int expected) {
 
         def result = responseStatusFor(uiRoot + endpoint)
 
@@ -804,6 +796,7 @@ class Steps {
     public void the_service_displays_the_result_page_including_the_results_and_your_search_headers(DataTable arg1) {
 
     }
+
     @Then("^The service displays the (.*) output page including the results and your search headers\$")
     public void the_service_displays_the_Consent_has_not_been_given_output_page_including_the_results_and_your_search_headers(String consent) {
         assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/h1")).getText() == consent
@@ -815,11 +808,11 @@ class Steps {
         assert driver.findElement(By.xpath("//*[@id=\"content\"]/div[2]/div[1]/h1")).getText() == consentPending
     }
 
-    @Then ("^(.+)should have the following options\$")
-    public void should_have_the_following_options (String radioId, DataTable options) {
+    @Then("^(.+)should have the following options\$")
+    public void should_have_the_following_options(String radioId, DataTable options) {
         Map<String, String> entries = options.asMap(String.class, String.class)
         entries.each { k, v ->
-            assert (driver.findElement(By.id( toCamelCase(radioId.trim()) + '-' + k + '-label')).getText() == v)
+            assert (driver.findElement(By.id(toCamelCase(radioId.trim()) + '-' + k + '-label')).getText() == v)
 
         }
     }

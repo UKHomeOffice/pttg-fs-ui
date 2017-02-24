@@ -26,7 +26,7 @@ Feature: Process 'pending' status and display the appropriate output page
             | End Date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
+            | Dependants                      | 1          |
             | Course start date               | 20/05/2016 |
             | Course end date                 | 30/11/2016 |
             | Tuition fees already paid       | 300        |
@@ -59,9 +59,9 @@ Feature: Process 'pending' status and display the appropriate output page
         And the financial status check is performed with
             | Application raised date | 30/07/2016 |
             | End Date                | 04/07/2016 |
-            | Dependants              | 0          |
+            | Dependants              | 1          |
         And the progress bar is displayed
-        And after at least 5 seconds
+        And after at least 2 seconds
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And the check again button is clicked
@@ -71,7 +71,7 @@ Feature: Process 'pending' status and display the appropriate output page
             | Outcome detail             | This applicant meets the financial requirements |
             | Total funds required       | £945.00                                         |
             | Maintenance period checked | 06/04/2016 to 04/07/2016                        |
-            | Dependants                 | 0                                               |
+            | Dependants                 | 1                                               |
             | Sort code                  | 22-22-23                                        |
             | Account number             | 22222229                                        |
             | DOB                        | 25/03/1987                                      |

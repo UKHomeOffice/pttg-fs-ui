@@ -32,9 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api threshold response will be t4
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the non-doctorate student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
+        And caseworker is on page t4/general/consent
         And consent is sought for the following:
             | DOB            | 21/09/1981 |
             | Sort code      | 11-11-11   |
@@ -207,4 +205,143 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Course length              | 13 (limited to 9)        |
             | Estimated Leave End Date   | 22/10/2017               |
 
+######### Overall course <12 months In London - dependant only - not pass #############
 
+    Scenario: Luiz is a dependant only application (Non Doctorate in London student and does not have sufficient funds)
+
+        Given the api daily balance response will Fail-low-balance
+        And caseworker is on page t4/general-dependants/bank/details
+        When the financial status check is performed
+        Then the service displays the following result
+            | Outcome                         | Not passed                   |
+            | Application Raised Date         | 31/05/2016                   |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student              |
+            | In London                       | Yes                          |
+            | Course dates checked            | 30/05/2016 to 30/11/2016     |
+            | Dependants                      | 1                            |
+            | Sort code                       | 11-11-11                     |
+            | Account number                  | 11111111                     |
+            | DOB                             | 21/09/1981                   |
+            | Continuation Course             | No                           |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Lowest balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 7 (limited to 9)         |
+
+######### Overall course <12 months In London - dependant only - pass #############
+
+    Scenario: Deigo and Edin is a dependant only application (x2) Non Doctorate in London student and has sufficient funds
+
+        Given the account has sufficient funds
+        And caseworker is on page t4/general-dependants/bank/details
+        When the financial status check is performed with
+            | Application Raised Date         | 31/05/2016 |
+            | In London                       | Yes        |
+            | Dependants                      | 2          |
+            | End date                        | 01/05/2016 |
+            | Course end date                 | 30/01/2017 |
+            | Course start date               | 01/05/2016 |
+            | Continuation Course             | Yes        |
+            | Original Course Start Date      | 30/10/2015 |
+            | Course type                     | Main       |
+
+        Then the service displays the following result
+            | Outcome                         | Passed                         |
+            | Application Raised Date         | 31/05/2016                     |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
+            | In London                       | Yes                            |
+            | Course dates checked            | 01/05/2016 to 30/01/2017       |
+            | Dependants                      | 2                              |
+            | Continuation Course             | Yes                            |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 04/04/2016 to 01/05/2016 |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
+
+
+ ###### overall course length 12+ months In London - dependant only - not pass #######
+
+    Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds
+
+        Given the account does not have sufficient funds
+        And caseworker is on page t4/general-dependants/bank/details
+        When the financial status check is performed with
+            | Application Raised Date         | 31/05/2016 |
+            | In London                       | Yes        |
+            | Dependants                      | 1          |
+            | End date                        | 30/05/2016 |
+            | Course end date                 | 30/01/2017 |
+            | Continuation Course             | No         |
+            | Course start date               | 01/05/2016 |
+            | Continuation Course             | Yes        |
+            | Original Course Start Date      | 30/10/2015 |
+            | Course type                     | Main       |
+        Then the service displays the following result
+            | Outcome                         | Not passed                   |
+            | Application Raised Date         | 31/05/2016                   |
+            | Account holder name             | Shelly Smith                 |
+            | Total funds required            | £16,090.00                   |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
+            | Course length                   | 9 (limited to 9)             |
+            | Lowest Balance                  | £100.00 on 03/10/2016        |
+            | Tier                            | Tier 4 (General)             |
+            | Applicant type                  | General student              |
+            | In London                       | Yes                          |
+            | Course dates checked            | 01/05/2016 to 30/01/2017     |
+            | Dependants                      | 1                            |
+            | Sort code                       | 11-11-11                     |
+            | Account number                  | 11111111                     |
+            | DOB                             | 21/09/1981                   |
+            | Continuation Course             | Yes                          |
+        And the result table contains the following
+            | Account holder name        | Shelly Smith             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
+            | Estimated Leave End Date   | 22/10/2017               |
+            | Course length              | 9 (limited to 9)         |
+            | Entire course length       | 16                       |
+
+
+    ###### overall course length 12+ months In London - dependant only - pass #######
+
+    Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
+
+        Given the account has sufficient funds
+        And caseworker is on page t4/general-dependants/bank/details
+        When the financial status check is performed with
+            | Application Raised Date         | 31/05/2016 |
+            | In London                       | Yes        |
+            | Dependants                      | 2          |
+            | Course start date               | 01/05/2016 |
+            | End date                        | 01/05/2016 |
+            | Course end date                 | 30/05/2017 |
+            | Course type                     | Main       |
+            | Continuation Course             | No         |
+        Then the service displays the following result
+            | Outcome                         | Passed                         |
+            | Application Raised Date         | 31/05/2016                     |
+            | Course dates checked            | 01/05/2016 to 30/05/2017       |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | General student                |
+            | In London                       | Yes                            |
+            | Dependants                      | 2                              |
+            | Sort code                       | 11-11-11                       |
+            | Account number                  | 11111111                       |
+            | DOB                             | 21/09/1981                     |
+            | Continuation Course             | No                             |
+            | Estimated Leave End Date        | 22/10/2017                     |
+        And the result table contains the following
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £16,090.00               |
+            | Maintenance period checked | 04/04/2016 to 01/05/2016 |
+            | Course length              | 13 (limited to 9)        |
+            | Estimated Leave End Date   | 22/10/2017               |
