@@ -121,13 +121,13 @@ public class ApiUrls {
     }
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public URI conditionCodesUrlFor(String studentType,
-                                    Boolean dependantsOnly,
-                                    Integer dependants,
-                                    Optional<LocalDate> courseStartDate,
-                                    Optional<LocalDate> courseEndDate,
-                                    Optional<String> courseType,
-                                    Optional<Boolean> recognisedBodyOrHEI) {
+    URI conditionCodesUrlFor(String studentType,
+                             Boolean dependantsOnly,
+                             Integer dependants,
+                             Optional<LocalDate> courseStartDate,
+                             Optional<LocalDate> courseEndDate,
+                             Optional<String> courseType,
+                             Optional<Boolean> recognisedBodyOrHEI) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(apiRoot + apiConditionCodesEndpoint)
             .queryParam("studentType", studentType)
             .queryParam("dependantsOnly", dependantsOnly)

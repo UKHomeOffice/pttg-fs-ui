@@ -117,7 +117,8 @@ public class Service {
         @CookieValue(value="kc-access", defaultValue = "") String accessToken
     ) {
         LOGGER.debug("Condition Codes request");
-        ConditionCodesResponse conditionCodesResponse = conditionCodesRequestor.retrieveConditionCodes(studentType, dependantsOnly, dependants, courseStartDate, courseEndDate, courseType, recognisedBodyOrHEI, accessToken);
+        ConditionCodesResponse conditionCodesResponse = conditionCodesRequestor.retrieveConditionCodes(studentType,
+            dependantsOnly, dependants, courseStartDate, courseEndDate, courseType, recognisedBodyOrHEI, accessToken);
         return ResponseEntity.ok(conditionCodesResponse);
     }
 

@@ -66,13 +66,14 @@ public class ConditionCodesRequestor {
         return response;
     }
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private Map<String, Object> getConditionCodesAuditData(String studentType,
-                                       Boolean dependantsOnly,
-                                       Integer dependants,
-                                       Optional<LocalDate> courseStartDate,
-                                       Optional<LocalDate> courseEndDate,
-                                       Optional<String> courseType,
-                                       Optional<Boolean> recognisedBodyOrHEI) {
+                                                           Boolean dependantsOnly,
+                                                           Integer dependants,
+                                                           Optional<LocalDate> courseStartDate,
+                                                           Optional<LocalDate> courseEndDate,
+                                                           Optional<String> courseType,
+                                                           Optional<Boolean> recognisedBodyOrHEI) {
         Map<String, Object> auditData = new HashMap<>();
 
         auditData.put("method", "retrieve-condition-codes");
@@ -89,7 +90,7 @@ public class ConditionCodesRequestor {
 
     private Map<String, Object> conditionCodesResponseAuditData(ConditionCodesResponse response) {
         Map<String, Object> auditData = new HashMap<>();
-        auditData.put("response", "response");
+        auditData.put("response", response);
         return auditData;
     }
 
