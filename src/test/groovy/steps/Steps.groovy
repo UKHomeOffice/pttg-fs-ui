@@ -79,6 +79,7 @@ class Steps {
         'no'                 : 'doCheck-no-label'
     ]
 
+    def conditionsUrlRegex = "/pttg/financialstatus/v1/t[245]/conditioncodes*"
     def thresholdUrlRegex = "/pttg/financialstatus/v1/t[245]/maintenance/threshold*"
     def consentCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/consent*"
     def balanceCheckUrlRegex = "/pttg/financialstatus/v1/accounts/\\d{6}/\\d{8}/dailybalancestatus*"
@@ -104,10 +105,16 @@ class Steps {
     def courseTypeRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('pre-sessional', 'courseType-presessional-label')
         .withOption('main', 'courseType-main-label')
+        .withOption('below-degree', 'courseType-below-degree-label')
 
     def continuationCourseRadio = new UtilitySteps.RadioButtonConfig()
         .withOption('yes', 'continuationCourse-yes-label')
         .withOption('no', 'continuationCourse-no-label')
+
+    def courseInstitutionRadio = new UtilitySteps.RadioButtonConfig()
+        .withOption('true', 'courseInstitution-true-label')
+        .withOption('false', 'courseInstitution-false-label')
+
 
     def studentType
 
@@ -252,6 +259,9 @@ class Steps {
             } else if (fieldName == "courseType") {
                 assertRadioSelection(courseTypeRadio, v)
 
+            } else if (fieldName == "courseInstitution") {
+                assertRadioSelection(courseInstitutionRadio, v)
+
             } else {
                 assert driver.findElement(By.id(fieldName)).getAttribute("value") == v
             }
@@ -278,6 +288,9 @@ class Steps {
 
                 } else if (key == "continuationCourse") {
                     clickRadioButton(driver, continuationCourseRadio, v)
+
+                } else if (key == "courseInstitution") {
+                    clickRadioButton(driver, courseInstitutionRadio, v)
 
                 } else if (key == "accountNumber") {
                     driver.findElement(By.id(key)).clear()
@@ -388,6 +401,10 @@ class Steps {
         testDataLoader.stubTestData('threshold-' + ref, thresholdUrlRegex)
     }
 
+    @Given("^the api condition codes response will be (.+)\$")
+    public void the_api_condition_codes_response_will_be(String ref) throws Throwable {
+        testDataLoader.stubTestData('conditioncodes-' + ref, conditionsUrlRegex)
+    }
 
     @Given("^the account has sufficient funds for tier (\\d)\$")
     public void the_account_has_sufficient_funds_for_tier(int tier) {
@@ -547,6 +564,7 @@ class Steps {
                 if (studentType.equalsIgnoreCase('general')) {
                     validDefaultEntries['Total tuition fees'] = '1';
                     validDefaultEntries['Tuition fees already paid'] = '0';
+                    validDefaultEntries['Course Institution'] = 'Recognised body or HEI';
                 }
 
                 if (!studentType.equalsIgnoreCase('doctorate')) {
@@ -646,34 +664,33 @@ class Steps {
 
 
     @Then("^the result table contains the following\$")
-    public void the_result_table_contains_the_following(DataTable arg1) throws Throwable {
-        Map<String, String> entries = arg1.asMap(String.class, String.class)
-
-        ArrayList<String> scenarioTable = new ArrayList<>()
-        String[] resultTable = entries.keySet()
-
-        for (String s : resultTable) {
-            scenarioTable.add(entries.get(s))
-        }
-
-        for (int j = 0; j < resultTable.size(); j++) {
-            assert scenarioTable.contains(driver.findElement(By.id(toCamelCase(resultTable[j]))).getText())
-        }
-
-
-        int numRows = driver.findElements(By.xpath('//*[@id="result"]/tbody/tr')).size()
-
-        for (int i = 1; i <= numRows; i++) {
-
-
-            if (driver.findElement(By.id("responseTime")).getText() != driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText()) {
-                if (driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText() == null) {
-                    break;
-                }
-                assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText())
-            }
-
-        }
+    public void the_result_table_contains_the_following(DataTable expectedResult) throws Throwable {
+        assertTextFieldEqualityForTable(expectedResult)
+//        Map<String, String> entries = arg1.asMap(String.class, String.class)
+//
+//        ArrayList<String> scenarioTable = new ArrayList<>()
+//        String[] resultTable = entries.keySet()
+//
+//        for (String s : resultTable) {
+//            scenarioTable.add(entries.get(s))
+//        }
+//
+//        for (int j = 0; j < resultTable.size(); j++) {
+//            assert scenarioTable.contains(driver.findElement(By.id(toCamelCase(resultTable[j]))).getText())
+//        }
+//
+//
+//        int numRows = driver.findElements(By.xpath('//*[@id="result"]/tbody/tr')).size()
+//
+//
+//        for (int i = 1; i <= numRows; i++) {
+//            if (driver.findElement(By.id("responseTime")).getText() != driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText()) {
+//                if (driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText() == null) {
+//                    break;
+//                }
+//                assert scenarioTable.contains(driver.findElement(By.xpath('//*[@id="result"]/tbody/tr[' + i + ']/td')).getText())
+//            }
+//        }
     }
 
     @Then("^the service displays the following page content\$")

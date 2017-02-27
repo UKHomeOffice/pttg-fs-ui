@@ -7,23 +7,24 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And caseworker is on page t4/general/consent
+        And the api condition codes response will be -3-1
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 11-11-11   |
             | Account number | 11111111   |
         And the default details are
-            | Application raised date         | 05/06/2016                   |
-            | End date                        | 30/05/2016                   |
-            | In London                       | Yes                          |
-            | Course start date               | 30/05/2016                   |
-            | Course end date                 | 30/11/2016                   |
-            | Total tuition fees              | 8500.00                      |
-            | Tuition fees already paid       | 0                            |
-            | Accommodation fees already paid | 0                            |
-            | Dependants                      | 1                            |
-            | Continuation Course             | No                           |
-            | Course type                     | Main course degree or higher |
-            | Course institution              | Recognised body or HEI       |
+            | Application raised date         | 05/06/2016 |
+            | End date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/11/2016 |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
+            | Accommodation fees already paid | 0          |
+            | Dependants                      | 1          |
+            | Continuation Course             | No         |
+            | Course type                     | main       |
+            | Course institution              | true       |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -53,6 +54,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Course dates checked                  |
             | Continuation course                   |
             | Course type                           |
+            | Course institution                    |
             | Total tuition fees for the first year |
             | Tuition fees already paid             |
             | Sort code                             |
@@ -73,8 +75,8 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
-            | Condition code           |
             | Lowest balance           |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -89,6 +91,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Course dates checked                  |
             | Continuation course                   |
             | Course type                           |
+            | Course institution                    |
             | Total tuition fees for the first year |
             | Tuition fees already paid             |
             | Sort code                             |
@@ -123,6 +126,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
             | Course dates checked                  |
             | Continuation course                   |
             | Course type                           |
+            | Course institution                    |
             | Total tuition fees for the first year |
             | Tuition fees already paid             |
             | Sort code                             |

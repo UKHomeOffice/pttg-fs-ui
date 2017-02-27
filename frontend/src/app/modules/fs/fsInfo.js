@@ -183,7 +183,7 @@ fsModule.factory('FsInfoService', [ function () {
       courseInstitution: {
         summary: 'Course institution',
         options: [
-          { value: 'true', label: 'Recognised body or HEI (higher education institution)' },
+          { value: 'true', label: 'Recognised body or HEI' },
           { value: 'false', label: 'Other institution' }
         ],
         format: 'radio'

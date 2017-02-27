@@ -176,6 +176,25 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       }
     }
 
+    if (me.hasConditionCodeInfo(obj)) {
+      var codes = []
+      var cc = obj.conditionCodeResponse.data
+
+      if (cc.applicantConditionCode) {
+        codes.push(cc.applicantConditionCode + ' - Applicant')
+      }
+      if (cc.partnerConditionCode) {
+        codes.push(cc.partnerConditionCode + ' - Adult dependant')
+      }
+      if (cc.childConditionCode) {
+        codes.push(cc.childConditionCode + ' - Child dependant')
+      }
+      results.conditionCode = {
+        label: 'Condition code',
+        display: codes.join('\n')
+      }
+    }
+
     if (me.hasThresholdInfo(obj)) {
       if (_.has(obj.thresholdResponse.data, 'leaveEndDate') && obj.thresholdResponse.data.leaveEndDate) {
         results.estimatedLeaveEndDate = {
@@ -418,6 +437,10 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     fs.conditionCodeResponse = {}
   }
 
+  this.hasConditionCodeInfo = function (fs) {
+    return _.has(fs, 'conditionCodeResponse') && _.has(fs.conditionCodeResponse, 'data')
+  }
+
   this.getConditionCodeUrl = function (obj) {
     if (!obj.tier === 4) {
       return null
@@ -430,13 +453,15 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     if (obj.applicantType !== 'general') {
       return {
         studentType: obj.applicantType,
-        dependants: obj.dependants
+        dependants: obj.dependants,
+        dependantsOnly: obj.dependantsOnly
       }
     }
 
     var params = {
       studentType: obj.applicantType,
       dependants: obj.dependants,
+      dependantsOnly: obj.dependantsOnly,
       courseType: obj.courseType,
       recognisedBodyOrHEI: obj.courseInstitution
     }
