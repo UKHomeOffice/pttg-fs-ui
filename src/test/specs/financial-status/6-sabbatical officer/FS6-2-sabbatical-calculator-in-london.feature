@@ -15,6 +15,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
+        And the api condition codes response will be 2--
 
 
     Scenario: Raj is a sabbatical officer in London student and does not have sufficient funds
@@ -100,6 +101,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Hugo is a dependant only application - sabbatical officer in London student and does not have sufficient funds
 
         Given the account does not have sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
@@ -129,7 +131,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | 4B - Partner, 1 - Child  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Course length              | 2 (limited to 9)         |
             | Entire Course Length       | 6                        |
             | Lowest Balance             | £100.00 on 03/10/2016    |
@@ -139,6 +141,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Adele and Grace are a dependant only application - sabbatical officer in London student and has sufficient funds
         Given the account has sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
@@ -169,7 +172,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | 4B - Partner, 1 - Child  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Course length              | 1 (limited to 9)         |
             | Entire course length       | 6                        |
             | Estimated Leave End Date   | 22/10/2017               |

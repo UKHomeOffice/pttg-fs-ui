@@ -5,6 +5,7 @@ Feature: Dependant only stuff
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
+        And the api condition codes response will be -3-1
         And caseworker is using the financial status service ui
         And caseworker is on page t4/doctorate-dependants/consent
         And consent is sought for the following:
@@ -21,19 +22,19 @@ Feature: Dependant only stuff
     Scenario: Rhianna is dependant only doctorate application and has sufficient funds
         When the financial status check is performed
         Then the service displays the following result
-            | Outcome                    | Passed                     |
-            | Account holder name        | Laura Taylor               |
-            | Total funds required       | £16,090.00                 |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016   |
-            | Condition code             | 3 - Partner, 1 - Child     |
-            | Applicant type             | Doctorate extension scheme |
-            | Tier                       | Tier 4 (General)           |
-            | In London                  | Yes                        |
-            | Dependants                 | 1                          |
-            | Sort code                  | 33-33-33                   |
-            | Account number             | 33333333                   |
-            | DOB                        | 25/03/1987                 |
-            | Application raised date    | 29/06/2016                 |
+            | Outcome                    | Passed                                   |
+            | Account holder name        | Laura Taylor                             |
+            | Total funds required       | £16,090.00                               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                 |
+            | Condition code             | 3 - Adult dependant\n1 - Child dependant |
+            | Applicant type             | Doctorate extension scheme               |
+            | Tier                       | Tier 4 (General)                         |
+            | In London                  | Yes                                      |
+            | Dependants                 | 1                                        |
+            | Sort code                  | 33-33-33                                 |
+            | Account number             | 33333333                                 |
+            | DOB                        | 25/03/1987                               |
+            | Application raised date    | 29/06/2016                               |
 
     Scenario: Latoya and Janet are a dependant only (x2) application for a Doctorate not in London and has sufficient funds
         When the financial status check is performed with
@@ -41,21 +42,20 @@ Feature: Dependant only stuff
             | End date                | 30/05/2016 |
             | In London               | No         |
             | Dependants              | 2          |
-
         Then the service displays the following result
-            | Outcome                    | Passed                     |
-            | Account holder name        | Laura Taylor               |
-            | Total funds required       | £16,090.00                 |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016   |
-            | Condition code             | 3 - Partner, 1 - Child     |
-            | Tier                       | Tier 4 (General)           |
-            | Applicant type             | Doctorate extension scheme |
-            | In London                  | No                         |
-            | Dependants                 | 2                          |
-            | Sort code                  | 33-33-33                   |
-            | Account number             | 33333333                   |
-            | DOB                        | 25/03/1987                 |
-            | Application raised date    | 20/06/2016                 |
+            | Outcome                    | Passed                                   |
+            | Account holder name        | Laura Taylor                             |
+            | Total funds required       | £16,090.00                               |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                 |
+            | Condition code             | 3 - Adult dependant\n1 - Child dependant |
+            | Tier                       | Tier 4 (General)                         |
+            | Applicant type             | Doctorate extension scheme               |
+            | In London                  | No                                       |
+            | Dependants                 | 2                                        |
+            | Sort code                  | 33-33-33                                 |
+            | Account number             | 33333333                                 |
+            | DOB                        | 25/03/1987                               |
+            | Application raised date    | 20/06/2016                               |
 
         ###################################### Dependant Only - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -76,8 +76,8 @@ Feature: Dependant only stuff
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
-            | Condition code           |
             | Lowest balance           |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
         And the service displays the following criteria headers in order

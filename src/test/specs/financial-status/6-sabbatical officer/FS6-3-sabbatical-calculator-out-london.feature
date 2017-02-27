@@ -15,6 +15,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
+        And the api condition codes response will be 2--
 
 
     Scenario: Ann is a sabbatical officer not in London student and does not have sufficient funds
@@ -54,7 +55,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Shelly Smith             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | Applicant - 2            |
+            | Condition Code             | 2 - Applicant             |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
             | Lowest Balance             | £100.00 on 03/10/2016    |
@@ -97,7 +98,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | Applicant - 2            |
+            | Condition Code             | 2 - Applicant            |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |
@@ -107,6 +108,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
 
     Scenario: Alex is a dependant only application - sabbatical officer not in London student and does not have sufficient funds
         Given the account does not have sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
@@ -137,14 +139,14 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Continuation Course        | Yes                              |
             | Original Course Start Date | 30/10/2015                       |
         And the result table contains the following
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | 4B - Partner, 1 - Child  |
-            | Course length              | 7 (limited to 9)         |
-            | Entire course length       | 14                       |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
-            | Estimated Leave End Date   | 22/10/2017               |
+            | Account holder name        | Shelly Smith                              |
+            | Total funds required       | £16,090.00                                |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
+            | Course length              | 7 (limited to 9)                          |
+            | Entire course length       | 14                                        |
+            | Lowest Balance             | £100.00 on 03/10/2016                     |
+            | Estimated Leave End Date   | 22/10/2017                                |
 
 
 ## Pass - Dependant only - not in London ##
@@ -152,6 +154,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
     Scenario: Jamelia and Alicia are a dependant only (x2) application - sabbatical officer not in London student and has sufficient funds
 
         Given the account has sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is on page t4/suso-dependants/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
@@ -185,7 +188,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Condition Code             | 4B - Partner, 1 - Child  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
             | Entire course length       | 14                       |

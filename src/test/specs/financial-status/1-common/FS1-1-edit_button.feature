@@ -14,18 +14,18 @@ Feature: Edit search button to return UI populated with current values (for all 
 
     Scenario: Caseworker needs to edit the information input into the UI after the API has been called and results displayed.
         Given the financial status check is performed with
-            | Application raised date         | 02/05/2016                   |
-            | End Date                        | 01/05/2016                   |
-            | Dependants                      | 0                            |
-            | In London                       | No                           |
-            | Course Start Date               | 30/05/2016                   |
-            | Course End Date                 | 29/07/2016                   |
-            | Total tuition fees              | 3000                         |
-            | Tuition fees already paid       | 2000                         |
-            | Accommodation fees already paid | 100                          |
-            | Continuation course             | No                           |
-            | Course type                     | Main course degree or higher |
-            | Course institution              | Recognised body or HEI       |
+            | Application raised date         | 02/05/2016 |
+            | End Date                        | 01/05/2016 |
+            | Dependants                      | 0          |
+            | In London                       | No         |
+            | Course Start Date               | 30/05/2016 |
+            | Course End Date                 | 29/07/2016 |
+            | Total tuition fees              | 3000       |
+            | Tuition fees already paid       | 2000       |
+            | Accommodation fees already paid | 100        |
+            | Continuation course             | No         |
+            | Course type                     | main       |
+            | Course institution              | true       |
 
         #And the submit button is pressed
         When the edit search button is clicked

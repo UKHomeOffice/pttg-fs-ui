@@ -45,6 +45,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
+        And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
         And caseworker is on page t4/general/consent
         And consent is sought for the following:
@@ -52,23 +53,24 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
         When the financial status check is performed with
-            | Application raised date         | 05/06/2016                   |
-            | End date                        | 30/05/2016                   |
-            | In London                       | Yes                          |
-            | Course start date               | 30/05/2016                   |
-            | Course end date                 | 30/11/2016                   |
-            | Total tuition fees              | 8500.00                      |
-            | Tuition fees already paid       | 0                            |
-            | Accommodation fees already paid | 0                            |
-            | Dependants                      | 1                            |
-            | Continuation Course             | No                           |
-            | Course type                     | Main course degree of higher |
+            | Application raised date         | 05/06/2016 |
+            | End date                        | 30/05/2016 |
+            | In London                       | Yes        |
+            | Course start date               | 30/05/2016 |
+            | Course end date                 | 30/11/2016 |
+            | Total tuition fees              | 8500.00    |
+            | Tuition fees already paid       | 0          |
+            | Accommodation fees already paid | 0          |
+            | Dependants                      | 1          |
+            | Continuation Course             | No         |
+            | Course type                     | main       |
+            | Course institution              | true       |
         Then the service displays the following result
             | Outcome | Passed |
         And the result table contains the following
             | Total funds required       | £16,090.00               |
             | Account holder name        | Laura Taylor             |
-            | Condition code             |                          |
+            | Condition code             | 2 - Applicant            |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
             | Estimated leave end date   | 22/10/2017               |
             | Course length              | 7 (limited to 9)         |
@@ -79,7 +81,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Accommodation fees already paid | £0.00 (limited to £1,265.00) |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Continuation Course             | No                           |
-            | Course type                     | Main course degree of higher |
+            | Course type                     | Main course degree or higher |
             | Total tuition fees              | £8,500.00                    |
             | Tuition fees already paid       | £0.00                        |
             | Tier                            | Tier 4 (General)             |

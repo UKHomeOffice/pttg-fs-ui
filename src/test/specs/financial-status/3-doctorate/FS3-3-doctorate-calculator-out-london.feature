@@ -17,6 +17,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
+        And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
         And caseworker is on page t4/doctorate/consent
         And consent is sought for the following:

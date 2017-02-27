@@ -375,7 +375,7 @@ class Steps {
     @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|\\d+)\$")
     public void the_api_consent_response_will_be(String ref) throws Throwable {
         if (ref.isInteger()) {
-            println ('testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger()) = ' + ref)
+            println('testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger()) = ' + ref)
             testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger())
         } else {
             testDataLoader.stubTestData('consentcheckresponse-' + ref.trim(), consentCheckUrlRegex)
@@ -557,7 +557,8 @@ class Steps {
                 'Accommodation fees already paid': '0',
                 'Dependants'                     : '1',
                 'Continuation course'            : 'No',
-                'Course type'                    : 'Main'
+                'Course type'                    : 'main',
+                'Course institution'             : 'true'
             ]
 
             if (studentType) {
