@@ -5,7 +5,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
        # Given the account has sufficient funds
         And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/doctorate/consent
+        And caseworker is on page t4/des/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |

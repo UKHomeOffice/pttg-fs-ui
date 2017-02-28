@@ -18,7 +18,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate o
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/doctorate/consent
+        And caseworker is on page t4/des/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |

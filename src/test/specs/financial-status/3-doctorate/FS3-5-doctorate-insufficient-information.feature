@@ -6,7 +6,7 @@ Feature: Insufficient Information
     Scenario: No records exist within the period stated
         Given the api health check response has status 200
         And the api consent response will be 404
-        And caseworker is on page t4/doctorate/consent
+        And caseworker is on page t4/des/consent
         And consent is sought for the following:
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
