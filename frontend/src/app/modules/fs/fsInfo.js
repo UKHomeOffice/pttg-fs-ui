@@ -83,7 +83,7 @@ fsModule.factory('FsInfoService', [ function () {
         fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
       },
       {
-        value: 'doctorate',
+        value: 'des',
         label: 'Doctorate extension scheme',
         full: 'Tier 4 (General) student (doctorate extension scheme)',
         fields: ['*default', '*t4all', 'dependants']

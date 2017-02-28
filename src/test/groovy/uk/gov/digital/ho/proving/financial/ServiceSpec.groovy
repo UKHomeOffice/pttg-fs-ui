@@ -203,7 +203,7 @@ class ServiceSpec extends Specification {
                 .param('toDate', TO_DATE)
                 .param('dob', DOB)
                 .param('inLondon', 'true')
-                .param('studentType', 'doctorate')
+                .param('studentType', 'des')
             //no dates dates
                 .param('totalTuitionFees', '1')
                 .param('tuitionFeesAlreadyPaid', '1')

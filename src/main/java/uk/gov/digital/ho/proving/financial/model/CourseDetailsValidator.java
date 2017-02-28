@@ -15,7 +15,7 @@ public class CourseDetailsValidator implements ConstraintValidator<CourseDetails
 
     public static final String IS_NOT_ALLOWED = " is not allowed";
     public static final String IS_REQUIRED = " is required";
-    public static final String STUDENT_TYPE_DOCTORATE = "DOCTORATE";
+    public static final String STUDENT_TYPE_DOCTORATE = "des";
 
     @Override
     public void initialize(CourseDetails constraintAnnotation) {

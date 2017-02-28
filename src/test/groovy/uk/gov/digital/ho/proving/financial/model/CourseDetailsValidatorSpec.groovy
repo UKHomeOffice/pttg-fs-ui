@@ -32,7 +32,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course dates not allowed for doctorate - no dates = valid'() {
 
         given:
-        Course course = aCourseWith(null, null, null, "DOCTORATE","main")
+        Course course = aCourseWith(null, null, null, "des", "main")
 
         expect:
         validator.isValid(course, context)
@@ -41,7 +41,7 @@ class CourseDetailsValidatorSpec extends Specification {
     def 'course dates not allowed for doctorate - date supplied = invalid'() {
 
         given:
-        Course course = aCourseWith(aDate, null, null, "DOCTORATE","main")
+        Course course = aCourseWith(aDate, null, null, "des", "main")
 
         expect:
         !validator.isValid(course, context)

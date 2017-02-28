@@ -18,7 +18,7 @@ Feature: Availability message
         Given the api is unreachable
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the doctorate student type is chosen
+        And the des student type is chosen
         Then the service displays the following message
             | availability-heading | You can’t use this service just now                  |
 
@@ -40,7 +40,7 @@ Feature: Availability message
         Given the api health check response has status 200
         And caseworker is using the financial status service ui
         And the caseworker selects Tier four
-        And the doctorate student type is chosen
+        And the des student type is chosen
         Then the availability warning box should not be shown
 
 
