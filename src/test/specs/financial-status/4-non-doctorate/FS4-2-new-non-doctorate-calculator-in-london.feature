@@ -84,7 +84,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
    # //*[@id="resultsTable"]/tbody/tr[1]/td
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
-        And the api condition codes response will be 2a-3-1
+        And the api condition codes response will be 2A-3-1
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016   |
             | In London                       | Yes          |

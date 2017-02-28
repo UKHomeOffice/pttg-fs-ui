@@ -71,7 +71,7 @@ Feature: Process 'pending' status and display the appropriate output page
             | Outcome detail             | This applicant meets the financial requirements |
             | Total funds required       | £945.00                                         |
             | Maintenance period checked | 06/04/2016 to 04/07/2016                        |
-            | Condition code             |                                                 |
+           # | Condition code             |                                                 |
             | Dependants                 | 1                                               |
             | Sort code                  | 22-22-23                                        |
             | Account number             | 22222229                                        |
