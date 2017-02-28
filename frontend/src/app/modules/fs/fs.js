@@ -64,6 +64,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     obj.tier = Number(stateParams.tier) // tier 4
     var tier = FsInfoService.getTier(obj.tier)
     var split = me.splitApplicantType(stateParams.applicantType)
+    console.log(split)
     obj.applicantType = split.applicantType // general, sso
     obj.dependantsOnly = split.dependantsOnly
 
@@ -172,6 +173,25 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       results.lowestBalance = {
         label: 'Lowest balance',
         display: $filter('pounds')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) + ' on ' + $filter('dateDisplay')(obj.dailyBalanceResponse.data.failureReason.lowestBalanceDate)
+      }
+    }
+
+    if (me.hasConditionCodeInfo(obj)) {
+      var codes = []
+      var cc = obj.conditionCodeResponse.data
+
+      if (cc.applicantConditionCode) {
+        codes.push(cc.applicantConditionCode + ' - Applicant')
+      }
+      if (cc.partnerConditionCode) {
+        codes.push(cc.partnerConditionCode + ' - Adult dependant')
+      }
+      if (cc.childConditionCode) {
+        codes.push(cc.childConditionCode + ' - Child dependant')
+      }
+      results.conditionCode = {
+        label: 'Condition code',
+        display: codes.join('\n')
       }
     }
 
@@ -411,6 +431,56 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     } else {
       ga('send', 'event', category, action)
     }
+  }
+
+  this.clearConditionCode = function (fs) {
+    fs.conditionCodeResponse = {}
+  }
+
+  this.hasConditionCodeInfo = function (fs) {
+    return _.has(fs, 'conditionCodeResponse') && _.has(fs.conditionCodeResponse, 'data')
+  }
+
+  this.getConditionCodeUrl = function (obj) {
+    if (!obj.tier === 4) {
+      return null
+    }
+
+    return 't' + obj.tier + '/conditioncodes'
+  }
+
+  this.getConditionCodeParams = function (obj) {
+    if (obj.applicantType !== 'general') {
+      return {
+        studentType: obj.applicantType,
+        dependants: obj.dependants,
+        dependantsOnly: obj.dependantsOnly
+      }
+    }
+
+    var params = {
+      studentType: obj.applicantType,
+      dependants: obj.dependants,
+      dependantsOnly: obj.dependantsOnly,
+      courseType: obj.courseType,
+      recognisedBodyOrHEI: obj.courseInstitution
+    }
+
+    if (obj.courseEndDate) {
+      params.courseEndDate = obj.courseEndDate
+    }
+
+    if (obj.courseStartDate) {
+      params.courseStartDate = obj.courseStartDate
+    }
+
+    return params
+  }
+
+  this.sendConditionCodeRequest = function (obj) {
+    var u = me.getConditionCodeUrl(obj)
+    var params = me.getConditionCodeParams(obj)
+    return IOService.get(u, params, { timeout: CONFIG.timeout })
   }
 
   me.reset()

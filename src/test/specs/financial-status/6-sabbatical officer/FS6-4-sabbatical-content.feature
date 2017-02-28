@@ -5,6 +5,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And the api threshold response will be t4
+        And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
         And the default details are
             | Application raised date         | 10/06/2016 |
@@ -34,6 +35,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -72,6 +74,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Total funds required     |
             | 28-day period checked    |
             | Lowest balance           |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -114,6 +117,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name   |
             | Total funds required  |
             | 28-day period checked |
+            | Condition code        |
         And the service displays the following criteria headers in order
             | Tier                            |
             | Applicant type                  |
@@ -147,6 +151,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Account holder name      |
             | Total funds required     |
             | 28-day period checked    |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |
@@ -182,6 +187,7 @@ Feature: Tier 4 (General) student union (sabbatical officer) content (single cur
             | Total funds required     |
             | 28-day period checked    |
             | Lowest balance           |
+            | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
             | Course length            |

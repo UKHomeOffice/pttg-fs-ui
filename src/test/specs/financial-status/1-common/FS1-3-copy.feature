@@ -28,11 +28,9 @@ Feature: Copy results to paste buffer
             | Tuition fees already paid       | 10         |
             | Accommodation fees already paid | 20         |
             | Dependants                      | 0          |
-            #| Sort code                       | 11-11-11   |
-            #| Account number                  | 11111111   |
-            #| DOB                             | 27/07/1981 |
             | Continuation Course             | No         |
-            | Course type                     | Main       |
+            | Course type                     | main       |
+            | Course institution              | true       |
 
 
 
@@ -63,6 +61,7 @@ Feature: Copy results to paste buffer
             | Continuation Course             | No                                              |
             | Leave End Date                  |                                                 |
             | Date Received                   |                                                 |
+            | Condition code                  |                                                 |
 
     Scenario: copy results when continuation course is selected as yes
         Given the account has sufficient funds
@@ -90,4 +89,5 @@ Feature: Copy results to paste buffer
             | Continuation Course             | Yes                                             |
             | Original Course Start Date      |                                                 |
             | Leave End Date                  |                                                 |
+            | Condition code                  |                                                 |
             | Result timestamp                |                                                 |

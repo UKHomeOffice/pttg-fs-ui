@@ -24,7 +24,9 @@ Feature: Edit search button to return UI populated with current values (for all 
             | Tuition fees already paid       | 2000       |
             | Accommodation fees already paid | 100        |
             | Continuation course             | No         |
-            | Course type                     | Main       |
+            | Course type                     | main       |
+            | Course institution              | true       |
+
         #And the submit button is pressed
         When the edit search button is clicked
         Then the inputs will be populated with

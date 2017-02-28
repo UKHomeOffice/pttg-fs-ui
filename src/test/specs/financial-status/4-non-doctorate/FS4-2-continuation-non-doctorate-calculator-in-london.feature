@@ -50,12 +50,14 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Dependants                      | 1          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
-            | Course type                     | Main       |
+            | Course type                     | main       |
+            | Course institution              | true       |
 
  ######### Overall course <12 months In London - pass #############
 
     Scenario: Shelly is a Non Doctorate in London student and has sufficient funds 1
         Given the account has sufficient funds
+        And the api condition codes response will be 2-3-1
         When the financial status check is performed with
             | Application raised date         | 30/06/2016 |
             | End date                        | 01/06/2016 |
@@ -68,7 +70,8 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Accommodation fees already paid | 250.50     |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
-            | Course type                     | Main       |
+            | Course type                     | main       |
+            | Course institution              | true       |
         Then the service displays the following result
             | Outcome                         | Passed                                     |
             | Application Raised Date         | 30/06/2016                                 |
@@ -90,17 +93,19 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Original Course Start Date      | 30/10/2015                                 |
             | Estimated Leave End Date        | 22/10/2017                                 |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Course length              | 9 (limited to 9)         |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Entire course length       | 16                       |
+            | Account holder name        | Laura Taylor                                            |
+            | Total funds required       | £16,090.00                                              |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016                                |
+            | Condition Code             | 2 - Applicant\n3 - Adult dependant\n1 - Child dependant |
+            | Course length              | 9 (limited to 9)                                        |
+            | Estimated Leave End Date   | 22/10/2017                                              |
+            | Entire course length       | 16                                                      |
 
  ###### overall course length 12+ months In London - not pass #######
 
     Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
         Given the api daily balance response will Fail-low-balance
+        And the api condition codes response will be 2-3-1
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                         | Not passed                   |
@@ -121,30 +126,32 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course             | Yes                          |
             | Original Course Start Date      | 30/10/2015                   |
         And the result table contains the following
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 7 (limited to 9)         |
-            | Entire course length       | 14                       |
+            | Account holder name        | Shelly Smith                                            |
+            | Total funds required       | £16,090.00                                              |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016                                |
+            | Condition Code             | 2 - Applicant\n3 - Adult dependant\n1 - Child dependant |
+            | Lowest Balance             | £100.00 on 03/10/2016                                   |
+            | Estimated Leave End Date   | 22/10/2017                                              |
+            | Course length              | 7 (limited to 9)                                        |
+            | Entire course length       | 14                                                      |
 
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
+    Scenario: Stef is a Non Doctorate in London student and has sufficient funds
         Given the account has sufficient funds
+        And the api condition codes response will be 2a--
         When the financial status check is performed with
-            | Application raised date         | 30/06/2016 |
-            | End date                        | 01/06/2016 |
-            | In London                       | No         |
-            | Dependants                      | 0          |
-            | Continuation Course             | Yes        |
-            | Course start date               | 01/05/2016 |
-            | Course end date                 | 25/09/2017 |
-            | Original Course Start Date      | 30/10/2015 |
-            | Total tuition fees              | 9755.50    |
-            | Tuition fees already paid       | 500        |
-            | Accommodation fees already paid | 250.50     |
-            | Course type                     | Main       |
-           # | DOB                             | 06/04/1989 |
+            | Application raised date         | 30/06/2016   |
+            | End date                        | 01/06/2016   |
+            | In London                       | No           |
+            | Dependants                      | 0            |
+            | Continuation Course             | Yes          |
+            | Course start date               | 01/05/2016   |
+            | Course end date                 | 25/09/2017   |
+            | Original Course Start Date      | 30/10/2015   |
+            | Total tuition fees              | 9755.50      |
+            | Tuition fees already paid       | 500          |
+            | Accommodation fees already paid | 250.50       |
+            | Course type                     | below-degree |
+            | Course institution              | true         |
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 30/06/2016                     |
@@ -166,6 +173,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 05/05/2016 to 01/06/2016 |
+            | Condition Code             | 2A - Applicant           |
             | Course length              | 17 (limited to 9)        |
             | Estimated Leave End Date   | 22/10/2017               |
             | Entire course length       | 23                       |
@@ -175,6 +183,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
     Scenario: Beyonce and Tara is a dependant only applicant (Non Doctorate in London student and has sufficient funds)
         Given the account has sufficient funds
+        And the api condition codes response will be -3-1
         And caseworker is on page t4/general-dependants/bank/details
         When the financial status check is performed with
             | Application raised date    | 30/06/2016 |
@@ -185,7 +194,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Dependants                 | 2          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
-            | Course type                | Main       |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Application Raised Date    | 30/06/2016               |
@@ -203,12 +211,13 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Original Course Start Date | 30/10/2015               |
             | Estimated Leave End Date   | 22/10/2017               |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Course length              | 9 (limited to 9)         |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Entire course length       | 16                       |
+            | Account holder name        | Laura Taylor                             |
+            | Total funds required       | £16,090.00                               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016                 |
+            | Condition Code             | 3 - Adult dependant\n1 - Child dependant |
+            | Course length              | 9 (limited to 9)                         |
+            | Estimated Leave End Date   | 22/10/2017                               |
+            | Entire course length       | 16                                       |
 
 
 
@@ -218,6 +227,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
         Given the api daily balance response will Fail-low-balance
         And caseworker is on page t4/general-dependants/bank/details
+        And the api condition codes response will be -3-1
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                    | Not passed               |
@@ -235,13 +245,14 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course        | Yes                      |
             | Original Course Start Date | 30/10/2015               |
         And the result table contains the following
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 7 (limited to 9)         |
-            | Entire course length       | 14                       |
+            | Account holder name        | Shelly Smith                             |
+            | Total funds required       | £16,090.00                               |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016                 |
+            | Condition Code             | 3 - Adult dependant\n1 - Child dependant |
+            | Lowest Balance             | £100.00 on 03/10/2016                    |
+            | Estimated Leave End Date   | 22/10/2017                               |
+            | Course length              | 7 (limited to 9)                         |
+            | Entire course length       | 14                                       |
 
 
 ###### overall course length 12+ months In London - dependant only - pass #######
@@ -250,6 +261,7 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
 
         Given the account has sufficient funds
         And caseworker is on page t4/general-dependants/bank/details
+        And the api condition codes response will be -4B-1
         When the financial status check is performed with
             | Application raised date    | 30/06/2016 |
             | End date                   | 01/06/2016 |
@@ -259,8 +271,6 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Course start date          | 01/05/2016 |
             | Course end date            | 25/09/2017 |
             | Original Course Start Date | 30/10/2015 |
-            | Course type                | Main       |
-#            | DOB                             | 06/04/1989 |
         Then the service displays the following result
             | Outcome                    | Passed                   |
             | Application Raised Date    | 30/06/2016               |
@@ -276,9 +286,10 @@ Feature: Total Funds Required Calculation - Tier 4 Continuation (General) Studen
             | Continuation Course        | Yes                      |
             | Original Course Start Date | 30/10/2015               |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 05/05/2016 to 01/06/2016 |
-            | Course length              | 17 (limited to 9)        |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Entire course length       | 23                       |
+            | Account holder name        | Laura Taylor                              |
+            | Total funds required       | £16,090.00                                |
+            | Maintenance period checked | 05/05/2016 to 01/06/2016                  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
+            | Course length              | 17 (limited to 9)                         |
+            | Estimated Leave End Date   | 22/10/2017                                |
+            | Entire course length       | 23                                        |

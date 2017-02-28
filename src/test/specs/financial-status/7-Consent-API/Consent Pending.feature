@@ -22,25 +22,25 @@ Feature: Process 'pending' status and display the appropriate output page
             | Sort code      | 22-22-23   |
             | Account number | 22222226   |
         And the financial status check is performed with
-            | Application raised date         | 30/05/2016 |
-            | End Date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Accommodation fees already paid | 0          |
-            | Dependants                      | 1          |
-            | Course start date               | 20/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Tuition fees already paid       | 300        |
-            | Total tuition fees              | 8500.00    |
-            | Continuation Course             | No         |
-            | Course type                     | Main       |
+            | Application raised date         | 30/05/2016                   |
+            | End Date                        | 30/05/2016                   |
+            | In London                       | Yes                          |
+            | Accommodation fees already paid | 0                            |
+            | Dependants                      | 1                            |
+            | Course start date               | 20/05/2016                   |
+            | Course end date                 | 30/11/2016                   |
+            | Tuition fees already paid       | 300                          |
+            | Total tuition fees              | 8500.00                      |
+            | Continuation Course             | No                           |
+            | Course type                     | Main course degree of higher |
         Then the service displays the following page content
-            | Outcome        | Consent pending                                             |
-            | Outcome detail | The applicant has not yet responded to the request.         |
-            | Consent check  | We will automatically check for consent again in 5s.|
+            | Outcome        | Consent pending                                      |
+            | Outcome detail | The applicant has not yet responded to the request.  |
+            | Consent check  | We will automatically check for consent again in 5s. |
         Examples:
-            | Tier      | Applicant     |
-            | Tier two  | Main          |
-            | Tier five | Dependant     |
+            | Tier      | Applicant |
+            | Tier two  | Main      |
+            | Tier five | Dependant |
 
 
 ## 'Pending' consent status followed by 'SUCCESS' ##
@@ -71,6 +71,7 @@ Feature: Process 'pending' status and display the appropriate output page
             | Outcome detail             | This applicant meets the financial requirements |
             | Total funds required       | £945.00                                         |
             | Maintenance period checked | 06/04/2016 to 04/07/2016                        |
+           # | Condition code             |                                                 |
             | Dependants                 | 1                                               |
             | Sort code                  | 22-22-23                                        |
             | Account number             | 22222229                                        |

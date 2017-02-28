@@ -81,8 +81,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Account holder name        | Shelly Smith             |
-            | Total funds required       | £945.00                |
-            | Lowest Balance             | £100.00 on 03/10/2016   |
+            | Total funds required       | £945.00                  |
+            | Lowest Balance             | £100.00 on 03/10/2016    |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Sort code                  | 22-22-23                 |
             | Account number             | 22222223                 |
@@ -96,8 +96,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
             | Dependants | 2 |
         Then the service displays the following result
             | Outcome                    | Passed                   |
-            | Account holder name        | Laura Taylor            |
-            | Total funds required       | £945.00                 |
+            | Account holder name        | Laura Taylor             |
+            | Total funds required       | £945.00                  |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 2                        |
             | Sort code                  | 22-22-23                 |
@@ -113,8 +113,8 @@ Feature: Total Funds Required Calculation - Tier 2 & 5 (General) (single current
         Then the service displays the following result
             | Outcome                    | Not passed               |
             | Account holder name        | Shelly Smith             |
-            | Total funds required       | £1,575.00                 |
-            | Lowest Balance             | £600.90 on 01/06/2016  |
+            | Total funds required       | £1,575.00                |
+            | Lowest Balance             | £600.90 on 01/06/2016    |
             | Maintenance period checked | 06/04/2016 to 04/07/2016 |
             | Dependants                 | 3                        |
             | Sort code                  | 22-22-23                 |

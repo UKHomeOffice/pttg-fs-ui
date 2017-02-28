@@ -6,18 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uk.gov.digital.ho.proving.financial.api.ConditionCodesResponse;
 import uk.gov.digital.ho.proving.financial.api.ConsentCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.FundingCheckResponse;
 import uk.gov.digital.ho.proving.financial.api.ThresholdResponse;
 import uk.gov.digital.ho.proving.financial.health.ApiAvailabilityChecker;
+import uk.gov.digital.ho.proving.financial.integration.ConditionCodesRequestor;
 import uk.gov.digital.ho.proving.financial.integration.FinancialStatusChecker;
-import uk.gov.digital.ho.proving.financial.integration.ThresholdResult;
 import uk.gov.digital.ho.proving.financial.model.Account;
 import uk.gov.digital.ho.proving.financial.model.Course;
 import uk.gov.digital.ho.proving.financial.model.Maintenance;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * @Author Home Office Digital
@@ -36,6 +38,9 @@ public class Service {
 
     @Autowired
     private ApiAvailabilityChecker apiAvailabilityChecker;
+
+    @Autowired
+    private ConditionCodesRequestor conditionCodesRequestor;
 
     @RequestMapping(path = "t4/threshold", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity threshold(
@@ -97,6 +102,24 @@ public class Service {
         LOGGER.debug("Consent for account: {}", account);
         ConsentCheckResponse result = financialStatusChecker.checkConsent(account, accessToken);
         return ResponseEntity.ok(result);
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    @RequestMapping(path = "t4/conditioncodes", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity conditionCodes(
+        @RequestParam(value = "studentType") String studentType,
+        @RequestParam(value = "dependantsOnly") Boolean dependantsOnly,
+        @RequestParam(value = "dependants", required = false, defaultValue = "0") Integer dependants,
+        @RequestParam(value = "courseStartDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> courseStartDate,
+        @RequestParam(value = "courseEndDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<LocalDate> courseEndDate,
+        @RequestParam(value = "courseType", required = false) Optional<String> courseType,
+        @RequestParam(value = "recognisedBodyOrHEI", required = false) Optional<Boolean> recognisedBodyOrHEI,
+        @CookieValue(value="kc-access", defaultValue = "") String accessToken
+    ) {
+        LOGGER.debug("Condition Codes request");
+        ConditionCodesResponse conditionCodesResponse = conditionCodesRequestor.retrieveConditionCodes(studentType,
+            dependantsOnly, dependants, courseStartDate, courseEndDate, courseType, recognisedBodyOrHEI, accessToken);
+        return ResponseEntity.ok(conditionCodesResponse);
     }
 
     @RequestMapping(path = "availability", method = RequestMethod.GET, produces = "application/json")

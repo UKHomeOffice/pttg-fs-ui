@@ -12,6 +12,7 @@ import uk.gov.digital.ho.proving.financial.model.Maintenance;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * @Author Home Office Digital
@@ -38,6 +39,9 @@ public class ApiUrls {
 
     @Value("${api.threshold.t5.endpoint}")
     private String apiThresholdT5Endpoint;
+
+    @Value("${api.conditioncodes.endpoint}")
+    private String apiConditionCodesEndpoint;
 
 
     public URI t4ThresholdUrlFor(Course course, Maintenance maintenance, Boolean dependantsOnly) {
@@ -114,5 +118,25 @@ public class ApiUrls {
             .toUri();
         LOGGER.debug(expanded.toString());
         return expanded;
+    }
+
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    URI conditionCodesUrlFor(String studentType,
+                             Boolean dependantsOnly,
+                             Integer dependants,
+                             Optional<LocalDate> courseStartDate,
+                             Optional<LocalDate> courseEndDate,
+                             Optional<String> courseType,
+                             Optional<Boolean> recognisedBodyOrHEI) {
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(apiRoot + apiConditionCodesEndpoint)
+            .queryParam("studentType", studentType)
+            .queryParam("dependantsOnly", dependantsOnly)
+            .queryParam("dependants", dependants);
+        courseStartDate.ifPresent(localDate -> uriComponentsBuilder.queryParam("courseStartDate", localDate));
+        courseEndDate.ifPresent(localDate -> uriComponentsBuilder.queryParam("courseEndDate", localDate));
+        courseType.ifPresent(localType -> uriComponentsBuilder.queryParam("courseType", localType));
+        recognisedBodyOrHEI.ifPresent(localBool -> uriComponentsBuilder.queryParam("recognisedBodyOrHEI", localBool));
+
+        return uriComponentsBuilder.build().toUri();
     }
 }

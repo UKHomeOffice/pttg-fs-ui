@@ -33,6 +33,7 @@ Feature: Show clear error details when inputs are invalid
             | Dependants                      |  |
             | Continuation Course             |  |
             | Course type                     |  |
+            | Course institution              |  |
         Then the service displays the following message
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
@@ -48,6 +49,7 @@ Feature: Show clear error details when inputs are invalid
             | The number of dependants is invalid            |
             | The course continuation option is invalid      |
             | The course type option is invalid              |
+            | The course institution option is invalid       |
 
 
 ######################### Validation on the Application Raised Date Field #########################
@@ -98,7 +100,7 @@ Feature: Show clear error details when inputs are invalid
 
     Scenario: Case Worker enters invalid End date - within 31 days of application raised date
         When the financial status check is performed with
-            | End Date | 30/05/2016 |
+            | End Date                | 30/05/2016 |
             | Application raised date | 31/01/2016 |
         Then the service displays the following error message
             | End Date-error | End date cannot be after application raised date |
@@ -281,3 +283,10 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | Original Course Start Date-error | Enter a valid original course start date |
 
+######################### Validation on the Course institution Field #########################
+
+    Scenario: Case Worker does NOT enter Course institution
+        When the financial status check is performed with
+            | Course institution | |
+        Then the service displays the following error message
+            | Course institution-error | Select an option |

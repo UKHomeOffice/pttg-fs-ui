@@ -25,6 +25,7 @@ Feature: Copy results to paste buffer
             | Dependants                      | 0          |
             | Continuation Course             | No         |
             | Course type                     | Main       |
+            | Course institution              | true       |
 
 
 

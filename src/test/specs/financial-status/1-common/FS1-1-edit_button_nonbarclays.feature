@@ -26,6 +26,7 @@ Feature: Edit search button to return UI populated with current values (for all 
             | Accommodation fees already paid | 100        |
             | Continuation course             | No         |
             | Course type                     | Main       |
+            | Course institution              | true       |
         When the edit search button is clicked
         Then the inputs will be populated with
             | Application raised date         | 02/05/2016 |

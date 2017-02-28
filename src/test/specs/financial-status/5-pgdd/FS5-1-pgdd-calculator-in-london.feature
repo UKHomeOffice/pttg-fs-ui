@@ -19,6 +19,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Raj is a postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
+        And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
         And caseworker is on page t4/pgdd/consent
         And consent is sought for the following:
@@ -40,6 +41,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name             | Shelly Smith                   |
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
+            | Condition Code                  | 2 - Applicant                  |
             | Course dates checked            | 30/05/2016 to 30/07/2016       |
             | Lowest Balance                  | £100.00 on 03/10/2016          |
             | Tier                            | Tier 4 (General)               |
@@ -57,6 +59,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
         Given the account has sufficient funds
+        And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
         And caseworker is on page t4/pgdd/consent
         And consent is sought for the following:
@@ -90,6 +93,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             | 2 - Applicant            |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 2 (limited to 9)         |
             | Entire course length       | 9                        |
@@ -98,6 +102,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
 
     Scenario: Josie and Esther are a dependant only application (x2) - postgraduate doctor or dentist in London student and does not have sufficient funds
         Given the account does not have sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
         And caseworker is on page t4/pgdd-dependants/consent
         And consent is sought for the following:
@@ -105,37 +110,39 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code      | 11-11-11   |
             | Account number | 11111111   |
         When the financial status check is performed with
-            | Application raised date         | 29/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
-            | Dependants                      | 2          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
+            | Application raised date    | 29/06/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | Yes        |
+            | Course start date          | 30/05/2016 |
+            | Course end date            | 30/07/2016 |
+            | Dependants                 | 2          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | Not passed                     |
-            | Account holder name             | Shelly Smith                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Course dates checked            | 30/05/2016 to 30/07/2016       |
-            | Lowest Balance                  | £100.00 on 03/10/2016          |
-            | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | Postgraduate doctor or dentist |
-            | In London                       | Yes                            |
-            | Course length                   | 3 (limited to 9)               |
-            | Dependants                      | 2                              |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 25/03/1987                     |
-            | Continuation Course             | Yes                            |
-            | Original Course Start Date      | 30/10/2015                     |
+            | Outcome                    | Not passed                                |
+            | Account holder name        | Shelly Smith                              |
+            | Total funds required       | £16,090.00                                |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                  |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
+            | Course dates checked       | 30/05/2016 to 30/07/2016                  |
+            | Lowest Balance             | £100.00 on 03/10/2016                     |
+            | Tier                       | Tier 4 (General)                          |
+            | Applicant type             | Postgraduate doctor or dentist            |
+            | In London                  | Yes                                       |
+            | Course length              | 3 (limited to 9)                          |
+            | Dependants                 | 2                                         |
+            | Sort code                  | 11-11-11                                  |
+            | Account number             | 11111111                                  |
+            | DOB                        | 25/03/1987                                |
+            | Continuation Course        | Yes                                       |
+            | Original Course Start Date | 30/10/2015                                |
 
 
  ## Dependant Only - pass - in London ##
 
     Scenario: Ander is a a dependant only application (postgraduate doctor or dentist in London student and has sufficient funds)
         Given the account has sufficient funds
+        And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
         And caseworker is on page t4/pgdd-dependants/consent
         And consent is sought for the following:
@@ -143,30 +150,31 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Sort code      | 11-11-11   |
             | Account number | 11111111   |
         When the financial status check is performed with
-            | Application raised date         | 31/05/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/06/2016 |
-            | Dependants                      | 1          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
+            | Application raised date    | 31/05/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | Yes        |
+            | Course start date          | 30/05/2016 |
+            | Course end date            | 30/06/2016 |
+            | Dependants                 | 1          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | Passed                         |
-            | Course dates checked            | 30/05/2016 to 30/06/2016       |
-            | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | Postgraduate doctor or dentist |
-            | In London                       | Yes                            |
-            | Dependants                      | 1                              |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 25/03/1987                     |
-            | Continuation Course             | Yes                            |
-            | Original Course Start Date      | 30/10/2015                     |
+            | Outcome                    | Passed                         |
+            | Course dates checked       | 30/05/2016 to 30/06/2016       |
+            | Tier                       | Tier 4 (General)               |
+            | Applicant type             | Postgraduate doctor or dentist |
+            | In London                  | Yes                            |
+            | Dependants                 | 1                              |
+            | Sort code                  | 11-11-11                       |
+            | Account number             | 11111111                       |
+            | DOB                        | 25/03/1987                     |
+            | Continuation Course        | Yes                            |
+            | Original Course Start Date | 30/10/2015                     |
         And the result table contains the following
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Estimated Leave End Date   | 22/10/2017               |
             | Course length              | 2 (limited to 9)         |
             | Entire course length       | 9                        |
