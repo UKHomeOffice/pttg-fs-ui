@@ -8,7 +8,7 @@ Feature: Route selection screen inputs - All tiers
     Scenario:  Caseworker selects Tier 4
         When caseworker is on page t4
         Then applicant type should have the following options
-            | main  | Main applicant (with & without dependants) |
+            | main      | Main applicant (with & without dependants) |
             | dependant | Dependants only                            |
 
 
@@ -17,10 +17,10 @@ Feature: Route selection screen inputs - All tiers
         And the main option of the applicant type radio is selected
         And the submit button is clicked
         Then student type should have the following options
-            | general   | General student                  |
-            | doctorate | Doctorate extension scheme       |
-            | pgdd      | Postgraduate doctor or dentist   |
-            | suso       | Student union sabbatical officer |
+            | general | General student                  |
+            | des     | Doctorate extension scheme       |
+            | pgdd    | Postgraduate doctor or dentist   |
+            | suso    | Student union sabbatical officer |
 
     Scenario: Caseworker selects Tier 2 (General)
         When caseworker is on page t2
