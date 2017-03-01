@@ -10,6 +10,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   var me = this
   var _application
 
+  // reset all the current application's values back to their defaults
   this.reset = function () {
     _application = {
       doCheck: '',
@@ -38,6 +39,10 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return _application
   }
 
+  /* if an applicant type has a sub-type then these are currently carried in the same url parameter and need splitting in to two values,
+  eg des-dependants needs splitting into
+  applicantType=des and dependantsOnly=true
+  */
   this.splitApplicantType = function (str) {
     var results = {
       applicantType: null,
@@ -60,11 +65,18 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return results
   }
 
+  /* using the angular router state parameters set some primary values in the application object
+  e.g. it should be possible to determine from the url structure alone:
+  - tier
+  - applicantType
+  - dependantOnly
+  - wether or not a bank check is required
+  */
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
     var tier = FsInfoService.getTier(obj.tier)
     var split = me.splitApplicantType(stateParams.applicantType)
-    console.log(split)
+
     obj.applicantType = split.applicantType // general, sso
     obj.dependantsOnly = split.dependantsOnly
 
@@ -91,8 +103,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return false
   }
 
+  // clear any previous response to the threshold request
   this.clearThresholdResponse = function (obj) {
-    if (me.hasThresholdInfo) {
+    if (_.has(obj, 'thresholdResponse')) {
       delete obj.thresholdResponse
       return true
     }
@@ -240,6 +253,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return $filter('dateDisplay')(startDate) + ' to ' + $filter('dateDisplay')(endDate)
   }
 
+  // get the capped values from the threshold response, eg capped months for course length when used in the calculation
   this.getThresholdCappedValues = function (obj) {
     if (_.has(obj, 'thresholdResponse') && _.has(obj.thresholdResponse, 'data') && _.has(obj.thresholdResponse.data, 'cappedValues')) {
       return obj.thresholdResponse.data.cappedValues
@@ -330,6 +344,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return criteria
   }
 
+  // get the bank account specific criteria
   this.getConsentCriteria = function (obj) {
     var criteria = {}
     if (!FsBankService.hasBankInfo(obj)) {
@@ -341,6 +356,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return criteria
   }
 
+  // what should a caseworker do next?
   this.getThingsToDoNext = function (obj) {
     var doNext = []
     if (obj.doCheck !== 'yes') {
@@ -371,6 +387,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return doNext
   }
 
+  // get the duration in months between two dates
   this.getMonths = function (start, end) {
     start = moment(start, 'YYYY-MM-DD', true)
     end = moment(end, 'YYYY-MM-DD', true)
@@ -385,14 +402,17 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return Math.ceil(months)
   }
 
+  // get the course length from the obj courseStartDate and courseEndDate
   this.getCourseLength = function (obj) {
     return me.getMonths(obj.courseStartDate, obj.courseEndDate)
   }
 
+  // get the entire course length between the original courseStartDate and the courseEndDate
   this.getEntireCourseLength = function (obj) {
     return me.getMonths(obj.originalCourseStartDate, obj.courseEndDate)
   }
 
+  // get the plain text required for the copy into paste buffer function
   this.getPlainTextResults = function (obj) {
     var lineLength = function (str, len) {
       while (str.length < len) {

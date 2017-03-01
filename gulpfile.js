@@ -5,13 +5,8 @@ var gulp = require('gulp')
 var async = require('async')
 var run = require('run-sequence')
 var karma = require('karma')
-var minifyHTML = require('gulp-html-minifier')
-// var imagemin = require('gulp-imagemin');
-// var imageminJpegRecompress = require('imagemin-jpeg-recompress');
 var uglify = require('gulp-uglify')
-// var nodemon = require('gulp-nodemon');
 var templateCache = require('gulp-angular-templatecache')
-var del = require('del')
 var concat = require('gulp-concat')
 var plumber = require('gulp-plumber')
 var gutil = require('gulp-util')
@@ -26,10 +21,6 @@ var onError = function (err) {
   console.log(err)
   this.emit('end')
 }
-
-// 'govuk_template': 'frameworks/govuk_template_mustache',
-// 'govuk_frontend_toolkit': 'node_modules/govuk_frontend_toolkit',
-// 'govuk_elements_sass': 'node_modules/govuk-elements-sass/public/sass'
 
 var config = {
   sass: {
