@@ -7,17 +7,17 @@ Feature: Dependant only stuff
         And the api threshold response will be t4
         And the api condition codes response will be -3-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/des-dependants/consent
+        And caseworker is on page t4/status/dependant/des
         And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 33-33-33   |
-            | Account number | 33333333   |
         And the default details are
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
             | Dependants                      | 1          |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 33-33-33   |
+            | Account number                  | 33333333   |
 
     Scenario: Rhianna is dependant only doctorate application and has sufficient funds
         When the financial status check is performed

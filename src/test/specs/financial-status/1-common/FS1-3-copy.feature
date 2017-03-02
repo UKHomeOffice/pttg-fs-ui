@@ -8,16 +8,8 @@ Feature: Copy results to paste buffer
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        #And the api threshold response will be t4
-        And the caseworker selects Tier four
-        And the main option of the applicant type radio is selected
-        And the submit button is clicked
-        And the general student type is chosen
-        And the caseworker selects the Yes, check Barclays radio button
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 33-33-33   |
-            | Account number | 33333333   |
+        And caseworker is on page t4/status/main/general
+
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
@@ -31,6 +23,9 @@ Feature: Copy results to paste buffer
             | Continuation Course             | No         |
             | Course type                     | main       |
             | Course institution              | true       |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 33-33-33   |
+            | Account number                  | 33333333   |
 
 
 
@@ -87,7 +82,7 @@ Feature: Copy results to paste buffer
             | Date of birth                   | 27/07/1981                                      |
             | Application raised date         |                                                 |
             | Continuation Course             | Yes                                             |
-            | Original Course Start Date      |                                                 |
+            | Original Course Start Date      | 1/1/2014                                        |
             | Leave End Date                  |                                                 |
             | Condition code                  |                                                 |
             | Result timestamp                |                                                 |

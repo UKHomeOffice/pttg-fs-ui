@@ -32,11 +32,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api threshold response will be t4
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/general/consent
+        And caseworker is on page t4/status/main/general
         And consent is sought for the following:
-            | DOB            | 21/09/1981 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -51,7 +48,9 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Original Course Start Date      | 30/10/2015 |
             | Course type                     | main       |
             | Course institution              | true       |
-
+            | DOB                             | 21/09/1981 |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
  ######### Overall course <12 months In London #############
 
     Scenario: Shelly is a Non Doctorate in London student and does not have sufficient funds
@@ -82,7 +81,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 
 
    # //*[@id="resultsTable"]/tbody/tr[1]/td
-    Scenario: Shelly is a Non Doctorate in London student and has sufficient funds
+    Scenario: Shelly is a Non Doctorate out of London student on a continuation course and has sufficient funds
         Given the account has sufficient funds
         And the api condition codes response will be 2A-3-1
         When the financial status check is performed with
@@ -110,6 +109,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees already paid | £250.50 (limited to £1,265.00) |
             | Dependants                      | 1                              |
             | Continuation Course             | Yes                            |
+            | Original Course Start Date      | 30/10/2015                     |
         And the result table contains the following
             | Account holder name        | Laura Taylor                                             |
             | Total funds required       | £16,090.00                                               |
@@ -127,7 +127,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api condition codes response will be 2-4B-1
         When the financial status check is performed with
             | Application Raised Date         | 31/05/2016 |
-            | In London                       | Yes        |
+            | In London                       | No         |
             | Dependants                      | 1          |
             | End date                        | 30/05/2016 |
             | Course end date                 | 30/01/2017 |
@@ -141,14 +141,9 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Application Raised Date         | 31/05/2016                   |
-            | Account holder name             | Shelly Smith                 |
-            | Total funds required            | £16,090.00                   |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016     |
-            | Course length                   | 9 (limited to 9)             |
-            | Lowest Balance                  | £100.00 on 03/10/2016        |
             | Tier                            | Tier 4 (General)             |
             | Applicant type                  | General student              |
-            | In London                       | Yes                          |
+            | In London                       | No                           |
             | Course dates checked            | 01/05/2016 to 30/01/2017     |
             | Total tuition fees              | £9,755.50                    |
             | Tuition fees already paid       | £0.00                        |
@@ -213,7 +208,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Luiz is a dependant only application (Non Doctorate in London student and does not have sufficient funds)
 
         Given the api daily balance response will Fail-low-balance
-        And caseworker is on page t4/general-dependants/bank/details
+        And caseworker is on page t4/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed
         Then the service displays the following result
@@ -239,7 +234,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Deigo and Edin is a dependant only application (x2) Non Doctorate in London student and has sufficient funds
 
         Given the account has sufficient funds
-        And caseworker is on page t4/general-dependants/bank/details
+        And caseworker is on page t4/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date    | 31/05/2016 |
@@ -274,7 +269,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds
 
         Given the account does not have sufficient funds
-        And caseworker is on page t4/general-dependants/bank/details
+        And caseworker is on page t4/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date    | 31/05/2016 |
@@ -287,22 +282,17 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                    | Not passed               |
-            | Application Raised Date    | 31/05/2016               |
-            | Account holder name        | Shelly Smith             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
-            | Course length              | 9 (limited to 9)         |
-            | Lowest Balance             | £100.00 on 03/10/2016    |
-            | Tier                       | Tier 4 (General)         |
-            | Applicant type             | General student          |
-            | In London                  | Yes                      |
-            | Course dates checked       | 01/05/2016 to 30/01/2017 |
-            | Dependants                 | 1                        |
-            | Sort code                  | 11-11-11                 |
-            | Account number             | 11111111                 |
-            | DOB                        | 21/09/1981               |
-            | Continuation Course        | Yes                      |
+            | Outcome                 | Not passed               |
+            | Application Raised Date | 31/05/2016               |
+            | Tier                    | Tier 4 (General)         |
+            | Applicant type          | General student          |
+            | In London               | Yes                      |
+            | Course dates checked    | 01/05/2016 to 30/01/2017 |
+            | Dependants              | 1                        |
+            | Sort code               | 11-11-11                 |
+            | Account number          | 11111111                 |
+            | DOB                     | 21/09/1981               |
+            | Continuation Course     | Yes                      |
         And the result table contains the following
             | Account holder name        | Shelly Smith                             |
             | Total funds required       | £16,090.00                               |
@@ -319,7 +309,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
 
         Given the account has sufficient funds
-        And caseworker is on page t4/general-dependants/bank/details
+        And caseworker is on page t4/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date | 31/05/2016 |

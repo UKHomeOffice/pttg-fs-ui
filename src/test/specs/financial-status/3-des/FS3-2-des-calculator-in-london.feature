@@ -18,21 +18,18 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/des/consent
+        And caseworker is on page t4/status/main/des
         And the api condition codes response will be 2--
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 33-33-33   |
-            | Account number | 33333333   |
         And the default details are
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222223   |
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
             | Dependants                      | 0          |
 
-
-#Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a Doctorate in London student and has sufficient funds
         When the financial status check is performed
         Then the service displays the following result
@@ -50,6 +47,29 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Account number                  | 33333333                       |
             | DOB                             | 25/03/1987                     |
             | Application raised date         | 29/06/2016                     |
+
+    Scenario: Laura is a Doctorate not in London student and has sufficient funds
+        When the financial status check is performed with
+            | Application raised date         | 20/06/2016 |
+            | End date                        | 30/05/2016 |
+            | In London                       | No         |
+            | Accommodation fees already paid | 265        |
+            | Dependants                      | 0          |
+        Then the service displays the following result
+            | Outcome                         | Passed                         |
+            | Account holder name             | Laura Taylor                   |
+            | Total funds required            | £16,090.00                     |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
+            | Condition Code                  | 2 - Applicant                  |
+            | Tier                            | Tier 4 (General)               |
+            | Applicant type                  | Doctorate extension scheme     |
+            | In London                       | No                             |
+            | Accommodation fees already paid | £265.00 (limited to £1,265.00) |
+            | Dependants                      | 0                              |
+            | Sort code                       | 22-22-23                       |
+            | Account number                  | 22222223                       |
+            | DOB                             | 25/03/1987                     |
+            | Application raised date         | 20/06/2016                     |
 
     Scenario: User clicks on the Begin a new search button after completing financial status check
         When the financial status check is performed

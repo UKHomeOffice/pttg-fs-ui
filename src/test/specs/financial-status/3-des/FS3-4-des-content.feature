@@ -6,12 +6,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
         And the api condition codes response will be 2--
-        And caseworker is on page t4/des/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 22-22-23   |
-            | Account number | 22222223   |
-
+        And caseworker is on page t4/status/main/des
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -24,6 +19,9 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | In London                       | Yes        |
             | Accommodation fees already paid | 100        |
             | Dependants                      | 0          |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 22-22-23   |
+            | Account number                  | 22222223   |
         Then the service displays the following page content
             | Outcome        | Not passed                                                            |
             | Outcome detail | One or more daily closing balances are below the total funds required |
