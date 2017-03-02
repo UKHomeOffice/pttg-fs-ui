@@ -7,11 +7,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the api condition codes response will be -3-1
-        And caseworker is on page t4/general-dependants/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        And caseworker is on page t4/status/dependant/general
         And the default details are
             | Application raised date | 05/06/2016 |
             | End date                | 30/05/2016 |
@@ -22,7 +18,9 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
             | Continuation Course     | No         |
             | Course type             | main       |
             | Course institution      | true       |
-
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
 
 ###################################### Dependant Only - Check for text on Output meets minimum financial requirement - Pass page ######################################
 

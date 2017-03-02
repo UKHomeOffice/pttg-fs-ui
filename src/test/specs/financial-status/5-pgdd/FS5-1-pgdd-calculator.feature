@@ -21,11 +21,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account does not have sufficient funds
         And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/pgdd/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        And caseworker is on page t4/status/main/pgdd
         When the financial status check is performed with
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
@@ -36,6 +32,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
         Then the service displays the following result
             | Outcome                         | Not passed                     |
             | Account holder name             | Shelly Smith                   |
@@ -61,11 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account has sufficient funds
         And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/pgdd/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        And caseworker is on page t4/status/main/pgdd
         When the financial status check is performed with
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -76,6 +71,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Course dates checked            | 30/05/2016 to 30/06/2016       |
@@ -104,11 +102,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account does not have sufficient funds
         And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/pgdd-dependants/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        And caseworker is on page t4/status/dependant/pgdd
         When the financial status check is performed with
             | Application raised date    | 29/06/2016 |
             | End date                   | 30/05/2016 |
@@ -118,6 +112,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Dependants                 | 2          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+            | DOB                        | 25/03/1987 |
+            | Sort code                  | 11-11-11   |
+            | Account number             | 11111111   |
         Then the service displays the following result
             | Outcome                    | Not passed                                |
             | Account holder name        | Shelly Smith                              |
@@ -144,11 +141,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account has sufficient funds
         And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/pgdd-dependants/consent
-        And consent is sought for the following:
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+        And caseworker is on page t4/status/dependant/pgdd
         When the financial status check is performed with
             | Application raised date    | 31/05/2016 |
             | End date                   | 30/05/2016 |
@@ -158,6 +151,9 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Dependants                 | 1          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+            | DOB            | 25/03/1987 |
+            | Sort code      | 11-11-11   |
+            | Account number | 11111111   |
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Course dates checked       | 30/05/2016 to 30/06/2016       |
@@ -171,10 +167,10 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Continuation Course        | Yes                            |
             | Original Course Start Date | 30/10/2015                     |
         And the result table contains the following
-            | Account holder name        | Laura Taylor             |
-            | Total funds required       | £16,090.00               |
-            | Maintenance period checked | 03/05/2016 to 30/05/2016 |
+            | Account holder name        | Laura Taylor                              |
+            | Total funds required       | £16,090.00                                |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                  |
             | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
-            | Estimated Leave End Date   | 22/10/2017               |
-            | Course length              | 2 (limited to 9)         |
-            | Entire course length       | 9                        |
+            | Estimated Leave End Date   | 22/10/2017                                |
+            | Course length              | 2 (limited to 9)                          |
+            | Entire course length       | 9                                         |

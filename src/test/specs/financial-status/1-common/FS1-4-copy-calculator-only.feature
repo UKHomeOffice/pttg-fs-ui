@@ -7,12 +7,7 @@ Feature: Copy results to paste buffer
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
-        And caseworker is using the financial status service ui
-        And the caseworker selects Tier four
-        And the main option of the applicant type radio is selected
-        And the submit button is clicked
-        And the general student type is chosen
-        And the caseworker selects the No radio button
+        And caseworker is on page t4/calc/main/general
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |
@@ -33,8 +28,7 @@ Feature: Copy results to paste buffer
     ## although the actual functionality in the end product is expected to work in all modern browsers
     ## the methods available to test copy paste are poorly supported
     Scenario: copy results
-        Given caseworker is on page t4/general/calc/details
-        And the financial status check is performed
+        Given the financial status check is performed
         When the copy button is clicked
         Then the copied text includes
             | Total funds required            | £16,090.00                    |
@@ -53,8 +47,7 @@ Feature: Copy results to paste buffer
             | Date Received                   |                               |
 
     Scenario: copy results when continuation course is selected as yes
-        Given caseworker is on page t4/general/calc/details
-        And the financial status check is performed with
+        Given the financial status check is performed with
             | Continuation course        | Yes      |
             | Original course start date | 1/1/2014 |
         When the copy button is clicked
