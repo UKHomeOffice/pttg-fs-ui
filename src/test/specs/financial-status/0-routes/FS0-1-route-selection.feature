@@ -9,15 +9,15 @@ Feature: Route selection screen inputs - All tiers
         When caseworker is on page t4
         Then the service displays the following page content
             | Page title  | Check financial status            |
-            | getConsent  | Get consent for a financial check |
-            | checkStatus | Check fincancial status           |
+            | Get consent | Get consent for a financial check |
+            | Check status | Check fincancial status           |
             | calculator  | Calculate daily funds required    |
 
-    Scenario: Caseworker selects Tier 4 checkStatus
+    Scenario: Caseworker selects Tier 4 Check status
         When caseworker is on page t4/status
         Then the service displays the following page content
             | Main Applicant | Main applicant (with & without dependants) |
-            | dependant Only | Dependants only                            |
+            | Dependant Only | Dependants only                            |
 
 
     Scenario: Caseworker selects the student type - Tier 4 (General)
@@ -33,8 +33,8 @@ Feature: Route selection screen inputs - All tiers
     Scenario:  Caseworker selects Tier 2
         When caseworker is on page t2
         Then the service displays the following page content
-            | getConsent  | Get consent for a financial check |
-            | checkStatus | Check fincancial status           |
+            | Get consent | Get consent for a financial check |
+            | Check status | Check fincancial status           |
             | calculator  | Calculate daily funds required    |
 
     Scenario: Caseworker selects Tier 2 (General)
@@ -48,8 +48,8 @@ Feature: Route selection screen inputs - All tiers
     Scenario:  Caseworker selects Tier 5
         When caseworker is on page t5
         Then the service displays the following page content
-            | getConsent  | Get consent for a financial check |
-            | checkStatus | Check fincancial status           |
+            | Get consent | Get consent for a financial check |
+            | Check status | Check fincancial status           |
             | calculator  | Calculate daily funds required    |
 
     Scenario: Caseworker selects Tier 5
