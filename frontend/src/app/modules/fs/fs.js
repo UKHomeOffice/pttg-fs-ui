@@ -39,32 +39,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     return _application
   }
 
-  /* if an applicant type has a sub-type then these are currently carried in the same url parameter and need splitting in to two values,
-  eg des-dependants needs splitting into
-  applicantType=des and dependantsOnly=true
-  */
-  this.splitApplicantType = function (str) {
-    var results = {
-      applicantType: null,
-      dependantsOnly: false
-    }
-
-    if (!_.isString(str)) {
-      return results
-    }
-
-    var split = str.split('-')
-    if (split.length >= 1) {
-      results.applicantType = split[0]
-    }
-
-    if (split.length >= 2 && split[1] === 'dependants') {
-      results.dependantsOnly = true
-    }
-
-    return results
-  }
-
   /* using the angular router state parameters set some primary values in the application object
   e.g. it should be possible to determine from the url structure alone:
   - tier
@@ -74,23 +48,19 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   */
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
-    var tier = FsInfoService.getTier(obj.tier)
-    var split = me.splitApplicantType(stateParams.applicantType)
+    // var tier = FsInfoService.getTier(obj.tier)
 
-    obj.applicantType = split.applicantType // general, sso
-    obj.dependantsOnly = split.dependantsOnly
-
-    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
-    if (variant.dependantsOnly) {
-      obj.dependantsOnly = true
+    if (_.has(stateParams, 'statusOrCalc')) {
+      obj.doCheck = (stateParams.statusOrCalc === 'status')
     }
 
-    obj.doCheck = (stateParams.calcOrBank === 'bank') ? 'yes' : 'no' // bank check
+    if (_.has(stateParams, 'applicantType')) {
+      obj.applicantType = (stateParams.applicantType === 'dependant') ? 'dependant' : 'main'
+      obj.dependantsOnly = (stateParams.applicantType === 'dependant')
+    }
 
-    if (obj.doCheck !== 'yes') {
-      obj.sortCode = ''
-      obj.accountNumber = ''
-      obj.dob = ''
+    if (_.has(stateParams, 'variantType')) {
+      obj.variantType = stateParams.variantType // general, suso etc
     }
   }
 

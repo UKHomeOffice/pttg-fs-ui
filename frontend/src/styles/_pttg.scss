@@ -84,6 +84,11 @@ th {
 
 a[ng-click] {
   cursor: pointer;
+  color: #005ea5;
+  text-decoration: underline;
+  &:visited {
+    color: #4c2c92;
+  }
 }
 
 .debuglinks {

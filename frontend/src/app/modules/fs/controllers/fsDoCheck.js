@@ -7,24 +7,18 @@ var fsModule = angular.module('hod.fs')
 // #### ROUTES #### //
 fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   // define a route for the details of the form
-  $stateProvider.state({
-    name: 'fsDoCheck',
-    url: '/:applicantType',
-    params: {
-      dependantsOnly: {
-        value: null,
-        squash: true
-      }
-    },
-    title: 'Financial Status : Query',
-    parent: 'fsApplicantType',
-    views: {
-      'content@': {
-        templateUrl: 'modules/fs/templates/fsDoCheck.html',
-        controller: 'FsDoCheckCtrl'
-      }
-    }
-  })
+  // $stateProvider.state({
+  //   name: 'fsDoCheck',
+  //   url: '/:applicantType',
+  //   title: 'Financial Status : Query',
+  //   parent: 'fsApplicantType',
+  //   views: {
+  //     'content@': {
+  //       templateUrl: 'modules/fs/templates/fsDoCheck.html',
+  //       controller: 'FsDoCheckCtrl'
+  //     }
+  //   }
+  // })
 }])
 
 fsModule.controller('FsDoCheckCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {

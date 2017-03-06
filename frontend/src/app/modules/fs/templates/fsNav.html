@@ -1,7 +1,7 @@
 <nav id="nav">
   <div class="navbar">
     <ul class="navbar__list-items">
-      <li ng-repeat="t in tiers" ng-class="{active: (tier === t.tier)}"><a ui-sref="fsApplicantType({tier: t.tier})">{{ t.label }}</a></li>
+      <li ng-repeat="t in tiers" ng-class="{active: (tier === t.tier)}"><a ui-sref="fsStart({tier: t.tier})">{{ t.label }}</a></li>
     </ul>
   </div>
 </nav>
@@ -13,3 +13,4 @@
   <a ng-click="setBank('00000503')">FAILURE</a>
   <a ng-click="setBank('00000504')">INVALID</a>
 </div>
+<hod-availability></hod-availability>

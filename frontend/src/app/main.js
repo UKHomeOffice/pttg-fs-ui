@@ -19,7 +19,7 @@ app.constant('CONFIG', {
 })
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/fs')
+  $urlRouterProvider.otherwise('/fs/t4')
 
   $stateProvider.state({
     name: 'default',

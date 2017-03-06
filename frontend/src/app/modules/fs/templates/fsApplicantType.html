@@ -1,11 +1,6 @@
-<hod-availability></hod-availability>
-
 <h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application</span>Type of application</h1>
 
-<hod-form name="fsApplicantTypeForm" submit="submit">
-  <hod-radio name="applicantType" field="fs.applicantType" config="conf.applicantType"></hod-radio>
-
-  <hod-radio name="dependantsOnly" field="fs.dependantsOnly" config="conf.dependantsOnly"></hod-radio>
-
-  <hod-submit value="Continue"></hod-submit>
-</hod-form>
+<p>
+  <a ui-sref="fsVariantType({ applicantType: 'main' })" class="font-medium">Main applicant</a> (with or without dependants)<br>
+  <a ui-sref="fsVariantType({ applicantType: 'dependant' })" class="font-medium">Dependants only</a><br>
+</p>

@@ -57,19 +57,20 @@ fsModule.factory('FsInfoService', [ function () {
       tier: 2,
       label: 'Tier 2',
       nDaysRequired: 90,
-      variants: [{
-        value: 'main',
-        label: 'Main applicant (with & without dependants)',
-        full: 'Main applicant (with & without dependants)',
-        fields: ['*default', 'dependants']
-      },
-      {
-        value: 'dependant',
-        label: 'Dependants only',
-        full: 'Dependants only',
-        fields: ['*default', 'dependants'],
-        dependantsOnly: true
-      }]
+      // types: [{
+      //   value: 'main',
+      //   label: 'Main applicant (with & without dependants)',
+      //   full: 'Main applicant (with & without dependants)',
+      //   fields: ['*default', 'dependants']
+      // },
+      // {
+      //   value: 'dependant',
+      //   label: 'Dependants only',
+      //   full: 'Dependants only',
+      //   fields: ['*default', 'dependants']
+      // }],
+      defaultFields: ['*default', 'dependants'],
+      variants: []
     },
     {
       tier: 4,
@@ -105,19 +106,21 @@ fsModule.factory('FsInfoService', [ function () {
       tier: 5,
       label: 'Tier 5',
       nDaysRequired: 90,
-      variants: [{
-        value: 'main',
-        label: 'Main applicant (with & without dependants)',
-        full: 'Main applicant (with & without dependants)',
-        fields: ['*default', 'dependants']
-      },
-      {
-        value: 'dependant',
-        label: 'Dependants only',
-        full: 'Dependants only',
-        fields: ['*default', 'dependants'],
-        dependantsOnly: true
-      }]
+      // variants: [{
+      //   value: 'main',
+      //   label: 'Main applicant (with & without dependants)',
+      //   full: 'Main applicant (with & without dependants)',
+      //   fields: ['*default', 'dependants']
+      // },
+      // {
+      //   value: 'dependant',
+      //   label: 'Dependants only',
+      //   full: 'Dependants only',
+      //   fields: ['*default', 'dependants'],
+      //   dependantsOnly: true
+      // }]
+      defaultFields: ['*default', 'dependants'],
+      variants: []
     }]
   }
 

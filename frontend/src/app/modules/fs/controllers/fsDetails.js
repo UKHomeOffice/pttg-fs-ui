@@ -9,9 +9,9 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   // define a route for the details of the form
   $stateProvider.state({
     name: 'fsDetails',
-    url: '/:calcOrBank/details',
+    url: '/:variantType',
     title: 'Financial Status : Details',
-    parent: 'fsDoCheck',
+    parent: 'fsVariantType',
     views: {
       'content@': {
         templateUrl: 'modules/fs/templates/fsDetails.html',
@@ -23,26 +23,28 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
 
 fsModule.run(['$rootScope', '$state', 'FsService', 'FsBankService', function ($rootScope, $state, FsService, FsBankService) {
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-    var fs = FsService.getApplication()
-    if (toState.name === 'fsDetails' && toParams.calcOrBank === 'bank' && !FsBankService.hasBankInfo(fs)) {
-      // you cannot be on the 'fsDetails' route/view if the bank details are not complete
-      event.preventDefault()
-      $state.go('fsGetConsent', toParams)
-      return false
-    }
+    // var fs = FsService.getApplication()
+    // if (toState.name === 'fsDetails' && toParams.calcOrBank === 'bank' && !FsBankService.hasBankInfo(fs)) {
+    //   // you cannot be on the 'fsDetails' route/view if the bank details are not complete
+    //   event.preventDefault()
+    //   $state.go('fsGetConsent', toParams)
+    //   return false
+    // }
   })
 }])
 
 fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
+  FsService.reset()
+
   var fs = FsService.getApplication()
+  FsService.setKnownParamsFromState(fs, $state.params)
   $scope.fs = fs
 
-  // force application values from the url params
-  FsService.setKnownParamsFromState(fs, $state.params)
-
+  console.log(fs, $state.params)
+  return
   // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)
-  $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.applicantType })
+  $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.variantType })
   $scope.fields = FsInfoService.getFields($scope.variant.fields)
 
   if (fs.dependantsOnly) {

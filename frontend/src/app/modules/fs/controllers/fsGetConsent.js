@@ -7,31 +7,31 @@ var fsModule = angular.module('hod.fs')
 // #### ROUTES #### //
 fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   // define a route for the details of the form
-  $stateProvider.state({
-    name: 'fsGetConsent',
-    url: '/consent',
-    title: 'Financial Status : Consent',
-    parent: 'fsDoCheck',
-    views: {
-      'content@': {
-        templateUrl: 'modules/fs/templates/fsGetConsent.html',
-        controller: 'FsGetConsentCtrl'
-      }
-    }
-  })
+  // $stateProvider.state({
+  //   name: 'fsGetConsent',
+  //   url: '/consent',
+  //   title: 'Financial Status : Consent',
+  //   parent: 'fsStart',
+  //   views: {
+  //     'content@': {
+  //       templateUrl: 'modules/fs/templates/fsGetConsent.html',
+  //       controller: 'FsGetConsentCtrl'
+  //     }
+  //   }
+  // })
 
-  $stateProvider.state({
-    name: 'fsConsentError',
-    url: '/problem',
-    title: 'Financial Status : Consent problem',
-    parent: 'fsGetConsent',
-    views: {
-      'content@': {
-        templateUrl: 'modules/fs/templates/fsConsentError.html',
-        controller: 'FsConsentErrorCtrl'
-      }
-    }
-  })
+  // $stateProvider.state({
+  //   name: 'fsConsentError',
+  //   url: '/problem',
+  //   title: 'Financial Status : Consent problem',
+  //   parent: 'fsGetConsent',
+  //   views: {
+  //     'content@': {
+  //       templateUrl: 'modules/fs/templates/fsConsentError.html',
+  //       controller: 'FsConsentErrorCtrl'
+  //     }
+  //   }
+  // })
 }])
 
 fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, FsService, FsInfoService, FsBankService) {
