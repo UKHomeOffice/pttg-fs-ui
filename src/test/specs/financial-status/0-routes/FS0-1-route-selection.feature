@@ -16,8 +16,8 @@ Feature: Route selection screen inputs - All tiers
     Scenario: Caseworker selects Tier 4 checkStatus
         When caseworker is on page t4/status
         Then the service displays the following page content
-            | mainApplicant | Main applicant (with & without dependants) |
-            | dependantOnly | Dependants only                            |
+            | Main Applicant | Main applicant (with & without dependants) |
+            | dependant Only | Dependants only                            |
 
 
     Scenario: Caseworker selects the student type - Tier 4 (General)
@@ -40,8 +40,8 @@ Feature: Route selection screen inputs - All tiers
     Scenario: Caseworker selects Tier 2 (General)
         When caseworker is on page t2/status
         Then the service displays the following page content
-            | mainApplicant | Main applicant (with & without dependants) |
-            | dependantOnly | Dependants only                            |
+            | Main Applicant | Main applicant (with & without dependants) |
+            | Dependant Only | Dependants only                            |
 
         #### TIER 5 ####
 
@@ -55,5 +55,5 @@ Feature: Route selection screen inputs - All tiers
     Scenario: Caseworker selects Tier 5
         When caseworker is on page t5/status
         Then the service displays the following page content
-            | mainApplicant | Main applicant (with & without dependants) |
-            | dependantOnly | Dependants only                            |
+            | Main Applicant | Main applicant (with & without dependants) |
+            | Dependant Only | Dependants only                            |
