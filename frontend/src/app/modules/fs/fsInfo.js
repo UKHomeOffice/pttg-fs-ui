@@ -42,7 +42,7 @@ fsModule.factory('FsInfoService', [ function () {
     return null
   }
 
-  // get a variant given the tier number and variant value eg t=4, v=main
+  // get a variant given the tier number and variant value eg t=4, v=general
   this.getVariant = function (t, v) {
     var tier = me.getTier(t)
     if (!tier) {
@@ -53,10 +53,41 @@ fsModule.factory('FsInfoService', [ function () {
 
   // get the available tiers and assoc info
   this.getTiers = function () {
-    return [{
-      tier: 2,
-      label: 'Tier 2',
-      nDaysRequired: 90,
+    return [
+      {
+        tier: 4,
+        label: 'Tier 4',
+        nDaysRequired: 28,
+        dependantsOnlyOption: true,
+        variants: [{
+          value: 'general',
+          label: 'General student',
+          full: 'Tier 4 (General) student',
+          fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'courseInstitution', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        },
+        {
+          value: 'des',
+          label: 'Doctorate extension scheme',
+          full: 'Tier 4 (General) student (doctorate extension scheme)',
+          fields: ['*default', '*t4all', 'dependants']
+        },
+        {
+          value: 'pgdd',
+          label: 'Postgraduate doctor or dentist',
+          full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
+          fields: ['*default', '*courses', '*t4all', 'dependants']
+        },
+        {
+          value: 'suso',
+          label: 'Student union sabbatical officer',
+          full: 'Tier 4 (General) student union (sabbatical officer)',
+          fields: ['*default', '*courses', '*t4all', 'dependants']
+        }]
+      },
+      {
+        tier: 2,
+        label: 'Tier 2',
+        nDaysRequired: 90,
       // types: [{
       //   value: 'main',
       //   label: 'Main applicant (with & without dependants)',
@@ -69,43 +100,13 @@ fsModule.factory('FsInfoService', [ function () {
       //   full: 'Dependants only',
       //   fields: ['*default', 'dependants']
       // }],
-      defaultFields: ['*default', 'dependants'],
-      variants: []
-    },
-    {
-      tier: 4,
-      label: 'Tier 4 (General)',
-      nDaysRequired: 28,
-      dependantsOnlyOption: true,
-      variants: [{
-        value: 'general',
-        label: 'General student',
-        full: 'Tier 4 (General) student',
-        fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'courseInstitution', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+        defaultFields: ['*default', 'dependants'],
+        variants: []
       },
       {
-        value: 'des',
-        label: 'Doctorate extension scheme',
-        full: 'Tier 4 (General) student (doctorate extension scheme)',
-        fields: ['*default', '*t4all', 'dependants']
-      },
-      {
-        value: 'pgdd',
-        label: 'Postgraduate doctor or dentist',
-        full: 'Tier 4 (General) student (postgraduate doctor or dentist)',
-        fields: ['*default', '*courses', '*t4all', 'dependants']
-      },
-      {
-        value: 'suso',
-        label: 'Student union sabbatical officer',
-        full: 'Tier 4 (General) student union (sabbatical officer)',
-        fields: ['*default', '*courses', '*t4all', 'dependants']
-      }]
-    },
-    {
-      tier: 5,
-      label: 'Tier 5',
-      nDaysRequired: 90,
+        tier: 5,
+        label: 'Tier 5',
+        nDaysRequired: 90,
       // variants: [{
       //   value: 'main',
       //   label: 'Main applicant (with & without dependants)',
@@ -119,9 +120,9 @@ fsModule.factory('FsInfoService', [ function () {
       //   fields: ['*default', 'dependants'],
       //   dependantsOnly: true
       // }]
-      defaultFields: ['*default', 'dependants'],
-      variants: []
-    }]
+        defaultFields: ['*default', 'dependants'],
+        variants: []
+      }]
   }
 
   // given a field group name return the individual fields
@@ -136,9 +137,35 @@ fsModule.factory('FsInfoService', [ function () {
       case '*t4all':
         // common fields for t4
         return ['inLondon', 'accommodationFeesAlreadyPaid']
+      case '*bank':
+        return ['sortCode', 'accountNumber', 'dob']
     }
 
     return []
+  }
+
+  this.getFieldsForObject = function (obj) {
+    var tier = me.getTier(obj.tier)
+    var v = me.getVariant(obj.tier, obj.variantType)
+    var fields = (_.has(v, 'fields')) ? v.fields : tier.defaultFields
+
+    // add the bank fields
+    if (obj.doCheck) {
+      fields.push('*bank')
+    }
+
+    fields = me.getFields(fields)
+
+    if (obj.dependantsOnly) {
+      // these fields should be excluded on a dependant only route
+      fields = _.without(fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
+    }
+
+    if (obj.continuationCourse !== 'yes') {
+      fields = _.without(fields, 'originalCourseStartDate')
+    }
+
+    return fields
   }
 
   // given a list of fields - resolve field group name for the actual fields
@@ -220,14 +247,22 @@ fsModule.factory('FsInfoService', [ function () {
         summary: 'Accommodation fees already paid',
         format: 'pounds'
       },
-      doCheck: {
-        summary: '',
-        options: [{ value: 'yes', label: 'Yes, check Barclays' }, { value: 'no', label: 'No' }]
-      },
-
+      // doCheck: {
+      //   summary: '',
+      //   options: [{ value: 'yes', label: 'Yes, check Barclays' }, { value: 'no', label: 'No' }]
+      // },
       dependantsOnly: {
         summary: '',
         options: [{ value: 'main', label: 'Main applicant (with & without dependants)' }, { value: 'dependant', label: 'Dependants only' }]
+      },
+      accountNumber: {
+        summary: 'Account number'
+      },
+      sortCode: {
+        summary: 'Sort code'
+      },
+      dob: {
+        summary: 'Date of birth'
       }
     }
 

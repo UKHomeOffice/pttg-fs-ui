@@ -36,32 +36,44 @@ describe('app: hod.proving', function () {
       })
     })
 
-    describe('splitApplicantType', function () {
-      it('is expected to correctly split the applicantType url parameter into applicantType and dependantsOnly boolean', function () {
-        var testCases = [
-          {str: null, result: { applicantType: null, dependantsOnly: false }},
-          {str: 'general-dependants', result: { applicantType: 'general', dependantsOnly: true }},
-          {str: 'sso-dependants', result: { applicantType: 'sso', dependantsOnly: true }},
-          {str: 'general', result: { applicantType: 'general', dependantsOnly: false }},
-          {str: 'general-dependantzzz', result: { applicantType: 'general', dependantsOnly: false }}
-        ]
+    // describe('splitApplicantType', function () {
+    //   it('is expected to correctly split the applicantType url parameter into applicantType and dependantsOnly boolean', function () {
+    //     var testCases = [
+    //       {str: null, result: { applicantType: null, dependantsOnly: false }},
+    //       {str: 'general-dependants', result: { applicantType: 'general', dependantsOnly: true }},
+    //       {str: 'sso-dependants', result: { applicantType: 'sso', dependantsOnly: true }},
+    //       {str: 'general', result: { applicantType: 'general', dependantsOnly: false }},
+    //       {str: 'general-dependantzzz', result: { applicantType: 'general', dependantsOnly: false }}
+    //     ]
 
-        _.each(testCases, function (data) {
-          var split = fs.splitApplicantType(data.str)
-          expect(split.applicantType).toEqual(data.result.applicantType)
-          expect(split.dependantsOnly).toEqual(data.result.dependantsOnly)
-        })
-      })
-    })
+    //     _.each(testCases, function (data) {
+    //       var split = fs.splitApplicantType(data.str)
+    //       expect(split.applicantType).toEqual(data.result.applicantType)
+    //       expect(split.dependantsOnly).toEqual(data.result.dependantsOnly)
+    //     })
+    //   })
+    // })
 
     describe('setKnownParamsFromState', function () {
       it('is expected to be able to set tier, variant, and dependantOnly values from the url state params', function () {
         // setKnownParamsFromState
         var testCases = [
-          {source: { tier: 4, applicantType: 'general' }, result: { tier: 4, applicantType: 'general', dependantsOnly: false }},
-          {source: { tier: 2, applicantType: 'main' }, result: { tier: 2, applicantType: 'main', dependantsOnly: false }},
-          {source: { tier: 4, applicantType: 'general-dependants' }, result: { tier: 4, applicantType: 'general', dependantsOnly: true }},
-          {source: { tier: 5, applicantType: 'dependant' }, result: { tier: 5, applicantType: 'dependant', dependantsOnly: true }}
+          {
+            source: { tier: 4, statusOrCalc: 'status', applicantType: 'main', variantType: 'general' },
+            result: { tier: 4, doCheck: true, applicantType: 'main', variantType: 'general', dependantsOnly: false }
+          },
+          {
+            source: { tier: 2, statusOrCalc: 'calc', applicantType: 'main', variantType: 'details' },
+            result: { tier: 2, doCheck: false, applicantType: 'main', variantType: null, dependantsOnly: false }
+          },
+          {
+            source: { tier: 4, statusOrCalc: 'status', applicantType: 'dependant', variantType: 'general' },
+            result: { tier: 4, doCheck: true, applicantType: 'dependant', variantType: 'general', dependantsOnly: true }
+          },
+          {
+            source: { tier: 5, statusOrCalc: 'calc', applicantType: 'dependant', variantType: 'details' },
+            result: { tier: 5, doCheck: false, applicantType: 'dependant', variantType: null, dependantsOnly: true }
+          }
         ]
 
         _.each(testCases, function (data) {
@@ -69,16 +81,18 @@ describe('app: hod.proving', function () {
           fs.setKnownParamsFromState(obj, data.source)
           expect(obj.tier).toEqual(data.result.tier)
           expect(obj.applicantType).toEqual(data.result.applicantType)
+          expect(obj.variantType).toEqual(data.result.variantType)
           expect(obj.dependantsOnly).toEqual(data.result.dependantsOnly)
-          expect(obj.doCheck).toEqual('no')
+          expect(obj.doCheck).toEqual(data.result.doCheck)
         })
       })
 
       it('should clear bank details when not a bank route', function () {
         var testParams = {
           tier: 4,
-          applicantType: 'general',
-          calcOrBank: 'bank'
+          applicantType: 'main',
+          variantType: 'general',
+          statusOrCalc: 'status'
         }
         var obj = {
           sortCode: '01-06-16',
@@ -87,11 +101,11 @@ describe('app: hod.proving', function () {
         }
 
         fs.setKnownParamsFromState(obj, testParams)
-        expect(obj.doCheck).toEqual('yes')
+        expect(obj.doCheck).toBeTruthy()
 
-        testParams.calcOrBank = 'calc'
+        testParams.statusOrCalc = 'calc'
         fs.setKnownParamsFromState(obj, testParams)
-        expect(obj.doCheck).toEqual('no')
+        expect(obj.doCheck).toBeFalsy()
         expect(obj.sortCode).toEqual('')
         expect(obj.accountNumber).toEqual('')
         expect(obj.dob).toEqual('')
@@ -142,10 +156,11 @@ describe('app: hod.proving', function () {
     })
 
     describe('getThresholdParams', function () {
-      var testObj = { tier: 4, applicantType: 'general' }
+      var testObj = { tier: 4, applicantType: 'main', variantType: 'general' }
       it('should return the appropriate parameters to send in a threshold request', function () {
         var result = fs.getThresholdParams(testObj)
         expect(_.has(result, 'applicantType')).toBeTruthy()
+        expect(_.has(result, 'dependantsOnly')).toBeTruthy()
       })
     })
 
@@ -194,7 +209,8 @@ describe('app: hod.proving', function () {
     describe('getCriteria', function () {
       var testObj = {
         tier: 4,
-        applicantType: 'general',
+        applicantType: 'main',
+        variantType: 'general',
         endDate: '2016-05-13',
         continuationCourse: 'yes',
         courseType: 'main',
@@ -203,7 +219,7 @@ describe('app: hod.proving', function () {
       }
       it('should return an object with field labels and display values', function () {
         var criteria = fs.getCriteria(testObj)
-        console.log(criteria)
+
         // expect(_.has(criteria, 'endDate')).toBeTruthy()
         expect(_.has(criteria, 'continuationCourse')).toBeTruthy()
         expect(_.has(criteria, 'courseType')).toBeTruthy()

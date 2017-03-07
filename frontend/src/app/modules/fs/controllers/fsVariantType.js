@@ -21,9 +21,13 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   })
 }])
 
-fsModule.controller('FsVariantTypeCtrl', ['$scope', '$state', 'FsInfoService', function ($scope, $state, FsInfoService) {
-  var t = Number($state.params.tier)
-  $scope.tier = FsInfoService.getTier(t)
+fsModule.controller('FsVariantTypeCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
+  FsService.reset()
+  var fs = FsService.getApplication()
+  FsService.setKnownParamsFromState(fs, $state.params)
+  $scope.tier = FsInfoService.getTier(fs.tier)
+  $scope.applicantType = fs.applicantType
+
   if ($scope.tier.variants.length === 0) {
     // skip this page if there are no variants to choose from, set the variant url parameter to 'details' as a generic placeholder
     $state.go('fsDetails', {variantType: 'details'})

@@ -35,17 +35,28 @@ fsModule.run(['$rootScope', '$state', 'FsService', 'FsBankService', function ($r
 
 fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
   FsService.reset()
-
   var fs = FsService.getApplication()
   FsService.setKnownParamsFromState(fs, $state.params)
+
   $scope.fs = fs
 
-  console.log(fs, $state.params)
-  return
-  // determine fields to show
   $scope.tier = FsInfoService.getTier(fs.tier)
-  $scope.variant = _.findWhere($scope.tier.variants, { value: $scope.fs.variantType })
-  $scope.fields = FsInfoService.getFields($scope.variant.fields)
+
+  if (_.isNull(fs.variantType) && $state.params.variantType !== 'details') {
+    // #### ERROR #### //
+    // If variantType is null then the state param must be set to the generic term details
+    $state.go('fsVariantType')
+    return
+  }
+
+  $scope.fields = FsInfoService.getFieldsForObject(fs)
+
+  // if (_.isNull(fs.variantType)) {
+  //   $scope.fields = FsInfoService.getFields($scope.tier.defaultFields)
+  // } else {
+  //   $scope.variant = FsInfoService.getVariant(fs.tier, fs.variantType)
+  //   $scope.fields = FsInfoService.getFields($scope.variant.fields)
+  // }
 
   if (fs.dependantsOnly) {
     $scope.fields = _.without($scope.fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
@@ -207,7 +218,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
           ok = false
         }
 
-        if (($scope.variant.dependantsOnly || fs.dependantsOnly) && n < 1) {
+        if (fs.dependantsOnly && n < 1) {
           ok = false
         }
 

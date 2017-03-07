@@ -94,6 +94,7 @@ describe('app: hod.proving', function () {
         expect(fsi.getFields(['*default']).length).toEqual(2)
         expect(fsi.getFields(['*default', '*courses']).length).toEqual(6)
         expect(fsi.getFields(['*default', '*courses', '*t4all']).length).toEqual(8)
+        expect(fsi.getFields(['*bank']).length).toEqual(3)
       })
 
       it('should return resolved field groups and individual fields', function () {
@@ -110,7 +111,7 @@ describe('app: hod.proving', function () {
     describe('getAllFieldInfo', function () {
       it('should return a list of all available fields', function () {
         var fieldInfo = fsi.getAllFieldInfo()
-        expect(_.keys(fieldInfo).length).toEqual(15)
+        expect(_.keys(fieldInfo).length).toEqual(17)
         expect(_.has(fieldInfo, 'applicationRaisedDate')).toBeTruthy()
       })
     })
@@ -120,6 +121,62 @@ describe('app: hod.proving', function () {
         var info = fsi.getFieldInfo('inLondon')
         expect(_.has(info, 'summary')).toBeTruthy()
         expect(_.has(info, 'options')).toBeTruthy()
+      })
+    })
+
+    describe('getFieldsForObject', function () {
+      var testObj
+      var fields
+      it('should return the fields for given application object', function () {
+        testObj = {
+          variantType: 'general',
+          tier: 4,
+          doCheck: true,
+          continuationCourse: 'yes'
+        }
+
+        fields = fsi.getFieldsForObject(testObj)
+        expect(fields.length).toEqual(16)
+        expect(fields).toContain('applicationRaisedDate')
+        expect(fields).toContain('endDate')
+        expect(fields).toContain('inLondon')
+        expect(fields).toContain('dependants')
+        expect(fields).toContain('courseStartDate')
+        expect(fields).toContain('courseEndDate')
+        expect(fields).toContain('continuationCourse')
+        expect(fields).toContain('originalCourseStartDate')
+        expect(fields).toContain('courseType')
+        expect(fields).toContain('courseInstitution')
+        expect(fields).toContain('accommodationFeesAlreadyPaid')
+        expect(fields).toContain('totalTuitionFees')
+        expect(fields).toContain('tuitionFeesAlreadyPaid')
+        expect(fields).toContain('sortCode')
+        expect(fields).toContain('accountNumber')
+        expect(fields).toContain('dob')
+      })
+
+      it('should include bank details when doCheck is true', function () {
+        expect(fields).toContain('accountNumber')
+        expect(fields).toContain('sortCode')
+        expect(fields).toContain('dob')
+      })
+
+      it('should not include any fees paid when dependant only route', function () {
+        testObj.dependantsOnly = true
+        fields = fsi.getFieldsForObject(testObj)
+        expect(fields).not.toContain('accommodationFeesAlreadyPaid')
+        expect(fields).not.toContain('totalTuitionFees')
+        expect(fields).not.toContain('tuitionFeesAlreadyPaid')
+      })
+
+      it('should only include originalCourseStartDate when application is a continuation course', function () {
+        testObj.continuationCourse = 'no'
+        fields = fsi.getFieldsForObject(testObj)
+        expect(fields).not.toContain('originalCourseStartDate')
+
+        testObj.continuationCourse = 'yes'
+        fields = fsi.getFieldsForObject(testObj)
+        expect(fields).toContain('originalCourseStartDate')
       })
     })
 

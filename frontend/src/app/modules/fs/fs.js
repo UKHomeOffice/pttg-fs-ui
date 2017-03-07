@@ -48,19 +48,19 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   */
   this.setKnownParamsFromState = function (obj, stateParams) {
     obj.tier = Number(stateParams.tier) // tier 4
-    // var tier = FsInfoService.getTier(obj.tier)
 
-    if (_.has(stateParams, 'statusOrCalc')) {
-      obj.doCheck = (stateParams.statusOrCalc === 'status')
-    }
+    obj.doCheck = (stateParams.statusOrCalc === 'status')
 
-    if (_.has(stateParams, 'applicantType')) {
-      obj.applicantType = (stateParams.applicantType === 'dependant') ? 'dependant' : 'main'
-      obj.dependantsOnly = (stateParams.applicantType === 'dependant')
-    }
+    obj.applicantType = (stateParams.applicantType === 'dependant') ? 'dependant' : 'main'
+    obj.dependantsOnly = (stateParams.applicantType === 'dependant')
 
-    if (_.has(stateParams, 'variantType')) {
-      obj.variantType = stateParams.variantType // general, suso etc
+    var v = FsInfoService.getVariant(obj.tier, stateParams.variantType)
+    obj.variantType = (v) ? stateParams.variantType : null
+
+    if (!obj.doCheck) {
+      obj.sortCode = ''
+      obj.accountNumber = ''
+      obj.dob = ''
     }
   }
 
@@ -93,8 +93,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
   // get the required params for the threshold request
   this.getThresholdParams = function (obj) {
-    var variant = FsInfoService.getVariant(obj.tier, obj.applicantType)
-    var fields = FsInfoService.getFields(variant.fields)
+    var fields = FsInfoService.getFieldsForObject(obj)
     var params = {dependants: 0}
     _.each(fields, function (f) {
       params[f] = obj[f]
@@ -103,18 +102,18 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     params.dependantsOnly = obj.dependantsOnly
 
     // [TODO]
-    params.studentType = obj.applicantType
-    params.applicantType = obj.applicantType
+    if (obj.variantType) {
+      params.studentType = obj.variantType
+      params.applicantType = obj.variantType
+    } else {
+      params.studentType = obj.applicantType
+      params.applicantType = obj.applicantType
+    }
+
     if (obj.dependantsOnly) {
-      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
-        params.accommodationFeesAlreadyPaid = 0
-      }
-      if (!_.has(fields.totalTuitionFees)) {
-        params.totalTuitionFees = 0
-      }
-      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
-        params.tuitionFeesAlreadyPaid = 0
-      }
+      params.accommodationFeesAlreadyPaid = 0
+      params.totalTuitionFees = 0
+      params.tuitionFeesAlreadyPaid = 0
     }
 
     return params
@@ -235,9 +234,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.getCriteria = function (obj) {
     // basics
     var tier = FsInfoService.getTier(obj.tier)
-    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
+    var variant = FsInfoService.getVariant(obj.tier, obj.variantType)
 
-    var fields = FsInfoService.getFields(variant.fields)
+    var fields = FsInfoService.getFieldsForObject(obj)
     var capped = me.getThresholdCappedValues(obj)
     var dependantsOnlyOptions = FsInfoService.getFieldInfo('dependantsOnly')
 
@@ -259,16 +258,16 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       display: tier.label
     }
 
-    criteria.applicantType = {
-      label: 'Applicant type',
-      display: variant.label
+    var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
+    criteria.dependantsOnly = {
+      label: 'Dependant/Main applicant',
+      display: opt.label
     }
 
-    if (tier.dependantsOnlyOption) {
-      var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
-      criteria.dependantsOnly = {
-        label: 'Dependant/Main applicant',
-        display: opt.label
+    if (obj.variantType) {
+      criteria.variantType = {
+        label: 'Student type',
+        display: variant.label
       }
     }
 
@@ -440,16 +439,16 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   }
 
   this.getConditionCodeParams = function (obj) {
-    if (obj.applicantType !== 'general') {
+    if (obj.variantType !== 'general') {
       return {
-        studentType: obj.applicantType,
+        studentType: obj.variantType,
         dependants: obj.dependants,
         dependantsOnly: obj.dependantsOnly
       }
     }
 
     var params = {
-      studentType: obj.applicantType,
+      studentType: obj.variantType,
       dependants: obj.dependants,
       dependantsOnly: obj.dependantsOnly,
       courseType: obj.courseType,
