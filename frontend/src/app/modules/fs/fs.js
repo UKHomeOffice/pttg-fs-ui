@@ -240,15 +240,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var capped = me.getThresholdCappedValues(obj)
     var dependantsOnlyOptions = FsInfoService.getFieldInfo('dependantsOnly')
 
-    if (obj.continuationCourse !== 'yes') {
-      // remove the original course start date from the results if its not a continuation course
-      fields = _.without(fields, 'originalCourseStartDate')
-    }
-
-    if (obj.dependantsOnly) {
-      fields = _.without(fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
-    }
-
     fields = _.without(fields, 'courseEndDate', 'endDate')
 
     var criteria = {}
@@ -259,13 +250,13 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
-    criteria.dependantsOnly = {
+    criteria.applicantType = {
       label: 'Dependant/Main applicant',
       display: opt.label
     }
 
     if (obj.variantType) {
-      criteria.variantType = {
+      criteria.studentType = {
         label: 'Student type',
         display: variant.label
       }
@@ -328,7 +319,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   // what should a caseworker do next?
   this.getThingsToDoNext = function (obj) {
     var doNext = []
-    if (obj.doCheck !== 'yes') {
+    if (!obj.doCheck) {
       doNext.push(FsInfoService.t('manualCheck'))
       doNext.push(FsInfoService.t('copyToCid'))
       return doNext

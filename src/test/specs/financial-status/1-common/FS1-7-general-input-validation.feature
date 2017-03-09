@@ -16,7 +16,7 @@ Feature: Show clear error details when inputs are invalid
 
     Background:
         Given caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/general
+        And caseworker is on page t4/application/status/main/general
 
 ######################### General validation message display #########################
 

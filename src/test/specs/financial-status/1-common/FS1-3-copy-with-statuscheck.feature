@@ -8,7 +8,7 @@ Feature: Copy results to paste buffer
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/general
+        And caseworker is on page t4/application/status/main/general
 
         And the default details are
             | Application raised date         | 31/05/2016 |
@@ -42,7 +42,7 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Applicant type                  | Tier 4 (General) student                        |
+            | Applicant type                  | Tier 4 student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |
@@ -70,7 +70,7 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                                      |
             | 28-day period checked           | 03/05/2016 to 30/05/2016                        |
             | Course length                   | 7 (limited to 9)                                |
-            | Applicant type                  | Tier 4 (General) student                        |
+            | Applicant type                  | Tier 4 student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
             | Total tuition fees              | £8,500.00                                       |

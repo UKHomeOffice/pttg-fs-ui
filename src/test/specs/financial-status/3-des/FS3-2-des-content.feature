@@ -1,4 +1,4 @@
-Feature: Tier 4 (General) doctorate extension scheme content (single current account with dependants)
+Feature: Tier 4 doctorate extension scheme content (single current account with dependants)
 
     Background:
         Given the api health check response has status 200
@@ -6,7 +6,7 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
         And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
         And the api condition codes response will be 2--
-        And caseworker is on page t4/status/main/des
+        And caseworker is on page t4/application/status/main/des
 
  ###################################### Section - Check for text on Output does not meet minimum financial requirement - Not Passed ######################################
 
@@ -35,8 +35,8 @@ Feature: Tier 4 (General) doctorate extension scheme content (single current acc
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                            |
-            | Applicant type                  |
             | Dependant/Main applicant        |
+            | Student type                    |
             | Application raised date         |
             | In London                       |
             | Accommodation fees already paid |

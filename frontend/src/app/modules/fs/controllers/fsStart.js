@@ -15,7 +15,7 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
     views: {
       'content@': {
         templateUrl: 'modules/fs/templates/fsStart.html',
-        controller: 'FsDoCheckCtrl'
+        controller: 'FsStartCtrl'
       },
       'nav@': {
         templateUrl: 'modules/fs/templates/fsNav.html',
@@ -34,17 +34,17 @@ fsModule.run(['$rootScope', function ($rootScope) {
 fsModule.controller('FsStartCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
   var fs = FsService.getApplication()
   FsService.setKnownParamsFromState(fs, $state.params)
-  $scope.tiers = FsInfoService.getTiers()
+  $scope.tier = FsInfoService.getTier(fs.tier)
 }])
 
 fsModule.controller('FsNavCtrl', ['$rootScope', '$scope', '$state', '$location', 'FsService', 'FsInfoService', function ($rootScope, $scope, $state, $location, FsService, FsInfoService) {
   $scope.tiers = FsInfoService.getTiers()
   $scope.showDebug = ($location.host() === '127.0.0.1')
-
   FsService.reset()
-
   $scope.setBank = function (accountNumber) {
     var fs = FsService.getApplication()
     fs.accountNumber = accountNumber
+    fs.sortCode = '010616'
+    fs.dob = '1974-05-13'
   }
 }])

@@ -1,4 +1,4 @@
-Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
+Feature: Non Doctorate Content - Tier 4 student Dependant ONLY
 
     Background:
         Given the api health check response has status 200
@@ -7,7 +7,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student Dependant ONLY
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the api condition codes response will be -3-1
-        And caseworker is on page t4/status/dependant/general
+        And caseworker is on page t4/application/status/dependant/general
         And the default details are
             | Application raised date | 05/06/2016 |
             | End date                | 30/05/2016 |

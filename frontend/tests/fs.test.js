@@ -237,7 +237,7 @@ describe('app: hod.proving', function () {
     })
 
     describe('getConsentCriteria', function () {
-      var testObj = { sortCode: '123456', accountNumber: '87654321', dob: '1974/05/13', doCheck: 'yes' }
+      var testObj = { sortCode: '123456', accountNumber: '87654321', dob: '1974/05/13', doCheck: true }
       it('should return bank specific info about the application', function () {
         var crit = fs.getConsentCriteria(testObj)
         expect(_.has(crit, 'sortCode')).toBeTruthy()

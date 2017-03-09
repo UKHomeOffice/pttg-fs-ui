@@ -9,7 +9,7 @@ fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvide
   // define a route for the details of the form
   $stateProvider.state({
     name: 'fsApplicantType',
-    url: '/:statusOrCalc',
+    url: '/application/:statusOrCalc',
     title: 'Financial Status : Application type',
     parent: 'fsStart',
     views: {

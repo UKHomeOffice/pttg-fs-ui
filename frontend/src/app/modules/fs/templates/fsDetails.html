@@ -1,6 +1,12 @@
-<h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application ({{ fs.applicantType }} applicant)</span>Calculate daily funds</h1>
+<h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application ({{ fs.applicantType }} applicant)</span><span id="pageTitle">Calculate daily funds</span></h1>
 
 <hod-form name="finStatusDetails" submit="submit">
+
+  <hod-date name="dob" label="Date of birth" field="fs.dob" config="conf.dob"></hod-date>
+
+  <hod-sortcode name="sortCode" label="Sort code" field="fs.sortCode"></hod-sortcode>
+
+  <hod-number name="accountNumber" label="Account number" field="fs.accountNumber" config="conf.accountNumber"></hod-number>
 
   <hod-date name="applicationRaisedDate" label="Application raised date" field="fs.applicationRaisedDate" config="conf.applicationRaisedDate"></hod-date>
 

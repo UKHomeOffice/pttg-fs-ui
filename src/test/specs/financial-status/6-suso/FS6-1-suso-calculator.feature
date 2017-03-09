@@ -1,4 +1,4 @@
-Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical officer) In London (single current account with dependants)
+Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) In London (single current account with dependants)
 
     Acceptance criteria
 
@@ -36,7 +36,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required            | £16,090.00                       |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
             | Lowest Balance                  | £100.00 on 03/10/2016            |
-            | Tier                            | Tier 4 (General)                 |
+            | Tier                            | Tier 4                 |
             | Applicant type                  | Student union sabbatical officer |
             | In London                       | Yes                              |
             | Course length                   | 2 (limited to 9)                 |
@@ -70,7 +70,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Outcome                         | Passed                           |
             | Total funds required            | £16,090.00                       |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016         |
-            | Tier                            | Tier 4 (General)                 |
+            | Tier                            | Tier 4                 |
             | Applicant type                  | Student union sabbatical officer |
             | In London                       | No                              |
             | Course length                   | 1 (limited to 9)                 |
@@ -108,7 +108,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Total funds required       | £16,090.00                       |
             | Maintenance period checked | 03/05/2016 to 30/05/2016         |
             | Lowest Balance             | £100.00 on 03/10/2016            |
-            | Tier                       | Tier 4 (General)                 |
+            | Tier                       | Tier 4                 |
             | Applicant type             | Student union sabbatical officer |
             | In London                  | Yes                              |
             | Course length              | 2 (limited to 9)                 |
@@ -142,7 +142,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student (sabbatical
             | Outcome                    | Passed                           |
             | Total funds required       | £16,090.00                       |
             | Maintenance period checked | 03/05/2016 to 30/05/2016         |
-            | Tier                       | Tier 4 (General)                 |
+            | Tier                       | Tier 4                 |
             | Applicant type             | Student union sabbatical officer |
             | In London                  | Yes                              |
             | Course length              | 1 (limited to 9)                 |

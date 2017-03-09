@@ -1,0 +1,35 @@
+<div class="govuk-box-highlight" ng-if="ok">
+  <h1 class="bold-large" id="outcome">{{ outcome }}</h1>
+  <p id="outcomeDetail">{{ outcomeDetail }}</p>
+</div>
+
+<div ng-if="!ok">
+  <h1 class="heading-large form-title"><span class="heading-secondary">{{ tier.label }} application</span><span id="outcome">{{ outcome }}</span></h1>
+  <p id="outcomeDetail">{{ outcomeDetail }}</p>
+</div>
+
+<div ng-if="reasons">
+  <ul class="list list-bullet">
+    <li ng-repeat="inf in reasons">{{ inf }}</li>
+  </ul>
+</div>
+
+<div ng-if="doNext">
+  <h2 class="heading-medium">Things to do now</h2>
+  <ol class="list list-number">
+    <li ng-repeat="(i, nxt) in doNext" id="doNext-{{ i }}">{{ nxt }}</li>
+  </ol>
+</div>
+
+<h2 class="heading-medium">Your search <a class="font-small" ui-sref="fsGetConsent" id="editSearchBtn">Edit details</a></h2>
+
+<table class="table-font-xsmall" id="criteria">
+  <tr ng-repeat="(f, obj) in criteria">
+    <th>{{ obj.label }}</th>
+    <td id="{{ f }}">{{ obj.display }}</td>
+  </tr>
+</table>
+
+<div class="form-group">
+  <a class="" ui-sref="fsStart" id="newSearchBtn">Start new check</a>
+</div>

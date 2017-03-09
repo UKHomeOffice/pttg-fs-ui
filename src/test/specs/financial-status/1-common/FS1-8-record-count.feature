@@ -6,7 +6,7 @@ Feature: Insufficient Records
         And the api daily balance response will Fail-record-count
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/dependant/des
+        And caseworker is on page t4/application/status/dependant/des
         When the financial status check is performed with
             | Application raised date         | 11/06/2016 |
             | End date                        | 10/06/2016 |

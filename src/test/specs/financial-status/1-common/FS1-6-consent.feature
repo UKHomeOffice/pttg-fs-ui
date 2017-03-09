@@ -13,8 +13,8 @@ Feature: Insufficient Information
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
         Then the service displays the following page content
-            | Outcome        | <Message> |
-            | Outcome detail | <Detail>  |
+            | Outcome        | <Message>  |
+            | Outcome detail | <Detail>   |
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
@@ -24,6 +24,7 @@ Feature: Insufficient Information
             | INITIATED | Consent requested                                                                  | Awaiting response from applicant                                                 |
             | SUCCESS   | Consent given                                                                      | Applicant has given permission to access their account                           |
             | FAIlURE   | Consent not given                                                                  | Applicant has refused permission to access their account                         |
+            | INVALID   | Consent not given                                                                  | Applicant has refused permission to access their account                         |
             | 404       | Invalid or inaccessible account                                                    | One or more of the following conditions prevented us from accessing the account: |
             | 500       | You can’t use this service just now. The problem will be fixed as soon as possible | Please try again later.                                                          |
 
@@ -36,4 +37,4 @@ Feature: Insufficient Information
             | Sort code      | 22-22-23   |
             | Account number | 22222223   |
         Then the service displays the following page content
-            | doNext | Check you have entered the correct information. |
+            | Do next-0 | Check you have entered the correct information. |

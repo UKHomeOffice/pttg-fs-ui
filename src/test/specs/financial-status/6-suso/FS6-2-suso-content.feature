@@ -1,4 +1,4 @@
-Feature: Tier 4 (General) student union (sabbatical officer) content (single current account with dependants)
+Feature: Tier 4 student union (sabbatical officer) content (single current account with dependants)
 
     Background:
         Given the api health check response has status 200

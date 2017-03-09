@@ -1,0 +1,7 @@
+{
+  "consent" : "INITIATED",
+  "status" : {
+    "code" : "200",
+    "message" : "OK"
+  }
+}

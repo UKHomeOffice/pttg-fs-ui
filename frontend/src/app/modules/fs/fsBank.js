@@ -11,7 +11,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
 
   // does the object supplied (_application) have complete bank info?
   this.hasBankInfo = function (obj) {
-    if (obj.doCheck !== 'yes') {
+    if (obj.doCheck !== true) {
       // doCheck must be YES
       return false
     }
@@ -57,6 +57,9 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     if (_.has(obj, 'consentResponse') && _.has(obj.consentResponse, 'data') && _.has(obj.consentResponse.data, 'consent')) {
       return obj.consentResponse.data.consent
     }
+    if (_.has(obj, 'consentResponse') && _.has(obj.consentResponse, 'status')) {
+      return obj.consentResponse.status
+    }
     return null
   }
 
@@ -83,14 +86,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.getDailyBalanceParams = function (obj) {
-    var tier = FsInfoService.getTier(obj.tier)
-    var variant = _.findWhere(tier.variants, { value: obj.applicantType })
-    var fields = FsInfoService.getFields(variant.fields)
-
-    if (obj.continuationCourse !== 'yes') {
-      // remove the original course start date from the results if its not a continuation course
-      fields = _.without(fields, 'originalCourseStartDate')
-    }
+    var fields = FsInfoService.getFieldsForObject(obj)
 
     var params = {}
     _.each(fields, function (f) {
@@ -101,16 +97,14 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
       params[f] = obj[f]
     })
 
-    if (!_.has(params, 'dependantsOnly')) {
-      params.dependantsOnly = variant.dependantsOnly || false
-    }
+    params.dependantsOnly = obj.dependantsOnly || false
 
     // add the date of birth
     params.dob = obj.dob
 
     // add the applicant type
-    params.applicantType = obj.applicantType
-    params.studentType = obj.applicantType
+    params.applicantType = obj.variantType || obj.applicantType
+    params.studentType = obj.variantType
     if (obj.dependantsOnly) {
       if (!_.has(fields.accommodationFeesAlreadyPaid)) {
         params.accommodationFeesAlreadyPaid = 0

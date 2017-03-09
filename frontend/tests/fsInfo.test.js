@@ -178,6 +178,30 @@ describe('app: hod.proving', function () {
         fields = fsi.getFieldsForObject(testObj)
         expect(fields).toContain('originalCourseStartDate')
       })
+
+      it('should not contain courseDates when tier 2, 5 or 4 (des)', function () {
+        var testNoCourses = function (testData) {
+          fields = fsi.getFieldsForObject(testData)
+          expect(fields).not.toContain('originalCourseStartDate')
+          expect(fields).not.toContain('courseContinuation')
+          expect(fields).not.toContain('courseStartDate')
+          expect(fields).not.toContain('courseEndDate')
+        }
+
+        testObj = {
+          variantType: null,
+          tier: 2,
+          doCheck: true
+        }
+        testNoCourses(testObj)
+
+        testObj.tier = 2
+        testNoCourses(testObj)
+
+        testObj.tier = 4
+        testObj.variantType = 'des'
+        testNoCourses(testObj)
+      })
     })
 
     describe('t', function () {

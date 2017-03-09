@@ -1,4 +1,4 @@
-Feature: Total Funds Required Calculation - Tier 4 (General) Student post graduate doctor or dentist In London (single current account and no dependants)
+Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor or dentist In London (single current account and no dependants)
 
     Acceptance criteria
 
@@ -21,7 +21,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account does not have sufficient funds
         And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/pgdd
+        And caseworker is on page t4/application/status/main/pgdd
         When the financial status check is performed with
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
@@ -43,7 +43,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Condition Code                  | 2 - Applicant                  |
             | Course dates checked            | 30/05/2016 to 30/07/2016       |
             | Lowest Balance                  | £100.00 on 03/10/2016          |
-            | Tier                            | Tier 4 (General)               |
+            | Tier                            | Tier 4               |
             | Applicant type                  | Postgraduate doctor or dentist |
             | In London                       | Yes                            |
             | Course length                   | 3 (limited to 9)               |
@@ -60,7 +60,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account has sufficient funds
         And the api condition codes response will be 2--
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/pgdd
+        And caseworker is on page t4/application/status/main/pgdd
         When the financial status check is performed with
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -77,7 +77,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Course dates checked            | 30/05/2016 to 30/06/2016       |
-            | Tier                            | Tier 4 (General)               |
+            | Tier                            | Tier 4               |
             | Applicant type                  | Postgraduate doctor or dentist |
             | In London                       | Yes                            |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
@@ -102,7 +102,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account does not have sufficient funds
         And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/dependant/pgdd
+        And caseworker is on page t4/application/status/dependant/pgdd
         When the financial status check is performed with
             | Application raised date    | 29/06/2016 |
             | End date                   | 30/05/2016 |
@@ -123,7 +123,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
             | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Course dates checked       | 30/05/2016 to 30/07/2016                  |
             | Lowest Balance             | £100.00 on 03/10/2016                     |
-            | Tier                       | Tier 4 (General)                          |
+            | Tier                       | Tier 4                          |
             | Applicant type             | Postgraduate doctor or dentist            |
             | In London                  | Yes                                       |
             | Course length              | 3 (limited to 9)                          |
@@ -141,7 +141,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Given the account has sufficient funds
         And the api condition codes response will be -4B-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/dependant/pgdd
+        And caseworker is on page t4/application/status/dependant/pgdd
         When the financial status check is performed with
             | Application raised date    | 31/05/2016 |
             | End date                   | 30/05/2016 |
@@ -157,7 +157,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student post gradua
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Course dates checked       | 30/05/2016 to 30/06/2016       |
-            | Tier                       | Tier 4 (General)               |
+            | Tier                       | Tier 4               |
             | Applicant type             | Postgraduate doctor or dentist |
             | In London                  | Yes                            |
             | Dependants                 | 1                              |

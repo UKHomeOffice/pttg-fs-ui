@@ -1,6 +1,4 @@
-<h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application</span>Get consent</h1>
-
-<p>Barclays will contact the customer to get consent for this financial check.</p>
+<h1 class="heading-large form-title "><span class="heading-secondary">{{ tier.label }} application</span><span id="pageTitle">Get consent for a financial check</span></h1>
 
 <hod-form name="fsGetConsentForm" submit="submit">
   <hod-date name="dob" label="Date of birth" field="fs.dob" config="conf.dob"></hod-date>
@@ -9,5 +7,5 @@
 
   <hod-number name="accountNumber" label="Account number" field="fs.accountNumber" config="conf.accountNumber"></hod-number>
 
-  <hod-submit value="Continue"></hod-submit>
+  <hod-submit value="Get consent"></hod-submit>
 </hod-form>

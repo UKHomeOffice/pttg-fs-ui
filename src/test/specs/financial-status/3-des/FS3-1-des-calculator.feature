@@ -1,4 +1,4 @@
-Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate In London (single current account including dependants)
+Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (single current account including dependants)
 
     Acceptance criteria
 
@@ -18,7 +18,7 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/des
+        And caseworker is on page t4/application/status/main/des
         And the api condition codes response will be 2--
         And the default details are
             | DOB                             | 25/03/1987 |
@@ -38,13 +38,13 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Total funds required            | £16,090.00                     |
             | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
             | Condition Code                  | 2 - Applicant                  |
-            | Applicant type                  | Doctorate extension scheme     |
-            | Tier                            | Tier 4 (General)               |
+            | Student type                    | Doctorate extension scheme     |
+            | Tier                            | Tier 4               |
             | In London                       | Yes                            |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
             | Dependants                      | 0                              |
-            | Sort code                       | 33-33-33                       |
-            | Account number                  | 33333333                       |
+            | Sort code                       | 22-22-23                       |
+            | Account number                  | 22222223                       |
             | DOB                             | 25/03/1987                     |
             | Application raised date         | 29/06/2016                     |
 
@@ -56,20 +56,21 @@ Feature: Total Funds Required Calculation - Tier 4 (General) Student Doctorate I
             | Accommodation fees already paid | 265        |
             | Dependants                      | 0          |
         Then the service displays the following result
-            | Outcome                         | Passed                         |
-            | Account holder name             | Laura Taylor                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Condition Code                  | 2 - Applicant                  |
-            | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | Doctorate extension scheme     |
-            | In London                       | No                             |
-            | Accommodation fees already paid | £265.00 (limited to £1,265.00) |
-            | Dependants                      | 0                              |
-            | Sort code                       | 22-22-23                       |
-            | Account number                  | 22222223                       |
-            | DOB                             | 25/03/1987                     |
-            | Application raised date         | 20/06/2016                     |
+            | Outcome                         | Passed                                     |
+            | Account holder name             | Laura Taylor                               |
+            | Total funds required            | £16,090.00                                 |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                   |
+            | Condition Code                  | 2 - Applicant                              |
+            | Tier                            | Tier 4                                     |
+            | Applicant type                  | Main applicant (with & without dependants) |
+            | Student type                    | Doctorate extension scheme                 |
+            | In London                       | No                                         |
+            | Accommodation fees already paid | £265.00 (limited to £1,265.00)             |
+            | Dependants                      | 0                                          |
+            | Sort code                       | 22-22-23                                   |
+            | Account number                  | 22222223                                   |
+            | DOB                             | 25/03/1987                                 |
+            | Application raised date         | 20/06/2016                                 |
 
     Scenario: User clicks on the Begin a new search button after completing financial status check
         When the financial status check is performed

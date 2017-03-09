@@ -20,8 +20,8 @@ Feature: Route selection screen inputs - All tiers
             | Dependant Only | Dependants only                            |
 
 
-    Scenario: Caseworker selects the student type - Tier 4 (General)
-        When caseworker is on page t4/status/main
+    Scenario: Caseworker selects the student type - Tier 4
+        When caseworker is on page t4/application/status/main
         Then the service displays the following page content
             | general | General student                  |
             | des     | Doctorate extension scheme       |

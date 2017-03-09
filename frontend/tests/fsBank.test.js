@@ -13,7 +13,7 @@ describe('app: hod.proving', function () {
 
     describe('hasBankInfo', function () {
       var testObj = {
-        doCheck: 'yes',
+        doCheck: true,
         sortCode: '123456',
         accountNumber: '12345678',
         dob: '1974-05-13'
@@ -22,8 +22,8 @@ describe('app: hod.proving', function () {
         expect(fsb.hasBankInfo(testObj)).toBeTruthy()
       })
 
-      it('should return false when doCheck is anything but yes', function () {
-        _.each(['Yes', 'yEs', 'no', '', 0, null], function (str) {
+      it('should return false when doCheck is anything but true', function () {
+        _.each(['Yes', 'yEs', 'no', 'yes', '', 0, null], function (str) {
           testObj.doCheck = str
           expect(fsb.hasBankInfo(testObj)).toBeFalsy()
         })

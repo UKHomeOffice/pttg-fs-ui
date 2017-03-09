@@ -372,7 +372,7 @@ class Steps {
     }
 
 
-    @Given("^the api consent response will be (FAILURE|SUCCESS|PENDING|\\d+)\$")
+    @Given("^the api consent response will be (.+)\$")
     public void the_api_consent_response_will_be(String ref) throws Throwable {
         if (ref.isInteger()) {
             println('testDataLoader.withResponseStatus(consentCheckUrlRegex, ref.toInteger()) = ' + ref)

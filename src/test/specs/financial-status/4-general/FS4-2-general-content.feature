@@ -1,4 +1,4 @@
-Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
+Feature: Non Doctorate Content - Tier 4 student (with dependants)
 
     Background:
         Given the api health check response has status 200
@@ -6,7 +6,7 @@ Feature: Non Doctorate Content - Tier 4 (General) student (with dependants)
         And the api daily balance response will Pass
         And the api threshold response will be t4
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/general
+        And caseworker is on page t4/application/status/main/general
         And the api condition codes response will be -3-1
         And the default details are
             | Application raised date         | 05/06/2016 |

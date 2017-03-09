@@ -18,12 +18,12 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
 #   Entire course 12+ months ((£1265 x 4) + (845 x (4+4) x 1) + (£10,000 - 0 - 0)) ##
 #
 #   Entire course <12 months
-#   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+2) x 1) + (£10,000 - £0 - £0) = £18,020
-#   Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+2) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
+#   Tier 4 Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+2) x 1) + (£10,000 - £0 - £0) = £18,020
+#   Tier 4 Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+2) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
 #
 #    Entire course 12+ months
-#    Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+4) x 1) + (£10,000 - £0 - £0) = £19,710.00
-#    Tier 4 (General) Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+4) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
+#    Tier 4 Student - non doctorate - In London, with dependents In Country - (£1265 x 3) + (£845 x (3+4) x 1) + (£10,000 - £0 - £0) = £19,710.00
+#    Tier 4 Student - non doctorate - In London, with dependents In Country - (£1265 x 8) + (£845 x (8+4) x 2) + (£7,000 - £300 - £500.50) = £31,529.50 (dependant require maintenance period capped at 9 months)
 
 
     Background:
@@ -32,8 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And the api threshold response will be t4
         And the api daily balance response will Pass
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/main/general
-        And consent is sought for the following:
+        And caseworker is on page t4/application/status/main/general
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End date                        | 30/05/2016 |
@@ -60,8 +59,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Application Raised Date         | 31/05/2016                   |
-            | Tier                            | Tier 4 (General)             |
-            | Applicant type                  | General student              |
+            | Tier                            | Tier 4                       |
+            | Student type                    | General student              |
             | In London                       | Yes                          |
             | Course dates checked            | 30/05/2016 to 30/11/2016     |
             | Total tuition fees              | £8,500.00                    |
@@ -100,8 +99,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Application Raised Date         | 31/05/2016                     |
-            | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | General student                |
+            | Tier                            | Tier 4                         |
+            | Student type                    | General student                |
             | In London                       | Yes                            |
             | Course dates checked            | 01/05/2016 to 30/01/2017       |
             | Total tuition fees              | £9,755.50                      |
@@ -141,8 +140,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                         | Not passed                   |
             | Application Raised Date         | 31/05/2016                   |
-            | Tier                            | Tier 4 (General)             |
-            | Applicant type                  | General student              |
+            | Tier                            | Tier 4                       |
+            | Student type                    | General student              |
             | In London                       | No                           |
             | Course dates checked            | 01/05/2016 to 30/01/2017     |
             | Total tuition fees              | £9,755.50                    |
@@ -183,8 +182,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Outcome                         | Passed                         |
             | Application Raised Date         | 31/05/2016                     |
             | Course dates checked            | 01/05/2016 to 30/05/2017       |
-            | Tier                            | Tier 4 (General)               |
-            | Applicant type                  | General student                |
+            | Tier                            | Tier 4                         |
+            | Student type                    | General student                |
             | In London                       | Yes                            |
             | Total tuition fees              | £9,755.50                      |
             | Tuition fees already paid       | £500.00                        |
@@ -208,14 +207,14 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Luiz is a dependant only application (Non Doctorate in London student and does not have sufficient funds)
 
         Given the api daily balance response will Fail-low-balance
-        And caseworker is on page t4/status/dependant/general
+        And caseworker is on page t4/application/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed
         Then the service displays the following result
             | Outcome                 | Not passed               |
             | Application Raised Date | 31/05/2016               |
-            | Tier                    | Tier 4 (General)         |
-            | Applicant type          | General student          |
+            | Tier                    | Tier 4                   |
+            | Student type            | General student          |
             | In London               | Yes                      |
             | Course dates checked    | 30/05/2016 to 30/11/2016 |
             | Dependants              | 1                        |
@@ -234,7 +233,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Deigo and Edin is a dependant only application (x2) Non Doctorate in London student and has sufficient funds
 
         Given the account has sufficient funds
-        And caseworker is on page t4/status/dependant/general
+        And caseworker is on page t4/application/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date    | 31/05/2016 |
@@ -248,8 +247,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                 | Passed                   |
             | Application Raised Date | 31/05/2016               |
-            | Tier                    | Tier 4 (General)         |
-            | Applicant type          | General student          |
+            | Tier                    | Tier 4                   |
+            | Student type            | General student          |
             | In London               | Yes                      |
             | Course dates checked    | 01/05/2016 to 30/01/2017 |
             | Dependants              | 2                        |
@@ -269,7 +268,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Neymar is a dependant only application (Non Doctorate in London student and does not have sufficient funds
 
         Given the account does not have sufficient funds
-        And caseworker is on page t4/status/dependant/general
+        And caseworker is on page t4/application/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date    | 31/05/2016 |
@@ -284,8 +283,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Then the service displays the following result
             | Outcome                 | Not passed               |
             | Application Raised Date | 31/05/2016               |
-            | Tier                    | Tier 4 (General)         |
-            | Applicant type          | General student          |
+            | Tier                    | Tier 4                   |
+            | Student type            | General student          |
             | In London               | Yes                      |
             | Course dates checked    | 01/05/2016 to 30/01/2017 |
             | Dependants              | 1                        |
@@ -309,7 +308,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
     Scenario: Alexis and Arsene is a dependant only (x2) application (Non Doctorate in London student and has sufficient funds)
 
         Given the account has sufficient funds
-        And caseworker is on page t4/status/dependant/general
+        And caseworker is on page t4/application/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed with
             | Application Raised Date | 31/05/2016 |
@@ -323,8 +322,8 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Outcome                  | Passed                   |
             | Application Raised Date  | 31/05/2016               |
             | Course dates checked     | 01/05/2016 to 30/05/2017 |
-            | Tier                     | Tier 4 (General)         |
-            | Applicant type           | General student          |
+            | Tier                     | Tier 4                   |
+            | Student type             | General student          |
             | In London                | Yes                      |
             | Dependants               | 2                        |
             | Sort code                | 11-11-11                 |

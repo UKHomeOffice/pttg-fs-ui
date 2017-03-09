@@ -34,7 +34,6 @@ fsModule.run(['$rootScope', '$state', 'FsService', 'FsBankService', function ($r
 }])
 
 fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
-  FsService.reset()
   var fs = FsService.getApplication()
   FsService.setKnownParamsFromState(fs, $state.params)
 
@@ -50,17 +49,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   }
 
   $scope.fields = FsInfoService.getFieldsForObject(fs)
-
-  // if (_.isNull(fs.variantType)) {
-  //   $scope.fields = FsInfoService.getFields($scope.tier.defaultFields)
-  // } else {
-  //   $scope.variant = FsInfoService.getVariant(fs.tier, fs.variantType)
-  //   $scope.fields = FsInfoService.getFields($scope.variant.fields)
-  // }
-
-  if (fs.dependantsOnly) {
-    $scope.fields = _.without($scope.fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
-  }
 
   // config for all fields
   $scope.conf = {
@@ -123,6 +111,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
     courseInstitution: FsInfoService.getFieldInfo('courseInstitution'),
     continuationCourse: angular.extend(FsInfoService.getFieldInfo('continuationCourse'), {
       onClick: function (opt, scope) {
+        console.log('onClick', opt)
         if (opt.value !== 'yes') {
           var fs = FsService.getApplication()
           fs.originalCourseStartDate = ''
@@ -231,6 +220,30 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
           msg: 'Enter a valid number of dependants'
         }
       }
+    },
+    accountNumber: {
+      length: 8,
+      min: '1',
+      max: '99999999',
+      errors: {
+        numeric: {
+          msg: 'Enter a valid account number'
+        },
+        min: {
+          msg: 'Enter a valid account number'
+        }
+      }
+    },
+    dob: {
+      max: moment().subtract(10, 'years').format('YYYY-MM-DD'),
+      errors: {
+        max: {
+          msg: 'Enter a valid date of birth'
+        }
+      }
+    },
+    sortCode: {
+
     }
   }
 

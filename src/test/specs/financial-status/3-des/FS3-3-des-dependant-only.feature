@@ -7,8 +7,7 @@ Feature: Dependant only stuff
         And the api threshold response will be t4
         And the api condition codes response will be -3-1
         And caseworker is using the financial status service ui
-        And caseworker is on page t4/status/dependant/des
-        And consent is sought for the following:
+        And caseworker is on page t4/application/status/dependant/des
         And the default details are
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
@@ -27,8 +26,8 @@ Feature: Dependant only stuff
             | Total funds required       | £16,090.00                               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016                 |
             | Condition code             | 3 - Adult dependant\n1 - Child dependant |
-            | Applicant type             | Doctorate extension scheme               |
-            | Tier                       | Tier 4 (General)                         |
+            | Student type               | Doctorate extension scheme               |
+            | Tier                       | Tier 4                                   |
             | In London                  | Yes                                      |
             | Dependants                 | 1                                        |
             | Sort code                  | 33-33-33                                 |
@@ -48,8 +47,8 @@ Feature: Dependant only stuff
             | Total funds required       | £16,090.00                               |
             | Maintenance period checked | 03/05/2016 to 30/05/2016                 |
             | Condition code             | 3 - Adult dependant\n1 - Child dependant |
-            | Tier                       | Tier 4 (General)                         |
-            | Applicant type             | Doctorate extension scheme               |
+            | Tier                       | Tier 4                                   |
+            | Student type               | Doctorate extension scheme               |
             | In London                  | No                                       |
             | Dependants                 | 2                                        |
             | Sort code                  | 33-33-33                                 |
@@ -82,8 +81,8 @@ Feature: Dependant only stuff
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                     |
-            | Applicant type           |
             | Dependant/Main applicant |
+            | Student type             |
             | Application raised date  |
             | In London                |
             | Number of dependants     |

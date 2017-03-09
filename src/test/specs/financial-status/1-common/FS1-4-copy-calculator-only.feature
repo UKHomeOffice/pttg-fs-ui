@@ -34,7 +34,7 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                    |
             | 28-day period checked           | 03/05/2016 to 30/05/2016      |
             | Course length                   | 7 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General) student      |
+            | Applicant type                  | Tier 4 student      |
             | In London                       | Yes                           |
             | Course dates                    | 30/05/2016 to 30/11/2016      |
             | Total tuition fees              | £8,500.00                     |
@@ -55,7 +55,7 @@ Feature: Copy results to paste buffer
             | Total funds required            | £16,090.00                    |
             | 28-day period checked           | 03/05/2016 to 30/05/2016      |
             | Course length                   | 7 (limited to 9)              |
-            | Applicant type                  | Tier 4 (General) student      |
+            | Applicant type                  | Tier 4 student      |
             | In London                       | Yes                           |
             | Course dates                    | 30/05/2016 to 30/11/2016      |
             | Total tuition fees              | £8,500.00                     |

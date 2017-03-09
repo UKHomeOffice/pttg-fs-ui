@@ -7,41 +7,40 @@ var fsModule = angular.module('hod.fs')
 // #### ROUTES #### //
 fsModule.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
   // define a route for the details of the form
-  // $stateProvider.state({
-  //   name: 'fsGetConsent',
-  //   url: '/consent',
-  //   title: 'Financial Status : Consent',
-  //   parent: 'fsStart',
-  //   views: {
-  //     'content@': {
-  //       templateUrl: 'modules/fs/templates/fsGetConsent.html',
-  //       controller: 'FsGetConsentCtrl'
-  //     }
-  //   }
-  // })
+  $stateProvider.state({
+    name: 'fsGetConsent',
+    url: '/consent',
+    title: 'Financial Status : Consent',
+    parent: 'fsStart',
+    views: {
+      'content@': {
+        templateUrl: 'modules/fs/templates/fsGetConsent.html',
+        controller: 'FsGetConsentCtrl'
+      }
+    }
+  })
 
-  // $stateProvider.state({
-  //   name: 'fsConsentError',
-  //   url: '/problem',
-  //   title: 'Financial Status : Consent problem',
-  //   parent: 'fsGetConsent',
-  //   views: {
-  //     'content@': {
-  //       templateUrl: 'modules/fs/templates/fsConsentError.html',
-  //       controller: 'FsConsentErrorCtrl'
-  //     }
-  //   }
-  // })
+  $stateProvider.state({
+    name: 'fsGetConsentResult',
+    url: '/result',
+    title: 'Financial Status : Consent',
+    parent: 'fsGetConsent',
+    views: {
+      'content@': {
+        templateUrl: 'modules/fs/templates/fsGetConsentResult.html',
+        controller: 'FsGetConsentResultCtrl'
+      }
+    }
+  })
 }])
 
 fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, FsService, FsInfoService, FsBankService) {
-  var t = Number($state.params.tier)
-  $scope.tier = FsInfoService.getTier(t)
-  $scope.fs = FsService.getApplication()
-  $scope.fs.tier = t
-  $scope.fs.doCheck = 'yes'
-  $scope.fs.applicantType = $state.params.applicantType
+  var fs = FsService.getApplication()
+  fs.tier = Number($state.params.tier)
+  fs.doCheck = true
 
+  $scope.tier = FsInfoService.getTier(fs.tier)
+  $scope.fs = fs
   $scope.conf = {
     accountNumber: {
       length: 8,
@@ -69,42 +68,77 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
   $scope.submit = function (valid) {
     if (valid) {
       FsBankService.sendConsentRequest($scope.fs).then(function (data) {
-        console.log('FsGetConsentCtrl $scope.submit', data)
+        // console.log('FsGetConsentCtrl $scope.submit', data)
         $scope.fs.consentResponse = data
-        if (data.data.consent === 'FAILURE') {
-          $state.go('fsConsentError', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
-        } else {
-          $state.go('fsDetails', { tier: t, applicantType: $scope.fs.applicantType, calcOrBank: 'bank' })
-        }
+        $state.go('fsGetConsentResult')
       }, function (data) {
-        console.log('FsGetConsentCtrl $scope.submit err', data)
-        $scope.fs.consentResponse = {}
-        if (data.status === 500) {
-          $state.go('fsError', $state.params)
-        } else {
-          $state.go('fsConsentError', $state.params)
-        }
+        // console.log('FsGetConsentCtrl $scope.submit err', data)
+        $scope.fs.consentResponse = data
+        $state.go('fsGetConsentResult')
       })
     }
   }
 }])
 
-fsModule.controller('FsConsentErrorCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', function ($scope, $state, FsService, FsInfoService) {
-  var t = Number($state.params.tier)
+fsModule.controller('FsGetConsentResultCtrl', ['$scope', '$state', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, FsService, FsInfoService, FsBankService) {
   var fs = FsService.getApplication()
-  $scope.tier = FsInfoService.getTier(t)
-  if (_.has(fs.consentResponse, 'data') && fs.consentResponse.data.consent === 'FAILURE') {
-    $scope.outcome = FsInfoService.t('consentDenied')
-    $scope.outcomeDetail = FsInfoService.t('consentDeniedReason')
-  } else {
-    $scope.outcome = FsInfoService.t('inaccessibleaccount')
-    $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
-    $scope.criteria = FsService.getConsentCriteria(fs)
+
+  $scope.tier = FsInfoService.getTier(fs.tier)
+  $scope.criteria = FsService.getConsentCriteria(fs)
+  $scope.ok = false
+
+  if (!FsBankService.hasBankInfo(fs)) {
+    return $state.go('fsGetConsent')
   }
 
-  var reasons = {}
-  _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
-    reasons[f] = FsInfoService.t(f)
-  })
-  $scope.reasons = reasons
+  var consentStatus = FsBankService.getConsentStatus(fs)
+  switch (consentStatus) {
+    case 'INITIATED':
+    case 'PENDING':
+      $scope.outcome = FsInfoService.t('consentRequested')
+      $scope.outcomeDetail = FsInfoService.t('consentRequestedReason')
+      $scope.ok = true
+      break
+
+    case 'SUCCESS':
+      $scope.outcome = FsInfoService.t('consentGiven')
+      $scope.outcomeDetail = FsInfoService.t('consentGivenReason')
+      $scope.ok = true
+      break
+
+    case 'FAILURE':
+    case 'INVALID':
+      $scope.outcome = FsInfoService.t('consentDenied')
+      $scope.outcomeDetail = FsInfoService.t('consentDeniedReason')
+      break
+
+    case 500:
+      $scope.outcome = FsInfoService.t('notnow')
+      $scope.outcomeDetail = FsInfoService.t('trylater')
+      break
+
+    default:
+      $scope.outcome = FsInfoService.t('inaccessibleaccount')
+      $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
+
+      var reasons = {}
+      _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
+        reasons[f] = FsInfoService.t(f)
+      })
+      $scope.reasons = reasons
+
+      $scope.doNext = [FsInfoService.t('checkDataEntry')]
+  }
+
+  // var t = Number($state.params.tier)
+  // var fs = FsService.getApplication()
+  // $scope.tier = FsInfoService.getTier(t)
+  // if (_.has(fs.consentResponse, 'data') && fs.consentResponse.data.consent === 'FAILURE') {
+  //   $scope.outcome = FsInfoService.t('consentDenied')
+  //   $scope.outcomeDetail = FsInfoService.t('consentDeniedReason')
+  // } else {
+  //   $scope.outcome = FsInfoService.t('inaccessibleaccount')
+  //   $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
+  //   $scope.criteria = FsService.getConsentCriteria(fs)
+  // }
 }])
