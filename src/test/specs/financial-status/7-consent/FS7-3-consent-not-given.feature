@@ -10,7 +10,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         And the api consent response will be PENDING
         And the api threshold response will be t<Tier>
         And caseworker is using the financial status service ui
-        And caseworker is on page t<Tier>/status/<Applicant>
+        And caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
             | Application raised date | 30/07/2016 |
             | End Date                | 04/07/2016 |
@@ -22,13 +22,13 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         And the api consent response will be FAILURE
         And the check again button is clicked
         Then the service displays the following result
-            | Outcome              | Consent has not been given                                                                    |
-            | Outcome detail       | The applicant has not given consent to check their financial status directly with their bank. |
-            | Total funds required | £945.00                                                                                       |
+            | Outcome              | Consent not given                                        |
+            | Outcome detail       | Applicant has refused permission to access their account |
+            | Total funds required | <Funds>                                                  |
         Examples:
-            | Tier | Applicant |
-            | 2    | main      |
-            | 5    | dependant |
+            | Tier | Applicant | Funds     |
+            | 2    | main      | £945.00   |
+            | 5    | dependant | £1,575.00 |
 
 
         ## 'Failure' consent status received immediately when requesting consent (before the financial status check is performed) ##
@@ -42,8 +42,8 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Sort code      | 22-22-23   |
             | Account number | 22222225   |
         Then the service displays the following page content
-            | Outcome        | Consent has not been given                                                                    |
-            | Outcome detail | The applicant has not given consent to check their financial status directly with their bank. |
+            | Outcome        | Consent not given                                        |
+            | Outcome detail | Applicant has refused permission to access their account |
         Examples:
             | Tier      |
             | Tier two  |

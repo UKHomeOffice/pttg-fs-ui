@@ -146,9 +146,11 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       }
     }
 
-    results.maintenancePeriodChecked = {
-      label: tier.nDaysRequired + '-day period checked',
-      display: me.getPeriodChecked(obj)
+    if (FsBankService.hasResult(obj)) {
+      results.maintenancePeriodChecked = {
+        label: tier.nDaysRequired + '-day period checked',
+        display: me.getPeriodChecked(obj)
+      }
     }
 
     if (FsBankService.hasResult(obj) && !FsBankService.passed(obj) && obj.dailyBalanceResponse.data.failureReason.lowestBalanceValue) {
@@ -251,7 +253,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
     var opt = _.findWhere(dependantsOnlyOptions.options, {value: (obj.dependantsOnly) ? 'dependant' : 'main'})
     criteria.applicantType = {
-      label: 'Dependant/Main applicant',
+      label: 'Applicant type',
       display: opt.label
     }
 

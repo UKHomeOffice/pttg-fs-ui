@@ -11,7 +11,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         And the api daily balance response will Pass
         And the api threshold response will be t<Tier>
         And caseworker is using the financial status service ui
-        Given caseworker is on page t<Tier>/status/<Applicant>
+        Given caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
             | Application raised date | 30/06/2016 |
             | End Date                | 31/05/2016 |
@@ -22,8 +22,8 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
         Then the service displays the following result
             | Outcome              | Passed       |
             | Account holder name  | Laura Taylor |
-            | Total funds required | £945.00      |
+            | Total funds required | <Funds>      |
         Examples:
-            | Tier | Applicant |
-            | 2    | main      |
-            | 5    | dependant |
+            | Tier | Applicant | Funds     |
+            | 2    | main      | £945.00   |
+            | 5    | dependant | £1,575.00 |

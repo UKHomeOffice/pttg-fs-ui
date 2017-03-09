@@ -49,6 +49,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   }
 
   $scope.fields = FsInfoService.getFieldsForObject(fs)
+  // !!!! originalCourseStartDate is conditional
+  if (_.indexOf($scope.fields, 'continuationCourse') !== false) {
+    $scope.fields.push('originalCourseStartDate')
+  }
 
   // config for all fields
   $scope.conf = {
@@ -253,6 +257,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   })
 
   // the fields listed as required for this route should NOT be hidden
+  console.log($scope.fields)
   _.each($scope.fields, function (f) {
     $scope.conf[f].hidden = false
   })

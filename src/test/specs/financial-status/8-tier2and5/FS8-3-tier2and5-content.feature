@@ -14,17 +14,15 @@ Feature: Tier 2 & Tier 5
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
-        Given caseworker is on page t2/calc/main
+        Given caseworker is on page t2/application/calc/main
         When the financial status check is performed
         Then the service displays the following result headers in order
-            | Account holder name   |
-            | Total funds required  |
-            | 90-day period checked |
-            | Lowest balance        |
-            | Result timestamp      |
+            | Total funds required |
+            | Result timestamp     |
         And the service displays the following criteria headers in order
             | Tier                    |
             | Applicant type          |
+            | Student type            |
             | Application raised date |
             | Number of dependants    |
             | Sort code               |

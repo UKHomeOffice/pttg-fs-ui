@@ -86,8 +86,8 @@
 
 <div ng-if="state === 'CALCULATOR'">
   <div class="govuk-box-highlight panel-fail">
-    <h3 class="bold-large">{{ threshold | pounds }}</h3>
-    <p><strong class="heading-small">Total daily funds required</strong><br />{{ results.periodChecked.display }}</p>
+    <h3 class="bold-large" id="outcome">{{ threshold | pounds }}</h3>
+    <p><strong class="heading-small">Total daily funds required</strong></p>
   </div>
 
   <h2 class="heading-large">Things to do now</h2>

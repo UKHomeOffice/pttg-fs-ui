@@ -22,12 +22,10 @@ Feature: Tier 4 student union (sabbatical officer) content (single current accou
     Scenario: Page checks for Passed text write up
     This is a scenario to check if applicant meets minimum financial requirement text write up
         Given the account has sufficient funds
-        And caseworker is on page t4/calc/main/suso
+        And caseworker is on page t4/application/calc/main/suso
         When the financial status check is performed
         Then the service displays the following result headers in order
-            | Account holder name      |
             | Total funds required     |
-            | 28-day period checked    |
             | Condition code           |
             | Estimated leave end date |
             | Result timestamp         |
@@ -35,13 +33,10 @@ Feature: Tier 4 student union (sabbatical officer) content (single current accou
         And the service displays the following criteria headers in order
             | Tier                            |
             | Applicant type                  |
-            | Dependant/Main applicant        |
+            | Student type                    |
             | Application raised date         |
             | Course dates checked            |
             | Continuation course             |
             | In London                       |
             | Accommodation fees already paid |
             | Number of dependants            |
-            | Sort code                       |
-            | Account number                  |
-            | Date of birth                   |

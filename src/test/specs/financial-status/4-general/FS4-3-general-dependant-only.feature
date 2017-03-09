@@ -18,9 +18,9 @@ Feature: Non Doctorate Content - Tier 4 student Dependant ONLY
             | Continuation Course     | No         |
             | Course type             | main       |
             | Course institution      | true       |
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+            | DOB                     | 25/03/1987 |
+            | Sort code               | 11-11-11   |
+            | Account number          | 11111111   |
 
 ###################################### Dependant Only - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -40,19 +40,19 @@ Feature: Non Doctorate Content - Tier 4 student Dependant ONLY
             | Result timestamp         |
             | Course length            |
         And the service displays the following criteria headers in order
-            | Tier                     |
-            | Applicant type           |
-            | Dependant/Main applicant |
-            | Application raised date  |
-            | In London                |
-            | Number of dependants     |
-            | Course dates checked     |
-            | Continuation course      |
-            | Course type              |
-            | Course institution       |
-            | Sort code                |
-            | Account number           |
-            | Date of birth            |
+            | Tier                    |
+            | Applicant type          |
+            | Student type            |
+            | Application raised date |
+            | In London               |
+            | Number of dependants    |
+            | Course dates checked    |
+            | Continuation course     |
+            | Course type             |
+            | Course institution      |
+            | Sort code               |
+            | Account number          |
+            | Date of birth           |
 
 
 
@@ -75,19 +75,19 @@ Feature: Non Doctorate Content - Tier 4 student Dependant ONLY
             | Result timestamp         |
             | Course length            |
         And the service displays the following criteria headers in order
-            | Tier                     |
-            | Applicant type           |
-            | Dependant/Main applicant |
-            | Application raised date  |
-            | In London                |
-            | Number of dependants     |
-            | Course dates checked     |
-            | Continuation course      |
-            | Course type              |
-            | Course institution       |
-            | Sort code                |
-            | Account number           |
-            | Date of birth            |
+            | Tier                    |
+            | Applicant type          |
+            | Student type            |
+            | Application raised date |
+            | In London               |
+            | Number of dependants    |
+            | Course dates checked    |
+            | Continuation course     |
+            | Course type             |
+            | Course institution      |
+            | Sort code               |
+            | Account number          |
+            | Date of birth           |
 
 
 
@@ -110,16 +110,16 @@ Feature: Non Doctorate Content - Tier 4 student Dependant ONLY
             | Result timestamp         |
             | Course length            |
         And the service displays the following criteria headers in order
-            | Tier                     |
-            | Applicant type           |
-            | Dependant/Main applicant |
-            | Application raised date  |
-            | In London                |
-            | Number of dependants     |
-            | Course dates checked     |
-            | Continuation course      |
-            | Course type              |
-            | Course institution       |
-            | Sort code                |
-            | Account number           |
-            | Date of birth            |
+            | Tier                    |
+            | Applicant type          |
+            | Student type            |
+            | Application raised date |
+            | In London               |
+            | Number of dependants    |
+            | Course dates checked    |
+            | Continuation course     |
+            | Course type             |
+            | Course institution      |
+            | Sort code               |
+            | Account number          |
+            | Date of birth           |

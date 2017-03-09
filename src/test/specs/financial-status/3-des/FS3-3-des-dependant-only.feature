@@ -80,12 +80,12 @@ Feature: Dependant only stuff
             | Estimated leave end date |
             | Result timestamp         |
         And the service displays the following criteria headers in order
-            | Tier                     |
-            | Dependant/Main applicant |
-            | Student type             |
-            | Application raised date  |
-            | In London                |
-            | Number of dependants     |
-            | Sort code                |
-            | Account number           |
-            | Date of birth            |
+            | Tier                    |
+            | Applicant type          |
+            | Student type            |
+            | Application raised date |
+            | In London               |
+            | Number of dependants    |
+            | Sort code               |
+            | Account number          |
+            | Date of birth           |

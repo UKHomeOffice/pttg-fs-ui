@@ -12,7 +12,7 @@ Feature: Insufficient Records
             | End date                        | 10/06/2016 |
             | In London                       | No         |
             | Accommodation fees already paid | 0          |
-            | Dependants                      | 0          |
+            | Dependants                      | 1          |
             | DOB                             | 25/03/1987 |
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |

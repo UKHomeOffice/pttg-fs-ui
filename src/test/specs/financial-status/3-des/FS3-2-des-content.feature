@@ -35,7 +35,7 @@ Feature: Tier 4 doctorate extension scheme content (single current account with 
             | Result timestamp         |
         And the service displays the following criteria headers in order
             | Tier                            |
-            | Dependant/Main applicant        |
+            | Applicant type                  |
             | Student type                    |
             | Application raised date         |
             | In London                       |

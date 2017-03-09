@@ -36,24 +36,25 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | Sort code                       | 11-11-11   |
             | Account number                  | 11111111   |
         Then the service displays the following result
-            | Outcome                         | Not passed                     |
-            | Account holder name             | Shelly Smith                   |
-            | Total funds required            | £16,090.00                     |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016       |
-            | Condition Code                  | 2 - Applicant                  |
-            | Course dates checked            | 30/05/2016 to 30/07/2016       |
-            | Lowest Balance                  | £100.00 on 03/10/2016          |
-            | Tier                            | Tier 4               |
-            | Applicant type                  | Postgraduate doctor or dentist |
-            | In London                       | Yes                            |
-            | Course length                   | 3 (limited to 9)               |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00)   |
-            | Dependants                      | 0                              |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 25/03/1987                     |
-            | Continuation Course             | Yes                            |
-            | Original Course Start Date      | 30/10/2015                     |
+            | Outcome                         | Not passed                                 |
+            | Account holder name             | Shelly Smith                               |
+            | Total funds required            | £16,090.00                                 |
+            | Maintenance period checked      | 03/05/2016 to 30/05/2016                   |
+            | Condition Code                  | 2 - Applicant                              |
+            | Course dates checked            | 30/05/2016 to 30/07/2016                   |
+            | Lowest Balance                  | £100.00 on 03/10/2016                      |
+            | Tier                            | Tier 4                                     |
+            | Applicant type                  | Main applicant (with & without dependants) |
+            | Student type                    | Postgraduate doctor or dentist             |
+            | In London                       | Yes                                        |
+            | Course length                   | 3 (limited to 9)                           |
+            | Accommodation fees already paid | £0.00 (limited to £1,265.00)               |
+            | Dependants                      | 0                                          |
+            | Sort code                       | 11-11-11                                   |
+            | Account number                  | 11111111                                   |
+            | DOB                             | 25/03/1987                                 |
+            | Continuation Course             | Yes                                        |
+            | Original Course Start Date      | 30/10/2015                                 |
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
@@ -77,8 +78,8 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
         Then the service displays the following result
             | Outcome                         | Passed                         |
             | Course dates checked            | 30/05/2016 to 30/06/2016       |
-            | Tier                            | Tier 4               |
-            | Applicant type                  | Postgraduate doctor or dentist |
+            | Tier                            | Tier 4                         |
+            | Student type                    | Postgraduate doctor or dentist |
             | In London                       | Yes                            |
             | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
             | Dependants                      | 0                              |
@@ -123,8 +124,8 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | Condition Code             | 4B - Adult dependant\n1 - Child dependant |
             | Course dates checked       | 30/05/2016 to 30/07/2016                  |
             | Lowest Balance             | £100.00 on 03/10/2016                     |
-            | Tier                       | Tier 4                          |
-            | Applicant type             | Postgraduate doctor or dentist            |
+            | Tier                       | Tier 4                                    |
+            | Student type               | Postgraduate doctor or dentist            |
             | In London                  | Yes                                       |
             | Course length              | 3 (limited to 9)                          |
             | Dependants                 | 2                                         |
@@ -151,14 +152,14 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | Dependants                 | 1          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+            | DOB                        | 25/03/1987 |
+            | Sort code                  | 11-11-11   |
+            | Account number             | 11111111   |
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Course dates checked       | 30/05/2016 to 30/06/2016       |
-            | Tier                       | Tier 4               |
-            | Applicant type             | Postgraduate doctor or dentist |
+            | Tier                       | Tier 4                         |
+            | Student type               | Postgraduate doctor or dentist |
             | In London                  | Yes                            |
             | Dependants                 | 1                              |
             | Sort code                  | 11-11-11                       |

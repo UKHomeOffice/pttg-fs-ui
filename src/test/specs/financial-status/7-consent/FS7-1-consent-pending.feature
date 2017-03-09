@@ -13,7 +13,7 @@ Feature: Process 'pending' status and display the appropriate output page
     ## Service receives a 'Pending' status and displays the appropriate output page ##
 
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
-        Given caseworker is on page t<Tier>/status/<Applicant>
+        Given caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
             | DOB                             | 25/03/1987                   |
             | Sort code                       | 22-22-23                     |
@@ -45,7 +45,7 @@ Feature: Process 'pending' status and display the appropriate output page
         And the api consent response will be PENDING
         And the api threshold response will be t2
         And caseworker is using the financial status service ui
-        Given caseworker is on page t<Tier>/status/<Applicant>
+        Given caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
             | DOB            | 25/03/1987 |
             | Sort code      | 22-22-23   |

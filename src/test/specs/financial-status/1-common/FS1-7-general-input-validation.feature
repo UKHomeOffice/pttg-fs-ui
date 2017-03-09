@@ -228,7 +228,7 @@ Feature: Show clear error details when inputs are invalid
             | Dependants-error | Enter a valid number of dependants |
 
     Scenario: Case Worker enters invalid Dependants - CANNOT be zero on a dependants only route
-        Given caseworker is on page t4/general-dependants/calc/details
+        Given caseworker is on page t4/application/calc/dependant/general
         When the financial status check is performed with
             | Dependants | 0 |
         Then the service displays the following error message

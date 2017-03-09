@@ -3,10 +3,10 @@
 <h2 class="heading-small">Barclays bank account</h2>
 
 <p>
-  <a ui-sref="fsGetConsent" class="font-medium">Get consent for a financial check</a><br>
-  <a ui-sref="fsApplicantType({statusOrCalc: 'status'})" class="font-medium">Check financial status</a>
+  <a ui-sref="fsGetConsent" class="font-medium" id="getConsent">Get consent for a financial check</a><br>
+  <a ui-sref="fsApplicantType({statusOrCalc: 'status'})" class="font-medium" id="checkStatus">Check financial status</a>
 </p>
 
 <h2 class="heading-small">Other account</h2>
 
-<p><a ui-sref="fsApplicantType({statusOrCalc: 'calc'})" class="font-medium">Calculate daily funds required</a></p>
+<p><a ui-sref="fsApplicantType({statusOrCalc: 'calc'})" class="font-medium" id="calculator">Calculate daily funds required</a></p>

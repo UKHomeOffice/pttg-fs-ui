@@ -7,7 +7,7 @@ Feature: Copy results to paste buffer
         And the api daily balance response will Pass
         And the api consent response will be SUCCESS
         And the api threshold response will be t4
-        And caseworker is on page t4/calc/main/general
+        And caseworker is on page t4/application/calc/main/general
         And the default details are
             | Application raised date         | 31/05/2016 |
             | End Date                        | 30/05/2016 |

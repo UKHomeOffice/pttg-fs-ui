@@ -4,7 +4,7 @@
 
   <hod-date name="dob" label="Date of birth" field="fs.dob" config="conf.dob"></hod-date>
 
-  <hod-sortcode name="sortCode" label="Sort code" field="fs.sortCode"></hod-sortcode>
+  <hod-sortcode name="sortCode" label="Sort code" field="fs.sortCode" config="conf.sortCode"></hod-sortcode>
 
   <hod-number name="accountNumber" label="Account number" field="fs.accountNumber" config="conf.accountNumber"></hod-number>
 
@@ -26,7 +26,7 @@
 
   <hod-radio name="continuationCourse" label="Course continuation" field="fs.continuationCourse" config="conf.continuationCourse"></hod-radio>
   
-  <div class="panel panel-border-wide text" ng-show="(fs.continuationCourse=='yes' && !conf.originalCourseStartDate.hidden)">
+  <div class="panel panel-border-wide text" ng-show="fs.continuationCourse=='yes'">
     <hod-date name="originalCourseStartDate" label="Original course start date" field="fs.originalCourseStartDate" config="conf.originalCourseStartDate"></hod-date>
   </div>
 

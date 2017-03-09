@@ -21,9 +21,9 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
             | Continuation Course             | No         |
             | Course type                     | main       |
             | Course institution              | true       |
-            | DOB            | 25/03/1987 |
-            | Sort code      | 11-11-11   |
-            | Account number | 11111111   |
+            | DOB                             | 25/03/1987 |
+            | Sort code                       | 11-11-11   |
+            | Account number                  | 11111111   |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 
@@ -45,7 +45,7 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
-            | Dependant/Main applicant              |
+            | Student type                          |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |
@@ -82,7 +82,7 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
-            | Dependant/Main applicant              |
+            | Student type                          |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |
@@ -117,7 +117,7 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
         And the service displays the following criteria headers in order
             | Tier                                  |
             | Applicant type                        |
-            | Dependant/Main applicant              |
+            | Student type                          |
             | Application raised date               |
             | In London                             |
             | Accommodation fees already paid       |
