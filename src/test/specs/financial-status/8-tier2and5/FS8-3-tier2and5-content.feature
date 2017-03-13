@@ -24,9 +24,7 @@ Feature: Tier 2 & Tier 5
             | Applicant type          |
             | Application raised date |
             | Number of dependants    |
-            | Sort code               |
-            | Account number          |
-            | Date of birth           |
+
 
 
 
