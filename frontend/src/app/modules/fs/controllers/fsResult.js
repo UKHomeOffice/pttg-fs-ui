@@ -49,17 +49,18 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
 
   $scope.render = function (state) {
     $scope.state = state
-    console.log('render', state)
+
+    var label = 't' + fs.tier + '-' + fs.applicantType + '-' + fs.variantType
 
     switch (state) {
       case 'PASSED':
-        FsService.track('result', 'passed')
+        FsService.track('result', 'passed', label)
         $scope.stateTitle = FsInfoService.t('passed')
         $scope.stateReason = FsInfoService.t('passedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'NOTPASSED':
-        FsService.track('result', 'notpassed')
+        FsService.track('result', 'notpassed', label)
         $scope.stateTitle = FsInfoService.t('notPassed')
         if (fs.dailyBalanceResponse.data.failureReason && fs.dailyBalanceResponse.data.failureReason.recordCount) {
           $scope.stateReason = FsInfoService.t('notEnoughRecords').replace('{{ nDaysRequired }}', tier.nDaysRequired)
@@ -70,18 +71,18 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'CONSENTDENIED':
-        FsService.track('result', 'consentdenied')
+        FsService.track('result', 'consentdenied', label)
         $scope.stateTitle = FsInfoService.t('consentDenied')
         $scope.stateReason = FsInfoService.t('consentDeniedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
       case 'ERROR':
-        FsService.track('result', 'consenterror')
+        FsService.track('result', 'consenterror', label)
         $scope.stateTitle = 'Error'
         $scope.stateReason = 'Something went wrong, please try again later.'
         break
       case 'CALCULATOR':
-        FsService.track('result', 'calculator')
+        FsService.track('result', 'calculator', label)
         break
     }
   }
