@@ -35,7 +35,7 @@ app.run(['$location', '$rootScope', '$window', '$timeout', '$state', 'Availabili
 
   AvailabilityService.setURL('availability')
 
-  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
     ga('set', 'page', $state.href(toState.name, toParams))
     ga('send', 'pageview')
   })

@@ -22,7 +22,6 @@ Feature: Tier 2 & Tier 5
         And the service displays the following criteria headers in order
             | Tier                    |
             | Applicant type          |
-            | Student type            |
             | Application raised date |
             | Number of dependants    |
             | Sort code               |

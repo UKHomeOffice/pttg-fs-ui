@@ -834,4 +834,26 @@ class Steps {
 
         }
     }
+
+    @Then("^the service has the following links\$")
+    public void the_service_has_the_following_links (DataTable linkTable) {
+        println('the service has the following links')
+        List<List<String>> data = linkTable.raw()
+        println(data)
+
+        data.eachWithIndex {k, v ->
+            println(k + '-' + v + '\n')
+            v.eachWithIndex { k2, v2 ->
+                println(k2 + '-' + v2 + '\n')
+            }
+        }
+
+//
+//        print data
+
+//        links = links.asList()
+//        links.each {k, v ->
+//            println(k + '-' + v + '\n')
+//        }
+    }
 }

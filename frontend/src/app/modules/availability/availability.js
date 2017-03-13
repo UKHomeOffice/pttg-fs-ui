@@ -26,7 +26,13 @@ availabilityModule.factory('AvailabilityService', ['IOService', function (IOServ
   return this
 }])
 
-availabilityModule.directive('hodAvailability', ['IOService', 'AvailabilityService', '$timeout', function (IOService, AvailabilityService, $timeout) {
+availabilityModule.run(['$rootScope', function ($rootScope) {
+  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    $rootScope.$broadcast('testAvailability')
+  })
+}])
+
+availabilityModule.directive('hodAvailability', ['$rootScope', 'IOService', 'AvailabilityService', '$timeout', function ($rootScope, IOService, AvailabilityService, $timeout) {
   return {
     restrict: 'E',
     compile: function (element, attrs) {
@@ -38,8 +44,11 @@ availabilityModule.directive('hodAvailability', ['IOService', 'AvailabilityServi
           scope.$applyAsync()
 
           if (!a && conf.interval) {
+            // cancel any previous timeout
+            $timeout.cancel(scope.timeout)
+
             // if unavailable and a polling interval is set then retry!
-            $timeout(function () {
+            scope.timeout = $timeout(function () {
               testAvailability()
             }, conf.interval)
           }
@@ -48,12 +57,17 @@ availabilityModule.directive('hodAvailability', ['IOService', 'AvailabilityServi
         // test the availabilty end-point
         var testAvailability = function () {
           IOService.get(conf.url).then(function (res) {
-            var ok = (res.status === 200) ? true : false
+            var ok = (res.status === 200)
             setAvailability(ok)
-          }, function (err) {
+          }, function () {
             setAvailability(false)
           })
         }
+
+        $rootScope.$on('testAvailability', function () {
+          console.log('testAvailability')
+          testAvailability()
+        })
 
         // start the test process
         testAvailability()

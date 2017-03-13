@@ -57,7 +57,7 @@ Feature: System errors - specify messages shown in response to (simulated) conne
 
     Scenario: Coping when the API is down
         Given the api is unreachable
-#        When the financial status check is performed
+        When the financial status check is performed
         Then the service displays the following page content
             | Outcome        | You can’t use this service just now. The problem will be fixed as soon as possible |
             | Outcome detail | Please try again later.                                                            |
