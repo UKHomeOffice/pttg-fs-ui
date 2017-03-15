@@ -75,14 +75,9 @@
         </div>
       </div>
     </header>
-    <div id="global-header-bar"></div>
+    
 
-    <div class="phase-banner">
-      <p>
-        <strong class="phase-tag">BETA</strong>
-        <span id="betaMesssage">This is a new service – your <a href="mailto:financialstatus@digital.homeoffice.gov.uk" id="feedbackLink">feedback</a> will help us to improve it.</span>
-      </p>
-    </div>
+    
 
     <main id="content" role="main">
       <div ui-view="nav"></div>
@@ -90,6 +85,15 @@
       <div ui-view="content"></div>
 
     </main>
+
+    <footer id="footer" role="contentinfo">
+      <div class="phase-banner">
+        <p>
+          <strong class="phase-tag">BETA</strong>
+          <span id="betaMesssage">This is a new service – your <a href="mailto:financialstatus@digital.homeoffice.gov.uk" id="feedbackLink">feedback</a> will help us to improve it.</span>
+        </p>
+      </div>
+    </footer>
     <script src="app/vendor.js"></script>
     <script src="app/main.js"></script>
   </body>
