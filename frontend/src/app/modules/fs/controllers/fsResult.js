@@ -33,7 +33,7 @@ fsModule.run(['$rootScope', '$state', 'FsService', function ($rootScope, $state,
   })
 }])
 
-fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 'FsService', 'FsInfoService', 'FsBankService', function ($scope, $state, $filter, $timeout, FsService, FsInfoService, FsBankService) {
+fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter', '$timeout', 'FsService', 'FsInfoService', 'FsBankService', function ($rootScope, $scope, $state, $filter, $timeout, FsService, FsInfoService, FsBankService) {
   var fs = FsService.getApplication()
   var tier = FsInfoService.getTier(fs.tier)
   FsBankService.clearDailyBalanceResponse(fs)
@@ -85,6 +85,8 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
         FsService.track('result', 'calculator', label)
         break
     }
+
+    $rootScope.$broadcast('focusOnH1')
   }
 
   if (FsBankService.hasBankInfo(fs)) {
