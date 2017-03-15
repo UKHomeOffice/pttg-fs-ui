@@ -23,7 +23,7 @@ Feature: Insufficient Information
             | PENDING   | Consent requested                                                                  | Awaiting response from applicant                                                 |
             | INITIATED | Consent requested                                                                  | Awaiting response from applicant                                                 |
             | SUCCESS   | Consent given                                                                      | Applicant has given permission to access their account                           |
-            | FAIlURE   | Consent not given                                                                  | Applicant has refused permission to access their account                         |
+            | FAILURE   | Consent not given                                                                  | Applicant has refused permission to access their account                         |
             | INVALID   | Consent not given                                                                  | Applicant has refused permission to access their account                         |
             | 404       | Invalid or inaccessible account                                                    | One or more of the following conditions prevented us from accessing the account: |
             | 500       | You can’t use this service just now. The problem will be fixed as soon as possible | Please try again later.                                                          |
