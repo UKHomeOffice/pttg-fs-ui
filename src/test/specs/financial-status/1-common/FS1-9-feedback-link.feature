@@ -13,11 +13,11 @@ Feature: Add feedback header and 'feedback’ hyperlink to the tool
         And caseworker is using the financial status service ui
 
 
-#    Scenario: Feedback banner on each page
-#        Then the service displays the following page content
-#            | Beta messsage | This is a new service – your feedback will help us to improve it. |
-#        And the service has the following links
-#            | feedback link | feedback | financialstatus@digital.homeoffice.gov.uk |
+    Scenario: Feedback banner on each page
+        Then the service displays the following page content
+            | Beta messsage | This is a new service – your feedback will help us to improve it. |
+        And the service has the following links
+            | feedback link | feedback | financialstatus@digital.homeoffice.gov.uk |
 
 ####
 
