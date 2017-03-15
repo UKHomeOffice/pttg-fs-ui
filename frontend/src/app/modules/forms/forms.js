@@ -389,14 +389,14 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
         if (isValid) {
           $scope.showErrors = !isValid
+        } else {
+          $scope.showErrors = !isValid
           $timeout(function () {
-            var e = angular.element(document.querySelector('.error-summary'))
+            var e = angular.element(document.getElementById('validation-error-summary-heading'))
             if (e[0]) {
               e[0].focus()
             }
           })
-        } else {
-          $scope.showErrors = !isValid
         }
 
         if ($scope.submit) {

@@ -1,10 +1,10 @@
 <div class="govuk-box-highlight" ng-if="ok">
-  <h1 class="bold-large" id="outcome">{{ outcome }}</h1>
+  <h1 class="bold-large" id="outcome" tabindex="-1">{{ outcome }}</h1>
   <p id="outcomeDetail">{{ outcomeDetail }}</p>
 </div>
 
 <div ng-if="!ok">
-  <h1 class="heading-large form-title"><span class="heading-secondary">{{ tier.label }} application</span><span id="outcome">{{ outcome }}</span></h1>
+  <h1 class="heading-large form-title" tabindex="-1"><span class="heading-secondary">{{ tier.label }} application</span><span id="outcome">{{ outcome }}</span></h1>
   <p id="outcomeDetail">{{ outcomeDetail }}</p>
 </div>
 
