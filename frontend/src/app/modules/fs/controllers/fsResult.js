@@ -147,7 +147,7 @@ fsModule.controller('FsResultCtrl', ['$scope', '$state', '$filter', '$timeout', 
       if (data.data.consent === 'SUCCESS') {
         $scope.cancelTimer()
         $scope.checkBalance()
-      } else if (data.data.consent === 'FAILURE') {
+      } else if (data.data.consent === 'FAILURE' || data.data.consent === 'INVALID') {
         $scope.cancelTimer()
         $scope.render('CONSENTDENIED')
       } else if ($scope.numTry < $scope.numTryLimit) {
