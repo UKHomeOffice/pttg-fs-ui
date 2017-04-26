@@ -6,6 +6,7 @@ Feature: Availability message
         And caseworker is using the financial status service ui
         Then the service displays the following message
             | availability-heading | You can’t use this service just now                  |
+            | availability-info    | The problem has been logged and we’re working to fix it. If the problem persists please email |
 
     Scenario: Out of order message is shown on ApplicantType page when the '/availability' end point reports an issue
         Given the api is unreachable
