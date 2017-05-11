@@ -6,23 +6,23 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker build -f Dockerfile.build -t gradle-node .
+      - docker build -t pttg-fs-ui .
     when:
       event: push
       branch: master
 
-  my-build:
-    privileged: true
-    image: docker:1.11
-    environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
-    commands:
-      - docker run --name pttg-fs-ui-build gradle-node build
-      - mkdir -p build/libs
-      - docker cp pttg-fs-ui-build:/work/build/libs/ build
-    when:
-      event: push
-      branch: master
+  # my-build:
+  #   privileged: true
+  #   image: docker:1.11
+  #   environment:
+  #     - DOCKER_HOST=tcp://127.0.0.1:2375
+  #   commands:
+  #     - docker run --name pttg-fs-ui-build gradle-node build
+  #     - mkdir -p build/libs
+  #     - docker cp pttg-fs-ui-build:/work/build/libs/ build
+  #   when:
+  #     event: push
+  #     branch: master
 
   my-docker-build:
     privileged: true

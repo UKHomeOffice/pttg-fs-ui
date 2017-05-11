@@ -259,7 +259,7 @@ describe('app: hod.proving', function () {
         doCheck: 'yes',
         dailyBalanceResponse: {
           data: {
-            fundingRequirementMet: true
+            pass: true
           }
         },
         consentResponse: {
@@ -276,7 +276,7 @@ describe('app: hod.proving', function () {
       })
 
       it('should say check account holder name /check paper & copy to CID when check failed', function () {
-        testObj.dailyBalanceResponse.data.fundingRequirementMet = false
+        testObj.dailyBalanceResponse.data.pass = false
         var doNext = fs.getThingsToDoNext(testObj)
         expect(doNext[0]).toEqual(fsi.t('checkName'))
         expect(doNext[1]).toEqual(fsi.t('checkPaper'))

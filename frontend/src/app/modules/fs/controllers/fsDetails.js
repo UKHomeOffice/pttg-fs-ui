@@ -155,7 +155,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         return { summary: 'The original course start date is invalid', msg: 'Enter a valid original course start date' }
       }
     },
-    totalTuitionFees: {
+    tuitionFees: {
       prefix: '£ ',
       errors: {
         required: {
@@ -168,7 +168,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         }
       }
     },
-    tuitionFeesAlreadyPaid: {
+    tuitionFeesPaid: {
       prefix: '£ ',
       errors: {
         required: {
@@ -181,7 +181,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         }
       }
     },
-    accommodationFeesAlreadyPaid: {
+    accommodationFeesPaid: {
       prefix: '£ ',
       errors: {
         required: {

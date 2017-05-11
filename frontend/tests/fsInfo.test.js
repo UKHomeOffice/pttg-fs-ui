@@ -85,7 +85,7 @@ describe('app: hod.proving', function () {
       it('should have 2 fields in *t4all', function () {
         var fields = fsi.getFieldGroup('*t4all')
         expect(fields.length).toEqual(2)
-        expect(fields.join()).toEqual('inLondon,accommodationFeesAlreadyPaid')
+        expect(fields.join()).toEqual('inLondon,accommodationFeesPaid')
       })
     })
 
@@ -147,9 +147,9 @@ describe('app: hod.proving', function () {
         expect(fields).toContain('originalCourseStartDate')
         expect(fields).toContain('courseType')
         expect(fields).toContain('courseInstitution')
-        expect(fields).toContain('accommodationFeesAlreadyPaid')
-        expect(fields).toContain('totalTuitionFees')
-        expect(fields).toContain('tuitionFeesAlreadyPaid')
+        expect(fields).toContain('accommodationFeesPaid')
+        expect(fields).toContain('tuitionFees')
+        expect(fields).toContain('tuitionFeesPaid')
         expect(fields).toContain('sortCode')
         expect(fields).toContain('accountNumber')
         expect(fields).toContain('dob')
@@ -164,9 +164,9 @@ describe('app: hod.proving', function () {
       it('should not include any fees paid when dependant only route', function () {
         testObj.dependantsOnly = true
         fields = fsi.getFieldsForObject(testObj)
-        expect(fields).not.toContain('accommodationFeesAlreadyPaid')
-        expect(fields).not.toContain('totalTuitionFees')
-        expect(fields).not.toContain('tuitionFeesAlreadyPaid')
+        expect(fields).not.toContain('accommodationFeesPaid')
+        expect(fields).not.toContain('tuitionFees')
+        expect(fields).not.toContain('tuitionFeesPaid')
       })
 
       it('should only include originalCourseStartDate when application is a continuation course', function () {

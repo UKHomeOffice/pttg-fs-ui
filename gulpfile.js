@@ -4,7 +4,7 @@ var sourcePath = 'frontend/src/'
 var gulp = require('gulp')
 var async = require('async')
 var run = require('run-sequence')
-var karma = require('karma')
+
 var uglify = require('gulp-uglify')
 var templateCache = require('gulp-angular-templatecache')
 var concat = require('gulp-concat')
@@ -14,6 +14,7 @@ var sass = require('gulp-sass')
 var autoprefixer = require('gulp-autoprefixer')
 var htmlmin = require('gulp-htmlmin')
 var sourcemaps = require('gulp-sourcemaps')
+var nodemon = require('gulp-nodemon')
 
 // error function for plumber
 var onError = function (err) {
@@ -127,6 +128,14 @@ gulp.task('templateAndUglify', function () {
 })
 
 gulp.task('startwatch', function () {
+  nodemon({
+    script: 'server.js',
+    ext: 'js',
+    env: { 'NODE_ENV': 'development' },
+    cwd: __dirname,
+    ignore: ['node_modules/**'],
+    watch: ['server.js']
+  })
   gulp.watch(sourcePath + 'index.html', ['minifyHtml'])
   gulp.watch(sourcePath + 'app/modules/**/*.html', ['templateAndUglify'])
   gulp.watch([sourcePath + 'app/main.js', sourcePath + 'app/modules/**/*.js'], ['uglify'])
@@ -134,6 +143,7 @@ gulp.task('startwatch', function () {
 })
 
 gulp.task('test', function (done) {
+  var karma = require('karma')
   var server = new karma.Server({ configFile: __dirname + '/karma.conf.js' }, done)
   server.start()
 })

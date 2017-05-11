@@ -35,7 +35,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.hasResult = function (obj) {
-    if (_.has(obj, 'dailyBalanceResponse') && _.has(obj.dailyBalanceResponse, 'data') && _.has(obj.dailyBalanceResponse.data, 'fundingRequirementMet')) {
+    if (_.has(obj, 'dailyBalanceResponse') && _.has(obj.dailyBalanceResponse, 'data') && _.has(obj.dailyBalanceResponse.data, 'pass')) {
       return true
     }
     return false
@@ -106,14 +106,14 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     params.applicantType = obj.variantType || obj.applicantType
     params.studentType = obj.variantType
     if (obj.dependantsOnly) {
-      if (!_.has(fields.accommodationFeesAlreadyPaid)) {
-        params.accommodationFeesAlreadyPaid = 0
+      if (!_.has(fields.accommodationFeesPaid)) {
+        params.accommodationFeesPaid = 0
       }
-      if (!_.has(fields.totalTuitionFees)) {
-        params.totalTuitionFees = 0
+      if (!_.has(fields.tuitionFees)) {
+        params.tuitionFees = 0
       }
-      if (!_.has(fields.tuitionFeesAlreadyPaid)) {
-        params.tuitionFeesAlreadyPaid = 0
+      if (!_.has(fields.tuitionFeesPaid)) {
+        params.tuitionFeesPaid = 0
       }
     }
 
@@ -138,7 +138,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
 
   this.passed = function (obj) {
     if (me.hasResult(obj)) {
-      return obj.dailyBalanceResponse.data.fundingRequirementMet
+      return obj.dailyBalanceResponse.data.pass
     }
 
     return null

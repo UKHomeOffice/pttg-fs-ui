@@ -67,7 +67,7 @@ fsModule.factory('FsInfoService', [ function () {
           value: 'general',
           label: 'General student',
           full: 'Tier 4 (General) student',
-          fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'courseInstitution', 'totalTuitionFees', 'tuitionFeesAlreadyPaid']
+          fields: ['*default', '*t4all', 'dependants', '*courses', 'courseType', 'courseInstitution', 'tuitionFees', 'tuitionFeesPaid']
         },
         {
           value: 'des',
@@ -140,7 +140,7 @@ fsModule.factory('FsInfoService', [ function () {
         return ['courseStartDate', 'courseEndDate', 'continuationCourse', 'originalCourseStartDate']
       case '*t4all':
         // common fields for t4
-        return ['inLondon', 'accommodationFeesAlreadyPaid']
+        return ['inLondon', 'accommodationFeesPaid']
       case '*bank':
         return ['sortCode', 'accountNumber', 'dob']
     }
@@ -162,7 +162,7 @@ fsModule.factory('FsInfoService', [ function () {
 
     if (obj.dependantsOnly) {
       // these fields should be excluded on a dependant only route
-      fields = _.without(fields, 'accommodationFeesAlreadyPaid', 'tuitionFeesAlreadyPaid', 'totalTuitionFees')
+      fields = _.without(fields, 'accommodationFeesPaid', 'tuitionFeesPaid', 'tuitionFees')
     }
 
     if (obj.continuationCourse !== 'yes') {
@@ -239,15 +239,15 @@ fsModule.factory('FsInfoService', [ function () {
         summary: 'Original course start date',
         format: 'date'
       },
-      tuitionFeesAlreadyPaid: {
+      tuitionFeesPaid: {
         summary: 'Tuition fees already paid',
         format: 'pounds'
       },
-      totalTuitionFees: {
+      tuitionFees: {
         summary: 'Total tuition fees for the first year',
         format: 'pounds'
       },
-      accommodationFeesAlreadyPaid: {
+      accommodationFeesPaid: {
         summary: 'Accommodation fees already paid',
         format: 'pounds'
       },

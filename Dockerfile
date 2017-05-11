@@ -1,11 +1,10 @@
-FROM quay.io/ukhomeofficedigital/openjdk8:v1.1.0
+FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
 
 ENV PTTG_API_ENDPOINT localhost
 ENV USER pttg
 ENV GROUP pttg
 ENV NAME pttg-fs-ui
 
-ENV JAR_PATH build/libs
 ARG VERSION
 
 WORKDIR /app
@@ -15,11 +14,13 @@ RUN groupadd -r ${GROUP} && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
 
-COPY package.json /app/package.json
+COPY . /app
 
-COPY ${JAR_PATH}/${NAME}*.jar /app
-COPY run.sh /app
 
+RUN npm --loglevel warn install --only=dev
+RUN pwd
+RUN ls -la
+RUN ./node_modules/.bin/gulp
 RUN chmod a+x /app/run.sh
 
 USER pttg

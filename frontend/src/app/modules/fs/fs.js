@@ -26,9 +26,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       originalCourseStartDate: '',
       courseStartDate: '',
       courseEndDate: '',
-      totalTuitionFees: '',
-      tuitionFeesAlreadyPaid: '',
-      accommodationFeesAlreadyPaid: '',
+      tuitionFees: '',
+      tuitionFeesPaid: '',
+      accommodationFeesPaid: '',
       dependants: '',
       dependantsOnly: null
     }
@@ -111,9 +111,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     }
 
     if (obj.dependantsOnly) {
-      params.accommodationFeesAlreadyPaid = 0
-      params.totalTuitionFees = 0
-      params.tuitionFeesAlreadyPaid = 0
+      params.accommodationFeesPaid = 0
+      params.tuitionFees = 0
+      params.tuitionFeesPaid = 0
     }
 
     return params
@@ -294,7 +294,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
         disp += ' to ' + $filter('dateDisplay')(obj.courseEndDate)
       }
 
-      if (f === 'accommodationFeesAlreadyPaid' && capped && capped.accommodationFeesPaid) {
+      if (f === 'accommodationFeesPaid' && capped && capped.accommodationFeesPaid) {
         disp += ' (limited to ' + $filter('pounds')(capped.accommodationFeesPaid) + ')'
       }
 
