@@ -57,3 +57,14 @@ Feature: Route selection screen inputs - All tiers
         Then the service displays the following page content
             | Main Applicant | Main applicant  |
             | Dependant Only | Dependants only |
+
+
+    Scenario: Caseworker selects tier 5
+        When Caseworker is on t5 / main applicant / fiancial status #
+        Then the service displays the following content #
+
+            | DOB | #
+            | Sort Code | #
+            | Account Number | #
+            | Application raised date | #
+            | 90 day period check     | #
