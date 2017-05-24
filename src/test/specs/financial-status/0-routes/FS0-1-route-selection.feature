@@ -58,6 +58,11 @@ Feature: Route selection screen inputs - All tiers
             | Main Applicant | Main applicant  |
             | Dependant Only | Dependants only |
 
+    Scenario: Caseworker selects Tier 5
+        When caseworker is on page t5/application/selectapplicant
+        Then the service displays the following page content
+            | Main Applicant | Youth Mobility Scheme |
+            | Main Applicant | Temporary Worker      |
 
     Scenario: Caseworker selects tier 5
         When Caseworker is on t5 / main applicant / fiancial status #
@@ -68,3 +73,5 @@ Feature: Route selection screen inputs - All tiers
             | Account Number | #
             | Application raised date | #
             | 90 day period check     | #
+
+
