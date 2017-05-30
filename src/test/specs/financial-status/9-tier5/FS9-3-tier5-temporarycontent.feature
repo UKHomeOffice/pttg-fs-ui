@@ -10,14 +10,14 @@ Feature: Tier 5 Temporary Worker
             | Dependants              | 0          |
 
 
- ###################################### Section - Check for text on Output does not meet minimum financial requirement -Passed ######################################
+ ###################################### Section - Check for text on Output does not meet minimum financial requirement -Not Passed ######################################
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given caseworker is on page t5/application/calc/main #
         When the financial status check is performed
         Then the service displays the following content
-            | Outcome| Pass|
+            | Outcome| Not Passed| #
         And the service displays the following result headers in order
             | Total funds required |
             | Result timestamp     |
