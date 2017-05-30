@@ -25,16 +25,5 @@ Feature: Tier 2
             | Application raised date |
             | Number of dependants    |
 
-###############################Tier 5 Youth Mobility Scheme############################################################
-    Scenario: Page checks for Not Passed text write up #
-    This is a scenario to check if Applicant does not meet minimum financial requirement text write up #
-        Given caseworker is on page t5/application/calc/main #
-        When the financial status check is performed #
-        Then the service displays the following result headers in order #
-            | Total funds required | #
-            | Result timestamp     | #
-        And the service displays the following criteria headers in order #
-            | Tier                    | #
-            | Applicant type          | #
-            | Application raised date | #
+
 
