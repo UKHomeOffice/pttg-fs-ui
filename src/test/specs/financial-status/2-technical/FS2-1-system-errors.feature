@@ -15,12 +15,12 @@ Feature: System errors - specify messages shown in response to (simulated) conne
             | Application raised date         | 30/05/2016                   |
             | End Date                        | 30/05/2016                   |
             | In London                       | Yes                          |
-            | Accommodation fees already paid | 0                            |
+            | Accommodation fees paid | 0                            |
             | Dependants                      | 1                            |
             | Course start date               | 20/05/2016                   |
             | Course end date                 | 30/11/2016                   |
-            | Tuition fees already paid       | 300                          |
-            | Total tuition fees              | 8500.00                      |
+            | Tuition fees paid       | 300                          |
+            | Tuition fees              | 8500.00                      |
             | Continuation Course             | No                           |
             | Course type                     | Main course degree of higher |
             | DOB                             | 25/03/1987                   |

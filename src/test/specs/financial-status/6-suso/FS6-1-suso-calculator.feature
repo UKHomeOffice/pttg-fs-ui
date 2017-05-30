@@ -8,7 +8,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
 
     Required Maintenance threshold calculation to pass this feature file
     Maintenance threshold amount =  (Required Maintenance funds doctorate in London
-    (£1265) * 2) -  Accommodation fees already paid
+    (£1265) * 2) -  Accommodation fees paid
 
     Background:
         Given the api health check response has status 200
@@ -27,7 +27,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | In London                       | Yes        |
             | Course start date               | 01/03/2016 |
             | Course end date                 | 20/04/2016 |
-            | Accommodation fees already paid | 0          |
+            | Accommodation fees paid | 0          |
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
@@ -38,7 +38,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | Student type                    | Student union sabbatical officer |
             | In London                       | Yes                              |
             | Course length                   | 2 (limited to 9)                 |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00)     |
+            | Accommodation fees paid | £0.00 (limited to £1,265.00)     |
             | Dependants                      | 0                                |
         And the result table contains the following
             | Total funds required     | £16,090.00       |
@@ -57,7 +57,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | In London                       | No         |
             | Course start date               | 01/03/2016 |
             | Course end date                 | 30/03/2016 |
-            | Accommodation fees already paid | 100        |
+            | Accommodation fees paid | 100        |
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
@@ -68,7 +68,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | Student type                    | Student union sabbatical officer |
             | In London                       | No                               |
             | Course length                   | 1 (limited to 9)                 |
-            | Accommodation fees already paid | £100.00 (limited to £1,265.00)   |
+            | Accommodation fees paid | £100.00 (limited to £1,265.00)   |
             | Dependants                      | 0                                |
             | Continuation Course             | Yes                              |
             | Original Course Start Date      | 30/10/2015                       |

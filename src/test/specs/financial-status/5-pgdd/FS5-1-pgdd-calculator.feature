@@ -8,7 +8,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
 
     Required Maintenance threshold calculation to pass this feature file
     Maintenance threshold amount =  (Required Maintenance funds doctorate in London
-    (£1265) * remaining course length) -  Accommodation fees already paid
+    (£1265) * remaining course length) -  Accommodation fees paid
 
     Background:
         Given the api health check response has status 200
@@ -28,7 +28,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/07/2016 |
-            | Accommodation fees already paid | 0          |
+            | Accommodation fees paid | 0          |
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
@@ -48,7 +48,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | Student type                    | Postgraduate doctor or dentist             |
             | In London                       | Yes                                        |
             | Course length                   | 3 (limited to 9)                           |
-            | Accommodation fees already paid | £0.00 (limited to £1,265.00)               |
+            | Accommodation fees paid | £0.00 (limited to £1,265.00)               |
             | Dependants                      | 0                                          |
             | Sort code                       | 11-11-11                                   |
             | Account number                  | 11111111                                   |
@@ -68,7 +68,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/06/2016 |
-            | Accommodation fees already paid | 100        |
+            | Accommodation fees paid | 100        |
             | Dependants                      | 0          |
             | Continuation Course             | Yes        |
             | Original Course Start Date      | 30/10/2015 |
@@ -81,7 +81,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | Tier                            | Tier 4                         |
             | Student type                    | Postgraduate doctor or dentist |
             | In London                       | Yes                            |
-            | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
+            | Accommodation fees paid | £100.00 (limited to £1,265.00) |
             | Dependants                      | 0                              |
             | Sort code                       | 11-11-11                       |
             | Account number                  | 11111111                       |

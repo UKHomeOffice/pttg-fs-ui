@@ -12,7 +12,7 @@ Feature: Dependant only stuff
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Accommodation fees already paid | 100        |
+            | Accommodation fees paid | 100        |
             | Dependants                      | 1          |
             | DOB                             | 25/03/1987 |
             | Sort code                       | 33-33-33   |

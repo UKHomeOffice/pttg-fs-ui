@@ -27,9 +27,9 @@ Feature: Show clear error details when inputs are invalid
             | In London                       |  |
             | Course start date               |  |
             | Course end date                 |  |
-            | Total tuition fees              |  |
-            | Tuition fees already paid       |  |
-            | Accommodation fees already paid |  |
+            | Tuition fees              |  |
+            | Tuition fees paid       |  |
+            | Accommodation fees paid |  |
             | Dependants                      |  |
             | Continuation Course             |  |
             | Course type                     |  |
@@ -37,7 +37,7 @@ Feature: Show clear error details when inputs are invalid
             | Sort code                       |  |
             | Account number                  |  |
             | DOB                             |  |
-        Then the service displays the following message
+        Then the service displays the following page content
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |
         And the error summary list contains the text
@@ -163,44 +163,44 @@ Feature: Show clear error details when inputs are invalid
         Then the service displays the following error message
             | Course End Date-error | Enter a valid course length |
 
-######################### Validation on the Total tuition fees Field #########################
-    Scenario: Case Worker does NOT enter Total tuition fees
+######################### Validation on the Tuition fees Field #########################
+    Scenario: Case Worker does NOT enter Tuition fees
         When the financial status check is performed with
-            | Total tuition fees |  |
+            | Tuition fees |  |
         Then the service displays the following error message
-            | total tuition fees-error | Enter a valid total tuition fees |
+            | Tuition fees-error | Enter a valid total tuition fees |
 
-    Scenario: Case Worker enters invalid Total tuition fees - not numbers 0-9
+    Scenario: Case Worker enters invalid Tuition fees - not numbers 0-9
         When the financial status check is performed with
-            | Total tuition fees | A |
+            | Tuition fees | A |
         Then the service displays the following error message
-            | total tuition fees-error | Enter a valid total tuition fees |
+            | Tuition fees-error | Enter a valid total tuition fees |
 
-######################### Validation on the Tuition fees already paid Field #########################
-    Scenario: Case Worker does NOT enter Tuition fees already paid
+######################### Validation on the Tuition fees paid Field #########################
+    Scenario: Case Worker does NOT enter Tuition fees paid
         When the financial status check is performed with
-            | Tuition fees already paid |  |
+            | Tuition fees paid |  |
         Then the service displays the following error message
-            | tuition fees already paid-error | Enter a valid tuition fees already paid |
+            | Tuition fees paid-error | Enter a valid tuition fees already paid |
 
-    Scenario: Case Worker enters invalid Tuition fees already paid - not numbers 0-9
+    Scenario: Case Worker enters invalid Tuition fees paid - not numbers 0-9
         When the financial status check is performed with
-            | Tuition fees already paid | A |
+            | Tuition fees paid | A |
         Then the service displays the following error message
-            | tuition fees already paid-error | Enter a valid tuition fees already paid |
+            | Tuition fees paid-error | Enter a valid tuition fees already paid |
 
-######################### Validation on the Accommodation fees already paid Field #########################
-    Scenario: Case Worker does NOT enter Accommodation fees already paid
+######################### Validation on the Accommodation fees paid Field #########################
+    Scenario: Case Worker does NOT enter Accommodation fees paid
         When the financial status check is performed with
-            | Accommodation fees already paid |  |
+            | Accommodation fees paid |  |
         Then the service displays the following error message
-            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation fees paid-error | Enter a valid accommodation fees already paid |
 
-    Scenario: Case Worker enters invalid Accommodation fees already paid - not numbers 0-9
+    Scenario: Case Worker enters invalid Accommodation fees paid - not numbers 0-9
         When the financial status check is performed with
-            | Accommodation fees already paid | A |
+            | Accommodation fees paid | A |
         Then the service displays the following error message
-            | Accommodation Fees Already Paid-error | Enter a valid accommodation fees already paid |
+            | Accommodation fees paid-error | Enter a valid accommodation fees already paid |
 
 ######################### Validation on the Dependants Field #########################
     Scenario: Case Worker does NOT enter Dependants

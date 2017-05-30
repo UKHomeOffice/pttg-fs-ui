@@ -15,7 +15,7 @@ Feature: Tier 4 student union (sabbatical officer) content (single current accou
             | Course end date                 | 30/03/2016 |
             | Dependants                      | 2          |
             | Continuation Course             | No         |
-            | Accommodation fees already paid | 0          |
+            | Accommodation fees paid | 0          |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 

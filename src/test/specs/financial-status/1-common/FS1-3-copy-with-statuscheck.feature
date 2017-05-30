@@ -16,9 +16,9 @@ Feature: Copy results to paste buffer
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 10         |
-            | Accommodation fees already paid | 20         |
+            | Tuition fees              | 8500.00    |
+            | Tuition fees paid       | 10         |
+            | Accommodation fees paid | 20         |
             | Dependants                      | 0          |
             | Continuation Course             | No         |
             | Course type                     | main       |
@@ -45,9 +45,9 @@ Feature: Copy results to paste buffer
             | Applicant type                  | Tier 4 student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
-            | Total tuition fees              | £8,500.00                                       |
-            | Tuition fees already paid       | £10.00                                          |
-            | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+            | Tuition fees              | £8,500.00                                       |
+            | Tuition fees paid       | £10.00                                          |
+            | Accommodation fees paid | £20.00 (limited to £1,265.00)                   |
             | Dependants                      | 0                                               |
             | Sort code                       | 11-11-11                                        |
             | Account number                  | ****1111                                        |
@@ -73,9 +73,9 @@ Feature: Copy results to paste buffer
             | Applicant type                  | Tier 4 student                        |
             | In London                       | Yes                                             |
             | Course dates                    | 30/05/2016 to 30/11/2016                        |
-            | Total tuition fees              | £8,500.00                                       |
-            | Tuition fees already paid       | £10.00                                          |
-            | Accommodation fees already paid | £20.00 (limited to £1,265.00)                   |
+            | Tuition fees              | £8,500.00                                       |
+            | Tuition fees paid       | £10.00                                          |
+            | Accommodation fees paid | £20.00 (limited to £1,265.00)                   |
             | Dependants                      | 0                                               |
             | Sort code                       | 11-11-11                                        |
             | Account number                  | ****111X                                        |

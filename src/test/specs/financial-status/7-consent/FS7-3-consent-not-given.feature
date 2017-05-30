@@ -61,9 +61,9 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
-            | Accommodation fees already paid | 0          |
+            | Tuition fees              | 8500.00    |
+            | Tuition fees paid       | 0          |
+            | Accommodation fees paid | 0          |
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Original Course Start Date      | 30/10/2015 |

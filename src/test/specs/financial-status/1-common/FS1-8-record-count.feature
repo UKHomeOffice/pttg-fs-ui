@@ -11,7 +11,7 @@ Feature: Insufficient Records
             | Application raised date         | 11/06/2016 |
             | End date                        | 10/06/2016 |
             | In London                       | No         |
-            | Accommodation fees already paid | 0          |
+            | Accommodation fees paid | 0          |
             | Dependants                      | 1          |
             | DOB                             | 25/03/1987 |
             | Sort code                       | 11-11-11   |

@@ -9,23 +9,23 @@ var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 
 var stdRelay = function (res, uri, qs) {
-  // res.setHeader('Content-Type', 'application/json')
-  // res.send({uri: uri, qs: qs})
-  // console.log({uri: uri, qs: qs})
-  // return
-  console.log('Relay start:', uri)
-  console.log('qs: ', qs)
+  // console.log('Relay start:', uri)
+  // console.log('qs: ', qs)
   request({uri: uri, qs: qs}, function (error, response, body) {
     res.setHeader('Content-Type', 'application/json')
     res.status((response && response.statusCode) ? response.statusCode : 500)
     res.send(body)
-    console.log('response: ', res.statusCode)
-    console.log('response error?:', error)
-    console.log(body)
+    // console.log('response: ', res.statusCode)
+    // console.log('response error?:', error)
+    // console.log(body)
     if (error) {
-      console.log('ERROR', error)
+      if (error.code === 'ECONNREFUSED') {
+        console.log('ERROR: Connection refused', uri)
+      } else {
+        console.log('ERROR', error)
+      }
     }
-    console.log('Relay end:', uri)
+    // console.log('Relay end:', uri)
   })
 }
 
@@ -64,14 +64,22 @@ app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus'
   var uri = apiBaseUrl + req.params.tier + '/maintenance/threshold'
   // request the threshold
   request({uri: uri, qs: req.query}, function (error, response, body) {
-    req.query.minimum = JSON.parse(body).threshold
-    req.query.fromDate = moment(req.query.endDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
     if (error) {
       res.status((response && response.statusCode) ? response.statusCode : 500)
       res.send()
       return
     }
-    stdRelay(res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
+    try {
+      req.query.minimum = JSON.parse(body).threshold
+      req.query.fromDate = moment(req.query.endDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
+      stdRelay(res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
+    } catch (e) {
+      console.log('ERROR:')
+      console.log(e)
+      console.log(body)
+      res.status(500)
+      res.send()
+    }
   })
 })
 

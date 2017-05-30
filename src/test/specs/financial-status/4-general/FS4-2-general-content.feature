@@ -14,9 +14,9 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
             | In London                       | Yes        |
             | Course start date               | 30/05/2016 |
             | Course end date                 | 30/11/2016 |
-            | Total tuition fees              | 8500.00    |
-            | Tuition fees already paid       | 0          |
-            | Accommodation fees already paid | 0          |
+            | Tuition fees              | 8500.00    |
+            | Tuition fees paid       | 0          |
+            | Accommodation fees paid | 0          |
             | Dependants                      | 1          |
             | Continuation Course             | No         |
             | Course type                     | main       |

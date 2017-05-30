@@ -10,7 +10,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
 
     Required Maintenance threshold calculation to pass this feature file
     Maintenance threshold amount =  (Required Maintenance funds doctorate in London
-    (£1265) * 2) -  Accommodation fees already paid
+    (£1265) * 2) -  Accommodation fees paid
 
     Background:
         Given the api health check response has status 200
@@ -27,7 +27,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | Application raised date         | 29/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | Yes        |
-            | Accommodation fees already paid | 100        |
+            | Accommodation fees paid | 100        |
             | Dependants                      | 0          |
 
     Scenario: Shelly is a Doctorate in London student and has sufficient funds
@@ -41,7 +41,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | Student type                    | Doctorate extension scheme     |
             | Tier                            | Tier 4               |
             | In London                       | Yes                            |
-            | Accommodation fees already paid | £100.00 (limited to £1,265.00) |
+            | Accommodation fees paid | £100.00 (limited to £1,265.00) |
             | Dependants                      | 0                              |
             | Sort code                       | 22-22-23                       |
             | Account number                  | 22222223                       |
@@ -53,7 +53,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | Application raised date         | 20/06/2016 |
             | End date                        | 30/05/2016 |
             | In London                       | No         |
-            | Accommodation fees already paid | 265        |
+            | Accommodation fees paid | 265        |
             | Dependants                      | 0          |
         Then the service displays the following result
             | Outcome                         | Passed                                     |
@@ -65,7 +65,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | Applicant type                  | Main applicant (with & without dependants) |
             | Student type                    | Doctorate extension scheme                 |
             | In London                       | No                                         |
-            | Accommodation fees already paid | £265.00 (limited to £1,265.00)             |
+            | Accommodation fees paid | £265.00 (limited to £1,265.00)             |
             | Dependants                      | 0                                          |
             | Sort code                       | 22-22-23                                   |
             | Account number                  | 22222223                                   |
