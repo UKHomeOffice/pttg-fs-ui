@@ -52,35 +52,15 @@ Feature: Route selection screen inputs - All tiers
             | Check status | Check financial status            |
             | calculator   | Calculate daily funds required    |
 
-    Scenario: Caseworker selects Tier 5
-        When caseworker is on page t5/application/status
-        Then the service displays the following page content
-            | Main Applicant | Main applicant  |
-            | Dependant Only | Dependants only |
 
     Scenario: Caseworker selects Tier 5
-        When caseworker is on page t5/application/Status/select applicant
+        When caseworker is on page t5/application/main
         Then the service displays the following page content
+            | Main Applicant | Temporary Worker | #
             | Main Applicant | Youth Mobility Scheme | #
-            | Main Applicant | Temporary Worker      | #
 
-    Scenario: Caseworker selects tier 5
-        When caseworker is on page t5/application/status/select applicant/youth mobility scheme #
-        Then the service displays the following content #
-
-            | DOB | #
-            | Sort Code | #
-            | Account Number | #
-            | Application raised date | #
-            | 90 day period check     | #
-
-    Scenario: Caseworker selects tier 5
-        When caseworker is on page t5/application/status/select applicant/temporary worker #
-        Then the service displays the following content #
-
-            | DOB | #
-            | Sort Code | #
-            | Account Number | #
-            | Application raised date | #
-            | 90 day period check     | #
-            | Dependants              | #
+    Scenario: Caseworker selects Tier 5 temporary worker #
+        When caseworker is on page t5/application/main/status #
+        Then the service displays the following page content #
+            | Main Applicant | Main applicant  | #
+            | Dependant Only | Dependants only | #
