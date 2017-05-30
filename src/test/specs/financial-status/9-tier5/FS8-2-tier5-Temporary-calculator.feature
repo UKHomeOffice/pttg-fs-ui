@@ -1,10 +1,10 @@
-Feature: Total Funds Required Calculation - Tier 5 (General) (single current account including dependants) and dependant only applicants
+Feature: Total Funds Required Calculation - Tier 5 (Temporary) (single current account including dependants) and dependant only applicants
 
     Acceptance criteria
 
-    Requirement to meet Tier 2 & 5 (temporary worker) thresholds = £945 for main applicants and £630 for dependants passed and not passed
+    Requirement to meet Tier 5 (temporary worker) thresholds = £945 for main applicants and £630 for dependants passed and not passed
 
-    Required to meet tier 5 youth mobility scheme = £1890 ( dependants not permited)
+
     Maintenance threshold calculation to pass this feature file
 
     Background:
@@ -15,11 +15,11 @@ Feature: Total Funds Required Calculation - Tier 5 (General) (single current acc
             | End date                | 04/07/2016 |
             | Dependants              | 0          |
 
-##### pass for main applicant ##### *Do we require the pass fail in here?*
+########################## pass for tier 5 temporary main applicant ##################################################
 
-    Scenario: Laura is a Tier 2 (General)
-        Given caseworker is on page t2/application/calc/main
-        And the api threshold response will be t2
+    Scenario: Laura is a Tier 5 (temporary)
+        Given caseworker is on page t5/application/calc/main #
+        And the api threshold response will be t5 #
         When the financial status check is performed with
             | Dependants | 0 |
         Then the service displays the following result
@@ -27,7 +27,7 @@ Feature: Total Funds Required Calculation - Tier 5 (General) (single current acc
             | Total funds required | £945.00 |
             | Dependants           | 0       |
 
- ##### not pass as main applicant #####
+ ########################### Not pass tier 5 (Temporary) main  applicant with 1 dependant ################################################
 
     Scenario: Rob is a Tier 5 (Temporary) and has a dependant
         Given caseworker is on page t5/application/calc/main
@@ -35,30 +35,22 @@ Feature: Total Funds Required Calculation - Tier 5 (General) (single current acc
         When the financial status check is performed with
             | Dependants | 1 |
         Then the service displays the following result
-            | Outcome              | £1,575.00 |
+            | Outcome              | £1,275.00 |
             | Total funds required | £1,575.00 |
             | Dependants           | 1         |
 
-##### pass for main applicant #####
+####################################### pass for tier 5 (temporary) dependant only applicant #########################################
 
-    Scenario: Laura is a Tier 2 (General) dependant only
-        Given caseworker is on page t2/application/calc/dependant
-        And the api threshold response will be t2
+    Scenario: Jessica and Hannah are two Tier 5 (Temporary) dependants
+        Given caseworker is on page t5/application/calc/dependant
+        And the api threshold response will be t5
         When the financial status check is performed with
-            | Dependants | 1 |
+            | Dependants | 2 |
         Then the service displays the following result
-            | Outcome              | £945.00 |
-            | Total funds required | £945.00 |
-            | Dependants           | 1       |
+            | Outcome              | £1400.00 |
+            | Total funds required | £1260.00 |
+            | Dependants           | 2       |
 
- ##### pass as main applicant #####
 
-    Scenario: Rob is a Tier 5 (youth mobility scheme) #
-        Given caseworker is on page t5/application/calc #
-        And the api threshold response will be t5 #
-        When the financial status check is performed #
-        Then the service displays the following result #
-            | Outcome              | £1,890.00 | #
-            | Total funds required | £1,890.00 | #
 
 
