@@ -60,7 +60,14 @@ Feature: Route selection screen inputs - All tiers
             | Main Applicant | Youth Mobility Scheme | #
 
     Scenario: Caseworker selects Tier 5 temporary worker #
-        When caseworker is on page t5/application/main/status #
+        When caseworker is on page t5/application/main #
+        And caseworker has selected temporary worker
         Then the service displays the following page content #
             | Main Applicant | Main applicant  | #
             | Dependant Only | Dependants only | #
+
+
+    Scenario: Caseworker selects Tier 5 youth mobility #
+        When caseworker is on page t5/application/main #
+        And caseworker has selected youth mobility
+        Then the service should open the youth mobility input form #
