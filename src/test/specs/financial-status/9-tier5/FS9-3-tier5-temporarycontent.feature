@@ -10,7 +10,7 @@ Feature: Tier 5 Temporary Worker
             | Dependants              | 0          |
 
 
- ###################################### Section - Check for text on Output does not meet minimum financial requirement -Not Passed ######################################
+ ############################# Section - Check for text on Output does not meet minimum financial requirement -Not Passed ######################################
 
     Scenario: Page checks for Not Passed text write up
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
