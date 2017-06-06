@@ -18,8 +18,6 @@ var stdRelay = function (res, uri, qs) {
     res.status(status)
     res.send(body)
 
-    // console.log('\n')
-    // console.log(status)
     // console.log(uri)
     // console.log(body)
     // console.log('\n')

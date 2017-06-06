@@ -1,5 +1,5 @@
-Feature: Total Funds Required Calculation - Tier 2 (General) (single current account including dependants) and dependant only applicants
 
+Feature: Total Funds Required Calculation - Tier 2 (General) (single current account including dependants) and dependant only applicants
     Acceptance criteria
 
     Requirement to meet Tier 2 (General)thresholds = £945 for main applicants and £630 for dependants
