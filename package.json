@@ -4,7 +4,8 @@
   "description": "financial status service ui",
   "scripts": {
     "init": "npm install",
-    "test": "snyk test && gulp test"
+    "test": "snyk test && gulp test",
+    "bdd": "./node_modules/.bin/cucumber.js -f json:report/cucumber_report.json src/test/specs/financial-status -r test"
   },
   "devDependencies": {
     "angular": "^1.5.8",
@@ -40,7 +41,17 @@
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.2",
     "snyk": "^1.19.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "body-parser": "^1.17.2",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chromedriver": "^2.29.0",
+    "cucumber": "^2.2.0",
+    "cucumber-html-reporter": "^0.4.2",
+    "request": "^2.81.0",
+    "selenium-webdriver": "^3.4.0",
+    "install": "^0.10.1",
+    "npm": "^4.6.1"
   },
   "optionalDependencies": {
     "yargs": "^3.15.0",
