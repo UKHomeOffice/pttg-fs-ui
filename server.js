@@ -9,15 +9,15 @@ var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 
 var stdRelay = function (res, uri, qs) {
-  // console.log('Relay start:', uri)
-  // console.log('qs: ', qs)
   request({uri: uri, qs: qs}, function (error, response, body) {
     res.setHeader('Content-Type', 'application/json')
     res.status((response && response.statusCode) ? response.statusCode : 500)
     res.send(body)
-    // console.log('response: ', res.statusCode)
-    // console.log('response error?:', error)
+
+    // console.log('\n')
+    // console.log(uri)
     // console.log(body)
+    // console.log('\n')
     if (error) {
       if (error.code === 'ECONNREFUSED') {
         console.log('ERROR: Connection refused', uri)
@@ -25,7 +25,6 @@ var stdRelay = function (res, uri, qs) {
         console.log('ERROR', error)
       }
     }
-    // console.log('Relay end:', uri)
   })
 }
 

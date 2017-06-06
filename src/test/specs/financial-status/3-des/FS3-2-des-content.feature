@@ -5,6 +5,7 @@ Feature: Tier 4 doctorate extension scheme content (single current account with 
        # Given the account has sufficient funds
         And the api consent response will be SUCCESS
         And caseworker is using the financial status service ui
+        And the api threshold response will be t4
         And the api condition codes response will be 2--
         And caseworker is on page t4/application/status/main/des
 

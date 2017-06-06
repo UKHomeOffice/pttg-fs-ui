@@ -14,6 +14,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
         Given the api health check response has status 200
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
+        And the api threshold response will be t4
 
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI

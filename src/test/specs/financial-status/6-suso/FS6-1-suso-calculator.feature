@@ -14,6 +14,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
         Given the api health check response has status 200
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
+        And the api threshold response will be t4
         And caseworker is using the financial status service ui
         And the api condition codes response will be 2--
 
