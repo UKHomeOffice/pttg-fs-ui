@@ -15,20 +15,20 @@ Feature: Process 'pending' status and display the appropriate output page
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
         Given caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
-            | DOB                             | 25/03/1987                   |
-            | Sort code                       | 22-22-23                     |
-            | Account number                  | 22222226                     |
-            | Application raised date         | 30/05/2016                   |
-            | End Date                        | 30/05/2016                   |
-            | In London                       | Yes                          |
+            | DOB                     | 25/03/1987                   |
+            | Sort code               | 22-22-23                     |
+            | Account number          | 22222226                     |
+            | Application raised date | 30/05/2016                   |
+            | End Date                | 30/05/2016                   |
+            | In London               | Yes                          |
             | Accommodation fees paid | 0                            |
-            | Dependants                      | 1                            |
-            | Course start date               | 20/05/2016                   |
-            | Course end date                 | 30/11/2016                   |
+            | Dependants              | 1                            |
+            | Course start date       | 20/05/2016                   |
+            | Course end date         | 30/11/2016                   |
             | Tuition fees paid       | 300                          |
-            | Tuition fees              | 8500.00                      |
-            | Continuation Course             | No                           |
-            | Course type                     | Main course degree of higher |
+            | Tuition fees            | 8500.00                      |
+            | Continuation Course     | No                           |
+            | Course type             | Main course degree of higher |
         Then the service displays the following page content
             | Outcome        | Consent pending                                      |
             | Outcome detail | The applicant has not yet responded to the request.  |
@@ -47,9 +47,9 @@ Feature: Process 'pending' status and display the appropriate output page
         And caseworker is using the financial status service ui
         Given caseworker is on page t<Tier>/application/status/<Applicant>
         And the financial status check is performed with
-            | DOB            | 25/03/1987 |
-            | Sort code      | 22-22-23   |
-            | Account number | 22222229   |
+            | DOB                     | 25/03/1987 |
+            | Sort code               | 22-22-23   |
+            | Account number          | 22222229   |
             | Application raised date | 30/07/2016 |
             | End Date                | 04/07/2016 |
             | Dependants              | 1          |
@@ -60,8 +60,8 @@ Feature: Process 'pending' status and display the appropriate output page
         And the check again button is clicked
         And after at least 1 seconds
         Then the service displays the following result
-            | Outcome                    | Passed                                          |
-            | Outcome detail             | This applicant meets the financial requirements |
+            | Outcome        | Passed                                          |
+            | Outcome detail | This applicant meets the financial requirements |
         Examples:
             | Tier | Applicant |
             | 2    | main      |

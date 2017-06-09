@@ -23,24 +23,24 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
         Given the account does not have sufficient funds
         And caseworker is on page t4/application/calc/main/suso
         When the financial status check is performed with
-            | Application raised date         | 29/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 01/03/2016 |
-            | Course end date                 | 20/04/2016 |
-            | Accommodation fees paid | 0          |
-            | Dependants                      | 0          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
+            | Application raised date    | 29/06/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | Yes        |
+            | Course start date          | 01/03/2016 |
+            | Course end date            | 20/04/2016 |
+            | Accommodation fees paid    | 0          |
+            | Dependants                 | 0          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | £16,090.00                       |
-            | Total funds required            | £16,090.00                       |
-            | Tier                            | Tier 4                           |
-            | Student type                    | Student union sabbatical officer |
-            | In London                       | Yes                              |
-            | Course length                   | 2 (limited to 9)                 |
+            | Outcome                 | £16,090.00                       |
+            | Total funds required    | £16,090.00                       |
+            | Tier                    | Tier 4                           |
+            | Student type            | Student union sabbatical officer |
+            | In London               | Yes                              |
+            | Course length           | 2 (limited to 9)                 |
             | Accommodation fees paid | £0.00 (limited to £1,265.00)     |
-            | Dependants                      | 0                                |
+            | Dependants              | 0                                |
         And the result table contains the following
             | Total funds required     | £16,090.00       |
             | Condition Code           | 2 - Applicant    |
@@ -53,26 +53,26 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
         Given the account has sufficient funds
         And caseworker is on page t4/application/calc/main/suso
         When the financial status check is performed with
-            | Application raised date         | 10/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | No         |
-            | Course start date               | 01/03/2016 |
-            | Course end date                 | 30/03/2016 |
-            | Accommodation fees paid | 100        |
-            | Dependants                      | 0          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
+            | Application raised date    | 10/06/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | No         |
+            | Course start date          | 01/03/2016 |
+            | Course end date            | 30/03/2016 |
+            | Accommodation fees paid    | 100        |
+            | Dependants                 | 0          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
         Then the service displays the following result
-            | Outcome                         | £16,090.00                       |
-            | Total funds required            | £16,090.00                       |
-            | Tier                            | Tier 4                           |
-            | Student type                    | Student union sabbatical officer |
-            | In London                       | No                               |
-            | Course length                   | 1 (limited to 9)                 |
-            | Accommodation fees paid | £100.00 (limited to £1,265.00)   |
-            | Dependants                      | 0                                |
-            | Continuation Course             | Yes                              |
-            | Original Course Start Date      | 30/10/2015                       |
+            | Outcome                    | £16,090.00                       |
+            | Total funds required       | £16,090.00                       |
+            | Tier                       | Tier 4                           |
+            | Student type               | Student union sabbatical officer |
+            | In London                  | No                               |
+            | Course length              | 1 (limited to 9)                 |
+            | Accommodation fees paid    | £100.00 (limited to £1,265.00)   |
+            | Dependants                 | 0                                |
+            | Continuation Course        | Yes                              |
+            | Original Course Start Date | 30/10/2015                       |
         And the result table contains the following
             | Total funds required     | £16,090.00       |
             | Condition Code           | 2 - Applicant    |

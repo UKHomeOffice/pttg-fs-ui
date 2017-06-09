@@ -9,14 +9,14 @@ Feature: Dependant only stuff
         And caseworker is using the financial status service ui
         And caseworker is on page t4/application/status/dependant/des
         And the default details are
-            | Application raised date         | 29/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
+            | Application raised date | 29/06/2016 |
+            | End date                | 30/05/2016 |
+            | In London               | Yes        |
             | Accommodation fees paid | 100        |
-            | Dependants                      | 1          |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 33-33-33   |
-            | Account number                  | 33333333   |
+            | Dependants              | 1          |
+            | DOB                     | 25/03/1987 |
+            | Sort code               | 33-33-33   |
+            | Account number          | 33333333   |
 
     Scenario: Rhianna is dependant only doctorate application and has sufficient funds
         When the financial status check is performed

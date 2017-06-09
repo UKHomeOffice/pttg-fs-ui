@@ -22,21 +22,21 @@ Feature: Show clear error details when inputs are invalid
 
     Scenario: Error summary details are shown when a validation error occurs
         When the financial status check is performed with
-            | Application raised date         |  |
-            | End Date                        |  |
-            | In London                       |  |
-            | Course start date               |  |
-            | Course end date                 |  |
-            | Tuition fees              |  |
+            | Application raised date |  |
+            | End Date                |  |
+            | In London               |  |
+            | Course start date       |  |
+            | Course end date         |  |
+            | Tuition fees            |  |
             | Tuition fees paid       |  |
             | Accommodation fees paid |  |
-            | Dependants                      |  |
-            | Continuation Course             |  |
-            | Course type                     |  |
-            | Course institution              |  |
-            | Sort code                       |  |
-            | Account number                  |  |
-            | DOB                             |  |
+            | Dependants              |  |
+            | Continuation Course     |  |
+            | Course type             |  |
+            | Course institution      |  |
+            | Sort code               |  |
+            | Account number          |  |
+            | DOB                     |  |
         Then the service displays the following page content
             | validation-error-summary-heading | There's some invalid information                  |
             | validation-error-summary-text    | Make sure that all the fields have been completed |

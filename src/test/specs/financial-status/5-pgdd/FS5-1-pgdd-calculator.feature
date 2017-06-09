@@ -24,38 +24,38 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
         And caseworker is using the financial status service ui
         And caseworker is on page t4/application/status/main/pgdd
         When the financial status check is performed with
-            | Application raised date         | 29/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/07/2016 |
-            | Accommodation fees paid | 0          |
-            | Dependants                      | 0          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
+            | Application raised date    | 29/06/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | Yes        |
+            | Course start date          | 30/05/2016 |
+            | Course end date            | 30/07/2016 |
+            | Accommodation fees paid    | 0          |
+            | Dependants                 | 0          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
+            | DOB                        | 25/03/1987 |
+            | Sort code                  | 11-11-11   |
+            | Account number             | 11111111   |
         Then the service displays the following result
-            | Outcome                         | Not passed                                 |
-            | Account holder name             | Shelly Smith                               |
-            | Total funds required            | £16,090.00                                 |
-            | Maintenance period checked      | 03/05/2016 to 30/05/2016                   |
-            | Condition Code                  | 2 - Applicant                              |
-            | Course dates checked            | 30/05/2016 to 30/07/2016                   |
-            | Lowest Balance                  | £100.00 on 03/10/2016                      |
-            | Tier                            | Tier 4                                     |
-            | Applicant type                  | Main applicant (with & without dependants) |
-            | Student type                    | Postgraduate doctor or dentist             |
-            | In London                       | Yes                                        |
-            | Course length                   | 3 (limited to 9)                           |
-            | Accommodation fees paid | £0.00 (limited to £1,265.00)               |
-            | Dependants                      | 0                                          |
-            | Sort code                       | 11-11-11                                   |
-            | Account number                  | 11111111                                   |
-            | DOB                             | 25/03/1987                                 |
-            | Continuation Course             | Yes                                        |
-            | Original Course Start Date      | 30/10/2015                                 |
+            | Outcome                    | Not passed                                 |
+            | Account holder name        | Shelly Smith                               |
+            | Total funds required       | £16,090.00                                 |
+            | Maintenance period checked | 03/05/2016 to 30/05/2016                   |
+            | Condition Code             | 2 - Applicant                              |
+            | Course dates checked       | 30/05/2016 to 30/07/2016                   |
+            | Lowest Balance             | £100.00 on 03/10/2016                      |
+            | Tier                       | Tier 4                                     |
+            | Applicant type             | Main applicant (with & without dependants) |
+            | Student type               | Postgraduate doctor or dentist             |
+            | In London                  | Yes                                        |
+            | Course length              | 3 (limited to 9)                           |
+            | Accommodation fees paid    | £0.00 (limited to £1,265.00)               |
+            | Dependants                 | 0                                          |
+            | Sort code                  | 11-11-11                                   |
+            | Account number             | 11111111                                   |
+            | DOB                        | 25/03/1987                                 |
+            | Continuation Course        | Yes                                        |
+            | Original Course Start Date | 30/10/2015                                 |
 
         #Added to Jira PT-27 - Add 'Account holder name' to FSPS UI
     Scenario: Shelly is a postgraduate doctor or dentist in London student and has sufficient funds
@@ -64,31 +64,31 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
         And caseworker is using the financial status service ui
         And caseworker is on page t4/application/status/main/pgdd
         When the financial status check is performed with
-            | Application raised date         | 31/05/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/06/2016 |
-            | Accommodation fees paid | 100        |
-            | Dependants                      | 0          |
-            | Continuation Course             | Yes        |
-            | Original Course Start Date      | 30/10/2015 |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
+            | Application raised date    | 31/05/2016 |
+            | End date                   | 30/05/2016 |
+            | In London                  | Yes        |
+            | Course start date          | 30/05/2016 |
+            | Course end date            | 30/06/2016 |
+            | Accommodation fees paid    | 100        |
+            | Dependants                 | 0          |
+            | Continuation Course        | Yes        |
+            | Original Course Start Date | 30/10/2015 |
+            | DOB                        | 25/03/1987 |
+            | Sort code                  | 11-11-11   |
+            | Account number             | 11111111   |
         Then the service displays the following result
-            | Outcome                         | Passed                         |
-            | Course dates checked            | 30/05/2016 to 30/06/2016       |
-            | Tier                            | Tier 4                         |
-            | Student type                    | Postgraduate doctor or dentist |
-            | In London                       | Yes                            |
-            | Accommodation fees paid | £100.00 (limited to £1,265.00) |
-            | Dependants                      | 0                              |
-            | Sort code                       | 11-11-11                       |
-            | Account number                  | 11111111                       |
-            | DOB                             | 25/03/1987                     |
-            | Continuation Course             | Yes                            |
-            | Original Course Start Date      | 30/10/2015                     |
+            | Outcome                    | Passed                         |
+            | Course dates checked       | 30/05/2016 to 30/06/2016       |
+            | Tier                       | Tier 4                         |
+            | Student type               | Postgraduate doctor or dentist |
+            | In London                  | Yes                            |
+            | Accommodation fees paid    | £100.00 (limited to £1,265.00) |
+            | Dependants                 | 0                              |
+            | Sort code                  | 11-11-11                       |
+            | Account number             | 11111111                       |
+            | DOB                        | 25/03/1987                     |
+            | Continuation Course        | Yes                            |
+            | Original Course Start Date | 30/10/2015                     |
         And the result table contains the following
             | Account holder name        | Laura Taylor             |
             | Total funds required       | £16,090.00               |

@@ -9,23 +9,23 @@ Feature: System errors - specify messages shown in response to (simulated) conne
         And caseworker is using the financial status service ui
         And caseworker is on page t4/application/status/main/des
         And the default details are
-            | DOB                             | 25/03/1987                   |
-            | Sort code                       | 22-22-23                     |
-            | Account number                  | 22222226                     |
-            | Application raised date         | 30/05/2016                   |
-            | End Date                        | 30/05/2016                   |
-            | In London                       | Yes                          |
+            | DOB                     | 25/03/1987                   |
+            | Sort code               | 22-22-23                     |
+            | Account number          | 22222226                     |
+            | Application raised date | 30/05/2016                   |
+            | End Date                | 30/05/2016                   |
+            | In London               | Yes                          |
             | Accommodation fees paid | 0                            |
-            | Dependants                      | 1                            |
-            | Course start date               | 20/05/2016                   |
-            | Course end date                 | 30/11/2016                   |
+            | Dependants              | 1                            |
+            | Course start date       | 20/05/2016                   |
+            | Course end date         | 30/11/2016                   |
             | Tuition fees paid       | 300                          |
-            | Tuition fees              | 8500.00                      |
-            | Continuation Course             | No                           |
-            | Course type                     | Main course degree of higher |
-            | DOB                             | 25/03/1987                   |
-            | Sort code                       | 11-11-11                     |
-            | Account number                  | 11111111                     |
+            | Tuition fees            | 8500.00                      |
+            | Continuation Course     | No                           |
+            | Course type             | Main course degree of higher |
+            | DOB                     | 25/03/1987                   |
+            | Sort code               | 11-11-11                     |
+            | Account number          | 11111111                     |
 
     Scenario: Sensible connection timeout
         Given the api response is delayed for 10 seconds

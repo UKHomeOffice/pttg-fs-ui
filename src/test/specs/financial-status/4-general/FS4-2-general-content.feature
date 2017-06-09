@@ -9,21 +9,21 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
         And caseworker is on page t4/application/status/main/general
         And the api condition codes response will be -3-1
         And the default details are
-            | Application raised date         | 05/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
-            | Course start date               | 30/05/2016 |
-            | Course end date                 | 30/11/2016 |
-            | Tuition fees              | 8500.00    |
+            | Application raised date | 05/06/2016 |
+            | End date                | 30/05/2016 |
+            | In London               | Yes        |
+            | Course start date       | 30/05/2016 |
+            | Course end date         | 30/11/2016 |
+            | Tuition fees            | 8500.00    |
             | Tuition fees paid       | 0          |
             | Accommodation fees paid | 0          |
-            | Dependants                      | 1          |
-            | Continuation Course             | No         |
-            | Course type                     | main       |
-            | Course institution              | true       |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 11-11-11   |
-            | Account number                  | 11111111   |
+            | Dependants              | 1          |
+            | Continuation Course     | No         |
+            | Course type             | main       |
+            | Course institution      | true       |
+            | DOB                     | 25/03/1987 |
+            | Sort code               | 11-11-11   |
+            | Account number          | 11111111   |
 
  ###################################### Section - Check for text on Output meets minimum financial requirement - Pass page ######################################
 

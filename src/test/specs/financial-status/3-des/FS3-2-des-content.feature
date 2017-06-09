@@ -15,14 +15,14 @@ Feature: Tier 4 doctorate extension scheme content (single current account with 
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the account does not have sufficient funds
         When the financial status check is performed with
-            | Application raised date         | 29/06/2016 |
-            | End date                        | 30/05/2016 |
-            | In London                       | Yes        |
+            | Application raised date | 29/06/2016 |
+            | End date                | 30/05/2016 |
+            | In London               | Yes        |
             | Accommodation fees paid | 100        |
-            | Dependants                      | 0          |
-            | DOB                             | 25/03/1987 |
-            | Sort code                       | 22-22-23   |
-            | Account number                  | 22222223   |
+            | Dependants              | 0          |
+            | DOB                     | 25/03/1987 |
+            | Sort code               | 22-22-23   |
+            | Account number          | 22222223   |
         Then the service displays the following page content
             | Outcome        | Not passed                                                            |
             | Outcome detail | One or more daily closing balances are below the total funds required |
