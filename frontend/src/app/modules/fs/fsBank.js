@@ -119,13 +119,24 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
 
     params.toDate = obj.endDate
 
+    // [TODO] remove these they are only to support the old JAVA based UI-API
+    params.accommodationFeesAlreadyPaid = params.accommodationFeesPaid
+    params.totalTuitionFees = params.tuitionFees
+    params.tuitionFeesAlreadyPaid = params.tuitionFeesPaid
+
     return params
   }
 
   this.sendDailyBalanceRequest = function (obj) {
     var u = me.getDailyBalanceStatusUrl(obj)
     var params = me.getDailyBalanceParams(obj)
-    return IOService.get(u, params)
+    return IOService.get(u, params).then(function (results) {
+      if (results.data && _.has(results.data, 'fundingRequirementMet')) {
+        // [TODO] remove these they are only to support the old JAVA based UI-API
+        results.data.pass = results.data.fundingRequirementMet
+      }
+      return results
+    })
   }
 
   this.clearDailyBalanceResponse = function (obj) {

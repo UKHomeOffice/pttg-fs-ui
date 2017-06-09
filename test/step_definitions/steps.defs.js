@@ -122,11 +122,8 @@ var confirmContentById = function (d, data, timeoutLength) {
   var promises = []
   _.each(data, function (val, key) {
     var expectation = new Promise(function (resolve, reject) {
-      d.wait(until.elementLocated({id: key}), timeoutLength || 5 * 1000, 'TIMEOUT: Waiting for element #' + key).then(function () {
+      d.wait(until.elementLocated({id: key}), timeoutLength || 5 * 1000, 'TIMEOUT: Waiting for element #' + key).then(function (el) {
         // wait until driver has located the element
-        return d.findElement({id: key})
-      }).then(function (el) {
-        // element found
         return expect(el.getText()).to.eventually.equal(val)
       }).then(function (result) {
         // test OK
@@ -275,6 +272,11 @@ defineSupportCode(function ({Given, When, Then}) {
   Given('the api is unreachable', function (callback) {
     mockdata.stubHealthz(503)
     mockdata.stubIt(urls.threshold, '', 404)
+    callback()
+  })
+
+  Then('the api health check response has status {int}', function (int, callback) {
+    mockdata.stubHealthz(int)
     callback()
   })
 
@@ -479,8 +481,35 @@ defineSupportCode(function ({Given, When, Then}) {
     callback(null, 'pending')
   })
 
-  Then('the service has the following links', function (table, callback) {
-    callback(null, 'pending')
+  Then('the service has the following links', function (table) {
+    var promises = []
+    var errors = []
+    var test
+    var d = this.driver
+    _.each(table.rawTable, function (row, r) {
+      var key = toCamelCase(row[0])
+      var val = row[1]
+      var lnk = row[2]
+      var theElement
+      var expectation = d.wait(until.elementLocated({id: key}), 5000, 'TIMEOUT: Waiting for element #' + key).then(function (el) {
+        theElement = el
+        return el.getText()
+      }).then(function (txt) {
+        test = expect(txt).to.equal(val)
+        if (test !== true) {
+          errors.push(test)
+        }
+        return theElement.getAttribute('href')
+      }).then(function (href) {
+        test = expect(href).to.equal(lnk)
+        if (test !== true) {
+          errors.push(test)
+        }
+        return errors
+      })
+      promises.push(expectation)
+    })
+    return whenAllDone(promises)
   })
 
   Then('the service displays the following page content within {int} seconds', function (int, table) {
@@ -497,14 +526,6 @@ defineSupportCode(function ({Given, When, Then}) {
   })
 
   Then('the readiness response status should be {int}', function (int) {
-    return getHttp('http://localhost:8000/healthz').then(function (result) {
-      return expect(result.status).to.equal(int)
-    }, function (error) {
-      return expect(error.status).to.equal(int)
-    })
-  })
-
-  Then('the api health check response has status {int}', function (int) {
     return getHttp('http://localhost:8000/healthz').then(function (result) {
       return expect(result.status).to.equal(int)
     }, function (error) {

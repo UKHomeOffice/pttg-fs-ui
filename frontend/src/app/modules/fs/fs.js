@@ -116,6 +116,11 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       params.tuitionFeesPaid = 0
     }
 
+    // [TODO] remove these they are only to support the old JAVA based UI-API
+    params.accommodationFeesAlreadyPaid = params.accommodationFeesPaid
+    params.totalTuitionFees = params.tuitionFees
+    params.tuitionFeesAlreadyPaid = params.tuitionFeesPaid
+
     return params
   }
 

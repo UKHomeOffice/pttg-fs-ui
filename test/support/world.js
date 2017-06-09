@@ -1,4 +1,9 @@
+// require OUR APPLICATION THAT WE'RE TESTING
+require('../../server.js')
+//
+
 require('chromedriver')
+
 var mockdata = require('../step_definitions/mockdata')
 var reporter = require('cucumber-html-reporter')
 var seleniumWebdriver = require('selenium-webdriver')
@@ -21,7 +26,6 @@ if (shareBrowserInstances) {
 }
 
 function CustomWorld () {
-  console.log('CustomWorld')
   mockdata.clearAll()
 
   this.driver = shareBrowserInstances ? globalDriver : getNewBrowser(browserName)
@@ -39,7 +43,6 @@ function CustomWorld () {
 }
 
 defineSupportCode(function ({setWorldConstructor}) {
-  console.log('Define World')
   setWorldConstructor(CustomWorld)
 })
 

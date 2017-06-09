@@ -17,7 +17,7 @@ Feature: Add feedback header and 'feedback’ hyperlink to the tool
         Then the service displays the following page content
             | Beta messsage | This is a new service – your feedback will help us to improve it. |
         And the service has the following links
-            | feedback link | feedback | financialstatus@digital.homeoffice.gov.uk |
+            | feedback link | feedback | mailto:financialstatus@digital.homeoffice.gov.uk |
 
 ####
 
