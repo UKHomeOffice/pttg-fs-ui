@@ -16,3 +16,4 @@ bower_components
 node_modules
 **/webapp/*
 report
+shrinkwrap.yaml

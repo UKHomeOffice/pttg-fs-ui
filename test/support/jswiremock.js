@@ -4,6 +4,7 @@
 
 var express = require('express')
 var bodyParser = require('body-parser')
+var server
 
 var app = express()
 // app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -60,7 +61,14 @@ exports.jswiremock = function (port) {
         res.set(key, returnedStub.getMockResponse().getHeader()[key])
       }
       res.status(returnedStub.getMockResponse().getStatus())
-      res.send(returnedStub.getMockResponse().getBody())
+      var delay = returnedStub.getMockResponse().getDelay()
+      if (delay) {
+        setTimeout(function () {
+          res.send(returnedStub.getMockResponse().getBody())
+        }, delay)
+      } else {
+        res.send(returnedStub.getMockResponse().getBody())
+      }
     } else {
       res.status(404)
       res.send('Does not exist')
@@ -72,7 +80,7 @@ exports.jswiremock = function (port) {
 
     if (returnedStub != null) {
             // TODO - ONLY VERIFY POST REQUEST PARAMS
-      for (key in returnedStub.getPostParams()) {
+      for (var key in returnedStub.getPostParams()) {
         if (req.body[key] != null) {
           if (req.body[key] === returnedStub.getPostParams()[key]) {
             continue
@@ -83,11 +91,18 @@ exports.jswiremock = function (port) {
         }
       }
 
-      for (var key in returnedStub.getMockResponse().getHeader()) {
+      for (key in returnedStub.getMockResponse().getHeader()) {
         res.set(key, returnedStub.getMockResponse().getHeader()[key])
       }
       res.status(returnedStub.getMockResponse().getStatus())
-      res.send(returnedStub.getMockResponse().getBody())
+      var delay = returnedStub.getMockResponse().getDelay()
+      if (delay) {
+        setTimeout(function () {
+          res.send(returnedStub.getMockResponse().getBody())
+        }, delay)
+      } else {
+        res.send(returnedStub.getMockResponse().getBody())
+      }
     } else {
       res.status(404)
       res.send('Does not exist')
@@ -181,6 +196,15 @@ function MockResponse () {
   }
   this.getHeader = function () {
     return this.header
+  }
+
+  this.delay = 0
+  this.withDelay = function (ms) {
+    this.delay = ms
+    return this
+  }
+  this.getDelay = function () {
+    return this.delay
   }
 }
 

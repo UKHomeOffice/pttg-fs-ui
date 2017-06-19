@@ -10,11 +10,16 @@ var moment = require('moment')
 
 var stdRelay = function (res, uri, qs) {
   request({uri: uri, qs: qs}, function (error, response, body) {
+    var status = (response && response.statusCode) ? response.statusCode : 500
+    if ((body === '' || body === '""') && status === 200) {
+      status = 500
+    }
     res.setHeader('Content-Type', 'application/json')
-    res.status((response && response.statusCode) ? response.statusCode : 500)
+    res.status(status)
     res.send(body)
 
     // console.log('\n')
+    // console.log(status)
     // console.log(uri)
     // console.log(body)
     // console.log('\n')
@@ -73,9 +78,9 @@ app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus'
       req.query.fromDate = moment(req.query.endDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
       stdRelay(res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
     } catch (e) {
-      console.log('ERROR:')
-      console.log(e)
-      console.log(body)
+      // console.log('ERROR:')
+      // console.log(e)
+      // console.log(body)
       res.status(500)
       res.send()
     }

@@ -17,17 +17,19 @@ exports = module.exports = {
     stubFor(this.jswm, get(urlEqualTo('/healthz')).willReturn(res))
   },
 
-  stubIt: function (u, data, status) {
+  stubIt: function (u, data, status, delay) {
     var res = aResponse()
+    res.withDelay(delay || 0)
     res.withStatus(status || 200)
     res.withHeader({'Content-Type': 'application/json'})
     res.withBody(JSON.stringify(data))
     stubFor(this.jswm, get(urlEqualTo(u)).willReturn(res))
   },
 
-  stubItFile: function (u, file, status) {
+  stubItFile: function (u, file, status, delay) {
     // console.log('stubItFile', u, file)
     var res = aResponse()
+    res.withDelay(delay || 0)
     res.withStatus(status || 200)
     res.withHeader({'Content-Type': 'application/json'})
     if (file) {

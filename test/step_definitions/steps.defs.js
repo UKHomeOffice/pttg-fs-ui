@@ -281,11 +281,13 @@ defineSupportCode(function ({Given, When, Then}) {
   })
 
   Given('the api response is empty', function (callback) {
-    callback(null, 'pending')
+    mockdata.stubIt(urls.threshold, '', 200)
+    callback()
   })
 
-  Given('the api response is delayed for {int} seconds', function (int, callback) {
-    callback(null, 'pending')
+  Given('the api response is delayed for {int} seconds', {timeout: 60000}, function (int, callback) {
+    mockdata.stubItFile(urls.threshold, 'threshold-t4.json', 200, int * 1000)
+    callback()
   })
 
   Given('the api response is garbage', function (callback) {
@@ -303,7 +305,7 @@ defineSupportCode(function ({Given, When, Then}) {
 
   Given(/^the api response is a validation error - (.+) parameter$/, function (ref, callback) {
     mockdata.stubItFile(urls.threshold, 'validation-error-' + ref + '.json', 400)
-    callback(null, 'pending')
+    callback()
   })
 
   Given('the account does not have sufficient funds', function (callback) {
@@ -381,7 +383,7 @@ defineSupportCode(function ({Given, When, Then}) {
     })
   })
 
-  When('the financial status check is performed', function () {
+  When('the financial status check is performed', {timeout: 10 * 1000}, function () {
     var d = this.driver
     var data = expandFields(_.defaults(this.defaults))
     return completeInputs(d, data).then(function () {
@@ -389,7 +391,7 @@ defineSupportCode(function ({Given, When, Then}) {
     })
   })
 
-  When('the financial status check is performed with', function (table) {
+  When('the financial status check is performed with', {timeout: 10 * 1000}, function (table) {
     var d = this.driver
     var data = expandFields(_.defaults(toCamelCaseKeys(_.object(table.rawTable)), this.defaults))
     return completeInputs(d, data).then(function () {
@@ -478,7 +480,7 @@ defineSupportCode(function ({Given, When, Then}) {
   })
 
   Then('the copied text includes', function (table, callback) {
-    callback(null, 'pending')
+    callback()
   })
 
   Then('the service has the following links', function (table) {
@@ -512,7 +514,7 @@ defineSupportCode(function ({Given, When, Then}) {
     return whenAllDone(promises)
   })
 
-  Then('the service displays the following page content within {int} seconds', function (int, table) {
+  Then('the service displays the following page content within {int} seconds', {timeout: 20000}, function (int, table) {
     var data = toCamelCaseKeys(_.object(table.rawTable))
     return confirmContentById(this.driver, data, int * 1000)
   })

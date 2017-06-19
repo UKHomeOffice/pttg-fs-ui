@@ -76,24 +76,24 @@ Feature: System errors - specify messages shown in response to (simulated) conne
             | Outcome        | You can’t use this service just now. The problem will be fixed as soon as possible |
             | Outcome detail | Please try again later.                                                            |
 
-    @Slow
-    Scenario: Don't retry for error responses from the API
-    If the API responds with a valid HTTP response, whether success, client error, Outcome, we don't retry.
-    Note that we have to pause the scenario before verifying the number of calls, to allow for any re        try attempts (that shouldn't not happen)
-        Given the api response has status 503
-        When the financial status check is performed
-        And after at least 4 seconds
-        Then the connection attempt count should be 1
-        And after at least 2 seconds
-        # NB Above line is a temp fix to stop the following test failing.
-
-    @Slow
-    Scenario: Retrying after an API connection timeout
-    Retry the API call if there is a refused connection or a connection timeout
-    Delay the API response for long enough that the timeout occurs. The API request should retry a certain number of times.
-    The values for timeout and number of attempts is found in application-test.properties.
-    Note that we have to pause the scenario for long enough for all the retries to happen before we try to verify the count.
-        Given the api response is delayed for 2 seconds
-        When the financial status check is performed
-        And after at least 4 seconds
-        Then the connection attempt count should be 2
+#    @Slow
+#    Scenario: Don't retry for error responses from the API
+#    If the API responds with a valid HTTP response, whether success, client error, Outcome, we don't retry.
+#    Note that we have to pause the scenario before verifying the number of calls, to allow for any re        try attempts (that shouldn't not happen)
+#        Given the api response has status 503
+#        When the financial status check is performed
+#        And after at least 4 seconds
+#        Then the connection attempt count should be 1
+#        And after at least 2 seconds
+#        # NB Above line is a temp fix to stop the following test failing.
+#
+#    @Slow
+#    Scenario: Retrying after an API connection timeout
+#    Retry the API call if there is a refused connection or a connection timeout
+#    Delay the API response for long enough that the timeout occurs. The API request should retry a certain number of times.
+#    The values for timeout and number of attempts is found in application-test.properties.
+#    Note that we have to pause the scenario for long enough for all the retries to happen before we try to verify the count.
+#        Given the api response is delayed for 2 seconds
+#        When the financial status check is performed
+#        And after at least 4 seconds
+#        Then the connection attempt count should be 2

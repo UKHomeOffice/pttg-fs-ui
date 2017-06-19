@@ -3,29 +3,44 @@ require('../../server.js')
 //
 
 require('chromedriver')
+require('geckodriver')
 
 var mockdata = require('../step_definitions/mockdata')
 var reporter = require('cucumber-html-reporter')
 var seleniumWebdriver = require('selenium-webdriver')
+var chrome = require('selenium-webdriver/chrome')
 var {defineSupportCode} = require('cucumber')
 var globalDriver
+var path = require('path')
+var reportPath = path.resolve('report/')
 
 // config
 var usePhantomJS = false
 var shareBrowserInstances = true
 //
 
-var browserName = usePhantomJS ? 'phantomjs' : 'chrome'
+var browserName = 'chrome'// usePhantomJS ? 'phantomjs' : 'chrome'
 
 var getNewBrowser = function (name) {
-  return new seleniumWebdriver.Builder().forBrowser(name).build()
+  var builder = new seleniumWebdriver.Builder()
+  var opts = new chrome.Options()
+  opts.addArguments('headless')
+  opts.addArguments('disable-extensions')
+  opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
+  builder.setChromeOptions(opts)
+
+  var forBrowser = builder.forBrowser(name)
+
+  var driver = forBrowser.build()
+  driver.manage().window().setSize(1280, 1024)
+  return driver
 }
 
 if (shareBrowserInstances) {
   globalDriver = getNewBrowser(browserName)
 }
 
-function CustomWorld () {
+function CustomWorld (done) {
   mockdata.clearAll()
 
   this.driver = shareBrowserInstances ? globalDriver : getNewBrowser(browserName)
@@ -40,6 +55,7 @@ function CustomWorld () {
     courseInstitution: 'Yes',
     dob: '13/05/1974'
   }
+  this.driver.get('http://127.0.0.1:8000/#!/fs/').then(done)
 }
 
 defineSupportCode(function ({setWorldConstructor}) {
@@ -47,11 +63,13 @@ defineSupportCode(function ({setWorldConstructor}) {
 })
 
 defineSupportCode(function ({registerHandler}) {
+  //
   registerHandler('AfterFeatures', function (features, callback) {
+    globalDriver.close()
     var options = {
       theme: 'foundation',
-      jsonFile: 'report/cucumber_report.json',
-      output: 'report/cucumber_report.html',
+      jsonFile: path.resolve(path.join(reportPath, 'cucumber_report.json')),
+      output: path.resolve(path.join(reportPath, 'cucumber_report.html')),
       reportSuiteAsScenarios: true,
       launchReport: true,
       metadata: {
