@@ -24,6 +24,6 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | Account holder name  | Laura Taylor |
             | Total funds required | <Funds>      |
         Examples:
-            | Tier | Applicant | Funds     |
-            | 2    | main      | £945.00   |
-            | 5    | dependant | £1,575.00 |
+            | Tier | Applicant | Funds   |
+            | 2    | main      | £945.00 |
+            | 2    | dependant | £945.00 |

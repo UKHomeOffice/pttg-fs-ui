@@ -68,11 +68,9 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
   $scope.submit = function (valid) {
     if (valid) {
       FsBankService.sendConsentRequest($scope.fs).then(function (data) {
-        // console.log('FsGetConsentCtrl $scope.submit', data)
         $scope.fs.consentResponse = data
         $state.go('fsGetConsentResult')
       }, function (data) {
-        // console.log('FsGetConsentCtrl $scope.submit err', data)
         $scope.fs.consentResponse = data
         $state.go('fsGetConsentResult')
       })
@@ -129,16 +127,4 @@ fsModule.controller('FsGetConsentResultCtrl', ['$scope', '$state', 'FsService', 
 
       $scope.doNext = [FsInfoService.t('checkDataEntry')]
   }
-
-  // var t = Number($state.params.tier)
-  // var fs = FsService.getApplication()
-  // $scope.tier = FsInfoService.getTier(t)
-  // if (_.has(fs.consentResponse, 'data') && fs.consentResponse.data.consent === 'FAILURE') {
-  //   $scope.outcome = FsInfoService.t('consentDenied')
-  //   $scope.outcomeDetail = FsInfoService.t('consentDeniedReason')
-  // } else {
-  //   $scope.outcome = FsInfoService.t('inaccessibleaccount')
-  //   $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
-  //   $scope.criteria = FsService.getConsentCriteria(fs)
-  // }
 }])

@@ -4,6 +4,7 @@ var expect = chai.expect
 var _ = require('underscore')
 var seleniumWebdriver = require('selenium-webdriver')
 var until = seleniumWebdriver.until
+var Keys = seleniumWebdriver.keys
 var By = seleniumWebdriver.By
 var {defineSupportCode} = require('cucumber')
 var mockdata = require('./mockdata')
@@ -21,7 +22,8 @@ var radioElements = {
   inLondon: [{
     key: 'yes',
     value: 'Yes'
-  }, {
+  },
+  {
     key: 'no',
     value: 'No'
   }],
@@ -29,21 +31,24 @@ var radioElements = {
     {
       key: 'pre-sessional',
       value: 'Pre-sessional'
-    }, {
+    },
+    {
       key: 'main',
       value: 'Main course degree or higher'
     }],
-  courseInstitution: [{
+  continuationCourse: [{
     key: 'yes',
     value: 'Yes'
-  }, {
+  },
+  {
     key: 'no',
     value: 'No'
   }],
-  continuationCourse: [{
+  courseInstitution: [{
     key: 'true',
     value: 'Recognised body or HEI'
-  }, {
+  },
+  {
     key: 'false',
     value: 'Other institution'
   }]
@@ -208,14 +213,17 @@ var expandFields = function (obj) {
 
 var selectRadio = function (d, key, val) {
   var rID = key + '-' + val.toLowerCase() + '-label'
+  // console.log('selectRadio', rID)
+  var elem
   return d.findElement({id: rID}).then(function (el) {
-    return el.click().then(function (result) {
-      return true
-    }, function () {
-      return false
-    })
-  }, function () {
+    elem = el
+    // return el.SendKeys(Keys.Return)
+    return el.click()
+  }).then(function (result) {
     return true
+  }, function (err) {
+    // console.log('NOT CLICKED', key, val, elem, err)
+    return false
   })
 }
 
@@ -230,6 +238,7 @@ var inputEnterText = function (d, key, val) {
 }
 
 var completeInput = function (d, key, val) {
+  // console.log('completeInput', key, val)
   if (isRadio(key)) {
     return selectRadio(d, key, val)
   }
@@ -343,7 +352,7 @@ defineSupportCode(function ({Given, When, Then}) {
     callback()
   })
 
-  Given('caseworker is using the financial status service ui', function () {
+  Given('caseworker is using the financial status service ui', {timeout: 10 * 1000}, function () {
     var d = this.driver
 
     return d.get('http://127.0.0.1:8000/#!/fs/').then(function () {
@@ -376,7 +385,7 @@ defineSupportCode(function ({Given, When, Then}) {
     })
   })
 
-  When(/^caseworker is on page (.+)$/, function (str) {
+  When(/^caseworker is on page (.+)$/, {timeout: 10 * 1000}, function (str) {
     var d = this.driver
     return d.get('http://127.0.0.1:8000/#!/fs/' + str).then(function () {
       return d.navigate().refresh()

@@ -210,5 +210,19 @@ describe('app: hod.proving', function () {
         expect(fsi.t('notPassed')).toEqual('Not passed')
       })
     })
+
+    describe('variantFirst', function () {
+      it('should determine if variant should be shown before applicant type', function () {
+        var dummyTier = {variants: [{
+          label: 'test1', fields: ['*default', '*courses', '*t4all', 'dependants']
+        }, {
+          label: 'test2', fields: ['*default', '*courses', '*t4all', 'dependants']
+        }]}
+        expect(fsi.variantFirst(dummyTier)).toBeFalsy()
+
+        dummyTier.variants[1].fields = ['*default', '*courses']
+        expect(fsi.variantFirst(dummyTier)).toBeTruthy()
+      })
+    })
   })
 })

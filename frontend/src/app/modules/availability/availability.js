@@ -65,7 +65,6 @@ availabilityModule.directive('hodAvailability', ['$rootScope', 'IOService', 'Ava
         }
 
         $rootScope.$on('testAvailability', function () {
-          console.log('testAvailability')
           testAvailability()
         })
 

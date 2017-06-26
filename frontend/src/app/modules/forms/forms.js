@@ -265,7 +265,6 @@ formsModule.factory('FormsService', ['$rootScope', 'FormValidatorsService', func
         return
       }
       if (o.error && o.error.msg) {
-        // console.log('ERROR', o.error)
         errcount++
         ga('send', 'event', formScope.name, 'validation', o.config.id)
       }
@@ -342,7 +341,7 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
             obj.displayError = ''
           } else if (obj.error.msg === '') {
             // NO ERROR MESSAGE?
-            return
+
           } else {
             // show the message within the component
             obj.displayError = obj.error.msg
@@ -384,7 +383,6 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
       $scope.submitForm = function () {
         var isValid = (me.validateForm() === 0)
-        // console.log('submitForm', $scope)
         FormsService.trackFormSubmission($scope)
 
         if (isValid) {
@@ -461,7 +459,6 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
             }
           }
         }, scope.config)
-        // console.log(scope.config)
         //
         formCtrl.addObj(scope)
 

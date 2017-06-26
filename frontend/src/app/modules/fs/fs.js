@@ -47,16 +47,27 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   - wether or not a bank check is required
   */
   this.setKnownParamsFromState = function (obj, stateParams) {
-    obj.tier = Number(stateParams.tier) // tier 4
+    // TIER
+    obj.tier = Number(stateParams.tier)
+    var tier = FsInfoService.getTier(obj.tier)
+    obj.variantFirst = FsInfoService.variantFirst(tier)
 
+    // if the variantType question was asked first then swap stateparams variantType and applicantType
+    var aType = (obj.variantFirst) ? stateParams.variantType : stateParams.applicantType
+    var vType = (obj.variantFirst) ? stateParams.applicantType : stateParams.variantType
+
+    // STATUS or CALC
     obj.doCheck = (stateParams.statusOrCalc === 'status')
 
-    obj.applicantType = (stateParams.applicantType === 'dependant') ? 'dependant' : 'main'
-    obj.dependantsOnly = (stateParams.applicantType === 'dependant')
+    //
+    obj.applicantType = (aType === 'dependant') ? 'dependant' : 'main'
+    obj.dependantsOnly = (aType === 'dependant')
 
-    var v = FsInfoService.getVariant(obj.tier, stateParams.variantType)
-    obj.variantType = (v) ? stateParams.variantType : null
+    //
+    var v = FsInfoService.getVariant(obj.tier, vType)
+    obj.variantType = (v) ? vType : null
 
+    // cancel these if not a bank checking route
     if (!obj.doCheck) {
       obj.sortCode = ''
       obj.accountNumber = ''
@@ -264,7 +275,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
 
     if (obj.variantType) {
       criteria.studentType = {
-        label: 'Student type',
+        label: tier.variantTypesLabel || 'Variant type',
         display: variant.label
       }
     }

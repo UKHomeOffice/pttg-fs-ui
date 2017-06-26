@@ -71,8 +71,16 @@ describe('app: hod.proving', function () {
             result: { tier: 4, doCheck: true, applicantType: 'dependant', variantType: 'general', dependantsOnly: true }
           },
           {
-            source: { tier: 5, statusOrCalc: 'calc', applicantType: 'dependant', variantType: 'details' },
-            result: { tier: 5, doCheck: false, applicantType: 'dependant', variantType: null, dependantsOnly: true }
+            source: { tier: 5, statusOrCalc: 'calc', applicantType: 'temp', variantType: 'main' },
+            result: { tier: 5, doCheck: false, applicantType: 'main', variantType: 'temp', dependantsOnly: false }
+          },
+          {
+            source: { tier: 5, statusOrCalc: 'calc', applicantType: 'temp', variantType: 'dependant' },
+            result: { tier: 5, doCheck: false, applicantType: 'dependant', variantType: 'temp', dependantsOnly: true }
+          },
+          {
+            source: { tier: 5, statusOrCalc: 'calc', applicantType: 'youth', variantType: 'main' },
+            result: { tier: 5, doCheck: false, applicantType: 'main', variantType: 'youth', dependantsOnly: false }
           }
         ]
 
@@ -84,6 +92,7 @@ describe('app: hod.proving', function () {
           expect(obj.variantType).toEqual(data.result.variantType)
           expect(obj.dependantsOnly).toEqual(data.result.dependantsOnly)
           expect(obj.doCheck).toEqual(data.result.doCheck)
+          expect(obj.variantFirst).toEqual(data.source.tier === 5)
         })
       })
 

@@ -36,7 +36,7 @@ Feature: Process 'pending' status and display the appropriate output page
         Examples:
             | Tier | Applicant |
             | 2    | main      |
-            | 5    | dependant |
+            | 2    | dependant |
 
 
 ## 'Pending' consent status followed by 'SUCCESS' ##
@@ -65,4 +65,4 @@ Feature: Process 'pending' status and display the appropriate output page
         Examples:
             | Tier | Applicant |
             | 2    | main      |
-            | 5    | dependant |
+            | 2    | dependant |

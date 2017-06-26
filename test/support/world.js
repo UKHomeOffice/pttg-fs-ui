@@ -15,24 +15,24 @@ var path = require('path')
 var reportPath = path.resolve('report/')
 
 // config
-var usePhantomJS = false
 var shareBrowserInstances = true
-//
-
 var browserName = 'chrome'// usePhantomJS ? 'phantomjs' : 'chrome'
+var headless = true
+var showReport = false
+//
 
 var getNewBrowser = function (name) {
   var builder = new seleniumWebdriver.Builder()
   var opts = new chrome.Options()
-  opts.addArguments('headless')
+  if (headless) opts.addArguments('headless')
   opts.addArguments('disable-extensions')
-  opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
+  // opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
   builder.setChromeOptions(opts)
 
   var forBrowser = builder.forBrowser(name)
 
   var driver = forBrowser.build()
-  driver.manage().window().setSize(1280, 1024)
+  // driver.manage().window().setSize(1280, 1024)
   return driver
 }
 
@@ -65,7 +65,7 @@ defineSupportCode(function ({setWorldConstructor}) {
 defineSupportCode(function ({registerHandler}) {
   //
   registerHandler('AfterFeatures', function (features, callback) {
-    globalDriver.close()
+    // globalDriver.close()
     var options = {
       theme: 'foundation',
       jsonFile: path.resolve(path.join(reportPath, 'cucumber_report.json')),
@@ -82,7 +82,7 @@ defineSupportCode(function ({registerHandler}) {
       }
     }
 
-    reporter.generate(options)
+    if (showReport) reporter.generate(options)
     callback()
   })
 })

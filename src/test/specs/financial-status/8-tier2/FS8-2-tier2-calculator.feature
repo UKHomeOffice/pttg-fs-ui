@@ -37,8 +37,8 @@ Feature: Total Funds Required Calculation - Tier 2 (General) (single current acc
         When the financial status check is performed with
             | Dependants | 1 |
         Then the service displays the following result
-            | Outcome              | £630.00 |
-            | Total funds required | £630.00 |
+            | Outcome              | £945.00 |
+            | Total funds required | £945.00 |
             | Dependants           | 1       |
 
 
@@ -50,8 +50,8 @@ Feature: Total Funds Required Calculation - Tier 2 (General) (single current acc
         When the financial status check is performed with
             | Dependants | 1 |
         Then the service displays the following result
-            | Outcome                | £1575.00 |
-            | Total funds required   | £1575.00 |
+            | Outcome                | £945.00 |
+            | Total funds required   | £945.00 |
             | Dependants             | 1        |
 
 

@@ -56,16 +56,38 @@ Feature: Route selection screen inputs - All tiers
     Scenario: Caseworker selects Tier 5
         When caseworker is on page t5/application/status
         Then the service displays the following page content
-            | Temp | Temporary Worker | #
-            | Youth | Youth Mobility Scheme | #
+            | Temp  | Temporary Worker      |
+            | Youth | Youth Mobility Scheme |
 
-    Scenario: Caseworker selects Tier 5 temporary worker #
-        When caseworker is on page t5/application/status/temp #
-        Then the service displays the following page content #
-            | Main Applicant | Main applicant  | #
-            | Dependant Only | Dependants only | #
+    Scenario: Caseworker selects Tier 5 temporary worker
+        When caseworker is on page t5/application/status/temp
+        Then the service displays the following page content
+            | Main Applicant | Main applicant  |
+            | Dependant Only | Dependants only |
 
 
-    Scenario: Caseworker selects Tier 5 youth mobility #
-        When caseworker is on page t5/application/status/youth #
-        Then the service should open the youth mobility input form #
+    Scenario: Caseworker selects Tier 5 youth mobility
+        When caseworker is on page t5/application/status/youth
+        Then the service displays the following page content
+            | Page Subtitle | Tier 5 application (main applicant) |
+
+    Scenario Outline: Routes to form pages
+        When caseworker is on page <Page>
+        Then the service displays the following page content
+            | Page Subtitle | <Subtitle> |
+        Examples:
+            | Page                                    | Subtitle                                 |
+            | t2/application/status/main/details      | Tier 2 application (main applicant)      |
+            | t2/application/status/dependant/details | Tier 2 application (dependant applicant) |
+            | t4/application/status/main/general      | Tier 4 application (main applicant)      |
+            | t4/application/status/dependant/general | Tier 4 application (dependant applicant) |
+            | t4/application/status/main/pgdd         | Tier 4 application (main applicant)      |
+            | t4/application/status/dependant/pgdd    | Tier 4 application (dependant applicant) |
+            | t4/application/status/main/des          | Tier 4 application (main applicant)      |
+            | t4/application/status/dependant/des     | Tier 4 application (dependant applicant) |
+            | t4/application/status/main/suso         | Tier 4 application (main applicant)      |
+            | t4/application/status/dependant/suso    | Tier 4 application (dependant applicant) |
+            | t5/application/status/temp/main         | Tier 5 application (main applicant)      |
+            | t5/application/status/temp/dependant    | Tier 5 application (dependant applicant) |
+            | t5/application/status/youth             | Tier 5 application (main applicant)      |
+            | t5/application/status/youth/main        | Tier 5 application (main applicant)      |

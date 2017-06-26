@@ -63,6 +63,7 @@ fsModule.factory('FsInfoService', [ function () {
         label: 'Tier 4',
         nDaysRequired: 28,
         dependantsOnlyOption: true,
+        variantTypesLabel: 'Student type',
         variants: [{
           value: 'general',
           label: 'General student',
@@ -92,40 +93,28 @@ fsModule.factory('FsInfoService', [ function () {
         tier: 2,
         label: 'Tier 2',
         nDaysRequired: 90,
-      // types: [{
-      //   value: 'main',
-      //   label: 'Main applicant (with & without dependants)',
-      //   full: 'Main applicant (with & without dependants)',
-      //   fields: ['*default', 'dependants']
-      // },
-      // {
-      //   value: 'dependant',
-      //   label: 'Dependants only',
-      //   full: 'Dependants only',
-      //   fields: ['*default', 'dependants']
-      // }],
         defaultFields: ['*default', 'dependants'],
-        variants: []
+        variants: [],
+        dependantsOnly: true
       },
       {
         tier: 5,
         label: 'Tier 5',
         nDaysRequired: 90,
-      // variants: [{
-      //   value: 'main',
-      //   label: 'Main applicant (with & without dependants)',
-      //   full: 'Main applicant (with & without dependants)',
-      //   fields: ['*default', 'dependants']
-      // },
-      // {
-      //   value: 'dependant',
-      //   label: 'Dependants only',
-      //   full: 'Dependants only',
-      //   fields: ['*default', 'dependants'],
-      //   dependantsOnly: true
-      // }]
-        defaultFields: ['*default', 'dependants'],
-        variants: []
+        variants: [{
+          value: 'temp',
+          label: 'Temporary Worker',
+          full: 'Temporary Worker (with & without dependants)',
+          fields: ['*default', 'dependants'],
+          dependantsOnlyOption: true
+        },
+        {
+          value: 'youth',
+          label: 'Youth Mobility Scheme',
+          full: 'Youth Mobility Scheme',
+          fields: ['*default'],
+          dependantsOnlyOption: false
+        }]
       }]
   }
 
@@ -283,6 +272,12 @@ fsModule.factory('FsInfoService', [ function () {
       return me.text[ref]
     }
     return ''
+  }
+
+  this.variantFirst = function (tier) {
+    return !_.every(tier.variants, function (v) {
+      return (v.fields.indexOf('dependants') >= 0)
+    })
   }
 
   return this

@@ -16,12 +16,13 @@ Feature: Edit search button to return UI populated with current values (for all 
             | In London               | No         |
             | Course Start Date       | 30/05/2016 |
             | Course End Date         | 29/07/2016 |
-            | Tuition fees            | 3000       |
-            | Tuition fees paid       | 2000       |
-            | Accommodation fees paid | 100        |
-            | Continuation course     | No         |
             | Course type             | main       |
             | Course institution      | true       |
+            | Tuition fees            | 3000       |
+            | Tuition fees paid       | 2000       |
+            | Continuation course     | No         |
+
+            | Accommodation fees paid | 100        |
         When the edit search button is clicked
         Then the inputs will be populated with
             | End Date                | 01/05/2016 |

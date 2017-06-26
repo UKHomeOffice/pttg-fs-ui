@@ -21,8 +21,6 @@ ioModule.factory('IOService', ['$http', '$state', 'CONFIG', function ($http, $st
 
     return new Promise(function (resolve, reject) {
       return $http.get(CONFIG.api + url, conf).then(function (result) {
-        // console.log('\nIO.get RESULT', url)
-        // console.log(result)
         resolve(result)
       }, function (err) {
         reject(err)

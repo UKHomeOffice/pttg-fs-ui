@@ -115,7 +115,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
     courseInstitution: FsInfoService.getFieldInfo('courseInstitution'),
     continuationCourse: angular.extend(FsInfoService.getFieldInfo('continuationCourse'), {
       onClick: function (opt, scope) {
-        console.log('onClick', opt)
         if (opt.value !== 'yes') {
           var fs = FsService.getApplication()
           fs.originalCourseStartDate = ''
@@ -257,7 +256,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
   })
 
   // the fields listed as required for this route should NOT be hidden
-  console.log($scope.fields)
   _.each($scope.fields, function (f) {
     $scope.conf[f].hidden = false
   })
@@ -267,7 +265,6 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       var doThresholdStuff = function () {
         FsService.clearThresholdResponse(fs)
         FsService.sendThresholdRequest(fs).then(function (data) {
-          // console.log('sendThresholdRequest', data)
           data.responseTime = moment()
           fs.thresholdResponse = data
           $state.go('fsResult', $state.params)

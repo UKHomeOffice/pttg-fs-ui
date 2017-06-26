@@ -144,7 +144,6 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
     // send the consent API request
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
-      console.log('FsBankService.sendConsentRequest(fs)', data)
       fs.consentResponse = data
       if (data.data.consent === 'SUCCESS') {
         $scope.cancelTimer()
@@ -165,18 +164,14 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
 
   $scope.checkBalance = function () {
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
-      console.log('FsBankService.sendDailyBalanceRequest(fs)', data)
       fs.dailyBalanceResponse = data
       $scope.results = FsService.getResults(fs)
       var passed = FsBankService.passed(fs)
       if (passed) {
-        console.log('PASSED')
         $scope.render('PASSED')
       } else if (passed === false) {
-        console.log('NOTPASSED')
         $scope.render('NOTPASSED')
       } else {
-        console.log('NO RESULT', passed, typeof passed)
         $scope.showPassOrFail = false
       }
     }, function (err, data) {

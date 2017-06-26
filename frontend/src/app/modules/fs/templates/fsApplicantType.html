@@ -1,6 +1,18 @@
-<h1 class="heading-large form-title" tabindex="-1"><span class="heading-secondary">{{ tier.label }} application</span><span id="pageTitle">Type of application</span></h1>
+<div ng-if="!showVariant">
+  <h1 class="heading-large form-title" tabindex="-1"><span class="heading-secondary">{{ tier.label }} application</span><span id="pageTitle">Type of application</span></h1>
 
-<p>
-  <a ui-sref="fsVariantType({ applicantType: 'main' })" class="font-medium" id="mainApplicant">Main applicant</a> (with or without dependants)<br>
-  <a ui-sref="fsVariantType({ applicantType: 'dependant' })" class="font-medium" id="dependantOnly">Dependants only</a><br>
-</p>
+  <p>
+    <a ng-click="selectApplicantType('main')" class="font-medium" id="mainApplicant">Main applicant</a> (with or without dependants)<br>
+    <a ng-click="selectApplicantType('dependant')" class="font-medium" id="dependantOnly">Dependants only</a><br>
+  </p>
+</div>
+
+
+<div ng-if="showVariant">
+  <h1 class="heading-large form-title" tabindex="-1"><span class="heading-secondary">{{ tier.label }} application ({{ applicantType }} applicant)</span><span id="pageTitle">Type of application cont.</span></h1>
+  <ul>
+    <li ng-repeat="v in tier.variants">
+      <a ng-click="selectVariantType(v.value)" class="font-medium" id="{{ v.value }}">{{ v.label }}</a>
+    </li>
+  </ul>
+</div>

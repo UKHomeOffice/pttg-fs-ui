@@ -28,7 +28,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         Examples:
             | Tier | Applicant | Funds     |
             | 2    | main      | £945.00   |
-            | 5    | dependant | £1,575.00 |
+            | 2    | dependant | £945.00 |
 
 
         ## 'Failure' consent status received immediately when requesting consent (before the financial status check is performed) ##
@@ -47,7 +47,6 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
         Examples:
             | Tier      |
             | Tier two  |
-            | Tier five |
 
 
     Scenario: T4 Main applicant - Consent granted, balances API invoked and data received - display result page
