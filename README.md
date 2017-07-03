@@ -42,3 +42,5 @@ http://localhost:8001/metrics
 http://localhost:8001/trace
 
 > Request log traces
+
+./node_modules/.bin/cucumber.js -r test -f json:report/cucumber_report.json src/test/specs/financial-status/

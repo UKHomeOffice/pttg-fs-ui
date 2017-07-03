@@ -49,7 +49,7 @@ class Steps {
 
     def delay = 500
     def uiHost = "localhost"
-    def uiPort = 8001
+    def uiPort = 8000
     def uiRoot = "http://$uiHost:$uiPort/"
 
     def healthUriRegex = "/healthz"

@@ -86,6 +86,18 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.getDailyBalanceParams = function (obj) {
+    var params = {}
+    params.dob = obj.dob
+    // params.sortcode = obj.sortcode
+    // params.accountNumber = obj.accountNumber
+    params.toDate = obj.endDate
+    params.fromDate = obj.fromDate
+    params.minimum = obj.minimum
+
+    return params
+  }
+
+  this.getDailyBalanceParamsX = function (obj) {
     var fields = FsInfoService.getFieldsForObject(obj)
 
     var params = {}

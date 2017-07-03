@@ -67,6 +67,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var v = FsInfoService.getVariant(obj.tier, vType)
     obj.variantType = (v) ? vType : null
 
+    console.log('setKnownParamsFromState', obj.applicantType, obj.variantType)
     // cancel these if not a bank checking route
     if (!obj.doCheck) {
       obj.sortCode = ''
@@ -115,7 +116,8 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     // [TODO]
     if (obj.variantType) {
       params.studentType = obj.variantType
-      params.applicantType = obj.variantType
+      params.variantType = obj.variantType
+      params.applicantType = obj.applicantType
     } else {
       params.studentType = obj.applicantType
       params.applicantType = obj.applicantType
@@ -132,6 +134,8 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     params.totalTuitionFees = params.tuitionFees
     params.tuitionFeesAlreadyPaid = params.tuitionFeesPaid
 
+    console.log(params)
+
     return params
   }
 
@@ -139,6 +143,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.sendThresholdRequest = function (obj) {
     var u = me.getThresholdUrl(obj)
     var params = me.getThresholdParams(obj)
+    console.log(params)
     return IOService.get(u, params, { timeout: CONFIG.timeout })
   }
 

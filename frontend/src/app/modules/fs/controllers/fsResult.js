@@ -163,6 +163,10 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
   }
 
   $scope.checkBalance = function () {
+    var nDays = tier.nDaysRequired - 1
+    var endDate = moment(fs.endDate)
+    fs.fromDate = endDate.clone().subtract(nDays, 'days')
+    fs.minimum = $scope.threshold
     FsBankService.sendDailyBalanceRequest(fs).then(function (data) {
       fs.dailyBalanceResponse = data
       $scope.results = FsService.getResults(fs)

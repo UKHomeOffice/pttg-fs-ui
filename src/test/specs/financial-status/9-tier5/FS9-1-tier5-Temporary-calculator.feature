@@ -21,7 +21,7 @@ Feature: Total Funds Required Calculation - Tier 5 (Temporary) (single current a
     Scenario: Laura is a Tier 5 (temporary)
         Given caseworker is on page t5/application/calc/temp/main
         When the financial status check is performed with
-            | Dependants | 0 | #
+            | Dependants | 0 |
         Then the service displays the following result
             | Outcome              | £1,575.00 |
             | Total funds required | £1,575.00 |
