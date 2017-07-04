@@ -8,6 +8,10 @@ var request = require('request')
 var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 
+// required when running BDDs to force to root directory
+var path = require('path');
+process.chdir(path.resolve(__dirname));
+
 var stdRelay = function (res, uri, qs) {
   request({uri: uri, qs: qs}, function (error, response, body) {
     var status = (response && response.statusCode) ? response.statusCode : 500
