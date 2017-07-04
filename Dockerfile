@@ -18,8 +18,6 @@ COPY . /app
 
 RUN yum install -y bzip2
 RUN npm --loglevel warn install --only=dev
-RUN pwd
-RUN ls -la
 RUN ./node_modules/.bin/gulp
 RUN chmod a+x /app/run.sh
 

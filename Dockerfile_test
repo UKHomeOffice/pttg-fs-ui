@@ -16,6 +16,8 @@ RUN groupadd -r ${GROUP} && \
 COPY . /app
 
 
+RUN yum install -y bzip2
+RUN yum install -y fontconfig
 RUN npm --loglevel warn install --only=dev
 RUN ./node_modules/.bin/gulp
 RUN npm run test:unit
