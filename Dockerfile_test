@@ -1,0 +1,21 @@
+FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
+
+ENV USER pttg
+ENV GROUP pttg
+ENV NAME pttg-fs-ui
+
+ARG VERSION
+
+WORKDIR /app
+
+RUN groupadd -r ${GROUP} && \
+    useradd -r -g ${USER} ${GROUP} -d /app && \
+    mkdir -p /app && \
+    chown -R ${USER}:${GROUP} /app
+
+COPY . /app
+
+
+RUN npm --loglevel warn install --only=dev
+RUN ./node_modules/.bin/gulp
+RUN npm run test:unit
