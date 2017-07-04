@@ -9,7 +9,6 @@ pipeline:
       - docker build -t pttg-fs-ui .
     when:
       event: push
-      branch: master
 
   test:
     privileged: true
@@ -20,7 +19,6 @@ pipeline:
       - docker build -f Dockerfile_test -t test .
     when:
       event: push
-      branch: master
 
   push:
     image: docker:1.11
