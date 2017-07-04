@@ -16,7 +16,7 @@ RUN groupadd -r ${GROUP} && \
 
 COPY . /app
 
-RUN npm install phantom --save
+RUN aptitude install bzip2
 RUN npm --loglevel warn install --only=dev
 RUN pwd
 RUN ls -la
