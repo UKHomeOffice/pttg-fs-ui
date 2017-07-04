@@ -16,7 +16,8 @@ RUN groupadd -r ${GROUP} && \
 
 COPY . /app
 
-RUN aptitude install bzip2
+RUN apt-get update
+RUN apt-get install bzip2
 RUN npm --loglevel warn install --only=dev
 RUN pwd
 RUN ls -la
