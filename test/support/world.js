@@ -25,7 +25,7 @@ var getNewBrowser = function (name) {
   var builder = new seleniumWebdriver.Builder()
   var opts = new chrome.Options()
   if (headless) {
-      opts.addArguments(['headless', 'no-sandbox'])
+    opts.addArguments(['headless', 'no-sandbox'])
   }
   opts.addArguments('disable-extensions')
   // opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
