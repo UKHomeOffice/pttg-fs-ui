@@ -1,5 +1,6 @@
 FROM quay.io/ukhomeofficedigital/nodejs-base:v6.9.1
 
+ENV PTTG_API_ENDPOINT localhost
 ENV USER pttg
 ENV GROUP pttg
 ENV NAME pttg-fs-ui
@@ -9,7 +10,7 @@ ARG VERSION
 WORKDIR /app
 
 RUN groupadd -r ${GROUP} && \
-    useradd -r -g ${USER} ${GROUP} -d /app && \
+    useradd -r -g ${GROUP} ${USER} -d /app && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
 
@@ -20,4 +21,15 @@ RUN yum install -y bzip2
 RUN yum install -y fontconfig
 RUN npm --loglevel warn install --only=dev
 RUN ./node_modules/.bin/gulp
-RUN npm run test:unit
+
+COPY google-chrome.repo /etc/yum.repos.d/
+RUN yum install -y gnu-free-sans-fonts
+RUN yum install -y google-chrome-stable
+RUN yum install -y xorg-x11-server-Xvfb
+RUN chown -R ${USER}:${GROUP} /app
+RUN Xvfb -ac :99 -screen 0 1680x1050x24 &
+RUN export DISPLAY=:99
+
+USER pttg
+
+ENTRYPOINT /app/run-test.sh
