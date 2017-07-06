@@ -5,7 +5,9 @@
   "scripts": {
     "init": "npm install",
     "test": "snyk test && gulp test",
-    "bdd": "./node_modules/.bin/cucumber.js -f json:report/cucumber_report.json src/test/specs/financial-status -r test"
+    "test:all": "npm run test:unit && npm run test:bdd",
+    "test:unit": "gulp test",
+    "test:bdd": "./node_modules/.bin/cucumber.js -f json:report/cucumber_report.json src/test/specs/financial-status -r test"
   },
   "devDependencies": {
     "angular": "^1.5.8",

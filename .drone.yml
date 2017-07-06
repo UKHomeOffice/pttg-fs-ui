@@ -1,6 +1,6 @@
 pipeline:
 
-  pre-build:
+  build:
     privileged: true
     image: docker:1.11
     environment:
@@ -9,44 +9,31 @@ pipeline:
       - docker build -t pttg-fs-ui .
     when:
       event: push
-      branch: master
 
-  # my-build:
-  #   privileged: true
-  #   image: docker:1.11
-  #   environment:
-  #     - DOCKER_HOST=tcp://127.0.0.1:2375
-  #   commands:
-  #     - docker run --name pttg-fs-ui-build gradle-node build
-  #     - mkdir -p build/libs
-  #     - docker cp pttg-fs-ui-build:/work/build/libs/ build
-  #   when:
-  #     event: push
-  #     branch: master
-
-  my-docker-build:
+  test:
     privileged: true
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker build -t quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA} .
+      - docker build -f Dockerfile_test -t pttg-fs-ui-test .
+      - docker run pttg-fs-ui-test
     when:
       event: push
-      branch: master
 
-  image_to_quay:
+  push:
     image: docker:1.11
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
     when:
       event: push
       branch: master
 
-  predeploy:
+  get-kube-configuration-deployment::
     image: plugins/git
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -56,7 +43,7 @@ pipeline:
       event: [push, deployment]
       branch: master
 
-  deploy_to_dev:
+  deploy-to-dev:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -71,7 +58,7 @@ pipeline:
       event: push
       branch: master
 
-  deploy_to_test:
+  deploy-to-test:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -86,7 +73,7 @@ pipeline:
       event: deployment
       environment: test
 
-  deploy_to_preprod:
+  deploy-to-preprod:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
@@ -101,7 +88,7 @@ pipeline:
       event: deployment
       environment: preprod
 
-  deploy_to_prod:
+  deploy-to-prod:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
