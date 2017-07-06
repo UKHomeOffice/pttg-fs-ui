@@ -16,7 +16,8 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker build -f Dockerfile_test -t test .
+      - docker build -f Dockerfile_test -t pttg-fs-ui-test .
+      - docker run pttg-fs-ui-test
     when:
       event: push
 
