@@ -14,7 +14,6 @@ var sass = require('gulp-sass')
 var autoprefixer = require('gulp-autoprefixer')
 var htmlmin = require('gulp-htmlmin')
 var sourcemaps = require('gulp-sourcemaps')
-var nodemon = require('gulp-nodemon')
 
 // error function for plumber
 var onError = function (err) {
@@ -128,6 +127,8 @@ gulp.task('templateAndUglify', function () {
 })
 
 gulp.task('startwatch', function () {
+  var nodemon = require('gulp-nodemon')
+
   nodemon({
     script: 'server.js',
     ext: 'js',

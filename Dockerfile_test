@@ -19,7 +19,7 @@ COPY . /app
 
 RUN yum install -y bzip2
 RUN yum install -y fontconfig
-RUN npm --loglevel warn install --only=dev
+RUN npm --loglevel warn install
 RUN ./node_modules/.bin/gulp
 
 COPY google-chrome.repo /etc/yum.repos.d/

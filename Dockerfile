@@ -16,8 +16,7 @@ RUN groupadd -r ${GROUP} && \
 
 COPY . /app
 
-RUN yum install -y bzip2
-RUN npm --loglevel warn install --only=dev
+RUN npm --loglevel warn install --only=prod
 RUN ./node_modules/.bin/gulp
 RUN chmod a+x /app/run.sh
 
