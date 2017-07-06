@@ -27,8 +27,10 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:latest
       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:latest
     when:
       event: push
       branch: master
