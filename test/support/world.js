@@ -3,7 +3,6 @@ require('../../server.js')
 //
 
 require('chromedriver')
-require('geckodriver')
 
 var mockdata = require('../step_definitions/mockdata')
 var reporter = require('cucumber-html-reporter')
