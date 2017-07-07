@@ -18,7 +18,6 @@ COPY . /app
 
 
 RUN npm --loglevel warn install
-RUN ./node_modules/.bin/gulp
 
 RUN chown -R ${USER}:${GROUP} /app
 
