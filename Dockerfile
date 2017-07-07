@@ -14,9 +14,10 @@ RUN groupadd -r ${GROUP} && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
 
-COPY . /app
-
 RUN npm --loglevel warn install --only=prod
+COPY . /app
+RUN npm --loglevel warn run postinstall
+
 RUN chmod a+x /app/run.sh
 
 USER pttg

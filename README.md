@@ -55,5 +55,17 @@ Tests are run using Chrome in Headless mode, you need an up-to-date version of C
 
 Tests may be run in Chrome with a browser window by changing the `var headless = true` in the config section of the `features/support/world.js`
 
+### BDD Base image ###
+
+When running the tests in Docker the image built by Dockerfile_test is used. This installs all dependent node modules not just prod ones.
+
+This Docker image is based on a pttg shared image `pttg-bdd-base`. 
+`pttg-bdd-base` is based on the current  LTS version of node and the latest stable chrome version for chrome headless testing.
+
+Therefore to test against the latest version of node just rebuild the pttg-bdd-base project and the latest stable version of Chrome will be baked into the image.
+
+Furthermore, if updating the node version in this project it is best to also update the node version in `pttg-bdd-base` which is used when running the BDD tests.
+
+
 
 
