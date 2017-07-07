@@ -15,9 +15,9 @@ RUN groupadd -r ${GROUP} && \
     chown -R ${USER}:${GROUP} /app
 
 COPY . /app
-
 RUN npm --loglevel warn install --only=prod
-RUN ./node_modules/.bin/gulp
+RUN npm --loglevel warn run postinstall
+
 RUN chmod a+x /app/run.sh
 
 USER pttg
