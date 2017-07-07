@@ -9,8 +9,8 @@ var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 
 // required when running BDDs to force to root directory
-var path = require('path');
-process.chdir(path.resolve(__dirname));
+var path = require('path')
+process.chdir(path.resolve(__dirname))
 
 var stdRelay = function (res, uri, qs) {
   request({uri: uri, qs: qs}, function (error, response, body) {
@@ -39,7 +39,7 @@ var getDaysToCheck = function (t) {
   return (t === 't4') ? 28 : 90
 }
 
-app.use(serveStatic('src/main/webapp/', { 'index': ['index.html'] }))
+app.use(serveStatic('public/', { 'index': ['index.html'] }))
 
 app.listen(port, function () {
   console.log('The server is running on port:' + port)

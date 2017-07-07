@@ -1,5 +1,5 @@
-var target = 'src/main/webapp/'
-var sourcePath = 'frontend/src/'
+var target = 'public/'
+var sourcePath = 'src/'
 
 var gulp = require('gulp')
 var async = require('async')
@@ -153,4 +153,3 @@ gulp.task('build', ['assets', 'sass', 'minifyHtml', 'vendor', 'templateAndUglify
 gulp.task('watch', ['startwatch', 'vendor'])
 gulp.task('default', ['build'])
 gulp.task('inline', ['default', 'inlineHTML'])
-

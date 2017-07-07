@@ -13,10 +13,10 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/main/webapp/app/vendor.js',
+      'public/app/vendor.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'src/main/webapp/app/main.js',
-      'frontend/tests/*.test.js'
+      'public/app/main.js',
+      'src/tests/*.test.js'
     ],
 
     // list of files to exclude

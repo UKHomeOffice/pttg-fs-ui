@@ -33,7 +33,7 @@ exports = module.exports = {
     res.withStatus(status || 200)
     res.withHeader({'Content-Type': 'application/json'})
     if (file) {
-      res.withBody(fs.readFileSync('src/test/resources/test-data/' + file, 'utf8'))
+      res.withBody(fs.readFileSync('features/test-data/' + file, 'utf8'))
     }
     stubFor(this.jswm, get(urlEqualTo(u)).willReturn(res))
   },

@@ -6,6 +6,7 @@ target/*
 .idea
 .settings/*
 .gradle/*
+public
 target
 bin
 build
