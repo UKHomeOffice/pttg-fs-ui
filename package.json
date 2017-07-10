@@ -60,10 +60,9 @@
     "jasmine": "^2.5.2",
     "jasmine-core": "^2.6.4",
     "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
-    "karma-phantomjs-launcher": "^1.0.2",
     "karma-spec-reporter": "0.0.26",
-    "phantomjs-prebuilt": "~2.1.7",
     "selenium-webdriver": "^3.4.0",
     "snyk": "^1.19.1",
     "standard": "^10.0.2"
