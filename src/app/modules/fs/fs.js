@@ -67,7 +67,7 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     var v = FsInfoService.getVariant(obj.tier, vType)
     obj.variantType = (v) ? vType : null
 
-    console.log('setKnownParamsFromState', obj.applicantType, obj.variantType)
+    // console.log('setKnownParamsFromState', obj.applicantType, obj.variantType)
     // cancel these if not a bank checking route
     if (!obj.doCheck) {
       obj.sortCode = ''

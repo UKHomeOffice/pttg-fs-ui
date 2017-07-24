@@ -45,8 +45,6 @@ fsModule.controller('FsApplicantTypeCtrl', ['$scope', '$state', 'FsService', 'Fs
   var hasVariants = ($scope.tier.variants.length > 0)
   var variantFirst = FsInfoService.variantFirst($scope.tier)
 
-  console.log(fs)
-
   if (fs.variantType) {
     var v = FsInfoService.getVariant(t, fs.variantType)
     if (v.dependantsOnlyOption === false || $scope.tier.dependantsOnlyOption === false) {
