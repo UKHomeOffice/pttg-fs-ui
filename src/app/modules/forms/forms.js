@@ -360,6 +360,11 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
                 a = obj.config.id + 'Part1'
                 break
 
+              case 'radio':
+                console.log(obj)
+                a = obj.config.id + '-' + obj.options[0].value + '-label'
+                break
+
               default:
                 a = obj.config.id + '0'
             }
