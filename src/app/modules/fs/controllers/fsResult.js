@@ -47,6 +47,7 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
   $scope.timerScope = null
   $scope.doNext = []
 
+  // show hide blocks of text and set display strings as required
   $scope.render = function (state) {
     $scope.state = state
 
@@ -89,12 +90,14 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
     $rootScope.$broadcast('focusOnH1')
   }
 
+  // set the default status
   if (FsBankService.hasBankInfo(fs)) {
     $scope.render('PENDING')
   } else {
     $scope.render('CALCULATOR')
   }
 
+  //
   $scope.timerConf = {
     duration: 5000,
     onInit: function (timerScope) {
@@ -179,6 +182,7 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
         $scope.showPassOrFail = false
       }
     }, function (err, data) {
+      $scope.render('ERROR')
       console.log('FsResultCtrl $scope.checkBalance err', err, data)
     })
   }

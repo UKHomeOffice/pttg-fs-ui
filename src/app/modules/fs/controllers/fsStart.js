@@ -36,15 +36,3 @@ fsModule.controller('FsStartCtrl', ['$scope', '$state', 'FsService', 'FsInfoServ
   FsService.setKnownParamsFromState(fs, $state.params)
   $scope.tier = FsInfoService.getTier(fs.tier)
 }])
-
-fsModule.controller('FsNavCtrl', ['$rootScope', '$scope', '$state', '$location', 'FsService', 'FsInfoService', function ($rootScope, $scope, $state, $location, FsService, FsInfoService) {
-  $scope.tiers = FsInfoService.getTiers()
-  $scope.showDebug = ($location.host() === '127.0.0.1')
-  FsService.reset()
-  $scope.setBank = function (accountNumber) {
-    var fs = FsService.getApplication()
-    fs.accountNumber = accountNumber
-    fs.sortCode = '010616'
-    fs.dob = '1974-05-13'
-  }
-}])

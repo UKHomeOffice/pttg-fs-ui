@@ -134,8 +134,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
     params.totalTuitionFees = params.tuitionFees
     params.tuitionFeesAlreadyPaid = params.tuitionFeesPaid
 
-    console.log(params)
-
     return params
   }
 
@@ -143,7 +141,6 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
   this.sendThresholdRequest = function (obj) {
     var u = me.getThresholdUrl(obj)
     var params = me.getThresholdParams(obj)
-    console.log(params)
     return IOService.get(u, params, { timeout: CONFIG.timeout })
   }
 

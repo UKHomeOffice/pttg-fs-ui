@@ -1,7 +1,7 @@
 var express = require('express')
 var serveStatic = require('serve-static')
 var app = express()
-var apiRoot = process.env.API_ROOT || 'http://localhost:8080'
+var apiRoot = process.env.API_ROOT || 'http://localhost:8050'
 var uiBaseUrl = '/pttg/financialstatus/v1/'
 var apiBaseUrl = apiRoot + '/pttg/financialstatus/v1/'
 var request = require('request')
