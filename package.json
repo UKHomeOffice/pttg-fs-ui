@@ -9,7 +9,9 @@
     "test:unit": "gulp test",
     "test:bdd": "./node_modules/.bin/cucumber.js",
     "gulp": "gulp",
-    "postinstall": "npm run gulp"
+    "postinstall": "npm run gulp",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "angular": "^1.6.5",
@@ -43,7 +45,8 @@
     "require-dir": "^0.3.2",
     "run-sequence": "^1.2.2",
     "serve-static": "^1.12.3",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "snyk": "^1.27.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.6.4",
@@ -67,7 +70,7 @@
     "karma-spec-reporter": "0.0.26",
     "phantomjs-prebuilt": "~2.1.7",
     "selenium-webdriver": "^3.4.0",
-    "snyk": "^1.19.1",
     "standard": "^10.0.2"
-  }
+  },
+  "snyk": true
 }

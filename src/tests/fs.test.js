@@ -347,5 +347,63 @@ describe('app: hod.proving', function () {
         expect(fs.getEntireCourseLength(testObj)).toEqual(11)
       })
     })
+
+    describe('clearConditionCode', function () {
+      it('should clear the condition code data from the fs object', function () {
+        var testObj = { conditionCodeResponse: { somthing: 1, else: 2 } }
+        expect(_.keys(fs.clearConditionCode(testObj)).length).toEqual(0)
+      })
+    })
+
+    describe('hasConditionCodeInfo', function () {
+      it('should return true/false if condition code data is availabe', function () {
+        var testObj = { conditionCodeResponse: { data: 'something' } }
+        expect(fs.hasConditionCodeInfo(testObj)).toBeTruthy()
+        delete testObj.conditionCodeResponse.data
+        expect(fs.hasConditionCodeInfo(testObj)).toBeFalsy()
+      })
+    })
+
+    describe('getConditionCodeParams', function () {
+      it('should return basic params when the obj.variantType is NOT general', function () {
+        var testObj = { variantType: 'des', dependantsOnly: true, dependants: 5, something: 1, else: 2 }
+        var result = fs.getConditionCodeParams(testObj)
+        expect(_.keys(result).length).toEqual(3)
+        expect(result.studentType).toEqual(testObj.variantType)
+        expect(result.dependantsOnly).toEqual(testObj.dependantsOnly)
+        expect(result.dependants).toEqual(testObj.dependants)
+      })
+
+      it('should return more details for general student type', function () {
+        var testObj = {
+          variantType: 'general',
+          dependants: 1,
+          dependantsOnly: false,
+          courseType: 'main',
+          courseInstitution: 'something',
+          courseStartDate: '11/11/2011',
+          courseEndDate: '12/12/2012',
+          continuationCourse: 'no'
+        }
+
+        var result = fs.getConditionCodeParams(testObj)
+        expect(_.keys(result).length).toEqual(7)
+        expect(result.studentType).toEqual('general')
+        expect(result.dependants).toEqual(1)
+        expect(result.dependantsOnly).toBeFalsy()
+        expect(result.courseType).toEqual('main')
+        expect(result.recognisedBodyOrHEI).toEqual('something')
+        expect(result.courseStartDate).toEqual('11/11/2011')
+        expect(result.courseEndDate).toEqual('12/12/2012')
+
+        testObj.continuationCourse = 'yes'
+        testObj.originalCourseStartDate = '10/10/2010'
+
+        result = fs.getConditionCodeParams(testObj)
+        expect(_.keys(result).length).toEqual(7)
+        expect(result.courseStartDate).toEqual('10/10/2010')
+        expect(result.courseEndDate).toEqual('12/12/2012')
+      })
+    })
   })
 })
