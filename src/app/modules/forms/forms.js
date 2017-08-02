@@ -361,7 +361,6 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
                 break
 
               case 'radio':
-                console.log(obj)
                 a = obj.config.id + '-' + obj.options[0].value + '-label'
                 break
 
