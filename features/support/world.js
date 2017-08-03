@@ -5,7 +5,7 @@ require('../../server.js')
 require('chromedriver')
 
 var mockdata = require('../step_definitions/mockdata')
-var reporter = require('cucumber-html-reporter')
+
 var seleniumWebdriver = require('selenium-webdriver')
 var chrome = require('selenium-webdriver/chrome')
 var {defineSupportCode} = require('cucumber')
@@ -83,7 +83,10 @@ defineSupportCode(function ({registerHandler}) {
       }
     }
 
-    if (showReport) reporter.generate(options)
+    if (showReport) {
+      var reporter = require('cucumber-html-reporter')
+      reporter.generate(options)
+    }
     callback()
   })
 })

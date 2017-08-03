@@ -25,12 +25,9 @@
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-autoprefixer": "^3.1.1",
-    "gulp-compass": "^2.1.0",
     "gulp-concat": "^2.6.1",
     "gulp-htmlmin": "^2.0.0",
     "gulp-inject": "^3.0.0",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-order": "^1.1.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.12.0",
@@ -38,9 +35,7 @@
     "gulp-util": "^3.0.8",
     "moment": "^2.18.1",
     "node-sass": "^3.13.1",
-    "prod": "^1.0.1",
     "request": "^2.81.0",
-    "require-dir": "^0.3.2",
     "run-sequence": "^1.2.2",
     "serve-static": "^1.12.3",
     "underscore": "^1.8.3"
@@ -52,11 +47,8 @@
     "chalk": "^1.1.1",
     "chromedriver": "^2.29.0",
     "cucumber": "^2.2.0",
-    "cucumber-html-reporter": "^0.4.2",
     "gulp-debug": "^2.1.2",
     "gulp-jasmine": "^2.4.2",
-    "gulp-jscs": "^3.0.2",
-    "gulp-jshint": "^2.0.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-watch": "^4.3.5",
     "jasmine": "^2.5.2",
@@ -67,7 +59,6 @@
     "karma-spec-reporter": "0.0.26",
     "phantomjs-prebuilt": "~2.1.7",
     "selenium-webdriver": "^3.4.0",
-    "snyk": "^1.19.1",
     "standard": "^10.0.2"
   }
 }
