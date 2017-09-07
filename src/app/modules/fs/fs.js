@@ -470,7 +470,9 @@ fsModule.factory('FsService', ['$filter', 'FsInfoService', 'FsBankService', 'IOS
       params.courseEndDate = obj.courseEndDate
     }
 
-    if (obj.courseStartDate) {
+    if (obj.continuationCourse === 'yes') {
+      params.courseStartDate = obj.originalCourseStartDate
+    } else if (obj.courseStartDate) {
       params.courseStartDate = obj.courseStartDate
     }
 
