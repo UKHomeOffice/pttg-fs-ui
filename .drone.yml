@@ -8,7 +8,7 @@ pipeline:
     commands:
       - docker build -t pttg-fs-ui .
     when:
-      event: push
+      event: [push, tag]
 
   test:
     privileged: true
@@ -27,23 +27,33 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:build-${DRONE_BUILD_NUMBER}
       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:latest
-      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:build-${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:latest
     when:
       event: push
       branch: master
 
-  get-kube-configuration-deployment::
+  push_with_tag_for_release:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
+    when:
+      event: tag
+
+  get-kube-configuration-deployment:
     image: plugins/git
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
       - git clone https://github.com/UKHomeOffice/kube-pttg-fs-ui.git
     when:
-      event: [push, deployment]
-      branch: master
+      event: [push, deployment, tag]
 
   deploy-to-dev:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
@@ -51,8 +61,8 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - KUBE_NAMESPACE=pt-i-dev
       - ENVIRONMENT=dev
-      - VERSION=${DRONE_COMMIT_SHA}
-      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+      - VERSION=build-${DRONE_BUILD_NUMBER}
+      - KUBE_SERVER=https://kube-dev.dsp.notprod.homeoffice.gov.uk
     commands:
       - cd kube-pttg-fs-ui
       - ./deploy.sh
@@ -60,20 +70,20 @@ pipeline:
       event: push
       branch: master
 
-  deploy-to-test:
+  deploy:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
-      - KUBE_NAMESPACE=pt-i-test
-      - ENVIRONMENT=test
-      - VERSION=${DRONE_COMMIT_SHA}
-      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+      - KUBE_NAMESPACE=pt-i-${DRONE_DEPLOY_TO}
+      - ENVIRONMENT=${DRONE_DEPLOY_TO}
+      - VERSION=${IMAGE_VERSION}
+      - KUBE_SERVER=https://kube-dev.dsp.notprod.homeoffice.gov.uk
     commands:
       - cd kube-pttg-fs-ui
       - ./deploy.sh
     when:
       event: deployment
-      environment: test
+      environment: [dev, test, preprod]
 
   deploy-to-preprod:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
@@ -81,14 +91,13 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - KUBE_NAMESPACE=pt-i-preprod
       - ENVIRONMENT=preprod
-      - VERSION=${DRONE_COMMIT_SHA}
-      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+      - VERSION=${DRONE_TAG}
+      - KUBE_SERVER=https://kube-dev.dsp.notprod.homeoffice.gov.uk
     commands:
       - cd kube-pttg-fs-ui
       - ./deploy.sh
     when:
-      event: deployment
-      environment: preprod
+      event: [tag]
 
   deploy-to-prod:
     image: quay.io/ukhomeofficedigital/kd:v0.2.3
@@ -96,11 +105,12 @@ pipeline:
       - DOCKER_HOST=tcp://127.0.0.1:2375
       - KUBE_NAMESPACE=pt-i-prod
       - ENVIRONMENT=prod
-      - VERSION=${DRONE_COMMIT_SHA}
-      - KUBE_SERVER_PROD=https://kube.dsp.digital.homeoffice.gov.uk
+      - VERSION=${IMAGE_VERSION}
+      - KUBE_SERVER=https://kube.dsp.digital.homeoffice.gov.uk
+      - WHITELIST=62.25.109.196/24
     commands:
       - cd kube-pttg-fs-ui
-      - ./deploy-prod.sh
+      - ./deploy.sh
     when:
       event: deployment
       environment: prod
