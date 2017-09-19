@@ -18,7 +18,7 @@ var addSecureHeaders = function (res) {
 }
 
 
-var stdRelay = function (res, uri, qs) {
+var stdRelay = function (req, res, uri, qs) {
   var headers = {}
 
   addSecureHeaders(res)
@@ -82,15 +82,15 @@ app.get('/healthz', function (req, res) {
 })
 
 app.get(uiBaseUrl + 'availability', function (req, res) {
-  stdRelay(res, apiRoot + '/healthz', '')
+  stdRelay(req, res, apiRoot + '/healthz', '')
 })
 
 app.get(uiBaseUrl + ':tier/threshold', function (req, res) {
-  stdRelay(res, apiBaseUrl + req.params.tier + '/maintenance/threshold', req.query)
+  stdRelay(req, res, apiBaseUrl + req.params.tier + '/maintenance/threshold', req.query)
 })
 
 app.get(uiBaseUrl + 'accounts/:sortCode/:accountNumber/consent', function (req, res) {
-  stdRelay(res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/consent', req.query)
+  stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/consent', req.query)
 })
 
 app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus', function (req, res) {
@@ -105,7 +105,7 @@ app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus'
     try {
       req.query.minimum = JSON.parse(body).threshold
       req.query.fromDate = moment(req.query.endDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
-      stdRelay(res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
+      stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
     } catch (e) {
       // console.log('ERROR:')
       // console.log(e)
@@ -117,7 +117,7 @@ app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus'
 })
 
 app.get(uiBaseUrl + ':tier/conditioncodes', function (req, res) {
-  stdRelay(res, apiBaseUrl + req.params.tier + '/conditioncodes', req.query)
+  stdRelay(req, res, apiBaseUrl + req.params.tier + '/conditioncodes', req.query)
 })
 
 function addCaCertsForHttps (opts, headers) {
