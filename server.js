@@ -8,6 +8,7 @@ var request = require('request')
 var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 var uuid = require('uuid/v4')
+var fs = require('fs')
 
 // required when running BDDs to force to root directory
 var path = require('path')
