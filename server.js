@@ -96,8 +96,30 @@ app.get(uiBaseUrl + 'accounts/:sortCode/:accountNumber/consent', function (req, 
 
 app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus', function (req, res) {
   var uri = apiBaseUrl + req.params.tier + '/maintenance/threshold'
+
+  var headers = {}
+
+  addSecureHeaders(res)
+
+  if (req.headers['x-auth-userid']) {
+    headers['x-auth-userid'] = req.headers['x-auth-userid']
+  }
+
+  if (req.headers['kc-access']) {
+      headers['kc-access'] = req.headers['kc-access']
+  }
+
+  headers['x-correlation-id'] = uuid()
+
+  var opts = {
+    uri: uri,
+    qs: req.query,
+     headers: headers
+  }
+  opts = addCaCertsForHttps(opts, headers)
+
   // request the threshold
-  request({uri: uri, qs: req.query}, function (error, response, body) {
+  request(opts, function (error, response, body) {
     if (error) {
       res.status((response && response.statusCode) ? response.statusCode : 500)
       res.send()
