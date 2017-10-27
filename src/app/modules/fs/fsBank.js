@@ -50,7 +50,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.getConsentParams = function (obj) {
-    return {dob: obj.dob}
+    return {dob: obj.dob, toDate: obj.endDate, tier: obj.tier}
   }
 
   this.getConsentStatus = function (obj) {
