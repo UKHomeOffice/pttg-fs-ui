@@ -96,7 +96,7 @@ app.get(uiBaseUrl + 'accounts/:sortCode/:accountNumber/consent', function (req, 
 })
 
 app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus', function (req, res) {
-    req.query.fromDate = moment(req.query.toDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
+    req.query.fromDate = moment(req.query.toDate).subtract(99, 'd').format('YYYY-MM-DD')
     stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
 })
 
