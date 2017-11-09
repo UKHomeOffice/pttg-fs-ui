@@ -50,10 +50,7 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
   }
 
   this.getConsentParams = function (obj) {
-      // temp hack while we investigate what dates should be passed to consent
-      // and whether it requires additional fields on consent page or a change in the flow
-      // see JIRA PTTG-562
-    return {dob: obj.dob, toDate: obj.endDate || moment().format('YYYY-MM-DD'), tier: obj.tier}
+    return {dob: obj.dob, toDate: moment().format('YYYY-MM-DD'), tier: obj.tier}
   }
 
   this.getConsentStatus = function (obj) {
