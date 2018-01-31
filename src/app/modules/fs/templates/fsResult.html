@@ -1,6 +1,6 @@
 
 <div ng-if="state === 'PENDING'">
-  <h1 class="heading-large" id="outcome" tabindex="0">Consent pending</h1>
+  <h1 class="heading-large" id="outcome" tabindex="-1">Consent pending</h1>
 
   <p id="outcomeDetail">The applicant has not yet responded to the request.</p>
 
@@ -22,7 +22,7 @@
 
 <div ng-if="state === 'PASSED'">
   <div class="govuk-box-highlight">
-    <h1 class="bold-large" id="outcome" tabindex="0">{{ stateTitle }}</h1>
+    <h1 class="bold-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
     <p id="outcomeDetail">{{ stateReason }}</p>
   </div>
 
@@ -38,7 +38,7 @@
 
 <div ng-if="state === 'NOTPASSED'">
   <div class="govuk-box-highlight panel-fail">
-    <h1 class="bold-large" id="outcome" tabindex="0">{{ stateTitle }}</h1>
+    <h1 class="bold-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
     <p id="outcomeDetail">{{ stateReason }}</p>
   </div>
 
@@ -53,7 +53,7 @@
 
 
 <div ng-if="state === 'CONSENTDENIED'">
-  <h1 class="bold-large" id="outcome" tabindex="0">{{ stateTitle }}</h1>
+  <h1 class="bold-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
   <p id="outcomeDetail">{{ stateReason }}</p>
 
   <ol class="list list-number">
@@ -86,7 +86,7 @@
 
 <div ng-if="state === 'CALCULATOR'">
   <div class="govuk-box-highlight panel-fail">
-    <h1 class="bold-large" id="outcome" tabindex="0">{{ threshold | pounds }}</h1>
+    <h1 class="bold-large" id="outcome" tabindex="-1">{{ threshold | pounds }}</h1>
     <p><strong class="heading-small">Total daily funds required</strong></p>
   </div>
 
