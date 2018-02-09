@@ -1,7 +1,7 @@
 pipeline:
 
   build:
-    image: docker:17.09.01
+    image: docker:17.09.1
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
