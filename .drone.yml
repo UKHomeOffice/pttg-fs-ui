@@ -10,35 +10,33 @@ pipeline:
       branch: master
       event: push
 
-#   test:
-#     privileged: true
-#     image: docker:1.11
-#     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
-#     commands:
-#       - docker build -f Dockerfile_test -t pttg-fs-ui-test .
-#       - docker run pttg-fs-ui-test
-#     when:
-#       event: push
+  test:
+  
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker build -f Dockerfile_test -t pttg-fs-ui-test .
+      - docker run pttg-fs-ui-test
+    when:
+      event: push
 
-#   push:
-#     image: docker:1.11
-#     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
-#     commands:
-#       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
-#       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:build-${DRONE_BUILD_NUMBER}
-#       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:latest
-#       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:build-${DRONE_BUILD_NUMBER}
-#       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:latest
-#     when:
-#       event: push
-#       branch: master
+  push:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=$${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:build-$${DRONE_BUILD_NUMBER}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:build-$${DRONE_BUILD_NUMBER}
+    when:
+      event: push
+      branch: master
 
 #   push_with_tag_for_release:
-#     image: docker:1.11
+#     image: docker:17.09.1
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #     commands:
 #       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
 #       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
@@ -49,7 +47,7 @@ pipeline:
 #   get-kube-configuration-deployment:
 #     image: plugins/git
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #     commands:
 #       - git clone https://github.com/UKHomeOffice/kube-pttg-fs-ui.git
 #     when:
@@ -58,7 +56,7 @@ pipeline:
 #   deploy-to-dev:
 #     image: quay.io/ukhomeofficedigital/kd:v0.2.3
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #       - KUBE_NAMESPACE=pt-i-dev
 #       - ENVIRONMENT=dev
 #       - VERSION=build-${DRONE_BUILD_NUMBER}
@@ -73,7 +71,7 @@ pipeline:
 #   deploy:
 #     image: quay.io/ukhomeofficedigital/kd:v0.2.3
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #       - KUBE_NAMESPACE=pt-i-${DRONE_DEPLOY_TO}
 #       - ENVIRONMENT=${DRONE_DEPLOY_TO}
 #       - VERSION=${IMAGE_VERSION}
@@ -88,7 +86,7 @@ pipeline:
 #   deploy-to-preprod:
 #     image: quay.io/ukhomeofficedigital/kd:v0.2.3
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #       - KUBE_NAMESPACE=pt-i-preprod
 #       - ENVIRONMENT=preprod
 #       - VERSION=${DRONE_TAG}
@@ -102,7 +100,7 @@ pipeline:
 #   deploy-to-prod:
 #     image: quay.io/ukhomeofficedigital/kd:v0.2.3
 #     environment:
-#       - DOCKER_HOST=tcp://127.0.0.1:2375
+#       - DOCKER_HOST=tcp://172.17.0.1:2375
 #       - KUBE_NAMESPACE=pt-i-prod
 #       - ENVIRONMENT=prod
 #       - VERSION=${IMAGE_VERSION}
@@ -117,8 +115,8 @@ pipeline:
 
 # services:
 #   dind:
-#     image: docker:1.11-dind
-#     privileged: true
+#     image: docker:17.09.1-dind
+#   
 #     command:
 #       - "-s"
 #       - "overlay"
