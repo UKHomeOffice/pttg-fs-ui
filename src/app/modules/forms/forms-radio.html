@@ -1,6 +1,6 @@
 <div id="{{ config.id }}-form-group" class="form-group"  ng-class="{error: displayError}" ng-hide="config.hidden">
   <fieldset ng-class="{inline: config.inline}">
-    <legend class="form-label-bold" id="{{ config.id }}">{{ label }}</legend>
+    <legend class="form-label-bold" id="{{ config.id }}-label">{{ config.label }}</legend>
     <div class="form-hint">{{ hint }}</div>
     <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
     <div class="radio-group">

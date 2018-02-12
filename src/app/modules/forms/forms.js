@@ -46,6 +46,10 @@ var lcFirst = function (str) {
   return str.substr(0, 1).toLowerCase() + str.substr(1)
 }
 
+var inQ = function (str) {
+  return '"' + str + '"'
+}
+
 formsModule.factory('FormValidatorsService', [function () {
   var me = this
   var defs = {}
@@ -105,8 +109,8 @@ formsModule.factory('FormsService', ['$rootScope', 'FormValidatorsService', func
     // default errors
     var errorObj = {
       err: err,
-      summary: 'The ' + lcFirst(scope.label) + ' is invalid',
-      msg: 'Enter a valid ' + lcFirst(scope.label)
+      summary: 'The ' + inQ(scope.label) + ' is invalid',
+      msg: 'Enter a valid ' + inQ(scope.label)
     }
 
     if (scope.config && scope.config.errors && scope.config.errors[err]) {
@@ -140,7 +144,7 @@ formsModule.factory('FormsService', ['$rootScope', 'FormValidatorsService', func
         config: '=?'
       },
       transclude: true,
-      templateUrl: 'modules/forms/forms-text.html',
+      templateUrl: (conf.type === 'textarea') ? 'modules/forms/forms-textarea.html' : 'modules/forms/forms-text.html',
       compile: function (element, attrs) {
         defaultAttrs(attrs, {name: '', hint: '', label: ''})
         return function (scope, element, attrs, formCtrl) {
@@ -223,8 +227,11 @@ formsModule.factory('FormsService', ['$rootScope', 'FormValidatorsService', func
 
               if (scope.config.validate) {
                 var custom = scope.config.validate(val, scope)
-                if (custom !== true) {
+                if (_.isObject(custom)) {
                   return custom
+                }
+                if (custom === false) {
+                  return me.getError('invalid', scope)
                 }
               }
 
@@ -341,12 +348,13 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
             obj.displayError = ''
           } else if (obj.error.msg === '') {
             // NO ERROR MESSAGE?
-
+            obj.displayError = ''
           } else {
             // show the message within the component
             obj.displayError = obj.error.msg
             var a
             switch (obj.type) {
+              case 'textarea':
               case 'text':
               case 'number':
                 a = obj.config.id
@@ -362,6 +370,10 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
               case 'radio':
                 a = obj.config.id + '-' + obj.options[0].value + '-label'
+                break
+
+              case 'checkboxes':
+                a = obj.config.options[0].id + '-label'
                 break
 
               default:
@@ -387,6 +399,7 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
       $scope.submitForm = function () {
         var isValid = (me.validateForm() === 0)
+        $scope.$applyAsync()
         FormsService.trackFormSubmission($scope)
 
         if (isValid) {
@@ -411,6 +424,10 @@ formsModule.directive('hodForm', ['$anchorScroll', 'FormsService', function ($an
 
 formsModule.directive('hodText', ['FormsService', function (FormsService) {
   return FormsService.getStandardTextDirective({type: 'text'})
+}])
+
+formsModule.directive('hodTextarea', ['FormsService', function (FormsService) {
+  return FormsService.getStandardTextDirective({type: 'textarea'})
 }])
 
 formsModule.directive('hodNumber', ['FormsService', function (FormsService) {
@@ -455,10 +472,11 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
           hidden: false,
           inline: false,
           required: true,
+          label: scope.label || '',
           // options: [{label: 'Please select', value: 0}],
           errors: {
             required: {
-              summary: 'The ' + lcFirst(scope.label) + ' option is invalid',
+              summary: 'The ' + inQ(scope.label) + ' option is invalid',
               msg: 'Select an option'
             }
           }
@@ -515,6 +533,91 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
   }
 }])
 
+formsModule.directive('hodCheckbox', ['FormsService', function (FormsService) {
+  return {
+    restrict: 'E',
+    require: '^^hodForm',
+    scope: {
+      field: '=',
+      hint: '@hint',
+      name: '@name',
+      label: '@label',
+      config: '=?'
+    },
+    // transclude: true,
+    templateUrl: 'modules/forms/forms-checkbox.html',
+    compile: function (element, attrs) {
+      defaultAttrs(attrs, {hint: '', label: '', inline: false})
+      return function (scope, element, attrs, formCtrl, transclude) {
+        scope.checked = (scope.field === true)
+        scope.field = scope.checked
+        scope.checkboxClick = function () {
+          scope.checked = !scope.checked
+          scope.field = scope.checked
+          scope.$applyAsync()
+        }
+      }
+    }
+  }
+}])
+
+
+formsModule.directive('hodCheckboxes', ['FormsService', function (FormsService) {
+  return {
+    restrict: 'E',
+    require: '^^hodForm',
+    scope: {
+      field: '=',
+      hint: '@hint',
+      name: '@name',
+      label: '@label',
+      config: '=?'
+    },
+    // transclude: true,
+    templateUrl: 'modules/forms/forms-checkboxes.html',
+    compile: function (element, attrs) {
+      defaultAttrs(attrs, {hint: '', label: '', inline: false})
+      return function (scope, element, attrs, formCtrl, transclude) {
+        _.each(scope.config.options, function (opt) {
+          opt.checked = !!opt.checked
+          scope.field[opt.id] = !!scope.field[opt.id]
+        })
+
+        formCtrl.addObj(scope)
+        scope.type = 'checkboxes'
+
+        scope.getInput = function () {
+          return formCtrl.getForm()[scope.config.options[0].id]
+        }
+
+        scope.validfunc = function () {
+          var result
+          if (_.isObject(scope.config.validate)) {
+            result = scope.config.validate(scope.config.options, scope)
+          } else {
+            result = true
+          }
+
+          if (result === true) {
+            scope.error = {code: '', summary: '', msg: ''}
+            scope.getInput().$setValidity('text', true)
+            return true
+          }
+
+          scope.error = result
+          scope.getInput().$setValidity('checkboxes', false)
+          return false
+        }
+
+        scope.checkBoxChange = function (opt) {
+          scope.field[opt.id] = opt.checked
+          scope.$applyAsync()
+        }
+      }
+    }
+  }
+}])
+
 formsModule.directive('hodDate', ['FormsService', function (FormsService) {
   return {
     restrict: 'E',
@@ -552,11 +655,11 @@ formsModule.directive('hodDate', ['FormsService', function (FormsService) {
           errors: {
             max: {
               msg: 'Date is after the max date',
-              summary: attrs.label + ' is invalid'
+              summary: inQ(attrs.label) + ' is invalid'
             },
             min: {
               msg: 'Date is before the min date',
-              summary: attrs.label + ' is invalid'
+              summary: inQ(attrs.label) + ' is invalid'
             }
           }
         }, scope.config)
@@ -626,8 +729,11 @@ formsModule.directive('hodDate', ['FormsService', function (FormsService) {
           var validate = function () {
             if (scope.config.validate) {
               var custom = scope.config.validate(scope.field, scope)
-              if (custom !== true) {
+              if (_.isObject(custom)) {
                 return custom
+              }
+              if (custom === false) {
+                return FormsService.getError('invalid', scope)
               }
             }
 

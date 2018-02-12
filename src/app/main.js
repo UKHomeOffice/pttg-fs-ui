@@ -5,11 +5,12 @@
 var app = angular.module('hod.proving', [
   'ui.router',
   'ngAria',
-  // 'hod.financialstatus',
+  'hod.contactus',
   'hod.fs',
   'hod.forms',
   'hod.io',
-  'hod.availability'
+  'hod.availability',
+  'hod.logout'
 ])
 
 app.constant('CONFIG', {

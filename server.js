@@ -9,15 +9,16 @@ var port = process.env.SERVER_PORT || '8000'
 var moment = require('moment')
 var uuid = require('uuid/v4')
 var fs = require('fs')
+var PROXY_DISCOVERY_URL = process.env.PROXY_DISCOVERY_URL || 'https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-qa'
+var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || 'https://fs.dev.notprod.pttg.homeoffice.gov.uk'
 
 // required when running BDDs to force to root directory
 var path = require('path')
 process.chdir(path.resolve(__dirname))
 
 var addSecureHeaders = function (res) {
-    res.setHeader('Cache-control', 'no-store, no-cache')
+  res.setHeader('Cache-control', 'no-store, no-cache')
 }
-
 
 var stdRelay = function (req, res, uri, qs) {
   var headers = {}
@@ -91,28 +92,33 @@ app.get(uiBaseUrl + ':tier/threshold', function (req, res) {
 })
 
 app.get(uiBaseUrl + 'accounts/:sortCode/:accountNumber/consent', function (req, res) {
-    req.query.fromDate = moment(req.query.toDate).subtract(99, 'd').format('YYYY-MM-DD')
+  req.query.fromDate = moment(req.query.toDate).subtract(99, 'd').format('YYYY-MM-DD')
   stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/consent', req.query)
 })
 
 app.get(uiBaseUrl + ':tier/accounts/:sortCode/:accountNumber/dailybalancestatus', function (req, res) {
-    req.query.fromDate = moment(req.query.toDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
-    stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
+  req.query.fromDate = moment(req.query.toDate).subtract(getDaysToCheck(req.params.tier) - 1, 'd').format('YYYY-MM-DD')
+  stdRelay(req, res, apiBaseUrl + 'accounts/' + req.params.sortCode + '/' + req.params.accountNumber + '/dailybalancestatus', req.query)
 })
 
 app.get(uiBaseUrl + ':tier/conditioncodes', function (req, res) {
   stdRelay(req, res, apiBaseUrl + req.params.tier + '/conditioncodes', req.query)
 })
 
+app.get('/logout', function (req, res) {
+  let url = PROXY_REDIRECTION_URL + '/oauth/logout?redirect=' + encodeURIComponent(PROXY_DISCOVERY_URL + '/protocol/openid-connect/logout?post_logout_redirect_uri=' + PROXY_REDIRECTION_URL)
+  res.setHeader('Content-Type', 'application/json')
+  res.send({logout: url})
+})
+
 function addCaCertsForHttps (opts, headers) {
     // log("About to call " + opts.uri, headers)
-    if (opts.uri && opts.uri.toLowerCase().startsWith('https')) {
+  if (opts.uri && opts.uri.toLowerCase().startsWith('https')) {
         // log("Loading certs from  " + process.env.CA_CERTS_PATH, headers)
-        opts.ca = fs.readFileSync(process.env.CA_CERTS_PATH, 'utf8')
+    opts.ca = fs.readFileSync(process.env.CA_CERTS_PATH, 'utf8')
         // DSP certs do not include root ca - so we can not validate entire chain that OpenSSL requires
         // so until we have entire chain in bundle lets not be strict
-        opts.strictSSL = false
-    }
-    return opts
+    opts.strictSSL = false
+  }
+  return opts
 }
-

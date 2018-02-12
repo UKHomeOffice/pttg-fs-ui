@@ -1,0 +1,9 @@
+<fieldset ng-hide="config.hidden" id="{{ config.id }}-wrapper">
+  <legend class="visually-hidden">{{ label }}</legend>
+  <div class="form-group" ng-class="{error: displayError}">
+    <label class="form-label-bold {{ type }}" id="{{ config.id }}-label" for="{{ config.id }}">{{ label }}</label>
+    <div class="form-hint">{{ hint }}</div>
+    <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
+    {{ config.prefix }}<textarea id="{{ config.id }}" name="{{ name }}" class="form-control" ng-class="config.classes" type="text" ng-model="field" ui-validate="'validfunc($value)'" maxlength="{{ maxlength }}"></textarea>{{ config.suffix }}
+  </div>
+</fieldset>

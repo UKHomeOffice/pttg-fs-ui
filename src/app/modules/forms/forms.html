@@ -5,7 +5,7 @@
     <p id="validation-error-summary-text">Make sure that all the fields have been completed</p>
 
     <ul class="error-summary-list" id="error-summary-list">
-      <li ng-repeat="obj in errorList">
+      <li ng-repeat="obj in errorList" ng-if="obj.msg">
         <a href="" ng-click="errorClicked(obj.anchor)">{{ obj.msg }}</a>
       </li>
     </ul>

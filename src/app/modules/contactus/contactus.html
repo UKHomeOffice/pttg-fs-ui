@@ -1,0 +1,35 @@
+<div class="column-full-width ng-scope">
+  
+  <h1 class="heading-large" id="pageTitle" tabindex="-1">Contact Us</h1>
+
+  <div ng-if="!showForm">
+    <h2>Thank you</h2>
+
+    <div class="form-group form-group--topspace">
+      <a id="newSearchBtn" class="button button--newSearch" ui-sref="fsStart({tier: 4})">Done</a>
+    </div>
+  </div>
+
+  <div ng-if="showForm">
+    <p><a class="font-medium" ng-click="whatToShow='general'">General enquiry</a></p>
+
+    <div ng-if="whatToShow==='general'">
+      <a href="mailto:provingthingsips@homeoffice.gsi.gov.uk?subject=General PTTG-IPS">Make a general enquiry</a>
+      <br />
+      <br />
+    </div>
+
+    <p><a class="font-medium" ng-click="whatToShow='report'">Report a problem</a></p>
+    <hod-form name="contactus" submit="contactusSubmit" ng-if="whatToShow==='report'">
+      <hod-radio name="issueType" config="conf.issueType" label="Kind of issue" field="contactDetails.issueType" options="issueOptions"></hod-radio>
+
+      <hod-text name="time" label="Time of incident" field="contactDetails.time" config="conf.time"></hod-text>
+
+      <hod-text name="users" label="Number of users affected" field="contactDetails.users" config="conf.users" hint="Does the issue affect just you, you and some of your colleagues or your whole team?"></hod-text>
+
+      <hod-textarea name="other" config="conf.other" label="Other comments" field="contactDetails.other"></hod-textarea>
+
+      <hod-submit value="Submit"></hod-submit>
+    </hod-form>
+  </div>
+</div>
