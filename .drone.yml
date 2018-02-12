@@ -35,40 +35,40 @@ pipeline:
       event: push
       branch: master
 
-#   push_with_tag_for_release:
-#     image: docker:17.09.1
-#     environment:
-#       - DOCKER_HOST=tcp://172.17.0.1:2375
-#     commands:
-#       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
-#       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
-#       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
-#     when:
-#       event: tag
+  push_with_tag_for_release:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:${DRONE_TAG}
+    when:
+      event: tag
 
-#   get-kube-configuration-deployment:
-#     image: plugins/git
-#     environment:
-#       - DOCKER_HOST=tcp://172.17.0.1:2375
-#     commands:
-#       - git clone https://github.com/UKHomeOffice/kube-pttg-fs-ui.git
-#     when:
-#       event: [push, deployment, tag]
+  # get-kube-configuration-deployment:
+  #   image: plugins/git
+  #   environment:
+  #     - DOCKER_HOST=tcp://172.17.0.1:2375
+  #   commands:
+  #     - git clone https://github.com/UKHomeOffice/kube-pttg-fs-ui.git
+  #   when:
+  #     event: [push, deployment, tag]
 
-#   deploy-to-dev:
-#     image: quay.io/ukhomeofficedigital/kd:v0.2.3
-#     environment:
-#       - DOCKER_HOST=tcp://172.17.0.1:2375
-#       - KUBE_NAMESPACE=pt-i-dev
-#       - ENVIRONMENT=dev
-#       - VERSION=build-${DRONE_BUILD_NUMBER}
-#       - KUBE_SERVER=https://kube-dev.dsp.notprod.homeoffice.gov.uk
-#     commands:
-#       - cd kube-pttg-fs-ui
-#       - ./deploy.sh
-#     when:
-#       event: push
-#       branch: master
+  # deploy-to-dev:
+  #   image: quay.io/ukhomeofficedigital/kd:v0.2.3
+  #   environment:
+  #     - DOCKER_HOST=tcp://172.17.0.1:2375
+  #     - KUBE_NAMESPACE=pt-i-dev
+  #     - ENVIRONMENT=dev
+  #     - VERSION=build-${DRONE_BUILD_NUMBER}
+  #     - KUBE_SERVER=https://kube-dev.dsp.notprod.homeoffice.gov.uk
+  #   commands:
+  #     - cd kube-pttg-fs-ui
+  #     - ./deploy.sh
+  #   when:
+  #     event: push
+  #     branch: master
 
 #   deploy:
 #     image: quay.io/ukhomeofficedigital/kd:v0.2.3
