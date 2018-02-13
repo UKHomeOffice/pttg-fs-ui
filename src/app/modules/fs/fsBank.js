@@ -97,48 +97,6 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     return params
   }
 
-  this.getDailyBalanceParamsX = function (obj) {
-    var fields = FsInfoService.getFieldsForObject(obj)
-
-    var params = {}
-    _.each(fields, function (f) {
-      if (!_.has(obj, f)) {
-        return
-      }
-
-      params[f] = obj[f]
-    })
-
-    params.dependantsOnly = obj.dependantsOnly || false
-
-    // add the date of birth
-    params.dob = obj.dob
-
-    // add the applicant type
-    params.applicantType = obj.variantType || obj.applicantType
-    params.studentType = obj.variantType
-    if (obj.dependantsOnly) {
-      if (!_.has(fields.accommodationFeesPaid)) {
-        params.accommodationFeesPaid = 0
-      }
-      if (!_.has(fields.tuitionFees)) {
-        params.tuitionFees = 0
-      }
-      if (!_.has(fields.tuitionFeesPaid)) {
-        params.tuitionFeesPaid = 0
-      }
-    }
-
-    params.toDate = obj.endDate
-
-    // [TODO] remove these they are only to support the old JAVA based UI-API
-    params.accommodationFeesAlreadyPaid = params.accommodationFeesPaid
-    params.totalTuitionFees = params.tuitionFees
-    params.tuitionFeesAlreadyPaid = params.tuitionFeesPaid
-
-    return params
-  }
-
   this.sendDailyBalanceRequest = function (obj) {
     var u = me.getDailyBalanceStatusUrl(obj)
     var params = me.getDailyBalanceParams(obj)

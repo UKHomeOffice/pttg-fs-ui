@@ -90,6 +90,7 @@ fsModule.controller('FsGetConsentResultCtrl', ['$scope', '$state', 'FsService', 
   }
 
   var consentStatus = FsBankService.getConsentStatus(fs)
+  FsService.track('consent', consentStatus, 'consent-only')
   switch (consentStatus) {
     case 'INITIATED':
     case 'PENDING':

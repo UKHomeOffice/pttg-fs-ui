@@ -60,28 +60,33 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
         $scope.stateReason = FsInfoService.t('passedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
+
       case 'NOTPASSED':
-        FsService.track('result', 'notpassed', label)
         $scope.stateTitle = FsInfoService.t('notPassed')
         if (fs.dailyBalanceResponse.data.failureReason && fs.dailyBalanceResponse.data.failureReason.recordCount) {
           $scope.stateReason = FsInfoService.t('notEnoughRecords').replace('{{ nDaysRequired }}', tier.nDaysRequired)
+          FsService.track('result', 'notpassed-records', label)
         } else {
+          FsService.track('result', 'notpassed', label)
           $scope.stateReason = FsInfoService.t('notPassedReason')
         }
 
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
+
       case 'CONSENTDENIED':
         FsService.track('result', 'consentdenied', label)
         $scope.stateTitle = FsInfoService.t('consentDenied')
         $scope.stateReason = FsInfoService.t('consentDeniedReason')
         $scope.doNext = FsService.getThingsToDoNext(fs)
         break
+
       case 'ERROR':
         FsService.track('result', 'consenterror', label)
         $scope.stateTitle = 'Error'
         $scope.stateReason = 'Something went wrong, please try again later.'
         break
+
       case 'CALCULATOR':
         FsService.track('result', 'calculator', label)
         break
@@ -148,6 +153,8 @@ fsModule.controller('FsResultCtrl', ['$rootScope', '$scope', '$state', '$filter'
     FsBankService.sendConsentRequest(fs).then(function (data) {
       // start the timer again
       fs.consentResponse = data
+      var consentStatus = FsBankService.getConsentStatus(fs)
+      FsService.track('consent', consentStatus, 'financial-status')
       if (data.data.consent === 'SUCCESS') {
         $scope.cancelTimer()
         $scope.checkBalance()
