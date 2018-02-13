@@ -24,6 +24,8 @@ contactusModule.controller('ContactUsCtrl', ['$scope', function ($scope) {
     return encodeURIComponent(str)
   }
 
+  $scope.email = 'provingthingsfsps@homeoffice.gsi.gov.uk'
+
   $scope.showForm = true
   $scope.contactDetails = {}
   $scope.whatToShow = ''
@@ -55,7 +57,7 @@ contactusModule.controller('ContactUsCtrl', ['$scope', function ($scope) {
       body += '\n\n## Time of incident ##\n' + data.time
       body += '\n\n## Affected users ##\n' + data.users
       body += '\n\n## Comments ##\n' + data.other
-      window.location = 'mailto:provingthingsfsps@homeoffice.gsi.gov.uk?body=' + safe(body) + '&subject=' + safe(data.issueType.toUpperCase() + ' PTTG-FSPS')
+      window.location = 'mailto:' + $scope.email + '?body=' + safe(body) + '&subject=' + safe(data.issueType.toUpperCase() + ' PTTG-FSPS')
       $scope.showForm = false
     }
   }
