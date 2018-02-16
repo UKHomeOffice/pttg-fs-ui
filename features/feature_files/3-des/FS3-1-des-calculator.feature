@@ -72,11 +72,5 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | DOB                        | 25/03/1987                                 |
             | Application raised date    | 20/06/2016                                 |
 
-    Scenario: User clicks on the Begin a new search button after completing financial status check
-        When the financial status check is performed
-        And the new search button is clicked
-        Then the service displays the following page content
-            | Page title | Check financial status |
-
 
 

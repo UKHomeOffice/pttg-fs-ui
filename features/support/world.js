@@ -16,7 +16,7 @@ var reportPath = path.resolve('report/')
 // config
 var shareBrowserInstances = true
 var browserName = 'chrome'// usePhantomJS ? 'phantomjs' : 'chrome'
-var headless = true
+var headless = false
 var showReport = false
 //
 
@@ -24,10 +24,10 @@ var getNewBrowser = function (name) {
   var builder = new seleniumWebdriver.Builder()
   var opts = new chrome.Options()
   if (headless) {
-    opts.addArguments(['headless', 'no-sandbox'])
+    opts.addArguments(['headless', 'no-sandbox', 'auto-open-devtools-for-tabs'])
   }
   opts.addArguments('disable-extensions')
-  // opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
+  opts.setChromeBinaryPath('/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary')
   builder.setChromeOptions(opts)
 
   var forBrowser = builder.forBrowser(name)

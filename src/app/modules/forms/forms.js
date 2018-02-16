@@ -476,12 +476,14 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
           // options: [{label: 'Please select', value: 0}],
           errors: {
             required: {
-              summary: 'The ' + inQ(scope.label) + ' option is invalid',
+              summary: 'The ' + inQ(scope.label || scope.config.label) + ' option is invalid',
               msg: 'Select an option'
             }
           }
         }, scope.config)
         //
+
+        console.log(scope.config)
         formCtrl.addObj(scope)
 
         scope.getSelectedOption = function () {
@@ -560,7 +562,6 @@ formsModule.directive('hodCheckbox', ['FormsService', function (FormsService) {
     }
   }
 }])
-
 
 formsModule.directive('hodCheckboxes', ['FormsService', function (FormsService) {
   return {
