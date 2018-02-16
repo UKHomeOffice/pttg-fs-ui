@@ -60,15 +60,15 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       max: moment().format('YYYY-MM-DD'),
       errors: {
         max: {
-          msg: 'Enter a valid application raised date'
+          msg: 'Enter a valid "Application raised date"'
         },
         invalid: {
           summary: 'The application raised date is invalid',
-          msg: 'Enter a valid application raised date'
+          msg: 'Enter a valid "Application raised date"'
         },
         required: {
-          msg: 'Enter a valid application raised date',
-          summary: 'The application raised date is invalid'
+          msg: 'Enter a valid "Application raised date"',
+          summary: 'The "Application raised date" is invalid'
         }
       }
     },
@@ -77,7 +77,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         var fs = FsService.getApplication()
         var aDate = moment(fs.applicationRaisedDate, 'YYYY-MM-DD', true)
         var eDate = moment(fs.endDate, 'YYYY-MM-DD', true)
-        var err = { summary: 'The end date is invalid', msg: 'Enter a valid end date' }
+        var err = { summary: 'The "End date" is invalid', msg: 'Enter a valid "End date"' }
         if (!eDate.isValid()) {
             // must be a valid date
           return err
@@ -128,10 +128,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         var start = moment(fs.courseStartDate, 'YYYY-MM-DD', true)
         var endDateMom = moment(v, 'YYYY-MM-DD', true)
         if (!endDateMom.isValid()) {
-          return { summary: 'The end date of course is invalid', msg: 'Enter a valid end date of course' }
+          return { summary: 'The "End date of course" is invalid', msg: 'Enter a valid "End date of course"' }
         }
         if (!start.isBefore(endDateMom)) {
-          return { summary: 'The end date of course is invalid', msg: 'Enter a valid course length' }
+          return { summary: 'The "End date of course" is invalid', msg: 'Enter a valid "Course length"' }
         }
         return true
       }
@@ -151,19 +151,19 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
           return true
         }
 
-        return { summary: 'The original course start date is invalid', msg: 'Enter a valid original course start date' }
+        return { summary: 'The "Original course start date" is invalid', msg: 'Enter a valid "Original course start date"' }
       }
     },
     tuitionFees: {
       prefix: '£ ',
       errors: {
         required: {
-          summary: 'The total tuition fees is invalid',
-          msg: 'Enter a valid total tuition fees'
+          summary: 'The "Total tuition fees" is invalid',
+          msg: 'Enter a valid "Total tuition fees"'
         },
         numeric: {
-          summary: 'The total tuition fees is invalid',
-          msg: 'Enter a valid total tuition fees'
+          summary: 'The "Total tuition fees" is invalid',
+          msg: 'Enter a valid "Total tuition fees"'
         }
       }
     },
@@ -171,12 +171,12 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       prefix: '£ ',
       errors: {
         required: {
-          summary: 'The tuition fees already paid is invalid',
-          msg: 'Enter a valid tuition fees already paid'
+          summary: 'The "Tuition fees already paid" is invalid',
+          msg: 'Enter a valid "Tuition fees already paid"'
         },
         numeric: {
-          summary: 'The tuition fees already paid is invalid',
-          msg: 'Enter a valid tuition fees already paid'
+          summary: 'The "Tuition fees already paid" is invalid',
+          msg: 'Enter a valid "Tuition fees already paid"'
         }
       }
     },
@@ -184,12 +184,12 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       prefix: '£ ',
       errors: {
         required: {
-          summary: 'The accommodation fees already paid is invalid',
-          msg: 'Enter a valid accommodation fees already paid'
+          summary: 'The "Accommodation fees already paid" is invalid',
+          msg: 'Enter a valid "Accommodation fees already paid"'
         },
         numeric: {
-          summary: 'The accommodation fees already paid is invalid',
-          msg: 'Enter a valid accommodation fees already paid'
+          summary: 'The "Accommodation fees already paid" is invalid',
+          msg: 'Enter a valid "Accommodation fees already paid"'
         }
       }
     },
@@ -219,8 +219,8 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
         }
 
         return {
-          summary: 'The number of dependants is invalid',
-          msg: 'Enter a valid number of dependants'
+          summary: 'The "Number of dependants" is invalid',
+          msg: 'Enter a valid "Number of dependants"'
         }
       }
     },
@@ -230,10 +230,10 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       max: '99999999',
       errors: {
         numeric: {
-          msg: 'Enter a valid account number'
+          msg: 'Enter a valid "Account number"'
         },
         min: {
-          msg: 'Enter a valid account number'
+          msg: 'Enter a valid "Account number"'
         }
       }
     },
@@ -241,7 +241,7 @@ fsModule.controller('FsDetailsCtrl', ['$scope', '$state', 'FsService', 'FsInfoSe
       max: moment().subtract(10, 'years').format('YYYY-MM-DD'),
       errors: {
         max: {
-          msg: 'Enter a valid date of birth'
+          msg: 'Enter a valid "Date of birth"'
         }
       }
     },

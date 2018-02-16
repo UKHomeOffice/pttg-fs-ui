@@ -1,13 +1,13 @@
 Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doctorate In London (single current account)
 
-    Applicants Required Maintenance period - Course length (capped to 9 months)
-    Dependants Required Maintenance period - Continuation course length +2 (when entire course <12 months) or +4 months (when entire course 12+) (capped to 9 months) ##Dependants Required Maintenance period  - Course length + 2 months (capped to 9 months)
-    Course length - this can be 7+ months ##this reflects the October 2016 policy change
-    Tuition fees - total amount of the tuition fees for the course
-    Tuition fees paid - total amount of Tuition fees paid
-    Accommodation fees paid - The maximum amount paid can be £1265
+#    Applicants Required Maintenance period - Course length (capped to 9 months)
+#    Dependants Required Maintenance period - Continuation course length +2 (when entire course <12 months) or +4 months (when entire course 12+) (capped to 9 months) ##Dependants Required Maintenance period  - Course length + 2 months (capped to 9 months)
+#    Course length - this can be 7+ months ##this reflects the October 2016 policy change
+#    Tuition fees - total amount of the tuition fees for the course
+#    Tuition fees paid - total amount of Tuition fees paid
+#    Accommodation fees paid - The maximum amount paid can be £1265
 
-    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * Dependants) + (Tuition fees - tuition fees paid - accommodation fees paid)
+#    Maintenance threshold amount = (Required Maintenance threshold non doctorate In London * Course length) + ((Dependants Required Maintenance threshold In London * Dependants Required Maintenance period)  * Dependants) + (Tuition fees - tuition fees paid - accommodation fees paid)
 
 #   Requirement to meet Tier 4 pass (Continuation applications only)
 #
@@ -77,9 +77,6 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Estimated Leave End Date   | 22/10/2017                                              |
             | Course length              | 7 (limited to 9)                                        |
 
-
-
-   # //*[@id="resultsTable"]/tbody/tr[1]/td
     Scenario: Shelly is a Non Doctorate out of London student on a continuation course and has sufficient funds
         Given the account has sufficient funds
         And the api condition codes response will be 2A-3-1

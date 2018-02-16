@@ -123,6 +123,29 @@
   <span class="button button-after" ng-show="showCopied">Copied</span>
 </div>
 
-<div class="form-group">
-  <a href="" ui-sref="fsStart" id="newSearchBtn">Start new check</a>
+&nbsp;
+
+<hod-form name="feedback" config="conf.feedback" submit="feedbackSubmit" ng-show="showFeedbackForm">
+  <h2 class="heading-medium ng-scope" id="feedbackheading">Feedback</h2>
+
+  <hod-radio name="match" config="conf.match" field="feedback.match" options="yesNoOptions"></hod-radio>
+
+  <div class="panel panel-border-wide text" ng-show="!conf.caseref.hidden">
+    <hod-text name="caseref" label="Case ID" field="feedback.caseref" config="conf.caseref"></hod-text>
+
+    <hod-textarea name="matchComment" config="conf.matchComment" label="Why do you think that the FSPS result did not match the paper assessment?" field="feedback.matchComment"></hod-textarea>
+    
+    <hod-checkboxes label="Why do you think that the FSPS result did not match the paper assessment?" field="feedback.whynot" config="conf.whynot"></hod-checkboxes>
+
+    <hod-text name="matchOther" config="conf.matchOther" label="Other" field="feedback.matchOther"></hod-text>
+  </div>
+
+  <hod-submit value="Submit and start a new search"></hod-submit>
+</hod-form>
+
+<div class="form-group" ng-if="showFeedbackThanks">
+  <h2 class="heading-medium ng-scope" id="feedbackthankyouheading">Feedback</h2>
+  <p id="feedbackthanks">Thank you for supplying feedback on this service.</p>
 </div>
+
+<input id="newSearchBtn" type="submit" class="button button--newSearch" value="Begin a new check" ng-click="newSearch()" ng-if="showNewSearchButton" />

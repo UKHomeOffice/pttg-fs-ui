@@ -51,7 +51,33 @@ const radioElements = {
   {
     key: 'false',
     value: 'Other institution'
-  }]
+  }],
+  match: [{
+    key: 'yes',
+    value: 'Yes'
+  },
+  {
+    key: 'no',
+    value: 'No'
+  }],
+  whynot: [
+    {
+      key: 'calculation',
+      value: 'Total funds required is incorrect'
+    },
+    {
+      key: 'ltrdate',
+      value: 'LTR calculated end date is incorrect'
+    },
+    {
+      key: 'name',
+      value: 'Barclays customer name does not match applicant name'
+    },
+    {
+      key: 'balances',
+      value: 'Closing balance data does not correspond with paper evidence'
+    }
+  ]
 }
 
 const getHttp = function (uri) {
@@ -123,13 +149,46 @@ const shouldSee = function (text) {
   return seleniumWebdriver.until.elementLocated({xpath: xpath})
 }
 
+const confirmVisible = function (d, data, visibility, timeoutLength) {
+  const promises = []
+  _.each(data, function (val, key) {
+    const expectation = new Promise(function (resolve, reject) {
+      d.wait(until.elementLocated({id: key}), timeoutLength || 1 * 1000, 'TIMEOUT: Waiting for element #' + key).then(function (el) {
+        return el.isDisplayed()
+      }).then(function (result) {
+        if (result === !!visibility) {
+          return resolve(result)
+        } else {
+          return reject()
+        }
+      }, function (err) {
+                // test failed
+        if (visibility === false) {
+          return resolve(true)
+        } else {
+          return reject(err)
+        }
+      })
+    })
+    promises.push(expectation)
+  })
+  return whenAllDone(promises)
+}
+
 const confirmContentById = function (d, data, timeoutLength) {
+  var e
   const promises = []
   _.each(data, function (val, key) {
     const expectation = new Promise(function (resolve, reject) {
       d.wait(until.elementLocated({id: key}), timeoutLength || 5 * 1000, 'TIMEOUT: Waiting for element #' + key).then(function (el) {
-                // wait until driver has located the element
-        return expect(el.getText()).to.eventually.equal(val)
+        e = el
+        return el.getTagName()
+      }).then(function (name) {
+        if (name === 'input') {
+          return expect(e.getAttribute('value')).to.eventually.equal(val)
+        } else {
+          return expect(e.getText()).to.eventually.equal(val)
+        }
       }).then(function (result) {
                 // test OK
         return resolve(result)
@@ -227,8 +286,28 @@ const selectRadio = function (d, key, val) {
   })
 }
 
+const clickCheckbox = function (d, key) {
+  const rID = key + '-label'
+  let elem
+  return d.findElement({id: rID}).then(function (el) {
+    elem = el
+    return el.click()
+  }).then(function (result) {
+    return true
+  }, function (err) {
+    return false
+  })
+}
+
 const inputEnterText = function (d, key, val) {
-  return d.findElement({id: key}).then(function (el) {
+  var el
+  return d.findElement({id: key}).then(function (e) {
+    el = e
+    return e.getAttribute('type')
+  }).then(function (t) {
+    if (t === 'checkbox') {
+      return clickCheckbox(d, key)
+    }
     return el.sendKeys(val)
   }).then(function (result) {
     return true
@@ -385,6 +464,14 @@ defineSupportCode(function ({Given, When, Then}) {
     })
   })
 
+  Given(/^the feedback form is completed$/, {timeout: 10 * 1000}, function (table) {
+    const d = this.driver
+    const data = toCamelCaseKeys(_.object(table.rawTable))
+    return completeInputs(d, data).then(function () {
+      return submitAction(d)
+    })
+  })
+
   When(/^caseworker is on page (.+)$/, {timeout: 10 * 1000}, function (str) {
     const d = this.driver
     return d.get('http://127.0.0.1:8000/#!/fs/' + str).then(function () {
@@ -450,7 +537,8 @@ defineSupportCode(function ({Given, When, Then}) {
     return el.getText().then(function (txt) {
       const promiseList = []
       _.each(table.rawTable, function (row) {
-        promiseList.push(expect(txt).to.contain(row[0]))
+        let prom = expect(txt).to.contain(row[0])
+        promiseList.push(prom)
       })
       return Promise.all(promiseList)
     })
@@ -546,5 +634,10 @@ defineSupportCode(function ({Given, When, Then}) {
 
   Then(/the connection attempt count should be (\d+)/, function (int, callback) {
     callback(null, 'pending')
+  })
+
+  Then(/^the following are (visible|hidden)$/, function (showOrHide, table) {
+    const data = toCamelCaseKeys(_.object(table.rawTable))
+    return confirmVisible(this.driver, data, (showOrHide === 'visible'))
   })
 })
