@@ -9,18 +9,10 @@ ARG VERSION
 
 WORKDIR /app
 
-RUN echo 'password file before'
-RUN cat /etc/passwd
-RUN echo
-
 RUN groupadd -r ${GROUP} && \
     useradd -g ${GROUP} ${USER} -d /app && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
-
-RUN echo 'password file after'
-RUN cat /etc/passwd
-RUN echo
 
 COPY . /app
 RUN npm --loglevel warn install --only=prod
