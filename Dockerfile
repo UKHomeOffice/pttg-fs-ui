@@ -9,10 +9,8 @@ ARG VERSION
 
 WORKDIR /app
 
-RUN cat /etc/passwd
-
 RUN groupadd -r ${GROUP} && \
-    useradd -r -g ${GROUP} ${USER} -d /app && \
+    useradd -g ${GROUP} ${USER} -d /app && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
 
