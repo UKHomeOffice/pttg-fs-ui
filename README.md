@@ -67,4 +67,3 @@ Therefore to test against the latest version of node just rebuild the pttg-bdd-b
 Furthermore, if updating the node version in this project it is best to also update the node version in `pttg-bdd-base` which is used when running the BDD tests.
 
 
-
