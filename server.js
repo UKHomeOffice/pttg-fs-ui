@@ -3,7 +3,7 @@ var apiRoot = process.env.API_ROOT || 'http://localhost:8050'
 var feedbackRoot = process.env.FEEDBACK_ROOT || 'http://localhost:8051'
 var port = process.env.SERVER_PORT || '8000'
 var PROXY_DISCOVERY_URL = process.env.PROXY_DISCOVERY_URL || 'https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-qa'
-var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || 'https://fs.calc.test.notprod.pttg.homeoffice.gov.uk'
+var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || 'https://fs.calc.dev.notprod.pttg.homeoffice.gov.uk'
 var httpauth = process.env.FS_API_AUTH || ''
 
 // require dependancies
