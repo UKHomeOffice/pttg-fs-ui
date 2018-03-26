@@ -65,4 +65,3 @@ This Docker image is based on a pttg shared image `pttg-bdd-base`.
 Therefore to test against the latest version of node just rebuild the pttg-bdd-base project and the latest stable version of Chrome will be baked into the image.
 
 Furthermore, if updating the node version in this project it is best to also update the node version in `pttg-bdd-base` which is used when running the BDD tests.
-
