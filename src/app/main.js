@@ -15,7 +15,7 @@ var app = angular.module('hod.proving', [
 
 app.constant('CONFIG', {
   api: '/pttg/financialstatus/v1/',
-  timeout: 5000,
+  timeout: 50000,
   retries: 0
 })
 
