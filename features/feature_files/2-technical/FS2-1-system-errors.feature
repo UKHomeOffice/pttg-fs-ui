@@ -27,12 +27,12 @@ Feature: System errors - specify messages shown in response to (simulated) conne
             | Sort code               | 11-11-11                     |
             | Account number          | 11111111                     |
 
-    Scenario: Sensible connection timeout
-        Given the api response is delayed for 10 seconds
-        When the financial status check is performed
-        Then the service displays the following page content within 6 seconds
-            | Outcome        | You can’t use this service just now. The problem will be fixed as soon as possible |
-            | Outcome detail | Please try again later.                                                            |
+#    Scenario: Sensible connection timeout
+#        Given the api response is delayed for 10 seconds
+#        When the financial status check is performed
+#        Then the service displays the following page content within 6 seconds
+#            | Outcome        | You can’t use this service just now. The problem will be fixed as soon as possible |
+#            | Outcome detail | Please try again later.                                                            |
 
     Scenario: Coping with a garbage response
         Given the api response is garbage
