@@ -26,11 +26,22 @@ var feedbackBaseUrl = feedbackRoot + '/feedback'
 var path = require('path')
 process.chdir(path.resolve(__dirname))
 
+const log = function (msg, info) {
+  let output = {
+    '@timestamp': moment().toISOString(),
+    message: msg
+  }
+  if (info) {
+    output.info = info
+  }
+  console.log(JSON.stringify(output))
+}
+
 var addSecureHeaders = function (res) {
   res.setHeader('Cache-control', 'no-store, no-cache')
 }
 
-var stdRelay = function (req, res, uri, qs, postdata) {
+var stdRelay = function (req, res, uri, qs, postdata, dontLog) {
   var headers = {}
 
   addSecureHeaders(res)
@@ -50,11 +61,12 @@ var stdRelay = function (req, res, uri, qs, postdata) {
   headers['x-correlation-id'] = uuid()
   var opts = {
     uri: uri,
-    qs: qs,
-    headers: headers,
-    followRedirect: false
+    method: 'GET'
   }
-  opts = addCaCertsForHttps(opts, headers)
+
+  if (qs) {
+    opts.qs = qs
+  }
 
   if (postdata) {
     opts.method = 'POST'
@@ -62,6 +74,14 @@ var stdRelay = function (req, res, uri, qs, postdata) {
     opts.headers['content-type'] = 'application/json'
     opts.body = postdata
   }
+
+  if (!dontLog) {
+    log(`request ${opts.uri}`, Object.assign(opts, {correlation: headers['x-correlation-id']}))
+  }
+
+  opts.followRedirect = false
+  opts.headers = headers
+  opts = addCaCertsForHttps(opts, headers)
 
   request(opts, function (error, response, body) {
     var status = (response && response.statusCode) ? response.statusCode : 500
@@ -73,12 +93,23 @@ var stdRelay = function (req, res, uri, qs, postdata) {
     res.status(status)
     res.send(body)
 
+    if (!dontLog) {
+      log(`response ${status} ${opts.uri}`, {
+        uri: opts.uri,
+        upstreamStatus:
+        response.statusCode,
+        status: status,
+        body: body,
+        correlation: headers['x-correlation-id']
+      })
+    }
+
     if (error) {
-      console.log(headers['x-correlation-id'], body)
+      log(headers['x-correlation-id'], body)
       if (error.code === 'ECONNREFUSED') {
-        console.log('ERROR: Connection refused', uri)
+        log('ERROR: Connection refused', uri)
       } else {
-        console.log('ERROR', error)
+        log('ERROR', error)
       }
     }
   })
@@ -91,8 +122,8 @@ var getDaysToCheck = function (t) {
 app.use(serveStatic('public/', { 'index': ['index.html'] }))
 
 app.listen(port, function () {
-  console.log('The server is running on port:' + port)
-  console.log('apiRoot is:' + apiRoot)
+  log('The server is running on port:' + port)
+  log('apiRoot is:' + apiRoot)
 })
 
 app.get('/ping', function (req, res) {
@@ -104,7 +135,8 @@ app.get('/healthz', function (req, res) {
 })
 
 app.get(uiBaseUrl + 'availability', function (req, res) {
-  stdRelay(req, res, apiRoot + '/healthz', '')
+  // req, res, uri, qs, postdata, dontLog)
+  stdRelay(req, res, apiRoot + '/healthz', null, null, true)
 })
 
 app.get(uiBaseUrl + ':tier/threshold', function (req, res) {
