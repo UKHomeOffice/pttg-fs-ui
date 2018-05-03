@@ -4,3 +4,4 @@ public
 *.iml
 node_modules
 package-lock.json
+.gradle/

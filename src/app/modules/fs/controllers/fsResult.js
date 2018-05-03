@@ -181,7 +181,9 @@ fsModule.controller('FsResultCtrl', [
         FsService.track('consent', consentStatus, 'financial-status')
         if (data.data.consent === 'SUCCESS') {
           $scope.cancelTimer()
-          $scope.checkBalance()
+          $timeout(function () {
+            $scope.checkBalance()
+          }, 60000)
         } else if (data.data.consent === 'FAILURE' || data.data.consent === 'INVALID') {
           $scope.cancelTimer()
           $scope.render('CONSENTDENIED')
