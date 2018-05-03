@@ -18,7 +18,7 @@ pipeline:
       - docker build -f Dockerfile_test -t pttg-fs-ui-test .
       - docker run pttg-fs-ui-test
     when:
-      event: push
+      event: tag
 
   install-docker-image:
     image: docker:17.09.1
