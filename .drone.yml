@@ -92,7 +92,7 @@ pipeline:
       - KUBE_NAMESPACE=pttg-fs-pr
       - ENVIRONMENT=pr
       - KUBE_SERVER=https://kube-api-prod.prod.acp.homeoffice.gov.uk
-      - WHITELIST=62.25.109.196/24,52.56.62.143
+      - WHITELIST=62.25.109.196/32,52.48.127.150/32,52.48.127.151/32,52.48.127.152/32,52.48.127.153/32,52.209.62.128/25,52.56.62.128/25
     secrets:
       - pttg_fs_pr
     commands:
