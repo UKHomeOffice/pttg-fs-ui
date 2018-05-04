@@ -134,6 +134,15 @@ app.get('/healthz', function (req, res) {
   res.send({env: process.env.ENV, status: 'OK'})
 })
 
+app.get('/delay/:ms', (req, res) => {
+  let d = Number(req.params.ms)
+  log('REQUEST RECEIVED', req.params)
+  setTimeout(() => {
+    log('SENDING RESPONSE', req.params)
+    res.send({msg: 'Hello world', delay: d})
+  }, d)
+})
+
 app.get(uiBaseUrl + 'availability', function (req, res) {
   // req, res, uri, qs, postdata, dontLog)
   stdRelay(req, res, apiRoot + '/healthz', null, null, true)
