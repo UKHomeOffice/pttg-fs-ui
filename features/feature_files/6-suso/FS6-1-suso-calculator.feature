@@ -32,6 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | Dependants                 | 0          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | £16,090.00                       |
             | Total funds required    | £16,090.00                       |
@@ -62,6 +63,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student (sabbatical officer) 
             | Dependants                 | 0          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | £16,090.00                       |
             | Total funds required       | £16,090.00                       |

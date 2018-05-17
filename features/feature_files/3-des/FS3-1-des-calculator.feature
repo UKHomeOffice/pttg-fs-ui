@@ -32,6 +32,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
 
     Scenario: Shelly is a Doctorate in London student and has sufficient funds
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Account holder name        | Laura Taylor                   |
@@ -55,6 +56,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student Doctorate In London (
             | In London               | No         |
             | Accommodation fees paid | 265        |
             | Dependants              | 0          |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                                     |
             | Account holder name        | Laura Taylor                               |

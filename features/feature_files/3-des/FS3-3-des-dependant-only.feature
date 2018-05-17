@@ -20,6 +20,7 @@ Feature: Dependant only stuff
 
     Scenario: Rhianna is dependant only doctorate application and has sufficient funds
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                                   |
             | Account holder name        | Laura Taylor                             |
@@ -41,6 +42,7 @@ Feature: Dependant only stuff
             | End date                | 30/05/2016 |
             | In London               | No         |
             | Dependants              | 2          |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                                   |
             | Account holder name        | Laura Taylor                             |
@@ -68,6 +70,7 @@ Feature: Dependant only stuff
             | End date                | 30/05/2016 |
             | In London               | Yes        |
             | Dependants              | 1          |
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Not passed                                                            |
             | Outcome detail | One or more daily closing balances are below the total funds required |

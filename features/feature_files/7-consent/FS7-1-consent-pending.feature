@@ -57,8 +57,7 @@ Feature: Process 'pending' status and display the appropriate output page
         And after at least 2 seconds
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
-        And the check again button is clicked
-        And after at least 1 seconds
+        And after at least 4 seconds
         Then the service displays the following result
             | Outcome        | Passed                                          |
             | Outcome detail | This applicant meets the financial requirements |

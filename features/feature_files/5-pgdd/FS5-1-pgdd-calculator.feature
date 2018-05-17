@@ -36,6 +36,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | DOB                        | 25/03/1987 |
             | Sort code                  | 11-11-11   |
             | Account number             | 11111111   |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Not passed                                 |
             | Account holder name        | Shelly Smith                               |
@@ -76,6 +77,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | DOB                        | 25/03/1987 |
             | Sort code                  | 11-11-11   |
             | Account number             | 11111111   |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Course dates checked       | 30/05/2016 to 30/06/2016       |
@@ -117,6 +119,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | DOB                        | 25/03/1987 |
             | Sort code                  | 11-11-11   |
             | Account number             | 11111111   |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Not passed                                |
             | Account holder name        | Shelly Smith                              |
@@ -156,6 +159,7 @@ Feature: Total Funds Required Calculation - Tier 4 Student post graduate doctor 
             | DOB                        | 25/03/1987 |
             | Sort code                  | 11-11-11   |
             | Account number             | 11111111   |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Course dates checked       | 30/05/2016 to 30/06/2016       |
