@@ -24,6 +24,7 @@ Feature: Tier 4 student union (sabbatical officer) content (single current accou
         Given the account has sufficient funds
         And caseworker is on page t4/application/calc/main/suso
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following result headers in order
             | Total funds required     |
             | Condition code           |

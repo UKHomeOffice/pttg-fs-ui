@@ -23,6 +23,7 @@ Feature: Tier 4 doctorate extension scheme content (single current account with 
             | DOB                     | 25/03/1987 |
             | Sort code               | 22-22-23   |
             | Account number          | 22222223   |
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Not passed                                                            |
             | Outcome detail | One or more daily closing balances are below the total funds required |

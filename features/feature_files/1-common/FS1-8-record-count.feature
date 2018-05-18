@@ -16,9 +16,10 @@ Feature: Insufficient Records
             | DOB                     | 25/03/1987 |
             | Sort code               | 11-11-11   |
             | Account number          | 11111111   |
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Not passed                                                          |
-            | Outcome detail | The records for this account does not cover the whole 28 day period |
+            | Outcome detail | The records for this account do not cover the whole 28 day period |
 
 
 

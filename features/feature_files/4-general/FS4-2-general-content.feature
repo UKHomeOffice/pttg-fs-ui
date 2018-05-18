@@ -31,6 +31,7 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
     This is a scenario to check if applicant meets minimum financial requirement text write up
 #        Given the account has sufficient funds
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Passed                                          |
             | Outcome detail | This applicant meets the financial requirements |
@@ -67,6 +68,7 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
     This is a scenario to check if Applicant does not meet minimum financial requirement text write up
         Given the account does not have sufficient funds
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Not passed                                                            |
             | Outcome detail | One or more daily closing balances are below the total funds required |
@@ -103,9 +105,10 @@ Feature: Non Doctorate Content - Tier 4 student (with dependants)
         Given the api consent response will be SUCCESS
         And the api daily balance response will Fail-record-count
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following page content
             | Outcome        | Not passed                                                          |
-            | Outcome detail | The records for this account does not cover the whole 28 day period |
+            | Outcome detail | The records for this account do not cover the whole 28 day period |
         And the service displays the following result headers in order
             | Account holder name      |
             | Total funds required     |

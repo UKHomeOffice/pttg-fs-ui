@@ -18,9 +18,9 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | DOB                     | 25/03/1987 |
             | Sort code               | 22-22-23   |
             | Account number          | 22222229   |
-        And after at least 5 seconds
+        And after at least 2 seconds
         And the api consent response will be FAILURE
-        And the check again button is clicked
+        And after at least 4 seconds
         Then the service displays the following result
             | Outcome              | Consent not given                                        |
             | Outcome detail       | Applicant has refused permission to access their account |

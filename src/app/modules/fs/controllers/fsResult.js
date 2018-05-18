@@ -70,10 +70,13 @@ fsModule.controller('FsResultCtrl', [
     $scope.numTryLimit = 5
     $scope.timerScope = null
     $scope.doNext = []
+    $scope.showCancelRequest = false
+    $scope.stateReason = ''
 
   // show hide blocks of text and set display strings as required
     $scope.render = function (state) {
       $scope.state = state
+      $scope.stateReason = FsInfoService.t('consentPendingReason')
 
       var label = 't' + fs.tier + '-' + fs.applicantType + '-' + fs.variantType
 
@@ -99,6 +102,13 @@ fsModule.controller('FsResultCtrl', [
           break
 
         case 'CONSENTDENIED':
+          FsService.track('result', 'consentdenied', label)
+          $scope.stateTitle = FsInfoService.t('consentDenied')
+          $scope.stateReason = FsInfoService.t('consentDeniedReason')
+          $scope.doNext = FsService.getThingsToDoNext(fs)
+          break
+
+        case 'INVALID':
           FsService.track('result', 'consentdenied', label)
           $scope.stateTitle = FsInfoService.t('consentDenied')
           $scope.stateReason = FsInfoService.t('consentDeniedReason')
@@ -144,6 +154,7 @@ fsModule.controller('FsResultCtrl', [
             $scope.consentCheck = 'We will automatically check for consent again in ' + s + 's.'
           } else {
             $scope.consentCheck = 'We will no longer check automatically for consent'
+            $scope.showCancelRequest = false
           }
         })
 
@@ -162,6 +173,8 @@ fsModule.controller('FsResultCtrl', [
       $scope.timerScope.percent = 0
       $scope.seconds = '-'
       $scope.numTry = $scope.numTryLimit
+      $scope.showCancelRequest = false
+      $scope.consentCheck = '-'
     }
 
     $scope.tryAgainNow = function (e) {
@@ -169,31 +182,43 @@ fsModule.controller('FsResultCtrl', [
     }
 
     $scope.checkConsent = function () {
-    // reset the seconds countdown and progress bar
+      // reset the seconds countdown and progress bar
       $scope.timerScope.percent = 0
       $scope.seconds = '-'
+      $scope.stateReason = FsInfoService.t('checkingNow')
 
-    // send the consent API request
+      // send the consent API request
       FsBankService.sendConsentRequest(fs).then(function (data) {
-      // start the timer again
+        // start the timer again
         fs.consentResponse = data
+        $scope.stateReason = FsInfoService.t('consentPendingReason')
         var consentStatus = FsBankService.getConsentStatus(fs)
         FsService.track('consent', consentStatus, 'financial-status')
         if (data.data.consent === 'SUCCESS') {
           $scope.cancelTimer()
+
+          $scope.stateReason = FsInfoService.t('consentGivenReason')
+          $scope.consentCheck = FsInfoService.t('checkingBalance')
+
           $timeout(function () {
             $scope.checkBalance()
-          }, 60000)
-        } else if (data.data.consent === 'FAILURE' || data.data.consent === 'INVALID') {
+          }, 500)
+        } else if (data.data.consent === 'FAILURE') {
           $scope.cancelTimer()
           $scope.render('CONSENTDENIED')
+        } else if (data.data.consent === 'INVALID') {
+          $scope.cancelTimer()
+          $scope.render('INVALID')
         } else if ($scope.numTry < $scope.numTryLimit) {
+          $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
         } else {
           console.log('ALL OVER')
         }
+
+        $scope.$applyAsync()
       }, function (err, data) {
-      // something went wrong
+        $scope.render('ERROR')
         console.log('err', err)
       })
     }

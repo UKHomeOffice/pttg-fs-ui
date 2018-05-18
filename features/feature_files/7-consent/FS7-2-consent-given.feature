@@ -19,6 +19,7 @@ Feature: Handle the responses from the Barclays Consent API & Balances API and d
             | DOB                     | 25/03/1987 |
             | Sort code               | 22-22-23   |
             | Account number          | 22222223   |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome              | Passed       |
             | Account holder name  | Laura Taylor |

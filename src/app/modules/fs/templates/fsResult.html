@@ -2,14 +2,14 @@
 <div ng-if="state === 'PENDING'">
   <h1 class="heading-large" id="outcome" tabindex="-1">Consent pending</h1>
 
-  <p id="outcomeDetail">The applicant has not yet responded to the request.</p>
+  <p id="outcomeDetail">{{ stateReason }}</p>
 
   <p id="consentCheck">{{ consentCheck }}</p>
 
   <fs-timer config="timerConf"></fs-timer>
 
-  <p><a class="" ng-click="tryAgainNow()" id="checkAgainBtn">Check again now</a></p>
-  <p><a class="" ng-click="cancelTimer()" id="cancelRequestBtn">Cancel request</a></p>
+  <p ng-if="!showCancelRequest"><a ng-click="tryAgainNow()" id="checkAgainBtn">Check again now</a></p>
+  <p ng-if="showCancelRequest"><a ng-click="cancelTimer()" id="cancelRequestBtn">Cancel request</a></p>
 
   <h2 id="account-holder" class="heading-medium">Calculator results</h2>
   <div class="govuk-box-highlight panel-fail">
@@ -53,7 +53,7 @@
 
 
 <div ng-if="state === 'CONSENTDENIED'">
-  <h1 class="bold-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
+  <h1 class="heading-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
   <p id="outcomeDetail">{{ stateReason }}</p>
 
   <ol class="list list-number">
@@ -67,9 +67,28 @@
   </div>
 </div>
 
+
+
 <div ng-if="state === 'ERROR'">
-  <h1 class="bold-large" tabindex="0">{{ stateTitle }}</h1>
+  <h1 class="heading-large" tabindex="0">{{ stateTitle }}</h1>
   <p>{{ stateReason }}</p>
+
+  <ol class="list list-number">
+    <li ng-repeat="nxt in doNext">{{ nxt }}</li>
+  </ol>
+
+  <h2 id="account-holder" class="heading-medium">Calculator results</h2>
+  <div class="govuk-box-highlight panel-fail">
+    <h3 class="bold-large">{{ threshold | pounds }}</h3>
+    <p><strong class="heading-small">Total daily funds required</strong><br />{{ results.periodChecked.display }}</p>
+  </div>
+</div>
+
+
+
+<div ng-if="state === 'INVALID'">
+  <h1 class="heading-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
+  <p id="outcomeDetail">{{ stateReason }}</p>
 
   <ol class="list list-number">
     <li ng-repeat="nxt in doNext">{{ nxt }}</li>
@@ -108,7 +127,7 @@
 </table>
 
 
-<h2 class="heading-medium">Your calculation <a href="" class="font-small" ui-sref="fsDetails" id="editSearchBtn">Edit details</a></h2>
+<h2 class="heading-medium">Your calculation <a class="font-small" ui-sref="fsDetails" id="editSearchBtn">Edit details</a></h2>
 
 <table class="table-font-xsmall" id="criteria">
   <tr ng-repeat="(f, obj) in criteria">

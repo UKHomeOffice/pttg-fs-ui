@@ -56,6 +56,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         Given the api daily balance response will Fail-low-balance
         And the api condition codes response will be 2-3-1
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | Not passed                   |
             | Application Raised Date | 31/05/2016                   |
@@ -93,6 +94,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Continuation Course        | Yes          |
             | Original Course Start Date | 30/10/2015   |
             | Course type                | below-degree |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                    | Passed                         |
             | Application Raised Date    | 31/05/2016                     |
@@ -134,6 +136,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Accommodation fees paid    | 0          |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | Not passed                   |
             | Application Raised Date | 31/05/2016                   |
@@ -175,6 +178,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Course institution      | false      |
             | Continuation Course     | No         |
             | Accommodation fees paid | 250.50     |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                  | Passed                         |
             | Application Raised Date  | 31/05/2016                     |
@@ -207,6 +211,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
         And caseworker is on page t4/application/status/dependant/general
         And the api condition codes response will be -3-1
         When the financial status check is performed
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | Not passed               |
             | Application Raised Date | 31/05/2016               |
@@ -241,6 +246,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Course start date          | 01/05/2016 |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | Passed                   |
             | Application Raised Date | 31/05/2016               |
@@ -277,6 +283,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | Course start date          | 01/05/2016 |
             | Continuation Course        | Yes        |
             | Original Course Start Date | 30/10/2015 |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                 | Not passed               |
             | Application Raised Date | 31/05/2016               |
@@ -315,6 +322,7 @@ Feature: Total Funds Required Calculation - Tier 4 New (General) Student Non Doc
             | End date                | 01/05/2016 |
             | Course end date         | 30/05/2017 |
             | Continuation Course     | No         |
+        And after at least 1 seconds
         Then the service displays the following result
             | Outcome                  | Passed                   |
             | Application Raised Date  | 31/05/2016               |
