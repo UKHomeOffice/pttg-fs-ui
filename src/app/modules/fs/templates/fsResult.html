@@ -67,9 +67,28 @@
   </div>
 </div>
 
+
+
 <div ng-if="state === 'ERROR'">
   <h1 class="heading-large" tabindex="0">{{ stateTitle }}</h1>
   <p>{{ stateReason }}</p>
+
+  <ol class="list list-number">
+    <li ng-repeat="nxt in doNext">{{ nxt }}</li>
+  </ol>
+
+  <h2 id="account-holder" class="heading-medium">Calculator results</h2>
+  <div class="govuk-box-highlight panel-fail">
+    <h3 class="bold-large">{{ threshold | pounds }}</h3>
+    <p><strong class="heading-small">Total daily funds required</strong><br />{{ results.periodChecked.display }}</p>
+  </div>
+</div>
+
+
+
+<div ng-if="state === 'INVALID'">
+  <h1 class="heading-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
+  <p id="outcomeDetail">{{ stateReason }}</p>
 
   <ol class="list list-number">
     <li ng-repeat="nxt in doNext">{{ nxt }}</li>

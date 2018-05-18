@@ -108,6 +108,13 @@ fsModule.controller('FsResultCtrl', [
           $scope.doNext = FsService.getThingsToDoNext(fs)
           break
 
+        case 'INVALID':
+          FsService.track('result', 'consentdenied', label)
+          $scope.stateTitle = FsInfoService.t('consentDenied')
+          $scope.stateReason = FsInfoService.t('consentDeniedReason')
+          $scope.doNext = FsService.getThingsToDoNext(fs)
+          break
+
         case 'ERROR':
           FsService.track('result', 'consenterror', label)
           $scope.stateTitle = 'Error'
@@ -196,9 +203,12 @@ fsModule.controller('FsResultCtrl', [
           $timeout(function () {
             $scope.checkBalance()
           }, 500)
-        } else if (data.data.consent === 'FAILURE' || data.data.consent === 'INVALID') {
+        } else if (data.data.consent === 'FAILURE') {
           $scope.cancelTimer()
           $scope.render('CONSENTDENIED')
+        } else if (data.data.consent === 'INVALID') {
+          $scope.cancelTimer()
+          $scope.render('INVALID')
         } else if ($scope.numTry < $scope.numTryLimit) {
           $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
