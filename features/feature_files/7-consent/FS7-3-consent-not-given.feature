@@ -1,10 +1,9 @@
 Feature: Handle the responses from the Barclays Consent API and display the appropriate output page when applicant consent is not granted.
 
-    The Barclays Consent API response will return a consent 'status' (Success, Failure, Invalid, Pending) when invoked.
+    # The Barclays Consent API response will return a consent 'status' (Success, Failure, Invalid, Pending) when invoked.
+    # The service will display the corresponding output page dependant on the status.
 
-    The service will display the corresponding output page dependant on the status.
-
-            ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
+    ## 'Pending' consent status followed by 'Failure' status (e.g. consent not granted) ##
     Scenario Outline: Consent status is in 'Pending' status when the financial status check is performed
         Given the api health check response has status 200
         And the api consent response will be PENDING
@@ -31,7 +30,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | 2    | dependant | £945.00 |
 
 
-        ## 'Failure' consent status received immediately when requesting consent (before the financial status check is performed) ##
+    ## 'Failure' consent status received immediately when requesting consent (before the financial status check is performed) ##
     Scenario Outline: 'Failure' consent status received immediately when requesting consent (before the financial status check is performed)
         Given the api health check response has status 200
         And the api consent response will be FAILURE
@@ -49,7 +48,7 @@ Feature: Handle the responses from the Barclays Consent API and display the appr
             | Tier two  |
 
 
-    Scenario: T4 Main applicant - Consent granted, balances API invoked and data received - display result page
+    Scenario: T4 Main applicant - Consent INVALID, balances API invoked and data received - display result page
         Given the api health check response has status 200
         And the api consent response will be INVALID
         And the api threshold response will be t4
