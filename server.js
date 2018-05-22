@@ -2,8 +2,10 @@
 var apiRoot = process.env.API_ROOT || 'http://localhost:8050'
 var feedbackRoot = process.env.FEEDBACK_ROOT || 'http://localhost:8051'
 var port = process.env.SERVER_PORT || '8000'
-var PROXY_DISCOVERY_URL = process.env.PROXY_DISCOVERY_URL || 'https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-qa'
-var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || 'https://fs.calc.dev.notprod.pttg.homeoffice.gov.uk'
+
+// PROXY_DISCOVERY_URL eg https://sso.digital.homeoffice.gov.uk/auth/realms/pttg-qa or pttg-production
+var PROXY_DISCOVERY_URL = process.env.PROXY_DISCOVERY_URL || ''
+var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || ''
 var httpauth = process.env.FS_API_AUTH || ''
 
 // require dependancies
@@ -157,6 +159,12 @@ app.get(uiBaseUrl + ':tier/conditioncodes', function (req, res) {
 })
 
 app.get('/logout', function (req, res) {
+  if (!PROXY_REDIRECTION_URL || !PROXY_DISCOVERY_URL) {
+    // NB: same as when the KC session has timed out
+    res.statusCode = 307
+    res.send()
+    return
+  }
   let url = PROXY_REDIRECTION_URL + '/oauth/logout?redirect=' + encodeURIComponent(PROXY_DISCOVERY_URL + '/protocol/openid-connect/logout?post_logout_redirect_uri=' + PROXY_REDIRECTION_URL)
   res.setHeader('Content-Type', 'application/json')
   res.send({logout: url})
