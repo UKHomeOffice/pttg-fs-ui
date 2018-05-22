@@ -481,9 +481,7 @@ formsModule.directive('hodRadio', ['FormsService', function (FormsService) {
             }
           }
         }, scope.config)
-        //
 
-        console.log(scope.config)
         formCtrl.addObj(scope)
 
         scope.getSelectedOption = function () {

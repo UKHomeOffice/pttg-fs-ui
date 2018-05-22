@@ -101,18 +101,27 @@ fsModule.controller('FsResultCtrl', [
           $scope.doNext = FsService.getThingsToDoNext(fs)
           break
 
-        case 'CONSENTDENIED':
-          FsService.track('result', 'consentdenied', label)
+        case 'FAILURE':
+        case 'INVALID':
+          FsService.track('result', 'consentfailure', label)
           $scope.stateTitle = FsInfoService.t('consentDenied')
           $scope.stateReason = FsInfoService.t('consentDeniedReason')
           $scope.doNext = FsService.getThingsToDoNext(fs)
           break
 
-        case 'INVALID':
-          FsService.track('result', 'consentdenied', label)
-          $scope.stateTitle = FsInfoService.t('consentDenied')
-          $scope.stateReason = FsInfoService.t('consentDeniedReason')
-          $scope.doNext = FsService.getThingsToDoNext(fs)
+        case 'BADREQUEST':
+          FsService.track('result', 'badrequest', label)
+
+          $scope.stateTitle = FsInfoService.t('inaccessibleaccount')
+          $scope.stateReason = FsInfoService.t('conditionspreventedus')
+
+          var reasons = {}
+          _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
+            reasons[f] = FsInfoService.t(f)
+          })
+          $scope.reasons = reasons
+
+          $scope.doNext = [FsInfoService.t('checkDataEntry')]
           break
 
         case 'ERROR':
@@ -205,21 +214,22 @@ fsModule.controller('FsResultCtrl', [
           }, 500)
         } else if (data.data.consent === 'FAILURE') {
           $scope.cancelTimer()
-          $scope.render('CONSENTDENIED')
+          $scope.render('FAILURE')
         } else if (data.data.consent === 'INVALID') {
           $scope.cancelTimer()
           $scope.render('INVALID')
         } else if ($scope.numTry < $scope.numTryLimit) {
           $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
-        } else {
-          console.log('ALL OVER')
         }
 
         $scope.$applyAsync()
-      }, function (err, data) {
-        $scope.render('ERROR')
-        console.log('err', err)
+      }, function (err) {
+        if (err.status >= 500) {
+          $scope.render('ERROR')
+        } else {
+          $scope.render('BADREQUEST')
+        }
       })
     }
 
@@ -271,7 +281,6 @@ fsModule.controller('FsResultCtrl', [
       timeoutResetButtonText()
     })
     clipboard.on('error', function (e) {
-      console.log('ClipBoard error', e)
       $scope.$applyAsync()
     })
 
@@ -335,8 +344,6 @@ fsModule.controller('FsResultCtrl', [
         ],
         validate: function (v, sc) {
           var n = _.reduce($scope.feedback.whynot, function (memo, bool) { return (bool) ? memo + 1 : memo }, 0)
-
-          console.log('whynot', n, v, $scope.feedback.whynot, $scope.feedback.matchOther)
           if (n || $scope.feedback.matchOther) return true
           return { summary: 'The "Why do you think that the paper assessment did not match the IPS result?" is blank', msg: 'Select one or more from below' }
         }
@@ -346,8 +353,6 @@ fsModule.controller('FsResultCtrl', [
         required: false,
         validate: function (v, sc) {
           var n = _.reduce($scope.feedback.whynot, function (memo, bool) { return (bool) ? memo + 1 : memo }, 0)
-
-          console.log('matchother', n, v)
           return (n || v) ? true : { summary: '', msg: 'Please provide comments' }
         }
       }

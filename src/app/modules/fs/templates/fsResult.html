@@ -52,7 +52,7 @@
 
 
 
-<div ng-if="state === 'CONSENTDENIED'">
+<div ng-if="state === 'FAILURE' || state === 'INVALID'">
   <h1 class="heading-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
   <p id="outcomeDetail">{{ stateReason }}</p>
 
@@ -70,8 +70,8 @@
 
 
 <div ng-if="state === 'ERROR'">
-  <h1 class="heading-large" tabindex="0">{{ stateTitle }}</h1>
-  <p>{{ stateReason }}</p>
+  <h1 class="heading-large" id="outcome"  tabindex="0">{{ stateTitle }}</h1>
+  <p id="outcomeDetail">{{ stateReason }}</p>
 
   <ol class="list list-number">
     <li ng-repeat="nxt in doNext">{{ nxt }}</li>
@@ -86,10 +86,17 @@
 
 
 
-<div ng-if="state === 'INVALID'">
+<div ng-if="state === 'BADREQUEST'">
   <h1 class="heading-large" id="outcome" tabindex="-1">{{ stateTitle }}</h1>
   <p id="outcomeDetail">{{ stateReason }}</p>
 
+  <div ng-if="reasons">
+    <ul class="list list-bullet">
+      <li ng-repeat="inf in reasons">{{ inf }}</li>
+    </ul>
+  </div>
+
+  <h2 class="heading-medium">Things to do now</h2>
   <ol class="list list-number">
     <li ng-repeat="nxt in doNext">{{ nxt }}</li>
   </ol>
@@ -153,7 +160,7 @@
     <hod-text name="caseref" label="Case ID" field="feedback.caseref" config="conf.caseref"></hod-text>
 
     <hod-textarea name="matchComment" config="conf.matchComment" label="Why do you think that the FSPS result did not match the paper assessment?" field="feedback.matchComment"></hod-textarea>
-    
+
     <hod-checkboxes label="Why do you think that the FSPS result did not match the paper assessment?" field="feedback.whynot" config="conf.whynot"></hod-checkboxes>
 
     <hod-text name="matchOther" config="conf.matchOther" label="Other" field="feedback.matchOther"></hod-text>
