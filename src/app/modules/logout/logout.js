@@ -26,6 +26,10 @@ logoutModule.controller('LogoutCtrl', ['$scope', '$http', '$window', function ($
       $window.location = logoutUrl
     }
   }).catch(function (e) {
-    console.log(e)
+    var logoutUrl = window.location.protocol + '//' + window.location.hostname
+    if (window.location.port !== '80' && window.location.port !== '443') {
+      logoutUrl += ':' + window.location.port
+    }
+    $window.location = logoutUrl
   })
 }])
