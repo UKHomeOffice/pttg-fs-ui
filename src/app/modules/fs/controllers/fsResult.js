@@ -162,7 +162,7 @@ fsModule.controller('FsResultCtrl', [
           if (s) {
             $scope.consentCheck = 'We will automatically check for consent again in ' + s + 's.'
           } else {
-            $scope.consentCheck = 'We will no longer check automatically for consent'
+            $scope.consentCheck = ''// 'We will no longer check automatically for consent'
             $scope.showCancelRequest = false
           }
         })
@@ -183,10 +183,11 @@ fsModule.controller('FsResultCtrl', [
       $scope.seconds = '-'
       $scope.numTry = $scope.numTryLimit
       $scope.showCancelRequest = false
-      $scope.consentCheck = '-'
+      $scope.consentCheck = ''
     }
 
     $scope.tryAgainNow = function (e) {
+      $scope.numTry = 0
       $scope.checkConsent()
     }
 
@@ -221,6 +222,8 @@ fsModule.controller('FsResultCtrl', [
         } else if ($scope.numTry < $scope.numTryLimit) {
           $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
+        } else if ($scope.numTry === $scope.numTryLimit) {
+          $scope.consentCheck = 'We will no longer check automatically for consent'
         }
 
         $scope.$applyAsync()
