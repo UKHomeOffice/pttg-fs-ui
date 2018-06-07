@@ -6,7 +6,7 @@
     "init": "npm install",
     "test": "gulp test",
     "test:all": "npm run test:unit && npm run test:bdd",
-    "test:unit": "gulp",
+    "test:unit": "gulp test",
     "test:bdd": "./node_modules/.bin/cucumber.js",
     "postinstall": "gulp"
   },
