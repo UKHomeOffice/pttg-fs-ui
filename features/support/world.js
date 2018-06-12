@@ -16,7 +16,7 @@ var reportPath = path.resolve('report/')
 // config
 var shareBrowserInstances = true
 var browserName = 'chrome'
-var headless = true
+var headless = (process.env.HEADLESS !== false && process.env.HEADLESS !== 'false')
 var showReport = false
 //
 
