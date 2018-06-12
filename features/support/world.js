@@ -10,15 +10,16 @@ var seleniumWebdriver = require('selenium-webdriver')
 var chrome = require('selenium-webdriver/chrome')
 var {defineSupportCode} = require('cucumber')
 var globalDriver
-var path = require('path')
-var reportPath = path.resolve('report/')
+var os = require('os')
 
 // config
 var shareBrowserInstances = true
 var browserName = 'chrome'
 var headless = (process.env.HEADLESS !== false && process.env.HEADLESS !== 'false')
-var showReport = false
 //
+console.log(os.cpus())
+console.log('Load average', os.loadavg())
+console.log('Free mem (MB)', Math.round((os.freemem() / (1024 * 1024))))
 
 var getNewBrowser = function (name) {
   var builder = new seleniumWebdriver.Builder()
@@ -42,6 +43,9 @@ if (shareBrowserInstances) {
 }
 
 function CustomWorld (done) {
+  console.log('Load average', os.loadavg())
+  console.log('Free mem (MB)', Math.round((os.freemem() / (1024 * 1024))))
+
   mockdata.clearAll()
 
   this.driver = shareBrowserInstances ? globalDriver : getNewBrowser(browserName)
