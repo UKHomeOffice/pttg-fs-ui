@@ -66,27 +66,6 @@ defineSupportCode(function ({setWorldConstructor}) {
 defineSupportCode(function ({registerHandler}) {
   //
   registerHandler('AfterFeatures', function (features, callback) {
-    // globalDriver.close()
-    var options = {
-      theme: 'foundation',
-      jsonFile: path.resolve(path.join(reportPath, 'cucumber_report.json')),
-      output: path.resolve(path.join(reportPath, 'cucumber_report.html')),
-      reportSuiteAsScenarios: true,
-      launchReport: true,
-      metadata: {
-        // 'App Version': '0.3.2',
-        // 'Test Environment': 'STAGING',
-        'Browser': 'Chrome'
-        // 'Platform': 'Windows 10',
-        // 'Parallel': 'Scenarios',
-        // 'Executed': 'Remote'
-      }
-    }
-
-    if (showReport) {
-      var reporter = require('cucumber-html-reporter')
-      reporter.generate(options)
-    }
     callback()
   })
 })

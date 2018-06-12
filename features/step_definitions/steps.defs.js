@@ -463,9 +463,7 @@ defineSupportCode(function ({Given, When, Then}) {
 
   Given(/the progress bar is displayed/, function () {
     const d = this.driver
-    return d.wait(until.elementLocated({className: 'progress-bar'}), 2 * 1000, 'TIMEOUT: Waiting for element .progress-bar').then(function () {
-      return d.findElement({className: 'progress-bar'})
-    }).then(function (el) {
+    return d.wait(until.elementLocated({id: 'progress-bar'}), 2 * 1000, 'TIMEOUT: Waiting for element #progress-bar').then(function (el) {
       return expect(el.isDisplayed()).to.eventually.equal(true)
     })
   })
