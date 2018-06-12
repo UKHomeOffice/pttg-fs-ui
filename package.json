@@ -34,7 +34,6 @@
     "gulp-uglify": "^2.1.2",
     "gulp-util": "^3.0.8",
     "moment": "^2.22.1",
-    "node-sass": "^4.9.0",
     "prod": "^1.0.1",
     "request": "^2.85.0",
     "require-dir": "^0.3.2",
