@@ -176,24 +176,30 @@ const confirmVisible = function (d, data, visibility, timeoutLength) {
 }
 
 const confirmContentById = function (d, data, timeoutLength) {
-  var e
   const promises = []
   _.each(data, function (val, key) {
     const expectation = new Promise(function (resolve, reject) {
+      let elem = null
       d.wait(until.elementLocated({id: key}), timeoutLength || 5 * 1000, 'TIMEOUT: Waiting for element #' + key).then(function (el) {
-        e = el
-        return el.getTagName()
-      }).then(function (name) {
-        if (name === 'input') {
-          return expect(e.getAttribute('value')).to.eventually.equal(val)
-        } else {
-          return expect(e.getText()).to.eventually.equal(val)
+        elem = el
+        return d.wait(elem.isDisplayed(), 1000, 'TIMEOUT: Waiting for element to be visible #' + key)
+      }).then(function (visible) {
+        // it is displayed
+        return elem.getTagName()
+      }).then(function (n) {
+        if (n === 'input') {
+          // for an input compare the value attribute
+          return elem.getAttribute('value')
         }
+        // otherwise just get the test of the element
+        return elem.getText()
       }).then(function (result) {
-                // test OK
-        return resolve(result)
+        // here we are removing line breaks from both the bdd sepcified value and the return from Chromedriver
+        // because of an issue where in some environments it compares \n correctly and in others it doesn't
+        val = val.replace(/\n/g, ' ')
+        result = result.replace(/\n/g, ' ')
+        return resolve(expect(result).to.equal(val))
       }, function (err) {
-                // test failed
         return reject(err)
       })
     })
