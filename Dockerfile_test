@@ -17,7 +17,7 @@ RUN groupadd -r ${GROUP} && \
 COPY . /app
 RUN npm --loglevel warn install
 RUN npm --loglevel warn run postinstall
-RUN npm install chromedriver@2.32.3
+RUN npm install chromedriver@2.38.3
 
 RUN chown -R ${USER}:${GROUP} /app
 
