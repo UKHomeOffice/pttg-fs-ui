@@ -463,9 +463,12 @@ defineSupportCode(function ({Given, When, Then}) {
 
   Given(/the progress bar is displayed/, function () {
     const d = this.driver
-    return d.wait(until.elementLocated({id: 'progressBar'}), 2 * 1000, 'TIMEOUT: Waiting for element #progressBar').then(function (el) {
-      return expect(el.isDisplayed()).to.eventually.equal(true)
-    })
+    return confirmContentById(d, {progressBar: 'Timer running'})
+    // return d.wait(until.elementLocated({id: 'progressBar'}), 2 * 1000, 'TIMEOUT: Waiting for element #progressBar').then(function (el) {
+    //   return el.getAttribute('width')
+    // }).then(function (width) {
+    //   return expect(width)
+    // })
   })
 
   Given(/^the feedback form is completed$/, {timeout: 10 * 1000}, function (table) {

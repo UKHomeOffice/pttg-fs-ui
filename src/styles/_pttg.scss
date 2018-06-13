@@ -88,6 +88,8 @@ form legend{
 .progress-bar {
   height: 15px;
   background: #005ea5;
+  white-space: nowrap;
+  text-indent: -9999px;
 }
 
 table {
