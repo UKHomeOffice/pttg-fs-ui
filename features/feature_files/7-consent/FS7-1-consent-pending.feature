@@ -53,8 +53,9 @@ Feature: Process 'pending' status and display the appropriate output page
             | Application raised date | 30/07/2016 |
             | End Date                | 04/07/2016 |
             | Dependants              | 1          |
+        And after at least 1 seconds
         And the progress bar is displayed
-        And after at least 2 seconds
+        And after at least 1 seconds
         And the api consent response will be SUCCESS
         And the api daily balance response will Pass
         And after at least 4 seconds
