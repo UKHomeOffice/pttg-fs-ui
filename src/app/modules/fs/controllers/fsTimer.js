@@ -13,10 +13,12 @@ fsModule.directive('fsTimer', ['$interval', function ($interval) {
     templateUrl: 'modules/fs/templates/fsTimer.html',
     compile: function (element, attrs) {
       return function (scope, element, attrs) {
+        scope.msg = 'Timer stopped'
         scope.interval = null
         scope.percent = 0
         scope.startTimer = function () {
           scope.stopTimer()
+          scope.msg = 'Timer running'
           scope.startTime = new Date().getTime()
           scope.interval = $interval(function () {
             var frac = scope.getFrac()
@@ -28,9 +30,11 @@ fsModule.directive('fsTimer', ['$interval', function ($interval) {
             }
           }, 50)
           scope.$emit('FsTimerSTARTED')
+          scope.$applyAsync()
         }
 
         scope.stopTimer = function () {
+          scope.msg = 'Timer stopped'
           $interval.cancel(scope.interval)
         }
 
