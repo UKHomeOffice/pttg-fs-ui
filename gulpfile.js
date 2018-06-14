@@ -13,6 +13,7 @@ var gutil = require('gulp-util')
 var htmlmin = require('gulp-htmlmin')
 var sourcemaps = require('gulp-sourcemaps')
 var sassjs = require('sass')
+var mkdirp = require('mkdirp')
 
 // error function for plumber
 var onError = function (err) {
@@ -63,6 +64,7 @@ gulp.task('sassjs', function () {
   }, function (err, result) {
     if (!err) {
       // No errors during the compilation, write this result on the disk
+      mkdirp.sync(target + 'styles')
       fs.writeFile(target + 'styles/main.css', result.css, function (err) {
         if (!err) {
           // file written on disk
