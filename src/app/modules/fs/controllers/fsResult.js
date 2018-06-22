@@ -74,7 +74,7 @@ fsModule.controller('FsResultCtrl', [
     $scope.stateReason = ''
 
   // show hide blocks of text and set display strings as required
-    $scope.render = function (state) {
+    $scope.render = function (state, detail) {
       $scope.state = state
       $scope.stateReason = FsInfoService.t('consentPendingReason')
 
@@ -127,7 +127,7 @@ fsModule.controller('FsResultCtrl', [
         case 'ERROR':
           FsService.track('result', 'consenterror', label)
           $scope.stateTitle = 'Error'
-          $scope.stateReason = 'Something went wrong, please try again later.'
+          $scope.stateReason = (detail && detail.msg) ? detail.msg : 'Something went wrong, please try again later.'
           break
 
         case 'CALCULATOR':
@@ -203,6 +203,9 @@ fsModule.controller('FsResultCtrl', [
         fs.consentResponse = data
         $scope.stateReason = FsInfoService.t('consentPendingReason')
         var consentStatus = FsBankService.getConsentStatus(fs)
+
+        console.log('consentStatus', consentStatus, data)
+
         FsService.track('consent', consentStatus, 'financial-status')
         if (data.data.consent === 'SUCCESS') {
           $scope.cancelTimer()
@@ -219,6 +222,8 @@ fsModule.controller('FsResultCtrl', [
         } else if (data.data.consent === 'INVALID') {
           $scope.cancelTimer()
           $scope.render('INVALID')
+        } else if (data.data.consent === 'ERROR') {
+          $scope.render('ERROR', {msg: data.data.status.message})
         } else if ($scope.numTry < $scope.numTryLimit) {
           $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
@@ -228,7 +233,10 @@ fsModule.controller('FsResultCtrl', [
 
         $scope.$applyAsync()
       }, function (err) {
-        if (err.status >= 500) {
+        // console.log(err)
+        if (err && err.data && err.data.status && err.data.status.message && err.data.status.message !== 'ERROR') {
+          $scope.render('ERROR', {msg: err.data.status.message})
+        } else if (err.status >= 500) {
           $scope.render('ERROR')
         } else {
           $scope.render('BADREQUEST')

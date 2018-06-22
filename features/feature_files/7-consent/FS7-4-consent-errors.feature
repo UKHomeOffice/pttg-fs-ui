@@ -50,3 +50,13 @@ Feature: Handle the errors and bad request responses from the Barclays Consent A
             | 500    |
             | 501    |
             | 599    |
+
+    Scenario: Consent response indicates an error not covered by specific cases
+        Given the api health check response has status 200
+        And the api consent response will be ERROR
+        And the api threshold response will be t4
+        And caseworker is on page t4/application/status/main/general
+        And the financial status check is performed
+        Then the service displays the following result
+            | Outcome        | Error                                         |
+            | Outcome detail | Mobile number has been updated within 14 days |
