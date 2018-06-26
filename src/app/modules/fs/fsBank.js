@@ -77,6 +77,14 @@ fsModule.factory('FsBankService', ['IOService', 'FsInfoService', function (IOSer
     return IOService.get(u, params)
   }
 
+  this.getResponseStatusMessage = function (obj) {
+    if (_.has(obj, 'data') && _.has(obj.data, 'status') && _.has(obj.data.status, 'message')) {
+      return obj.data.status.message
+    }
+
+    return null
+  }
+
   // get daily balance status url
   this.getDailyBalanceStatusUrl = function (obj) {
     if (!obj.tier || !obj.sortCode || !obj.accountNumber) {

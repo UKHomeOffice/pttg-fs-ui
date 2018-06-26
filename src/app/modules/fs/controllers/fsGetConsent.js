@@ -90,6 +90,7 @@ fsModule.controller('FsGetConsentResultCtrl', ['$scope', '$state', 'FsService', 
   }
 
   var consentStatus = FsBankService.getConsentStatus(fs)
+  console.log('ERROR')
   FsService.track('consent', consentStatus, 'consent-only')
   switch (consentStatus) {
     case 'INITIATED':
@@ -110,22 +111,28 @@ fsModule.controller('FsGetConsentResultCtrl', ['$scope', '$state', 'FsService', 
       $scope.outcome = FsInfoService.t('consentDenied')
       $scope.outcomeDetail = FsInfoService.t('consentDeniedReason')
       break
-
     case 500:
       $scope.outcome = FsInfoService.t('notnow')
       $scope.outcomeDetail = FsInfoService.t('trylater')
       break
 
     default:
-      $scope.outcome = FsInfoService.t('inaccessibleaccount')
-      $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
+      var msg = FsBankService.getResponseStatusMessage(fs.consentResponse)
+      if (msg && msg !== 'OK' && msg !== 'ERROR') {
+        // OK should never appear at this point and ERROR is too generic
+        $scope.outcome = 'ERROR'
+        $scope.outcomeDetail = msg
+      } else {
+        $scope.outcome = FsInfoService.t('inaccessibleaccount')
+        $scope.outcomeDetail = FsInfoService.t('conditionspreventedus')
 
-      var reasons = {}
-      _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
-        reasons[f] = FsInfoService.t(f)
-      })
-      $scope.reasons = reasons
+        var reasons = {}
+        _.each(['datamismatch', 'notbarclays', 'frozen', 'businessacc', 'accountclosed'], function (f) {
+          reasons[f] = FsInfoService.t(f)
+        })
+        $scope.reasons = reasons
 
-      $scope.doNext = [FsInfoService.t('checkDataEntry')]
+        $scope.doNext = [FsInfoService.t('checkDataEntry')]
+      }
   }
 }])
