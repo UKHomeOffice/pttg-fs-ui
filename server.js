@@ -8,6 +8,10 @@ var PROXY_DISCOVERY_URL = process.env.PROXY_DISCOVERY_URL || ''
 var PROXY_REDIRECTION_URL = process.env.PROXY_REDIRECTION_URL || ''
 var httpauth = process.env.FS_API_AUTH || ''
 
+//
+var TIMER_BAR_DURATION = process.env.TIMER_BAR_DURATION || 61000
+var TIME_BETWEEN_CONSENT_AND_BALANCE = process.env.TIME_BETWEEN_CONSENT_AND_BALANCE || 61000
+
 // require dependancies
 var request = require('request')
 var express = require('express')
@@ -98,8 +102,7 @@ var stdRelay = function (req, res, uri, qs, postdata, dontLog) {
     if (!dontLog) {
       log(`response ${status} ${opts.uri}`, {
         uri: opts.uri,
-        upstreamStatus:
-        response.statusCode,
+        upstreamStatus: (response && response.statusCode) ? response.statusCode : 'Unknown',
         status: status,
         body: body,
         correlation: headers['x-correlation-id']
@@ -126,6 +129,18 @@ app.use(serveStatic('public/', { 'index': ['index.html'] }))
 app.listen(port, function () {
   log('The server is running on port:' + port)
   log('apiRoot is:' + apiRoot)
+})
+
+app.get('/api/env.js', function (req, res) {
+  let envData = {
+    api: '/pttg/financialstatus/v1/',
+    timeout: 50000,
+    timerBarDuration: TIMER_BAR_DURATION,
+    timeBetweenConsentAndBalance: TIME_BETWEEN_CONSENT_AND_BALANCE
+  }
+
+  res.setHeader('Content-Type', 'application/json')
+  res.send('window.ENV = ' + JSON.stringify(envData))
 })
 
 app.get('/ping', function (req, res) {

@@ -39,6 +39,8 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
   fs.tier = Number($state.params.tier)
   fs.doCheck = true
 
+  $scope.showSubmit = true
+  $scope.showWait = false
   $scope.tier = FsInfoService.getTier(fs.tier)
   $scope.fs = fs
   $scope.conf = {
@@ -67,6 +69,10 @@ fsModule.controller('FsGetConsentCtrl', ['$scope', '$state', 'FsService', 'FsInf
 
   $scope.submit = function (valid) {
     if (valid) {
+      //
+      $scope.showSubmit = false
+      $scope.showWait = true
+      //
       FsBankService.sendConsentRequest($scope.fs).then(function (data) {
         $scope.fs.consentResponse = data
         $state.go('fsGetConsentResult')

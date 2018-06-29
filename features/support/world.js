@@ -1,4 +1,9 @@
 // require OUR APPLICATION THAT WE'RE TESTING
+
+// OVERRIDE THE TIMERS FOR TESTING
+process.env.TIMER_BAR_DURATION = 5000
+process.env.TIME_BETWEEN_CONSENT_AND_BALANCE = 500
+
 require('../../server.js')
 //
 

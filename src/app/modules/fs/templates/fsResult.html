@@ -8,7 +8,8 @@
 
   <fs-timer config="timerConf"></fs-timer>
 
-  <p ng-if="!showCancelRequest"><a ng-click="tryAgainNow()" id="checkAgainBtn">Check again now</a></p>
+  <p ng-if="!showCheckAgain && !showCancelRequest">&nbsp;</p>
+  <p ng-if="showCheckAgain"><a ng-click="tryAgainNow()" id="checkAgainBtn">Check again now</a></p>
   <p ng-if="showCancelRequest"><a ng-click="cancelTimer()" id="cancelRequestBtn">Cancel request</a></p>
 
   <h2 id="account-holder" class="heading-medium">Calculator results</h2>
