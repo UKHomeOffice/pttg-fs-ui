@@ -7,5 +7,6 @@
 
   <hod-number name="accountNumber" label="Account number" field="fs.accountNumber" config="conf.accountNumber"></hod-number>
 
-  <hod-submit value="Get consent"></hod-submit>
+  <hod-submit ng-show="showSubmit" value="Get consent"></hod-submit>
+  <p ng-show="showWait">Please wait</p>
 </hod-form>

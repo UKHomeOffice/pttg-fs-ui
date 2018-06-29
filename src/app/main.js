@@ -13,15 +13,21 @@ var app = angular.module('hod.proving', [
   'hod.logout'
 ])
 
-app.constant('CONFIG', {
+var defaultConf = {
   api: '/pttg/financialstatus/v1/',
-  timeout: 50000,
-  retries: 0
-})
+  timeout: 5000,
+  timerBarDuration: 500,
+  timeBetweenConsentAndBalance: 500
+}
 
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+if (window.ENV) {
+  app.constant('CONFIG', angular.extend(defaultConf, window.ENV))
+} else {
+  app.constant('CONFIG', defaultConf)
+}
+
+app.config(['$stateProvider', '$urlRouterProvider', 'CONFIG', function ($stateProvider, $urlRouterProvider, CONFIG) {
   $urlRouterProvider.otherwise('/fs/t4')
-
   $stateProvider.state({
     name: 'default',
     title: 'HOD',

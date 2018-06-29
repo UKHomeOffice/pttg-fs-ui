@@ -45,6 +45,7 @@ fsModule.controller('FsResultCtrl', [
   'IOService',
   '$window',
   '$stateParams',
+  'CONFIG',
   function (
     $rootScope,
     $scope,
@@ -56,7 +57,8 @@ fsModule.controller('FsResultCtrl', [
     FsBankService,
     IOService,
     $window,
-    $stateParams
+    $stateParams,
+    CONFIG
   ) {
     var fs = FsService.getApplication()
     var tier = FsInfoService.getTier(fs.tier)
@@ -70,6 +72,7 @@ fsModule.controller('FsResultCtrl', [
     $scope.numTryLimit = 5
     $scope.timerScope = null
     $scope.doNext = []
+    $scope.showCheckAgain = false
     $scope.showCancelRequest = false
     $scope.stateReason = ''
 
@@ -147,7 +150,7 @@ fsModule.controller('FsResultCtrl', [
 
   //
     $scope.timerConf = {
-      duration: 5000,
+      duration: CONFIG.timerBarDuration,
       onInit: function (timerScope) {
         $scope.timerScope = timerScope
         $scope.numTry = 0
@@ -164,6 +167,7 @@ fsModule.controller('FsResultCtrl', [
           } else {
             $scope.consentCheck = ''// 'We will no longer check automatically for consent'
             $scope.showCancelRequest = false
+            $scope.showCheckAgain = true
           }
         })
 
@@ -182,6 +186,7 @@ fsModule.controller('FsResultCtrl', [
       $scope.timerScope.percent = 0
       $scope.seconds = '-'
       $scope.numTry = $scope.numTryLimit
+      $scope.showCheckAgain = true
       $scope.showCancelRequest = false
       $scope.consentCheck = ''
     }
@@ -213,9 +218,10 @@ fsModule.controller('FsResultCtrl', [
           $scope.stateReason = FsInfoService.t('consentGivenReason')
           $scope.consentCheck = FsInfoService.t('checkingBalance')
 
+          $scope.showCheckAgain = false
           $timeout(function () {
             $scope.checkBalance()
-          }, 500)
+          }, CONFIG.timeBetweenConsentAndBalance)
         } else if (data.data.consent === 'FAILURE') {
           $scope.cancelTimer()
           $scope.render('FAILURE')
@@ -225,6 +231,7 @@ fsModule.controller('FsResultCtrl', [
         } else if (data.data.consent === 'ERROR') {
           $scope.render('ERROR', {msg: data.data.status.message})
         } else if ($scope.numTry < $scope.numTryLimit) {
+          $scope.showCheckAgain = false
           $scope.showCancelRequest = true
           $scope.timerScope.startTimer()
         } else if ($scope.numTry === $scope.numTryLimit) {
