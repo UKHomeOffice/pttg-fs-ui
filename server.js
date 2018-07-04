@@ -139,7 +139,7 @@ app.get('/api/env.js', function (req, res) {
     timeBetweenConsentAndBalance: TIME_BETWEEN_CONSENT_AND_BALANCE
   }
 
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader('Content-Type', 'application/javascript')
   res.send('window.ENV = ' + JSON.stringify(envData))
 })
 
