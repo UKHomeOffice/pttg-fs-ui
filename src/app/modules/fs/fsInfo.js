@@ -27,6 +27,7 @@ fsModule.factory('FsInfoService', [ function () {
     consentRequestedReason: 'Awaiting response from applicant',
     consentDenied: 'Consent not given',
     consentDeniedReason: 'Applicant has refused permission to access their account',
+    consentPending: 'Consent pending',
     consentPendingReason: 'The applicant has not yet responded to the request.',
     inaccessibleaccount: 'Invalid or inaccessible account',
     conditionspreventedus: 'One or more of the following conditions prevented us from accessing the account:',

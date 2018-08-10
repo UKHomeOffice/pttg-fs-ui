@@ -74,11 +74,13 @@ fsModule.controller('FsResultCtrl', [
     $scope.doNext = []
     $scope.showCheckAgain = false
     $scope.showCancelRequest = false
+    $scope.stateTitle = ''
     $scope.stateReason = ''
 
   // show hide blocks of text and set display strings as required
     $scope.render = function (state, detail) {
       $scope.state = state
+      $scope.stateTitle = FsInfoService.t('consentPending')
       $scope.stateReason = FsInfoService.t('consentPendingReason')
 
       var label = 't' + fs.tier + '-' + fs.applicantType + '-' + fs.variantType
@@ -218,6 +220,7 @@ fsModule.controller('FsResultCtrl', [
           $scope.stateReason = FsInfoService.t('consentGivenReason')
           $scope.consentCheck = FsInfoService.t('checkingBalance')
 
+          $scope.stateTitle = FsInfoService.t('consentGiven')
           $scope.showCheckAgain = false
           $timeout(function () {
             $scope.checkBalance()
