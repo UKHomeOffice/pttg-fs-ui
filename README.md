@@ -13,24 +13,24 @@ UI project to add basic interface to an API connected to Barclays Bank which can
 
 The frontend is an Angular 1 project.
 
-Userbase is a known limited quantity of users internal to The Home Office and access to Chrome as a browser for those users is confirmed, it has therefore been determined that supporting other browsers is unnessesary - however web standards should be adheared to.
+Userbase is a known limited quantity of users internal to The Home Office and access to Chrome as a browser for those users is confirmed, it has therefore been determined that supporting other browsers is unnecessary - however web standards should be adhered to.
 
-This project has a Node JS backend soley for the purposes of relaying asynchronous requests to the API which exists in its own project, this is one single Node file `server.js`.
+This project has a Node JS backend solely for the purposes of relaying asynchronous requests to the API which exists in its own project, this is one single Node file `server.js`.
 
 ## install ##
 
     // Checkout the project
-    git clone git@github.com:UKHomeOffice/pttg-fs-ui.git `
+    git clone git@github.com:UKHomeOffice/pttg-fs-ui.git
 
     // move into cloned directory
     cd pttg-fs-ui
 
     // install modules
     npm install
-    
+
     // generate the compiled/minified resources e.g. js, css
     gulp
-    
+
     // start the project
     npm start
 
@@ -44,13 +44,13 @@ These features are written in Gherkin and can be consumed by CucumberJS to run t
 
     // To run BDD feature file tests
     npm run test:bdd
-    
+
     // to run Unit tests
     npm run test:unit
-    
+
     // to run all tests
     npm run test:all
-   
+
 Tests are run using Chrome in Headless mode, you need an up-to-date version of Chrome to do this.
 
 Tests may be run in Chrome with a browser window by changing the `var headless = true` in the config section of the `features/support/world.js`
@@ -59,8 +59,8 @@ Tests may be run in Chrome with a browser window by changing the `var headless =
 
 When running the tests in Docker the image built by Dockerfile_test is used. This installs all dependent node modules not just prod ones.
 
-This Docker image is based on a pttg shared image `pttg-bdd-base`. 
-`pttg-bdd-base` is based on the current  LTS version of node and the latest stable chrome version for chrome headless testing.
+This Docker image is based on a pttg shared image `pttg-bdd-base`.
+`pttg-bdd-base` is based on the current LTS version of node and the latest stable chrome version for chrome headless testing.
 
 Therefore to test against the latest version of node just rebuild the pttg-bdd-base project and the latest stable version of Chrome will be baked into the image.
 
