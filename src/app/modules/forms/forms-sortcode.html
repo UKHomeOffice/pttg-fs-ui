@@ -5,7 +5,7 @@
       <span class="form-hint">{{ hint }}</span>
       <div ng-if="displayError" id="{{ config.id }}-error" class="form-error validation-message">{{ displayError }}</div>
       <div class="form-group form-group-sortcode">
-        <label for="{{ config.id }}Part1" class="visuallyhidden">Sortcode part 1</label>
+        <label for="{{ name }}Part1" class="visuallyhidden">Sortcode part 1</label>
         <input class="form-control" name="{{ name }}Part1" id="{{ config.id }}Part1" type="text" ng-model="data.part1" ng-change="itChanged()" autocomplete="off" maxlength="2" />
       </div>
 
@@ -19,5 +19,5 @@
         <input class="form-control" name="{{ name }}Part3" id="{{ config.id }}Part3" type="text" ng-model="data.part3" ng-change="itChanged()" autocomplete="off" maxlength="2" />
       </div>
     </div>
-  </fieldset>
+</fieldset>
 </div>
