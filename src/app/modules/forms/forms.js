@@ -872,11 +872,11 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
             return value === 0
           })
 
-          var methodToName = sortCodeArray.every(function(value) {
+          var isAllIntSortCode = sortCodeArray.every(function(value) {
             return Number.isInteger(value)
           })
 
-          if (scope.field.length !== 6 || allZeroSortCode || !methodToName) {
+          if (scope.field.length !== 6 || allZeroSortCode || !isAllIntSortCode) {
             return false
           }
 
