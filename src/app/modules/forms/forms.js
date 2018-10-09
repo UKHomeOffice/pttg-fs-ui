@@ -862,17 +862,27 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
         }
 
         scope.isValid = function () {
-          var pt1 = Number(scope.data.part1)
-          var pt2 = Number(scope.data.part2)
-          var pt3 = Number(scope.data.part3)
+          var sortCodeArray = [
+            Number(scope.data.part1),
+            Number(scope.data.part2),
+            Number(scope.data.part3)
+          ]
 
-          if (scope.field.length !== 6) {
+          var isAllZeroSortCode = sortCodeArray.every (function(value) {
+            return value === 0
+          })
+
+          var isAllIntSortCode = sortCodeArray.every (function(value) {
+            return Number.isInteger(value)
+          })
+
+          if (scope.field.length !== 6 || isAllZeroSortCode || !isAllIntSortCode) {
             return false
           }
 
-          return ((pt1 > 0 && pt1 <= 99) &&
-                  (pt2 > 0 && pt2 <= 99) &&
-                  (pt3 > 0 && pt3 <= 99))
+          return sortCodeArray.every (function(value) {
+              value >= 0 && value <=99
+          })
         }
 
         scope.isBlank = function () {

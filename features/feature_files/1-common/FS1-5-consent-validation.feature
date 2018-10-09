@@ -16,7 +16,7 @@ Feature: Validation on the fields required for consent from the bank to be obtai
         Then the service displays the following error message
             | sort Code-error | Enter a valid "Sort code" |
 
-    Scenario: Case Worker enters invalid Sort Code - mising digits
+    Scenario: Case Worker enters invalid Sort Code - missing digits
         When the financial status check is performed with
             | Sort code | 11-11-1 |
         Then the service displays the following error message
@@ -30,10 +30,16 @@ Feature: Validation on the fields required for consent from the bank to be obtai
 
     Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
         When the financial status check is performed with
-            | Sort code | 11-11-1q |
+            | Sort code | 11-0x-11 |
         Then the service displays the following error message
             | sort Code-error | Enter a valid "Sort code" |
 
+    Scenario: Case Worker enters valid Sort Code - including double 0's
+        When the financial status check is performed with
+            | Sort code | 00-00-01 |
+        When the submit button is clicked
+        Then the following are hidden
+             | whynot-error      |
 
 ######################### Validation on the Account Number Field #########################
 
