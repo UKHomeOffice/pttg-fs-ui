@@ -868,7 +868,7 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
             Number(scope.data.part3)
           ]
 
-          var allZeroSortCode = sortCodeArray.every(function(value) {
+          var isAllZeroSortCode = sortCodeArray.every(function(value) {
             return value === 0
           })
 
@@ -876,13 +876,13 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
             return Number.isInteger(value)
           })
 
-          if (scope.field.length !== 6 || allZeroSortCode || !isAllIntSortCode) {
+          if (scope.field.length !== 6 || isAllZeroSortCode || !isAllIntSortCode) {
             return false
           }
 
-          return ((sortCodeArray[0] >= 0 && sortCodeArray[0] <= 99) &&
-                  (sortCodeArray[1] >= 0 && sortCodeArray[1] <= 99) &&
-                  (sortCodeArray[2] >= 0 && sortCodeArray[2] <= 99))
+          return sortCodeArray.every(function(value) {
+              value >= 0 && value <=99
+          })
         }
 
         scope.isBlank = function () {
