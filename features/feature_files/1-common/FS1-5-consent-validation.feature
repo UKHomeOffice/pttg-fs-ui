@@ -28,6 +28,12 @@ Feature: Validation on the fields required for consent from the bank to be obtai
         Then the service displays the following error message
             | sort Code-error | Enter a valid "Sort code" |
 
+    Scenario: Case Worker enters invalid Sort Code - not numbers 0-9
+        When the financial status check is performed with
+            | Sort code | 11-0x-11 |
+        Then the service displays the following error message
+            | sort Code-error | Enter a valid "Sort code" |
+
     Scenario: Case Worker enters valid Sort Code - including double 0's
         When the financial status check is performed with
             | Sort code | 00-00-01 |
