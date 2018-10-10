@@ -868,11 +868,11 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
             Number(scope.data.part3)
           ]
 
-          var isAllZeroSortCode = sortCodeArray.every(function(value) {
+          var isAllZeroSortCode = sortCodeArray.every (function(value) {
             return value === 0
           })
 
-          var isAllIntSortCode = sortCodeArray.every(function(value) {
+          var isAllIntSortCode = sortCodeArray.every (function(value) {
             return Number.isInteger(value)
           })
 
