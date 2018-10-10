@@ -881,8 +881,9 @@ formsModule.directive('hodSortcode', ['FormsService', function (FormsService) {
           }
 
           return sortCodeArray.every(function(value) {
-              value >= 0 && value <=99
+               return value >= 0 && value <=99
           })
+
         }
 
         scope.isBlank = function () {
