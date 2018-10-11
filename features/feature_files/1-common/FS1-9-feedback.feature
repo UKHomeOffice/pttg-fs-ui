@@ -1,4 +1,3 @@
-@me
 Feature: Feedback form
 
     Background:
