@@ -1,3 +1,4 @@
+@me
 Feature: Feedback form
 
     Background:
@@ -66,7 +67,7 @@ Feature: Feedback form
         Given the financial status check is performed
         When the feedback form is completed
             | match       | no                |
-            | caseref     | 123456789         |
+            | caseref     | 12345678         |
             | calculation | checked           |
             | match other | It all went wrong |
         And the submit button is clicked
@@ -74,7 +75,7 @@ Feature: Feedback form
         Then the service displays the following page content
             | Page title | Check financial status |
 
-    @ignore
+
     Scenario Outline: Invalid Case IDs
       #Given Caseworker is using the Income Proving Service Case Worker Tool
         Given the financial status check is performed
@@ -89,30 +90,24 @@ Feature: Feedback form
             | 1234567    |
             | 222        |
             | 2222222T   |
-            | eightchr   |
-            | 01234567   |
-            | 02345678   |
+            | ninechars   |
+            | 012345678   |
+            | 0234567   |
             | 0234567666 |
             | 23456789 ! |
 
-    @ignore
+
     Scenario Outline: Valid Case IDs
       #Given Caseworker is using the Income Proving Service Case Worker Tool
         Given the financial status check is performed
         And the feedback form is completed
             | match   | No    |
-            | caseref | <ref> |
+            | caseref | 12345678 |
         When the submit button is clicked
         Then the following are hidden
             | caseref-error |
-        Examples:
-            | ref       |
-            | 234567890 |
-            | 298765439 |
-            | 023456789 |
-            | 000006543 |
 
-    @ignore
+
     Scenario: When No is selected and result is Passed then why not option 'balances' should not be shown
         Given the financial status check is performed
         When the feedback form is completed
@@ -130,7 +125,7 @@ Feature: Feedback form
         And the following are hidden
             | balances-label |
 
-    @ignore
+
     Scenario: When No is selected and result is NOT Passed then why not option 'balances' should be shown
         Given the api daily balance response will Fail-low-balance
         And the financial status check is performed
@@ -139,7 +134,7 @@ Feature: Feedback form
         Then the following are visible
             | balances-label |
 
-    @ignore
+
     Scenario: Validate that a case ref and comment are left
         Given the financial status check is performed
         And the feedback form is completed
@@ -149,7 +144,7 @@ Feature: Feedback form
             | caseref-error     | Enter a valid "Case ID" |
             | match other-error | Please provide comments |
 
-    @ignore
+
     Scenario: When Yes is selected and result is NOT Passed then case reference, checkboxes and text area should be displayed
         Given the api daily balance response will Fail-low-balance
         And the financial status check is performed
@@ -163,18 +158,18 @@ Feature: Feedback form
             | name-label        |
             | balances-label    |
 
-    @ignore
+
     Scenario: Neither checkbox or other is complete so show messages
         Given the financial status check is performed
         When the feedback form is completed
             | match   | No        |
-            | caseref | 123456789 |
+            | caseref | 12345678 |
         And the submit button is clicked
         Then the service displays the following result
             | whynot-error      | Select one or more from below |
             | match other-error | Please provide comments       |
 
-    @ignore
+
     Scenario: A checkbox reason is chosen so no errors for other should be shown
         Given the financial status check is performed
         When the feedback form is completed
@@ -185,7 +180,7 @@ Feature: Feedback form
             | whynot-error      |
             | match other-error |
 
-    @ignore
+
     Scenario: Other is complete so checkboxes are not required
         Given the financial status check is performed
         When the feedback form is completed

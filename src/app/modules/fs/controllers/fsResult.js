@@ -335,13 +335,12 @@ fsModule.controller('FsResultCtrl', [
         }
       },
       caseref: {
-      // length: 9,
+      // length: 8,
         classes: {'form-control-1-4': false},
         validate: function (val) {
           if (val) {
             var v = val.trim()
-          // var v = val.replace(/[^a-zA-Z0-9]/g, '')
-            if (/^\d{9}$/.test(v)) {
+            if (/^\d{8}$/.test(v)) {
               return true
             }
           }
