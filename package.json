@@ -8,7 +8,9 @@
     "test:all": "npm run test:unit && npm run test:bdd",
     "test:unit": "gulp test",
     "test:bdd": "./node_modules/.bin/cucumber.js --tags 'not @ignore'",
-    "postinstall": "gulp"
+    "postinstall": "gulp",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "angular": "^1.6.5",
@@ -42,7 +44,8 @@
     "sass": "^1.5.1",
     "serve-static": "^1.13.0",
     "underscore": "^1.8.3",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "snyk": "^1.123.0"
   },
   "optionalDependencies": {
     "fsevents": "1.2.2"
@@ -65,5 +68,6 @@
     "karma-spec-reporter": "0.0.26",
     "selenium-webdriver": "^3.4.0",
     "standard": "^10.0.2"
-  }
+  },
+  "snyk": true
 }
