@@ -7,7 +7,7 @@ pipeline:
     commands:
       - docker build -t pttg-fs-ui .
     when:
-      branch: [master, EE-21542-whitelist-dev-envs]
+      branch: master
       event: push
 
   test:
@@ -31,7 +31,7 @@ pipeline:
       - docker tag pttg-fs-ui quay.io/ukhomeofficedigital/pttg-fs-ui:build-$${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/pttg-fs-ui:build-$${DRONE_BUILD_NUMBER}
     when:
-      branch: [master, EE-21542-whitelist-dev-envs]
+      branch: master
       event: push
 
   tag-docker-image-with-git-tag:
@@ -68,7 +68,7 @@ pipeline:
       - cd kube-pttg-fs-ui
       - ./deploy.sh
     when:
-      branch: [master, EE-21542-whitelist-dev-envs]
+      branch: master
       event: [push, tag]
 
   deployment:
