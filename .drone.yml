@@ -61,6 +61,7 @@ pipeline:
       - ENVIRONMENT=dev
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+      - WHITELIST=62.25.109.196/32,52.48.127.150/32,52.48.127.151/32,52.48.127.152/32,52.48.127.153/32,52.209.62.128/25,52.56.62.128/25,185.22.224.96,185.22.224.96/32,185.22.226.96/32,213.251.23.180/30,213.251.23.184/30,213.251.23.188/30,148.253.134.213/32,167.98.162.0/25,167.98.158.128/25
     secrets:
       - pttg_fs_dev
     commands:
@@ -76,6 +77,7 @@ pipeline:
       - KUBE_NAMESPACE=pttg-fs-${DRONE_DEPLOY_TO}
       - ENVIRONMENT=${DRONE_DEPLOY_TO}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
+      - WHITELIST=62.25.109.196/32,52.48.127.150/32,52.48.127.151/32,52.48.127.152/32,52.48.127.153/32,52.209.62.128/25,52.56.62.128/25,185.22.224.96,185.22.224.96/32,185.22.226.96/32,213.251.23.180/30,213.251.23.184/30,213.251.23.188/30,148.253.134.213/32,167.98.162.0/25,167.98.158.128/25
     secrets:
       - pttg_fs_dev
       - pttg_fs_test
