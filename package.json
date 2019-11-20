@@ -11,7 +11,7 @@
     "postinstall": "gulp"
   },
   "dependencies": {
-    "angular": "^1.6.5",
+    "angular": "^1.7.9",
     "angular-aria": "^1.6.5",
     "angular-ui-router": "^0.3.2",
     "angular-ui-validate": "^1.2.3",
