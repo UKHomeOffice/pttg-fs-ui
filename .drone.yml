@@ -15,7 +15,6 @@ pipeline:
     commands:
       - docker build -t pttg-fs-ui .
     when:
-      branch: master
       event: push
 
   scan:
