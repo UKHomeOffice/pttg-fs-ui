@@ -163,7 +163,7 @@ gulp.task('test', function (done) {
   server.start()
 })
 
-gulp.task('build', ['assets', 'sassjs', 'minifyHtml', 'vendor', 'templateAndUglify'])
-gulp.task('watch', ['startwatch', 'vendor'])
-gulp.task('default', ['build'])
-gulp.task('inline', ['default', 'inlineHTML'])
+gulp.task('build', series(['assets', 'sassjs', 'minifyHtml', 'vendor', 'templateAndUglify']))
+gulp.task('watch', series(['startwatch', 'vendor']))
+gulp.task('default', series(['build']))
+gulp.task('inline', series(['default', 'inlineHTML']))
