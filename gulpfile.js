@@ -48,11 +48,12 @@ var config = {
   }
 }
 
-gulp.task('assets', function () {
+gulp.task('assets', function (done) {
   gulp.src([sourcePath + 'assets/**/*']).pipe(gulp.dest(target + 'assets'))
+  done()
 })
 
-gulp.task('sassjs', function () {
+gulp.task('sassjs', function (done) {
   sassjs.render({
     file: config.sass.src,
     includePaths: ['node_modules/govuk-elements-sass/public/sass',
@@ -72,6 +73,7 @@ gulp.task('sassjs', function () {
       })
     }
   })
+  done()
 })
 
 gulp.task('minifyHtml', function () {
@@ -123,7 +125,7 @@ gulp.task('vendor', function () {
   .pipe(gulp.dest(target + 'app'))
 })
 
-gulp.task('templateAndUglify', function () {
+gulp.task('templateAndUglify', function (done) {
   async.series([
     function (done) {
       run(['angTemplates'], function () {
@@ -137,10 +139,11 @@ gulp.task('templateAndUglify', function () {
     }
   ], function () {
     console.log('templateAndUglify done')
+    done()
   })
 })
 
-gulp.task('startwatch', function () {
+gulp.task('startwatch', function (done) {
   var nodemon = require('gulp-nodemon')
 
   nodemon({
@@ -155,6 +158,7 @@ gulp.task('startwatch', function () {
   gulp.watch(sourcePath + 'app/modules/**/*.html', ['templateAndUglify'])
   gulp.watch([sourcePath + 'app/main.js', sourcePath + 'app/modules/**/*.js'], ['uglify'])
   gulp.watch(sourcePath + 'styles/*.scss', ['sassjs'])
+  done()
 })
 
 gulp.task('test', function (done) {
