@@ -125,23 +125,7 @@ gulp.task('vendor', function () {
   .pipe(gulp.dest(target + 'app'))
 })
 
-gulp.task('templateAndUglify', function (done) {
-  async.series([
-    function (done) {
-      run(['angTemplates'], function () {
-        done()
-      })
-    },
-    function (done) {
-      run(['uglify'], function () {
-        done()
-      })
-    }
-  ], function () {
-    console.log('templateAndUglify done')
-    done()
-  })
-})
+gulp.task('templateAndUglify',  gulp.series(['angTemplates', 'uglify']))
 
 gulp.task('startwatch', function (done) {
   var nodemon = require('gulp-nodemon')
