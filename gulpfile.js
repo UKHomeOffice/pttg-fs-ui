@@ -166,4 +166,4 @@ gulp.task('test', function (done) {
 gulp.task('build', gulp.series(['assets', 'sassjs', 'minifyHtml', 'vendor', 'templateAndUglify']))
 gulp.task('watch', gulp.series(['startwatch', 'vendor']))
 gulp.task('default', gulp.series(['build']))
-gulp.task('inline', gulp.series(['default', 'inlineHTML']))
+gulp.task('inline', gulp.series(['default']))
