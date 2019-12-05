@@ -3,8 +3,7 @@ pipeline:
   npm-audit:
     image: node:12
     commands:
-      # TODO EE-29064 remove skip so that build fails for new errors.
-      - npm audit --audit-level=moderate --only=prod || echo Temporarily skipping failure until EE-29064 is resolved
+      - npm audit --production --audit-level=moderate
     when:
       event: push
 
@@ -22,9 +21,9 @@ pipeline:
     dockerfile: Dockerfile
     image_name: pttg-fs-ui
     local_image: true
-    tolerate: medium
+    tolerate: low
     show_all_vulnerabilities: true
-    fail_on_detection: false # TODO EE-29064 Remove this when current vulnerabilities are resolved
+    fail_on_detection: false # TODO EE-29635 Remove this when current vulnerabilities are resolved
     when:
       event: push
 
