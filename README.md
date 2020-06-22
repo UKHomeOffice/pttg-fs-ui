@@ -1,5 +1,7 @@
 # Financial Status Service UI #
 
+N.B. This repo is archived as there is no longer a requirement for the component.
+
 
 ## Overview ##
 
